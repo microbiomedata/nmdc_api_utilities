@@ -1,7 +1,7 @@
-NMDC Notebook Tools Documentation
+NMDC API Utilities Documentation
 =================================
 
-Welcome to NMDC Notebook Tools documentation. This package provides tools for interacting with the NMDC API.
+Welcome to NMDC API Utilities documentation. This package provides tools for interacting with the NMDC API.
 
 .. toctree::
    :maxdepth: 2

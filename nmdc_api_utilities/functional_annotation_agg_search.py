@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from nmdc_notebook_tools.functional_search import FunctionalSearch
+from nmdc_api_utilities.functional_search import FunctionalSearch
 import logging
 
 logger = logging.getLogger(__name__)

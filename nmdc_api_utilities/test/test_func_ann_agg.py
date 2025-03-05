@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
-from nmdc_notebook_tools.functional_annotation_agg_search import (
+from nmdc_api_utilities.functional_annotation_agg_search import (
     FunctionalAnnotationAggSearch,
 )
 import logging
 import unittest
-from nmdc_notebook_tools.utils import Utils
 
 
 class TestFunctionalAnnotation(unittest.TestCase):

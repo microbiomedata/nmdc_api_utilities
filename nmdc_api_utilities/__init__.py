@@ -11,7 +11,7 @@ __version__ = "0.1.0"
 
 # You can also include package-level docstring
 """
-nmdc_notebook_tools package
+nmdc_api_utilities package
 
 This package provides tools for working with NMDC notebooks.
 """

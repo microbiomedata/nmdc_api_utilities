@@ -1,10 +1,10 @@
-# nmdc_notebook_tools
+# nmdc_api_utilities
 A library designed to simplify various research tasks for users looking to leverage the NMDC (National Microbiome Data Collaborative) APIs. The library provides a collection of general-purpose functions that facilitate easy access, manipulation, and analysis of microbiome data.
 
 # Usage
 Example use of the Biosample class:
 ```python
-from nmdc_notebook_tools.biosample_search import BiosampleSearch
+from nmdc_api_utilities.biosample_search import BiosampleSearch
 
 # Create an instance of the module
 biosample_client = BiosampleSearch()
@@ -25,14 +25,14 @@ biosample_client.get_collection_by_id("biosample", "id")
 To install, run:
 
 ```bash
-python3 -m pip install nmdc_notebook_tools
+python3 -m pip install nmdc_api_utilities
 ```
 
 Peridodically run
 ```bash
-python3 -m pip install --upgrade nmdc_notebook_tools
+python3 -m pip install --upgrade nmdc_api_utilities
 ```
 to ensure you have the latest updates from this package.
 
 # Documentation
-Documentation about available functions and helpful usage notes can be found at https://microbiomedata.github.io/nmdc_notebook_tools/.
+Documentation about available functions and helpful usage notes can be found at https://microbiomedata.github.io/nmdc_api_utilities/.

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from nmdc_notebook_tools.nmdc_search import NMDCSearch
+from nmdc_api_utilities.nmdc_search import NMDCSearch
 import requests
 import logging
 

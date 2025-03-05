@@ -18,7 +18,7 @@
             "name": "Python: Module",
             "type": "debugpy",
             "request": "launch",
-            "module": "nmdc_notebook_tools.collection",
+            "module": "nmdc_api_utilities.collection",
             "console": "integratedTerminal",
             "justMyCode": true,
             "env": {

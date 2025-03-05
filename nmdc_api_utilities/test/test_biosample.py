@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-from nmdc_notebook_tools.biosample_search import BiosampleSearch
+from nmdc_api_utilities.biosample_search import BiosampleSearch
 import logging
-from nmdc_notebook_tools.utils import Utils
-from nmdc_notebook_tools.data_processing import DataProcessing
+from nmdc_api_utilities.data_processing import DataProcessing
 
 
 def test_find_biosample_by_id():

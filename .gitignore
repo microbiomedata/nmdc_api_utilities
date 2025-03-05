@@ -1,7 +1,7 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
-nmdc_notebook_tools/__pycache__/
-nmdc_notebook_tools/test/__pycache__/
+nmdc_api_utilities/__pycache__/
+nmdc_api_utilities/test/__pycache__/
 *.py[cod]
 *$py.class
 
@@ -164,4 +164,4 @@ cython_debug/
 #.idea/
 
 # Sphinx documentation
-src/nmdc_notebook_tools/docs/_build/
+src/nmdc_api_utilities/docs/_build/

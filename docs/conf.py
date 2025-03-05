@@ -12,10 +12,10 @@ sys.path.insert(0, os.path.abspath(".."))  # Path to your project root
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = "nmdc_notebook_tools"
+project = "nmdc_api_utilities"
 copyright = "2024, Olivia Hess"
 author = "Olivia Hess"
-release = "3/1/2025"
+release = "2/1/2025"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration

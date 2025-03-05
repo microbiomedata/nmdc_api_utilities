@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from nmdc_notebook_tools.collection_search import CollectionSearch
+from nmdc_api_utilities.collection_search import CollectionSearch
 
 
 def test_get_collection():

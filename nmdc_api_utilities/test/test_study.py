@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from nmdc_notebook_tools.study_search import StudySearch
+from nmdc_api_utilities.study_search import StudySearch
 
 
 def test_find_study_by_attribute():

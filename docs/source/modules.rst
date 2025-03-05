@@ -1,7 +1,7 @@
-nmdc_notebook_tools
+nmdc_api_utilities
 ===================
 
 .. toctree::
    :maxdepth: 4
 
-   nmdc_notebook_tools
+   nmdc_api_utilities

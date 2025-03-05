@@ -1,53 +1,53 @@
-nmdc\_notebook\_tools package
+nmdc\_api\_utilities package
 =============================
 
 Submodules
 ----------
 
-nmdc\_notebook\_tools.api module
+nmdc\_api\_utilities.api module
 --------------------------------
 
-.. automodule:: nmdc_notebook_tools.api
+.. automodule:: nmdc_api_utilities.api
    :members:
    :undoc-members:
    :show-inheritance:
 
-nmdc\_notebook\_tools.collection module
+nmdc\_api\_utilities.collection module
 ---------------------------------------
 
-.. automodule:: nmdc_notebook_tools.collection
+.. automodule:: nmdc_api_utilities.collection
    :members:
    :undoc-members:
    :show-inheritance:
 
-nmdc\_notebook\_tools.data\_processing module
+nmdc\_api\_utilities.data\_processing module
 ---------------------------------------------
 
-.. automodule:: nmdc_notebook_tools.data_processing
+.. automodule:: nmdc_api_utilities.data_processing
    :members:
    :undoc-members:
    :show-inheritance:
 
-nmdc\_notebook\_tools.find module
+nmdc\_api\_utilities.find module
 ---------------------------------
 
-.. automodule:: nmdc_notebook_tools.find
+.. automodule:: nmdc_api_utilities.find
    :members:
    :undoc-members:
    :show-inheritance:
 
-nmdc\_notebook\_tools.utils module
+nmdc\_api\_utilities.utils module
 ----------------------------------
 
-.. automodule:: nmdc_notebook_tools.utils
+.. automodule:: nmdc_api_utilities.utils
    :members:
    :undoc-members:
    :show-inheritance:
 
-nmdc\_notebook\_tools.visualize module
+nmdc\_api\_utilities.visualize module
 --------------------------------------
 
-.. automodule:: nmdc_notebook_tools.visualize
+.. automodule:: nmdc_api_utilities.visualize
    :members:
    :undoc-members:
    :show-inheritance:
@@ -55,7 +55,7 @@ nmdc\_notebook\_tools.visualize module
 Module contents
 ---------------
 
-.. automodule:: nmdc_notebook_tools
+.. automodule:: nmdc_api_utilities
    :members:
    :undoc-members:
    :show-inheritance:

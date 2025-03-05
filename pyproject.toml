@@ -3,8 +3,8 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "nmdc_notebook_tools"
-version = "0.2.3"
+name = "nmdc_api_utilities"
+version = "0.3.0"
 description = "A Python library for general research functions using NMDC APIs"
 authors = [
     { name = "Olivia Hess", email = "olivia.hess@pnnl.gov" },
