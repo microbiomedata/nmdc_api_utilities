@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nmdc_api_utilities"
-version = "0.3.0"
+version = "0.3.1"
 description = "A Python library for general research functions using NMDC APIs"
 authors = [
     { name = "Olivia Hess", email = "olivia.hess@pnnl.gov" },
@@ -15,5 +15,5 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
 ]
-license = { text = "MIT" }
-dependencies = ["pandas>=2.2.3", "requests>=2.32.3", "matplotlib==3.10.0"]
+dependencies = ["pandas~=2.2.3", "requests~=2.32.3", "matplotlib~=3.10.0"]
+license = { file = "LICENSE" }
