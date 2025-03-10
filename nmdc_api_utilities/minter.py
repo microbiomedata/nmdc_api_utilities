@@ -17,12 +17,15 @@ class Mint(NMDCSearch):
         Mint a new identifier for a collection.
         params:
             nmdc_type : str
-            The type of NMDC ID to mint (e.g., 'nmdc:MassSpectrometry',
-            'nmdc:DataObject').
+                The type of NMDC ID to mint (e.g., 'nmdc:MassSpectrometry',
+                'nmdc:DataObject').
             client_id : str
-            The client ID for the NMDC API.
+                The client ID for the NMDC API.
             client_secret : str
-            The client secret for the NMDC API.
+                The client secret for the NMDC API.
+        Secrurity Note:
+            Your client_id and client_secret should be stored in a secure location. We recommend using environment variables.
+            Do not hard code these values in your code.
         """
         # get the token
         client = oauthlib.oauth2.BackendApplicationClient(client_id=client_id)
