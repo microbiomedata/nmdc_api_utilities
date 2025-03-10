@@ -41,6 +41,20 @@ Collection Helpers
    :undoc-members:
    :show-inheritance:
 
+Metadata Module
+~~~~~~~~~~
+.. autoclass:: nmdc_api_utilities.metadata.Metadata
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Mint Module
+~~~~~~~~~~
+.. autoclass:: nmdc_api_utilities.minter.Minter
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 BioSample Subclass
 ~~~~~~~~~~
 .. autoclass:: nmdc_api_utilities.biosample_search.BiosampleSearch

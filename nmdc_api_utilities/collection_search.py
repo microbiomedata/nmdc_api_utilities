@@ -217,6 +217,47 @@ class CollectionSearch(NMDCSearch):
                 response, "data_object_set", filter, max_page_size, fields
             )["resources"]
         return dp.convert_to_df(results)
+    
+    def check_ids_exist(self, ids: list) -> bool:
+        """
+        Check if the IDs exist in the collection.
+
+        This method constructs a query to the API to filter the collection based on the given IDs, and checks if all IDs exist in the collection.
+
+        Parameters
+        ----------
+        ids : list
+            A list of IDs to check if they exist in the collection.
+
+        Returns
+        -------
+        bool
+            True if all IDs exist in the collection, False otherwise.
+
+        Raises
+        ------
+        requests.RequestException
+            If there's an error in making the API request.
+        """
+        ids_test = list(set(ids))
+        for id in ids_test:
+            filter_param = f'{{"id": "{id}"}}'
+            field = "id"
+
+            og_url = f"{self.base_url}/nmdcschema/{self.collection_name}?&filter={filter_param}&projection={field}"
+
+            try:
+                resp = requests.get(og_url)
+                resp.raise_for_status()  # Raises an HTTPError for bad responses
+                data = resp.json()
+                if len(data["resources"]) == 0:
+                    print(f"ID {id} not found")
+                    return False
+            except requests.RequestException as e:
+                raise requests.RequestException(f"Error making API request: {e}")
+        return True
+
+        
 
 
 if __name__ == "__main__":
