@@ -23,6 +23,8 @@ class Mint(NMDCSearch):
                 The client ID for the NMDC API.
             client_secret : str
                 The client secret for the NMDC API.
+        returns:
+            str - the new identifier.
         Secrurity Note:
             Your client_id and client_secret should be stored in a secure location. We recommend using environment variables.
             Do not hard code these values in your code.
@@ -48,4 +50,4 @@ class Mint(NMDCSearch):
                 f"API request response: {response.json()}\n API Status Code: {response.status_code}"
             )
         # return the response
-        return response.json()
+        return response.json()[0]
