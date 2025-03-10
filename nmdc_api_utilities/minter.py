@@ -6,13 +6,13 @@ import requests_oauthlib
 import json
 logger = logging.getLogger(__name__)
 
-class Mint(NMDCSearch):
+class Minter(NMDCSearch):
     """
     Class to interact with the NMDC API to mint new identifiers.
     """
     def __init__(self):
         super().__init__()
-    def mint(self, nmdc_type:str, client_id: str, client_secret: str):
+    def mint(self, nmdc_type:str, client_id: str, client_secret: str) -> str:
         """
         Mint a new identifier for a collection.
         params:
