@@ -51,7 +51,7 @@ def test_biosample_by_longitude():
 def test_biosample_by_lat_long():
     # {"lat_lon.latitude": {"$gt": 45.0}, "lat_lon.longitude": {"$lt":45}}
     biosample = BiosampleSearch()
-    results = biosample.biosample_by_lat_long("gt", "lt", 45.0, 45.0)
+    results = biosample.get_record_by_lat_long("gt", "lt", 45.0, 45.0)
     assert len(results) > 0
     assert results[0]["lat_lon"]["latitude"] == 63.875088
     assert results[0]["lat_lon"]["longitude"] == -149.210438

@@ -13,9 +13,9 @@ class CollectionSearch(NMDCSearch):
     Class to interact with the NMDC API to get collections of data. Must know the collection name to query.
     """
 
-    def __init__(self, collection_name):
+    def __init__(self, collection_name, env="Production"):
         self.collection_name = collection_name
-        super().__init__()
+        super().__init__(env=env)
 
     def get_records(
         self,
@@ -166,57 +166,8 @@ class CollectionSearch(NMDCSearch):
             logging.debug(
                 f"API request response: {response.json()}\n API Status Code: {response.status_code}"
             )
-
-        results = response.json()["resources"]
-
+        results = response.json()
         return results
-
-    def get_record_data_object_by_type(
-        self,
-        data_object_type: str = "",
-        max_page_size: int = 100,
-        fields: str = "",
-        all_pages: bool = False,
-    ):
-        """
-        Get a collection of data from the NMDC API. Specific function to get a collection of data from the NMDC API, filtered by data object type.
-        params:
-            data_object_type: str
-                The data_object_type to filter by. Default is an empty string, which will return all data.
-            max_page_size: int
-                The maximum number of items to return per page. Default is 100.
-            fields: str
-                The fields to return. Default is all fields.
-            pages: bool
-                True to return all pages. False to return the first page. Default is False.
-        """
-        results = []
-        dp = DataProcessing()
-        # create the filter based on data object type
-        filter = f'{{"data_object_type":{{"$regex": "{data_object_type}"}}}}'
-        filter = urllib.parse.quote_plus(filter)
-        # if fields is empty, return all fields
-        if not fields:
-            fields = "id,name,description,alternative_identifiers,file_size_bytes,md5_checksum,data_object_type,url,type"
-        url = f"{self.base_url}/nmdcschema/data_object_set?filter={filter}&max_page_size={max_page_size}&projection={fields}"
-        # get the reponse
-        try:
-            response = requests.get(url)
-            response.raise_for_status()
-        except requests.exceptions.RequestException as e:
-            logger.error("API request failed", exc_info=True)
-            raise RuntimeError("Failed to get data object from NMDC API") from e
-        else:
-            logging.debug(
-                f"API request response: {response.json()}\n API Status Code: {response.status_code}"
-            )
-        results = response.json()["resources"]
-        # otherwise, get all pages
-        if all_pages:
-            results = self._get_all_pages(
-                response, "data_object_set", filter, max_page_size, fields
-            )["resources"]
-        return dp.convert_to_df(results)
     
     def check_ids_exist(self, ids: list) -> bool:
         """

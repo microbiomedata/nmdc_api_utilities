@@ -10,6 +10,11 @@ def test_find_study_by_attribute():
     )
     assert len(stu) > 0
 
+def test_find_study_by_id():
+    st = StudySearch()
+    stu = st.get_record_by_id("nmdc:sty-11-8fb6t785")
+    assert len(stu) > 0
+    assert stu["id"] == "nmdc:sty-11-8fb6t785"
 
 def test_find_study_by_filter():
     st = StudySearch()
