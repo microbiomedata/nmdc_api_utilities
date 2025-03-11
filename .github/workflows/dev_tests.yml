@@ -1,4 +1,4 @@
-name: tests
+name: dev tests
 
 on:
   schedule:
@@ -16,7 +16,6 @@ jobs:
         with:
             python-version: 3.12
       - name: Set up environment variables
-        working-directory: ./
         run: echo "Environment variables set up"
         env:
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
@@ -26,8 +25,8 @@ jobs:
         run: |
             pip install -r requirements-dev.txt
       - name: Run tests
-        working-directory: ./src
         env:
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
           CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+          ENV : "Development"
         run: pytest -r nmdc_api_utilities/test/
