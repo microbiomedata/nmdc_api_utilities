@@ -4,13 +4,11 @@ from nmdc_api_utilities.lat_long_filters import LatLongFilters
 import logging
 
 logger = logging.getLogger(__name__)
-# TODO - what are these
-
 
 class FieldResearchSiteSearch(LatLongFilters, CollectionSearch):
     """
     Class to interact with the NMDC API to get field research site sets.
     """
 
-    def __init__(self):
-        super().__init__("field_research_site_set")
+    def __init__(self, env="Production"):
+        super().__init__("field_research_site_set", env=env)

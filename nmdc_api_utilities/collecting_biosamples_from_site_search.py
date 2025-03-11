@@ -10,5 +10,5 @@ class CollectingBiosamplesFromSiteSearch(CollectionSearch):
     Class to interact with the NMDC API to get collecting biosamples from site sets.
     """
 
-    def __init__(self):
-        super().__init__("collecting_biosamples_from_site_set")
+    def __init__(self, env="Production"):
+        super().__init__(collection_name="collecting_biosamples_from_site_set", env=env)

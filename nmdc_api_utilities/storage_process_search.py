@@ -10,5 +10,5 @@ class StorageProcessSearch(CollectionSearch):
     Class to interact with the NMDC API to get storage process sets.
     """
 
-    def __init__(self):
-        super().__init__("storage_process_set")
+    def __init__(self, env="Production"):
+        super().__init__(collection_name="storage_process_set", env=env)

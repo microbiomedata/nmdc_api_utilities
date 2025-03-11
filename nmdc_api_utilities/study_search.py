@@ -10,5 +10,5 @@ class StudySearch(CollectionSearch):
     Class to interact with the NMDC API to get studies.
     """
 
-    def __init__(self):
-        super().__init__("study_set")
+    def __init__(self, env="Production"):
+        super().__init__(collection_name="study_set", env=env)

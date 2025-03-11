@@ -9,8 +9,8 @@ class Metadata(NMDCSearch):
     """
     Class to interact with the NMDC API metadata. 
     """
-    def __init__(self):
-        super().__init__()
+    def __init__(self, env="Production"):
+        super().__init__(env=env)
 
     def validate_json(self, json_path) -> None:
         """
