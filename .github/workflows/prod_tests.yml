@@ -33,3 +33,9 @@ jobs:
           CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
           ENV : "Production"
         run: pytest -r nmdc_api_utilities/test/
+      - name: Create Issue
+        if: failure()
+        uses: peter-evans/create-issue-from-file@v2
+        with:
+            title: notebook_api_utilities production tests failed
+            labels: report, automated issue

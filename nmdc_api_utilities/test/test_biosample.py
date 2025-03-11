@@ -8,7 +8,7 @@ def test_find_biosample_by_id():
     biosample = BiosampleSearch()
     results = biosample.get_record_by_id("nmdc:bsm-11-002vgm56")
     assert len(results) > 0
-    assert results["id"] == "nmdc:bsm-11-002vgm56"
+    assert results["id"] == "nmdc:bsm"
 
 
 def test_logger():
