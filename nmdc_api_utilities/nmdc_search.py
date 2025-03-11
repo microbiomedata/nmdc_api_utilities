@@ -9,4 +9,4 @@ class NMDCSearch:
         if env == "Production":
             self.base_url = "https://api.microbiomedata.org"
         elif env == "Development":
-            self.base_url = "https://api-dev.microbiomedata.org/docs"
+            self.base_url = "https://api-dev.microbiomedata.org"
