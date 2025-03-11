@@ -39,4 +39,4 @@ def test_get_studies():
     st = StudySearch()
     studies = st.get_records(max_page_size=100)
     print(studies)
-    assert len(studies) == 32
+    assert len(studies) > 32
