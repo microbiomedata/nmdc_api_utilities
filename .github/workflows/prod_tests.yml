@@ -8,7 +8,7 @@ on:
     - cron: '0 0 * * *'
 
 permissions:
-  contents: write
+  contents: read,write
 
 jobs:
   test:
@@ -33,12 +33,17 @@ jobs:
           CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
           ENV : "Production"
         run: pytest -r nmdc_api_utilities/test/
-  notify:
-    name: Notify failed build
-    needs: [test]
-    if: failure() && github.event.pull_request == null
-    runs-on: ubuntu-latest
-    steps:
-      - uses: jayqi/failed-build-issue-action@v1
+      - name: Create Issue
+        if: failure() && github.event.pull_request == null
+        uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { owner, repo } = context.repo;
+            await github.rest.issues.create({
+              owner,
+              repo,
+              title: "notebook_api_utilities tests failed",
+              body: "The tests have failed in the latest run. Please investigate the issue.",
+              labels: ["report", "automated issue"]
+            });
