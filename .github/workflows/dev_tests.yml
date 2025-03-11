@@ -33,15 +33,16 @@ jobs:
           ENV : "Development"
         run: pytest -r nmdc_api_utilities/test/
       - name: Create Issue
-        if: failure()
+        if: failure() && github.event_name == 'schedule'
         uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            github.issues.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              title: "notebook_api_utilities dev tests failed",
-              body: "The tests have failed in the latest run. Please investigate the issue.",
+            const { owner, repo } = context.repo;
+            await github.rest.issues.create({
+              owner,
+              repo,
+              title: "notebook_api_utilities production tests failed",
+              body: "The production tests have failed in the latest run. Please investigate the issue.",
               labels: ["report", "automated issue"]
-            })
+            });

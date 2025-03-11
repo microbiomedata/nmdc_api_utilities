@@ -35,7 +35,7 @@ jobs:
           ENV : "Production"
         run: pytest -r nmdc_api_utilities/test/
       - name: Create Issue
-        if: failure() && github.event.pull_request == null
+        if: failure() && github.event.pull_request == null && github.event_name == 'schedule'
         uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -44,7 +44,7 @@ jobs:
             await github.rest.issues.create({
               owner,
               repo,
-              title: "notebook_api_utilities tests failed",
-              body: "The tests have failed in the latest run. Please investigate the issue.",
+              title: "notebook_api_utilities production tests failed",
+              body: "The production tests have failed in the latest run. Please investigate the issue.",
               labels: ["report", "automated issue"]
             });
