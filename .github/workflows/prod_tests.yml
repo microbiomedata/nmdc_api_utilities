@@ -33,16 +33,12 @@ jobs:
           CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
           ENV : "Production"
         run: pytest -r nmdc_api_utilities/test/
-      - name: Create Issue
-        if: failure()
-        uses: actions/github-script@v6
+  notify:
+    name: Notify failed build
+    needs: [test]
+    if: failure() && github.event.pull_request == null
+    runs-on: ubuntu-latest
+    steps:
+      - uses: jayqi/failed-build-issue-action@v1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            github.issues.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              title: "notebook_api_utilities prod tests failed",
-              body: "The tests have failed in the latest run. Please investigate the issue.",
-              labels: ["report", "automated issue"]
-            })
