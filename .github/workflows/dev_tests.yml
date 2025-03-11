@@ -34,7 +34,14 @@ jobs:
         run: pytest -r nmdc_api_utilities/test/
       - name: Create Issue
         if: failure()
-        uses: peter-evans/create-issue-from-file@v2
+        uses: actions/github-script@v6
         with:
-            title: notebook_api_utilities development tests failed
-            labels: report, automated issue
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            github.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: "notebook_api_utilities dev tests failed",
+              body: "The tests have failed in the latest run. Please investigate the issue.",
+              labels: ["report", "automated issue"]
+            })
