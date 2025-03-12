@@ -11,4 +11,4 @@ class ProcessedSampleSearch(CollectionSearch):
     """
 
     def __init__(self):
-        super().__init__("processed_sample_set")
+        super().__init__(collection_name="processed_sample_set", env="prod")

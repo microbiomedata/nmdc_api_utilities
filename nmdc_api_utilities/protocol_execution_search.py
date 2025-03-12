@@ -10,5 +10,5 @@ class ProtocolExecutionSearch(CollectionSearch):
     Class to interact with the NMDC API to get protocol execution sets.
     """
 
-    def __init__(self):
-        super().__init__("protocol_execution_set")
+    def __init__(self, env="prod"):
+        super().__init__(collection_name="protocol_execution_set", env=env)

@@ -12,8 +12,8 @@ class CollectionHelpers(NMDCSearch):
     These functions may not be specific to a particular collection.
     """
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, env="prod"):
+        super().__init__(env=env)
 
     def get_record_name_from_id(self, doc_id: str):
         """

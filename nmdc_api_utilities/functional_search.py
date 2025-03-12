@@ -8,8 +8,8 @@ class FunctionalSearch:
     Class to interact with the NMDC API to filter functional annotations by KEGG, COG, or PFAM ids.
     """
 
-    def __init__(self):
-        self.collectioninstance = CollectionSearch("functional_annotation_agg")
+    def __init__(self, env="prod"):
+        self.collectioninstance = CollectionSearch(collection_name="functional_annotation_agg", env=env)
 
     def get_functional_annotations(
         self,
@@ -70,4 +70,4 @@ class FunctionalSearch:
             fields: str
                 The fields to return. Default is all fields.
         """
-        self.collectioninstance.get_records(filter, max_page_size, fields, all_pages)
+        return self.collectioninstance.get_records(filter, max_page_size, fields, all_pages)

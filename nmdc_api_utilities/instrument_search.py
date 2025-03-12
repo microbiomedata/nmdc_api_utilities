@@ -10,5 +10,6 @@ class InstrumentSearch(CollectionSearch):
     Class to interact with the NMDC API to get instrument sets.
     """
 
-    def __init__(self):
-        super().__init__("instrument_set")
+    def __init__(self, env="prod"):
+        super().__init__(collection_name="instrument_set", env=env)
+

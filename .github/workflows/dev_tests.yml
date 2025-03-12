@@ -1,0 +1,48 @@
+name: dev tests
+
+on: 
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
+  
+
+permissions:
+  contents: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+            python-version: 3.12
+      - name: Set up environment variables
+        run: echo "Environment variables set up"
+        env:
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+          ENV : "dev"
+      - name: Install dependencies
+        run: |
+            pip install -r requirements-dev.txt
+      - name: Run tests
+        env:
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+          ENV : "dev"
+        run: pytest -r nmdc_api_utilities/test/
+      - name: Create Issue
+        if: failure() && github.event_name == 'schedule'
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { owner, repo } = context.repo;
+            await github.rest.issues.create({
+              owner,
+              repo,
+              title: "notebook_api_utilities production tests failed",
+              body: "The development tests have failed in the latest run. Please investigate the issue.",
+              labels: ["report", "automated issue"]
+            });

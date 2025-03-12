@@ -10,5 +10,5 @@ class CalibrationSearch(CollectionSearch):
     Class to interact with the NMDC API to get calibration records.
     """
 
-    def __init__(self):
-        super().__init__("calibration_set")
+    def __init__(self, env="prod"):
+        super().__init__(collection_name="calibration_set", env=env)
