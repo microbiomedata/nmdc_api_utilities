@@ -10,7 +10,7 @@ class Minter(NMDCSearch):
     """
     Class to interact with the NMDC API to mint new identifiers.
     """
-    def __init__(self, env="Production"):
+    def __init__(self, env="prod"):
         super().__init__(env=env)
     def mint(self, nmdc_type:str, client_id: str, client_secret: str) -> str:
         """

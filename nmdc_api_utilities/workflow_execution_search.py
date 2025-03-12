@@ -10,5 +10,5 @@ class WorkflowExecutionSearch(CollectionSearch):
     Class to interact with the NMDC API to get workflow execution sets.
     """
 
-    def __init__(self, env="Production"):
+    def __init__(self, env="prod"):
         super().__init__(collection_name="workflow_execution_set", env=env)

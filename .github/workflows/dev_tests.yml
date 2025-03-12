@@ -1,8 +1,10 @@
 name: dev tests
 
-on:
+on: 
+  workflow_dispatch:
   schedule:
     - cron: '0 0 * * *'
+  
 
 permissions:
   contents: write
@@ -20,7 +22,7 @@ jobs:
         env:
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
           CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-          ENV : "Development"
+          ENV : "dev"
       - name: Install dependencies
         run: |
             pip install -r requirements-dev.txt
@@ -28,7 +30,7 @@ jobs:
         env:
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
           CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-          ENV : "Development"
+          ENV : "dev"
         run: pytest -r nmdc_api_utilities/test/
       - name: Create Issue
         if: failure() && github.event_name == 'schedule'
@@ -41,6 +43,6 @@ jobs:
               owner,
               repo,
               title: "notebook_api_utilities production tests failed",
-              body: "The production tests have failed in the latest run. Please investigate the issue.",
+              body: "The development tests have failed in the latest run. Please investigate the issue.",
               labels: ["report", "automated issue"]
             });

@@ -24,7 +24,7 @@ jobs:
         env:
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
           CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-          ENV : "Production"
+          ENV : "prod"
       - name: Install dependencies
         run: |
             pip install -r requirements-dev.txt
@@ -32,7 +32,7 @@ jobs:
         env:
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
           CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-          ENV : "Production"
+          ENV : "prod"
         run: pytest -r nmdc_api_utilities/test/
       - name: Create Issue
         if: failure() && github.event.pull_request == null && github.event_name == 'schedule'

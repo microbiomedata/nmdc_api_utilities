@@ -10,5 +10,5 @@ class DataObjectSearch(CollectionSearch):
     Class to interact with the NMDC API to get data object sets.
     """
 
-    def __init__(self, env="Production"):
+    def __init__(self, env="prod"):
         super().__init__(collection_name="data_object_set", env=env)
