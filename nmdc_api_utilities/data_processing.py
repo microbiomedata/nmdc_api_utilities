@@ -109,6 +109,11 @@ class DataProcessing:
         else:
             for attribute_name, attribute_value in attributes.items():
                 # escape special characters - mongo db filters require special characters to be double escaped ex. GC\\-MS \\(2009\\)
-                escaped_value = re.sub(r'([\W])', r'\\\\\1', attribute_value)
+                escaped_value = re.sub(r'([\W])', r'\\\1', attribute_value)
+                logging.debug(f"Escaped value: {escaped_value}")
+                logging.debug(f"Attribute name: {attribute_name}")
                 filter_dict[attribute_name] = {"$regex": escaped_value}
-        return self._string_mongo_list(filter_dict)
+                logging.debug(f"Filter dict: {filter_dict}")
+        clean = self._string_mongo_list(filter_dict)
+        logging.debug(f"Filter cleaned: {clean}")
+        return clean
