@@ -47,7 +47,7 @@ class TestCollection(unittest.TestCase):
     def test_check_ids_exist_multiple(self):
         # simple test to check if the check_ids_exist method returns a boolean
         ids = ["nmdc:bsm-11-002vgm56","nmdc:bsm-11-006pnx90","nmdc:bsm-11-00dkyf35","nmdc:bsm-11-00hrxp98","nmdc:bsm-11-00m15h97","nmdc:bsm-11-00yhef97","nmdc:bsm-11-011z7z70","nmdc:bsm-11-0169zs66","nmdc:bsm-11-01bbrr08","nmdc:bsm-11-01f6m423","nmdc:bsm-11-01g9wf51","nmdc:bsm-11-01jah904","nmdc:bsm-11-01teww33","nmdc:bsm-11-01vt2q72","nmdc:bsm-11-024rsd62","nmdc:bsm-11-02kcw433","nmdc:bsm-11-02n85875","nmdc:bsm-11-02v78297","nmdc:bsm-11-02x97z84","nmdc:bsm-11-034x5t48"]
-        collection = CollectionSearch("study_set",env=ENV)
+        collection = CollectionSearch("biosample_set",env=ENV)
         results = collection.check_ids_exist(ids)
         assert results == True
 

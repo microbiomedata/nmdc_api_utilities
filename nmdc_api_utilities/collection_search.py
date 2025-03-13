@@ -6,7 +6,7 @@ from nmdc_api_utilities.nmdc_search import NMDCSearch
 import logging
 import re
 logger = logging.getLogger(__name__)
-
+import json
 
 class CollectionSearch(NMDCSearch):
     """
@@ -35,7 +35,7 @@ class CollectionSearch(NMDCSearch):
                 The fields to return. Default is all fields.
         """
         logging.debug(f"get_records Filter: {filter}")
-        filter = urllib.parse.quote_plus(filter)
+        filter = urllib.parse.quote(filter)
         logging.debug(f"get_records encoded Filter: {filter}")
         url = f"{self.base_url}/nmdcschema/{self.collection_name}?filter={filter}&max_page_size={max_page_size}&projection={fields}"
         try:
@@ -196,11 +196,8 @@ class CollectionSearch(NMDCSearch):
         requests.RequestException
             If there's an error in making the API request.
         """
-        dp = DataProcessing()
-        import json
+        
         ids_test = list(set(ids))
-        # ready_list = dp._string_mongo_list(ids_test)
-        # filter = f'{{"id":{{"$in":{ready_list}}}}}'
         filter_dict = {
             "id": {"$in": ids_test}
         }
