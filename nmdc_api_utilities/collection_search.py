@@ -138,7 +138,7 @@ class CollectionSearch(NMDCSearch):
         else:
             # escape special characters - mongo db filters require special characters to be double escaped ex. GC\\-MS \\(2009\\)
             escaped_value = re.sub(r'([\W])', r'\\\\\1', attribute_value)
-            filter = f'{{"{attribute_name}":{{"$regex":"{escaped_value}"}}}}'
+            filter = f'{{"{attribute_name}":{{"$regex":"{escaped_value}","$options":"i"}}}}'
         logging.debug(f"get_record_by_attribute Filter: {filter}")
         results = self.get_records(filter, max_page_size, fields, all_pages)
         return results

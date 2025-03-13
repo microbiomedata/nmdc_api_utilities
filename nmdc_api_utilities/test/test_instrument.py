@@ -18,8 +18,21 @@ def test_get_by_non_standard_attribute():
             attribute_name="name", attribute_value=instrument_name
         )
     logging.debug(result)
-    assert len(result) > 0
+    assert len(result) == 1
     assert result[0]["name"] == instrument_name
+
+def test_get_by_non_standard_attribute_case_insensitive():
+    """
+    Test to get a record by a non-standard attribute. Using the wrong case.
+    """
+    is_client = InstrumentSearch(env=ENV)
+    instrument_name = "Agilent GC-Ms (2009)"
+    result = is_client.get_record_by_attribute(
+            attribute_name="name", attribute_value=instrument_name
+        )
+    logging.debug(result)
+    assert len(result) == 1
+    assert result[0]["id"] == "nmdc:inst-14-fas8ny90"
 
 def test_get_by_standard_attribute():
     """
