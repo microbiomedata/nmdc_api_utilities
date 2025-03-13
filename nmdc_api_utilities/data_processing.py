@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import pandas as pd
 import logging
-
+import re
 logger = logging.getLogger(__name__)
 
 
@@ -108,5 +108,7 @@ class DataProcessing:
                 filter_dict[attribute_name] = attribute_value
         else:
             for attribute_name, attribute_value in attributes.items():
-                filter_dict[attribute_name] = {"$regex": attribute_value}
+                # escape special characters - mongo db filters require special characters to be double escaped ex. GC\\-MS \\(2009\\)
+                escaped_value = re.sub(r'([\W])', r'\\\\\1', attribute_value)
+                filter_dict[attribute_name] = {"$regex": escaped_value}
         return self._string_mongo_list(filter_dict)
