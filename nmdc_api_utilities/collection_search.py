@@ -34,6 +34,7 @@ class CollectionSearch(NMDCSearch):
             fields: str
                 The fields to return. Default is all fields.
         """
+        logging.debug(f"get_records Filter: {filter}")
         filter = urllib.parse.quote_plus(filter)
         logging.debug(f"get_records encoded Filter: {filter}")
         url = f"{self.base_url}/nmdcschema/{self.collection_name}?filter={filter}&max_page_size={max_page_size}&projection={fields}"
@@ -195,25 +196,20 @@ class CollectionSearch(NMDCSearch):
         requests.RequestException
             If there's an error in making the API request.
         """
+        dp = DataProcessing()
+        import json
         ids_test = list(set(ids))
-        for id in ids_test:
-            filter_param = f'{{"id": "{id}"}}'
-            field = "id"
+        # ready_list = dp._string_mongo_list(ids_test)
+        # filter = f'{{"id":{{"$in":{ready_list}}}}}'
+        filter_dict = {
+            "id": {"$in": ids_test}
+        }
+        filter_json_string = json.dumps(filter_dict, separators=(',', ':'))
 
-            og_url = f"{self.base_url}/nmdcschema/{self.collection_name}?&filter={filter_param}&projection={field}"
-
-            try:
-                resp = requests.get(og_url)
-                resp.raise_for_status()  # Raises an HTTPError for bad responses
-                data = resp.json()
-                if len(data["resources"]) == 0:
-                    print(f"ID {id} not found")
-                    return False
-            except requests.RequestException as e:
-                raise requests.RequestException(f"Error making API request: {e}")
+        results = self.get_records(filter=filter_json_string, max_page_size=len(ids_test), fields="id")
+        if len(results) != len(ids_test):
+            raise ValueError(f"IDs not found in collection: {set(ids_test) - set([r['id'] for r in results])}")
         return True
-
-        
 
 
 if __name__ == "__main__":
