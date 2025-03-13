@@ -4,7 +4,7 @@ from nmdc_api_utilities.data_processing import DataProcessing
 import urllib.parse
 from nmdc_api_utilities.nmdc_search import NMDCSearch
 import logging
-
+import re
 logger = logging.getLogger(__name__)
 
 
@@ -35,6 +35,7 @@ class CollectionSearch(NMDCSearch):
                 The fields to return. Default is all fields.
         """
         filter = urllib.parse.quote_plus(filter)
+        logging.debug(f"get_records encoded Filter: {filter}")
         url = f"{self.base_url}/nmdcschema/{self.collection_name}?filter={filter}&max_page_size={max_page_size}&projection={fields}"
         try:
             response = requests.get(url)
@@ -131,10 +132,14 @@ class CollectionSearch(NMDCSearch):
                 This var is used to determine if the inputted attribute value is an exact match or a partial match. Default is False, meaning the user does not need to input an exact match.
                 Under the hood this is used to determine if the inputted attribute value should be wrapped in a regex expression.
         """
+
         if exact_match:
             filter = f'{{"{attribute_name}":"{attribute_value}"}}'
         else:
-            filter = f'{{"{attribute_name}":{{"$regex":"{attribute_value}"}}}}'
+            # escape special characters - mongo db filters require special characters to be double escaped ex. GC\\-MS \\(2009\\)
+            escaped_value = re.sub(r'([\W])', r'\\\\\1', attribute_value)
+            filter = f'{{"{attribute_name}":{{"$regex":"{escaped_value}","$options":"i"}}}}'
+        logging.debug(f"get_record_by_attribute Filter: {filter}")
         results = self.get_records(filter, max_page_size, fields, all_pages)
         return results
 

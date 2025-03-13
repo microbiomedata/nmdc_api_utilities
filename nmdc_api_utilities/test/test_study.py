@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from nmdc_api_utilities.study_search import StudySearch
-
+import logging
+logging.basicConfig(level=logging.DEBUG)
 
 def test_find_study_by_attribute():
     st = StudySearch()
@@ -8,7 +9,9 @@ def test_find_study_by_attribute():
         "name",
         "Lab enrichment of tropical soil microbial communities from Luquillo Experimental Forest, Puerto Rico",
     )
+    logging.debug("Test result:", stu)
     assert len(stu) > 0
+    assert stu[0]["name"] == "Lab enrichment of tropical soil microbial communities from Luquillo Experimental Forest, Puerto Rico"
 
 def test_find_study_by_id():
     st = StudySearch()
@@ -40,3 +43,5 @@ def test_get_studies():
     studies = st.get_records(max_page_size=100)
     print(studies)
     assert len(studies) > 32
+
+test_find_study_by_attribute()
