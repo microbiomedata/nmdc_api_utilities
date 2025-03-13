@@ -4,3 +4,4 @@ matplotlib
 oauthlib
 requests_oauthlib
 dotenv
+re
