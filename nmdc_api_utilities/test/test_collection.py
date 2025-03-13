@@ -50,6 +50,3 @@ class TestCollection(unittest.TestCase):
         collection = CollectionSearch("biosample_set",env=ENV)
         results = collection.check_ids_exist(ids)
         assert results == True
-
-test = TestCollection()
-test.test_check_ids_exist_multiple()

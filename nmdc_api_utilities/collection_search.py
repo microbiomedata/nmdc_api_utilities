@@ -175,7 +175,7 @@ class CollectionSearch(NMDCSearch):
         results = response.json()
         return results
     
-    def check_ids_exist(self, ids: list) -> bool:
+    def check_ids_exist(self, ids: list, chunk_size=100) -> bool:
         """
         Check if the IDs exist in the collection.
 
@@ -185,7 +185,8 @@ class CollectionSearch(NMDCSearch):
         ----------
         ids : list
             A list of IDs to check if they exist in the collection.
-
+        chunk_size : int
+            The number of IDs to check in each query. Default is 100.
         Returns
         -------
         bool
@@ -196,16 +197,19 @@ class CollectionSearch(NMDCSearch):
         requests.RequestException
             If there's an error in making the API request.
         """
-        
+        # chunk the input list of IDs into smaller lists of 100 IDs each
+        # to avoid the maximum URL length limit
         ids_test = list(set(ids))
-        filter_dict = {
-            "id": {"$in": ids_test}
-        }
-        filter_json_string = json.dumps(filter_dict, separators=(',', ':'))
+        for i in range(0, len(ids_test), chunk_size):
+            chunk = ids[i:i + chunk_size]
+            filter_dict = {
+            "id": {"$in": chunk}
+            }
+            filter_json_string = json.dumps(filter_dict, separators=(',', ':'))
 
-        results = self.get_records(filter=filter_json_string, max_page_size=len(ids_test), fields="id")
-        if len(results) != len(ids_test):
-            raise ValueError(f"IDs not found in collection: {set(ids_test) - set([r['id'] for r in results])}")
+            results = self.get_records(filter=filter_json_string, max_page_size=len(chunk), fields="id")
+            if len(results) != len(chunk):
+                raise ValueError(f"IDs not found in collection: {set(chunk) - set([r['id'] for r in results])}")
         return True
 
 
