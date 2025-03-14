@@ -6,7 +6,7 @@ from nmdc_api_utilities.nmdc_search import NMDCSearch
 import logging
 import re
 logger = logging.getLogger(__name__)
-
+import json
 
 class CollectionSearch(NMDCSearch):
     """
@@ -34,7 +34,8 @@ class CollectionSearch(NMDCSearch):
             fields: str
                 The fields to return. Default is all fields.
         """
-        filter = urllib.parse.quote_plus(filter)
+        logging.debug(f"get_records Filter: {filter}")
+        filter = urllib.parse.quote(filter)
         logging.debug(f"get_records encoded Filter: {filter}")
         url = f"{self.base_url}/nmdcschema/{self.collection_name}?filter={filter}&max_page_size={max_page_size}&projection={fields}"
         try:
@@ -174,7 +175,7 @@ class CollectionSearch(NMDCSearch):
         results = response.json()
         return results
     
-    def check_ids_exist(self, ids: list) -> bool:
+    def check_ids_exist(self, ids: list, chunk_size=100) -> bool:
         """
         Check if the IDs exist in the collection.
 
@@ -184,7 +185,8 @@ class CollectionSearch(NMDCSearch):
         ----------
         ids : list
             A list of IDs to check if they exist in the collection.
-
+        chunk_size : int
+            The number of IDs to check in each query. Default is 100.
         Returns
         -------
         bool
@@ -195,25 +197,20 @@ class CollectionSearch(NMDCSearch):
         requests.RequestException
             If there's an error in making the API request.
         """
+        # chunk the input list of IDs into smaller lists of 100 IDs each
+        # to avoid the maximum URL length limit
         ids_test = list(set(ids))
-        for id in ids_test:
-            filter_param = f'{{"id": "{id}"}}'
-            field = "id"
+        for i in range(0, len(ids_test), chunk_size):
+            chunk = ids[i:i + chunk_size]
+            filter_dict = {
+            "id": {"$in": chunk}
+            }
+            filter_json_string = json.dumps(filter_dict, separators=(',', ':'))
 
-            og_url = f"{self.base_url}/nmdcschema/{self.collection_name}?&filter={filter_param}&projection={field}"
-
-            try:
-                resp = requests.get(og_url)
-                resp.raise_for_status()  # Raises an HTTPError for bad responses
-                data = resp.json()
-                if len(data["resources"]) == 0:
-                    print(f"ID {id} not found")
-                    return False
-            except requests.RequestException as e:
-                raise requests.RequestException(f"Error making API request: {e}")
+            results = self.get_records(filter=filter_json_string, max_page_size=len(chunk), fields="id")
+            if len(results) != len(chunk):
+                raise ValueError(f"IDs not found in collection: {set(chunk) - set([r['id'] for r in results])}")
         return True
-
-        
 
 
 if __name__ == "__main__":
