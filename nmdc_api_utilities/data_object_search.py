@@ -14,11 +14,11 @@ class DataObjectSearch(CollectionSearch):
     def __init__(self, env="prod"):
         super().__init__(collection_name="data_object_set", env=env)
 
-    def get_data_objects_for_studies(self, study_id: str):
+    def get_data_objects_for_studies(self, study_id: str, max_page_size: int = 100):
         """
         Get data objects by study id.
         """
-        url = f"{self.base_url}/data_objects/study/{study_id}"
+        url = f"{self.base_url}/data_objects/study/{study_id}?max_page_size={max_page_size}"
         try:
             response = requests.get(url)
             response.raise_for_status()
