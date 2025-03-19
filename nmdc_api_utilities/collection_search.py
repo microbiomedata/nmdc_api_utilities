@@ -175,7 +175,7 @@ class CollectionSearch(NMDCSearch):
         results = response.json()
         return results
     
-    def check_ids_exist(self, ids: list, chunk_size=100) -> bool:
+    def check_ids_exist(self, ids: list, chunk_size=100, return_missing_ids=False) -> bool:
         """
         Check if the IDs exist in the collection.
 
@@ -187,6 +187,8 @@ class CollectionSearch(NMDCSearch):
             A list of IDs to check if they exist in the collection.
         chunk_size : int
             The number of IDs to check in each query. Default is 100.
+        return_missing_ids : bool
+            If True, and if ids are missing in the collection, return the list of IDs that do not exist in the collection. Default is False.
         Returns
         -------
         bool
@@ -201,16 +203,32 @@ class CollectionSearch(NMDCSearch):
         # to avoid the maximum URL length limit
         ids_test = list(set(ids))
         for i in range(0, len(ids_test), chunk_size):
-            chunk = ids[i:i + chunk_size]
+            chunk = ids_test[i:i + chunk_size]
             filter_dict = {
             "id": {"$in": chunk}
             }
             filter_json_string = json.dumps(filter_dict, separators=(',', ':'))
 
             results = self.get_records(filter=filter_json_string, max_page_size=len(chunk), fields="id")
-            if len(results) != len(chunk):
-                raise ValueError(f"IDs not found in collection: {set(chunk) - set([r['id'] for r in results])}")
+            if len(results) != len(chunk) and return_missing_ids:
+                missing_ids = list(set(chunk) - set([record["id"] for record in results]))
+                return False, missing_ids
+            elif len(results) != len(chunk) and not return_missing_ids:
+                return False
         return True
+    
+    def get_batch_records(self, ids: list, chunk_size=100, fields="") -> list:
+        """
+        Get a batch of records from the collection by IDs.
+        """
+        results = []
+        for i in range(0, len(ids), chunk_size):
+            chunk = ids[i:i + chunk_size]
+            filter = {"id": {"$in": ids}}
+            filter = json.dumps(filter, separators=(',', ':'))
+            res = self.get_records(filter=filter, max_page_size=len(chunk), fields=fields)
+            results += res
+        return results
 
 
 if __name__ == "__main__":
