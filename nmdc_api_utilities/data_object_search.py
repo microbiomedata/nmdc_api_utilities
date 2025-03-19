@@ -17,6 +17,14 @@ class DataObjectSearch(CollectionSearch):
     def get_data_objects_for_studies(self, study_id: str, max_page_size: int = 100):
         """
         Get data objects by study id.
+        params:
+            study_id: str
+                The study id to search for.
+            max_page_size: int
+                The maximum number of items to return per page. Default is 100
+        returns:
+            results:
+                The results of the query.
         """
         url = f"{self.base_url}/data_objects/study/{study_id}?max_page_size={max_page_size}"
         try:
