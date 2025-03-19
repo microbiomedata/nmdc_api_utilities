@@ -165,3 +165,4 @@ cython_debug/
 
 # Sphinx documentation
 src/nmdc_api_utilities/docs/_build/
+package.zsh
