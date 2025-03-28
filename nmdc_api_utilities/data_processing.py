@@ -118,7 +118,7 @@ class DataProcessing:
         logging.debug(f"Filter cleaned: {clean}")
         return clean
     
-    def extract_field(api_results:list, field_name:str) -> list:
+    def extract_field(self, api_results:list, field_name:str) -> list:
         """
         This function is used to extract a field from the API results.
         params:
