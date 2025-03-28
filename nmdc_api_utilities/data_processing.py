@@ -117,3 +117,23 @@ class DataProcessing:
         clean = self._string_mongo_list(filter_dict)
         logging.debug(f"Filter cleaned: {clean}")
         return clean
+    
+    def extract_field(api_results:list, field_name:str) -> list:
+        """
+        This function is used to extract a field from the API results.
+        params:
+            api_results: list
+                A list of dictionaries.
+            field_name: str
+                The name of the field to extract.
+        returns:
+            list: A list of IDs.
+        """
+        field_list = []
+        for item in api_results:
+            if type(item[field_name]) == str:
+                field_list.append(item[field_name])
+            elif type(item[field_name]) == list:
+                for another_item in item[field_name]:
+                    field_list.append(another_item)
+        return field_list
