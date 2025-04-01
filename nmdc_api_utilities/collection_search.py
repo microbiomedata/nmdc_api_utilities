@@ -230,13 +230,14 @@ class CollectionSearch(NMDCSearch):
         returns:
             list: A list of records.
         """
-        results = []
         dp = DataProcessing()
-        for i in range(0, len(id_list), chunk_size):
-            chunk = id_list[i:i + chunk_size]
-            filter_dict = {"id": {"$in": chunk}}
-            filter_json_string = json.dumps(filter_dict, separators=(',', ':'))
-            res = self.get_records(filter=filter_json_string, max_page_size=len(chunk), fields=fields, all_pages=True)
+        results = []
+        id_list = list(set(id_list))
+        chunks = dp.split_list(input_list=id_list, chunk_size=chunk_size)
+        for chunk in chunks:
+            chunk = dp._string_mongo_list(data=chunk)
+            filter = f'{{"has_output": {{"$in": {chunk}}}}}'
+            res = self.get_records(filter=filter, max_page_size=len(chunk), fields=fields, all_pages=True)
             results += res
         return results
 

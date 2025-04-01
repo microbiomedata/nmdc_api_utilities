@@ -15,7 +15,7 @@ def nom_notebook_test():
 
     # convert to df
     processed_nom_df = dp_client.convert_to_df(processed_nom)
-    processed_nom_df
+    
     # since we are querying the WorkflowExecution collection, we need to create an instance of it
     we_client = WorkflowExecutionSearch()
     # use utility function to get a list of the ids from processed_nom
@@ -31,6 +31,4 @@ def nom_notebook_test():
 
     # convert to data frame
     analysis_dataobj_df = dp_client.convert_to_df(analysis_dataobj)
-    analysis_dataobj_df
-
-nom_notebook_test()
+    assert analysis_dataobj_df.shape[0] > 2000 

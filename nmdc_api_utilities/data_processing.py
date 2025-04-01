@@ -24,7 +24,22 @@ class DataProcessing:
                 A list of dictionaries.
         """
         return pd.DataFrame(data)
-
+    def split_list(self, input_list:list, chunk_size:int=100)->list:
+        """
+        Split a list into chunks of a specified size.
+        params:
+            input_list: list
+                The list to split.
+            chunk_size: int
+                The size of each chunk.
+        returns:
+            list: A list of lists.
+        """
+        result = []
+        for i in range(0, len(input_list), chunk_size):
+            result.append(input_list[i:i + chunk_size])
+            
+        return result
     def rename_columns(self, df: pd.DataFrame, new_col_names: list) -> pd.DataFrame:
         """
         Rename columns in a pandas dataframe.
