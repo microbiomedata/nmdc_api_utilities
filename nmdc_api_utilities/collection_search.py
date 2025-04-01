@@ -217,12 +217,14 @@ class CollectionSearch(NMDCSearch):
                 return False
         return True
     
-    def get_batch_records(self, id_list: list, chunk_size=100, fields="") -> list:
+    def get_batch_records(self, id_list: list, search_field:str, chunk_size=100, fields="") -> list:
         """
         Get a batch of records from the collection by IDs.
         params:
             id_list: list
                 A list of IDs to get records for.
+            search_field: str
+                The field to search for. This must match a field from the NMDC Schema. 
             chunk_size: int
                 The number of IDs to get in each query. Default is 100.
             fields: str
@@ -236,7 +238,7 @@ class CollectionSearch(NMDCSearch):
         chunks = dp.split_list(input_list=id_list, chunk_size=chunk_size)
         for chunk in chunks:
             chunk = dp._string_mongo_list(data=chunk)
-            filter = f'{{"has_output": {{"$in": {chunk}}}}}'
+            filter = f'{{"{search_field}": {{"$in": {chunk}}}}}'
             res = self.get_records(filter=filter, max_page_size=len(chunk), fields=fields, all_pages=True)
             results += res
         return results
