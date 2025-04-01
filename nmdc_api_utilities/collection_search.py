@@ -219,7 +219,8 @@ class CollectionSearch(NMDCSearch):
     
     def get_batch_records(self, id_list: list, search_field:str, chunk_size=100, fields="") -> list:
         """
-        Get a batch of records from the collection by IDs.
+        Get a batch of records from the collection by a list of input IDs. This method is used to identify records that include any of the IDs from the input list, matching the search_field.
+        This is using the MongoDB filter keyword $in to identify other records that include the input IDs.
         params:
             id_list: list
                 A list of IDs to get records for.
