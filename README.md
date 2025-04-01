@@ -9,8 +9,9 @@ from nmdc_api_utilities.biosample_search import BiosampleSearch
 # Create an instance of the module
 biosample_client = BiosampleSearch()
 # Use the variable to call the available functions
-biosample_client.get_collection_by_id("biosample", "id")
+biosample_client.get_record_by_id(collection_id="nmdc:bsm-13-amrnys72")
 ```
+For real use case examples, see the [nmdc_notebooks](https://github.com/microbiomedata/nmdc_notebooks) repository. Each of the Python Jupyter notebooks use this package. 
 
 ## Logging - Debug Mode
 To see debugging information, include these two lines where ever you are running the functions:
@@ -18,7 +19,7 @@ To see debugging information, include these two lines where ever you are running
 import logging
 logging.basicConfig(level=logging.DEBUG)
 # when this is run, you will see debug information in the console.
-biosample_client.get_collection_by_id("biosample", "id")
+biosample_client.get_record_by_id(collection_id="nmdc:bsm-13-amrnys72")
 ```
 
 # Installation
