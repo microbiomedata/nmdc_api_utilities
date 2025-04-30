@@ -6,8 +6,10 @@ import logging
 import unittest
 from dotenv import load_dotenv
 import os
+
 load_dotenv()
 ENV = os.getenv("ENV")
+
 
 class TestFunctionalAnnotation(unittest.TestCase):
     def test_func_ann_id(self):
@@ -25,4 +27,3 @@ class TestFunctionalAnnotation(unittest.TestCase):
         fannagg = FunctionalAnnotationAggSearch(env=ENV)
         results = fannagg.get_records(max_page_size=10)
         self.assertEqual(len(results), 10)
-    

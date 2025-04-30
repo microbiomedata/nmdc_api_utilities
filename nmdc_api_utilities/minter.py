@@ -1,32 +1,46 @@
+# -*- coding: utf-8 -*-
 from nmdc_api_utilities.nmdc_search import NMDCSearch
 import logging
 import requests
 import oauthlib
 import requests_oauthlib
 import json
+
 logger = logging.getLogger(__name__)
+
 
 class Minter(NMDCSearch):
     """
     Class to interact with the NMDC API to mint new identifiers.
     """
+
     def __init__(self, env="prod"):
         super().__init__(env=env)
-    def mint(self, nmdc_type:str, client_id: str, client_secret: str) -> str:
+
+    def mint(self, nmdc_type: str, client_id: str, client_secret: str) -> str:
         """
         Mint a new identifier for a collection.
-        params:
-            nmdc_type : str
-                The type of NMDC ID to mint (e.g., 'nmdc:MassSpectrometry',
-                'nmdc:DataObject').
-            client_id : str
-                The client ID for the NMDC API.
-            client_secret : str
-                The client secret for the NMDC API.
-        returns:
-            str - the new identifier.
-        Secrurity Note:
-            Your client_id and client_secret should be stored in a secure location. We recommend using environment variables.
+        Parameters
+        ----------
+        nmdc_type : str
+            The type of NMDC ID to mint (e.g., 'nmdc:MassSpectrometry',
+            'nmdc:DataObject').
+        client_id : str
+            The client ID for the NMDC API.
+        client_secret : str
+            The client secret for the NMDC API.
+        Returns
+        -------
+        str
+            The minted identifier.
+        Raises
+        ------
+        RuntimeError
+            If the API request fails.
+        Notes
+        -----
+        Security Warning: Your client_id and client_secret should be stored in a secure location.
+            We recommend using environment variables.
             Do not hard code these values in your code.
         """
         # get the token

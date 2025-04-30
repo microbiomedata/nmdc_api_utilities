@@ -1,85 +1,85 @@
 {
-    "biosample_set": [
+  "@type": "Database",
+  "biosample_set": [
     {
-      "id": "nmdc:bsm-11-ym07nd27",
-      "type": "nmdc:Biosample",
-      "name": "Biosample Row 1",
       "associated_studies": [
         "nmdc:sty-11-8ws97026",
         "nmdc:sty-11-aygzgv51"
       ],
-      "env_broad_scale": {
-        "type": "nmdc:ControlledIdentifiedTermValue",
-        "has_raw_value": "ENVO:01000174",
-        "term": {
-          "id": "ENVO:01000174",
-          "type": "nmdc:OntologyClass",
-          "name": "forest biome"
-        }
-      },
-      "env_local_scale": {
-        "type": "nmdc:ControlledIdentifiedTermValue",
-        "has_raw_value": "ENVO:03600011",
-        "term": {
-          "id": "ENVO:03600011",
-          "type": "nmdc:OntologyClass",
-          "name": "mineral horizon"
-        }
-      },
-      "env_medium": {
-        "type": "nmdc:ControlledIdentifiedTermValue",
-        "has_raw_value": "ENVO:00002261",
-        "term": {
-          "id": "ENVO:00002261",
-          "type": "nmdc:OntologyClass",
-          "name": "forest soil"
-        }
-      },
       "ecosystem": "Environmental",
       "ecosystem_category": "Terrestrial",
       "ecosystem_subtype": "Temperate forest",
-      "ecosystem_type": "Soil"
+      "ecosystem_type": "Soil",
+      "env_broad_scale": {
+        "has_raw_value": "ENVO:01000174",
+        "term": {
+          "id": "ENVO:01000174",
+          "name": "forest biome",
+          "type": "nmdc:OntologyClass"
+        },
+        "type": "nmdc:ControlledIdentifiedTermValue"
+      },
+      "env_local_scale": {
+        "has_raw_value": "ENVO:03600011",
+        "term": {
+          "id": "ENVO:03600011",
+          "name": "mineral horizon",
+          "type": "nmdc:OntologyClass"
+        },
+        "type": "nmdc:ControlledIdentifiedTermValue"
+      },
+      "env_medium": {
+        "has_raw_value": "ENVO:00002261",
+        "term": {
+          "id": "ENVO:00002261",
+          "name": "forest soil",
+          "type": "nmdc:OntologyClass"
+        },
+        "type": "nmdc:ControlledIdentifiedTermValue"
+      },
+      "id": "nmdc:bsm-11-ym07nd27",
+      "name": "Biosample Row 1",
+      "type": "nmdc:Biosample"
     },
     {
-      "id": "nmdc:bsm-11-kb88z442",
-      "type": "nmdc:Biosample",
-      "name": "Biosample Row 2",
       "associated_studies": [
         "nmdc:sty-11-8ws97026",
         "nmdc:sty-11-aygzgv51"
       ],
-      "env_broad_scale": {
-        "type": "nmdc:ControlledIdentifiedTermValue",
-        "has_raw_value": "ENVO:01000174",
-        "term": {
-          "id": "ENVO:01000174",
-          "type": "nmdc:OntologyClass",
-          "name": "forest biome"
-        }
-      },
-      "env_local_scale": {
-        "type": "nmdc:ControlledIdentifiedTermValue",
-        "has_raw_value": "ENVO:03600011",
-        "term": {
-          "id": "ENVO:03600011",
-          "type": "nmdc:OntologyClass",
-          "name": "mineral horizon"
-        }
-      },
-      "env_medium": {
-        "type": "nmdc:ControlledIdentifiedTermValue",
-        "has_raw_value": "ENVO:00002261",
-        "term": {
-          "id": "ENVO:00002261",
-          "type": "nmdc:OntologyClass",
-          "name": "forest soil"
-        }
-      },
       "ecosystem": "Environmental",
       "ecosystem_category": "Terrestrial",
       "ecosystem_subtype": "Temperate forest",
-      "ecosystem_type": "Soil"
+      "ecosystem_type": "Soil",
+      "env_broad_scale": {
+        "has_raw_value": "ENVO:01000174",
+        "term": {
+          "id": "ENVO:01000174",
+          "name": "forest biome",
+          "type": "nmdc:OntologyClass"
+        },
+        "type": "nmdc:ControlledIdentifiedTermValue"
+      },
+      "env_local_scale": {
+        "has_raw_value": "ENVO:03600011",
+        "term": {
+          "id": "ENVO:03600011",
+          "name": "mineral horizon",
+          "type": "nmdc:OntologyClass"
+        },
+        "type": "nmdc:ControlledIdentifiedTermValue"
+      },
+      "env_medium": {
+        "has_raw_value": "ENVO:00002261",
+        "term": {
+          "id": "ENVO:00002261",
+          "name": "forest soil",
+          "type": "nmdc:OntologyClass"
+        },
+        "type": "nmdc:ControlledIdentifiedTermValue"
+      },
+      "id": "nmdc:bsm-11-kb88z442",
+      "name": "Biosample Row 2",
+      "type": "nmdc:Biosample"
     }
-  ],
-  "@type": "Database"
+  ]
 }

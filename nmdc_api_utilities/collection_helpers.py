@@ -15,13 +15,24 @@ class CollectionHelpers(NMDCSearch):
     def __init__(self, env="prod"):
         super().__init__(env=env)
 
-    def get_record_name_from_id(self, doc_id: str):
+    def get_record_name_from_id(self, doc_id: str) -> str:
         """
         Used when you have an id but not the collection name.
         Determine the schema class by which the id belongs to.
-        params:
-            doc_id: str
-                The id of the document.
+
+        Parameters
+        ----------
+        doc_id: str
+            The id of the document.
+
+        Returns
+        -------
+        str
+            The collection name of the document.
+        Raises
+        ------
+        RuntimeError
+            If the API request fails.
         """
         url = f"{self.base_url}/nmdcschema/ids/{doc_id}/collection-name"
         try:

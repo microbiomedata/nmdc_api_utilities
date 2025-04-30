@@ -54,29 +54,38 @@ class LatLongFilters(CollectionSearch):
         self,
         comparison: str,
         longitude: float,
-        page_size=25,
-        fields="",
-        all_pages=False,
-    ):
+        page_size: int = 25,
+        fields: str = "",
+        all_pages: bool = False,
+    ) -> list[dict]:
         """
         Get a record from the NMDC API by longitude comparison.
-        params:
-            comparison: str
-                The comparison to use to query the record. MUST BE ONE OF THE FOLLOWING:
-                    eq    - Matches values that are equal to the given value.
-                    gt    - Matches if values are greater than the given value.
-                    lt    - Matches if values are less than the given value.
-                    gte    - Matches if values are greater or equal to the given value.
-                    lte - Matches if values are less or equal to the given value.
-            longitude: float
-                The longitude of the record to query.
-            page_size: int
-                The number of results to return per page. Default is 25.
-            fields: str
-                The fields to return. Default is all fields.
-                Example: "id,name,description,alternative_identifiers,file_size_bytes,md5_checksum,data_object_type,url,type"
-            all_pages: bool
-                True to return all pages. False to return the first page. Default is False.
+        Parameters
+        ----------
+        comparison: str
+            The comparison to use to query the record. MUST BE ONE OF THE FOLLOWING:
+                eq    - Matches values that are equal to the given value.
+                gt    - Matches if values are greater than the given value.
+                lt    - Matches if values are less than the given value.
+                gte    - Matches if values are greater or equal to the given value.
+                lte - Matches if values are less or equal to the given value.
+        longitude: float
+            The longitude of the record to query.
+        page_size: int
+            The number of results to return per page. Default is 25.
+        fields: str
+            The fields to return. Default is all fields.
+            Example: "id,name,description,alternative_identifiers,file_size_bytes,md5_checksum,data_object_type,url,type"
+        all_pages: bool
+            True to return all pages. False to return the first page. Default is False.
+        Returns
+        -------
+        list[dict]
+            A list of records.
+        Raises
+        ------
+        ValueError
+            If the comparison is not one of the allowed comparisons.
         """
         allowed_comparisons = ["eq", "gt", "lt", "gte", "lte"]
         if comparison not in allowed_comparisons:
@@ -96,38 +105,47 @@ class LatLongFilters(CollectionSearch):
         long_comparison: str,
         latitude: float,
         longitude: float,
-        page_size=25,
-        fields="",
-        all_pages=False,
-    ):
+        page_size: int = 25,
+        fields: str = "",
+        all_pages: bool = False,
+    ) -> list[dict]:
         """
         Get a record from the NMDC API by latitude and longitude comparison.
-        params:
-            lat_comparison: str
-                The comparison to use to query the record for latitude. MUST BE ONE OF THE FOLLOWING:
-                    eq    - Matches values that are equal to the given value.
-                    gt    - Matches if values are greater than the given value.
-                    lt    - Matches if values are less than the given value.
-                    gte    - Matches if values are greater or equal to the given value.
-                    lte - Matches if values are less or equal to the given value.
-            long_comparison: str
-                The comparison to use to query the record for longitude. MUST BE ONE OF THE FOLLOWING:
-                    eq    - Matches values that are equal to the given value.
-                    gt    - Matches if values are greater than the given value.
-                    lt    - Matches if values are less than the given value.
-                    gte    - Matches if values are greater or equal to the given value.
-                    lte - Matches if values are less or equal to the given value.
-            latitude: float
-                The latitude of the record to query.
-            longitude: float
-                The longitude of the record to query.
-            page_size: int
-                The number of results to return per page. Default is 25.
-            fields: str
-                The fields to return. Default is all fields.
-                Example: "id,name,description,alternative_identifiers,file_size_bytes,md5_checksum,data_object_type,url,type"
-            all_pages: bool
-                True to return all pages. False to return the first page. Default is False.
+        Parameters
+        ----------
+        lat_comparison: str
+            The comparison to use to query the record for latitude. MUST BE ONE OF THE FOLLOWING:
+                eq    - Matches values that are equal to the given value.
+                gt    - Matches if values are greater than the given value.
+                lt    - Matches if values are less than the given value.
+                gte    - Matches if values are greater or equal to the given value.
+                lte - Matches if values are less or equal to the given value.
+        long_comparison: str
+            The comparison to use to query the record for longitude. MUST BE ONE OF THE FOLLOWING:
+                eq    - Matches values that are equal to the given value.
+                gt    - Matches if values are greater than the given value.
+                lt    - Matches if values are less than the given value.
+                gte    - Matches if values are greater or equal to the given value.
+                lte - Matches if values are less or equal to the given value.
+        latitude: float
+            The latitude of the record to query.
+        longitude: float
+            The longitude of the record to query.
+        page_size: int
+            The number of results to return per page. Default is 25.
+        fields: str
+            The fields to return. Default is all fields.
+            Example: "id,name,description,alternative_identifiers,file_size_bytes,md5_checksum,data_object_type,url,type"
+        all_pages: bool
+            True to return all pages. False to return the first page. Default is False.
+        Returns
+        -------
+        list[dict]
+            A list of records.
+        Raises
+        ------
+        ValueError
+            If the comparison is not one of the allowed comparisons.
         """
         allowed_comparisons = ["eq", "gt", "lt", "gte", "lte"]
         if lat_comparison not in allowed_comparisons:

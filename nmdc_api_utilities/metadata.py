@@ -5,14 +5,17 @@ import logging
 import json
 
 logger = logging.getLogger(__name__)
+
+
 class Metadata(NMDCSearch):
     """
-    Class to interact with the NMDC API metadata. 
+    Class to interact with the NMDC API metadata.
     """
+
     def __init__(self, env="prod"):
         super().__init__(env=env)
 
-    def validate_json(self, json_path) -> None:
+    def validate_json(self, json_path: str) -> None:
         """
         Validates a json file using the NMDC json validate endpoint.
 

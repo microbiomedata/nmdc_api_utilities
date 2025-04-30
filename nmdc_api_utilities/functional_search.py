@@ -9,33 +9,40 @@ class FunctionalSearch:
     """
 
     def __init__(self, env="prod"):
-        self.collectioninstance = CollectionSearch(collection_name="functional_annotation_agg", env=env)
+        self.collectioninstance = CollectionSearch(
+            collection_name="functional_annotation_agg", env=env
+        )
 
     def get_functional_annotations(
         self,
         annotation: str,
         annotation_type: str,
-        page_size=25,
-        fields="",
-        all_pages=False,
-    ):
+        page_size: int = 25,
+        fields: str = "",
+        all_pages: bool = False,
+    ) -> list[dict]:
         """
         Get a record from the NMDC API by id. ID types can be KEGG, COG, or PFAM.
-        params:
-            annotation: str
-                The data base id to query the function annotations.
-            annotation_type:
-                The type of id to query. MUST be one of the following:
-                    KEGG
-                    COG
-                    PFAM
-            page_size: int
-                The number of results to return per page. Default is 25.
-            fields: str
-                The fields to return. Default is all fields.
-                Example: "id,name"
-            all_pages: bool
-                True to return all pages. False to return the first page. Default is False.
+        Parameters
+        -----------
+        annotation: str
+            The data base id to query the function annotations.
+        annotation_type:
+            The type of id to query. MUST be one of the following:
+                KEGG
+                COG
+                PFAM
+        page_size: int
+            The number of results to return per page. Default is 25.
+        fields: str
+            The fields to return. Default is all fields.
+            Example: "id,name"
+        all_pages: bool
+            True to return all pages. False to return the first page. Default is False.
+        Returns
+        -------
+        list[dict]
+            A list of functional annotations.
         """
         if annotation_type not in ["KEGG", "COG", "PFAM"]:
             raise ValueError("id_type must be one of the following: KEGG, COG, PFAM")
@@ -59,15 +66,22 @@ class FunctionalSearch:
         max_page_size: int = 100,
         fields: str = "",
         all_pages: bool = False,
-    ):
+    ) -> list[dict]:
         """
         Get a collection of data from the NMDC API. Generic function to get a collection of data from the NMDC API. Can provide a specific filter if desired.
-        params:
-            filter: str
-                The filter to apply to the query. Default is an empty string.
-            max_page_size: int
-                The maximum number of items to return per page. Default is 100.
-            fields: str
-                The fields to return. Default is all fields.
+        Parameters
+        ----------
+        filter: str
+            The filter to apply to the query. Default is an empty string.
+        max_page_size: int
+            The maximum number of items to return per page. Default is 100.
+        fields: str
+            The fields to return. Default is all fields.
+        Returns
+        -------
+        list[dict]
+            A list of records.
         """
-        return self.collectioninstance.get_records(filter, max_page_size, fields, all_pages)
+        return self.collectioninstance.get_records(
+            filter, max_page_size, fields, all_pages
+        )

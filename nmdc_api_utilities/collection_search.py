@@ -5,8 +5,10 @@ import urllib.parse
 from nmdc_api_utilities.nmdc_search import NMDCSearch
 import logging
 import re
+
 logger = logging.getLogger(__name__)
 import json
+
 
 class CollectionSearch(NMDCSearch):
     """
@@ -23,16 +25,27 @@ class CollectionSearch(NMDCSearch):
         max_page_size: int = 100,
         fields: str = "",
         all_pages: bool = False,
-    ):
+    ) -> list[dict]:
         """
         Get a collection of data from the NMDC API. Generic function to get a collection of data from the NMDC API. Can provide a specific filter if desired.
-        params:
-            filter: str
-                The filter to apply to the query. Default is an empty string.
-            max_page_size: int
-                The maximum number of items to return per page. Default is 100.
-            fields: str
-                The fields to return. Default is all fields.
+        Parameters
+        ----------
+        filter: str
+            The filter to apply to the query. Default is an empty string.
+        max_page_size: int
+            The maximum number of items to return per page. Default is 100.
+        fields: str
+            The fields to return. Default is all fields.
+        all_pages: bool
+            True to return all pages. False to return the first page. Default is False.
+        Returns
+        -------
+        list[dict]
+            A list of dictionaries containing the records.
+        Raises
+        ------
+        RuntimeError
+            If the API request fails.
         """
         logging.debug(f"get_records Filter: {filter}")
         filter = urllib.parse.quote(filter)
@@ -65,6 +78,28 @@ class CollectionSearch(NMDCSearch):
         max_page_size: int = 100,
         fields: str = "",
     ):
+        """
+        Get all pages of data from the NMDC API. This is a helper function to get all pages of data from the NMDC API.
+        Parameters
+        ----------
+        response: requests.models.Response
+            The response object from the API request.
+        filter: str
+            The filter to apply to the query. Default is an empty string.
+        max_page_size: int
+            The maximum number of items to return per page. Default is 100.
+        fields: str
+            The fields to return. Default is all fields.
+        Returns
+        -------
+        list[dict]
+            A list of dictionaries containing the records.
+        Raises
+        ------
+        RuntimeError
+            If the API request fails.
+        """
+
         results = response.json()
 
         while True:
@@ -87,59 +122,73 @@ class CollectionSearch(NMDCSearch):
         return results
 
     def get_record_by_filter(
-        self, filter: str, max_page_size=25, fields="", all_pages=False
-    ):
+        self, filter: str, max_page_size=25, fields: str = "", all_pages=False
+    ) -> list[dict]:
         """
         Get a record from the NMDC API by its id.
-        params:
-            filter: str
-                The filter to use to query the collection. Must be in MonogDB query format.
-                    Resources found here - https://www.mongodb.com/docs/manual/reference/method/db.collection.find/#std-label-method-find-query
-                Example: {"name":{"my record name"}}
-            max_page_size: int
-                The number of results to return per page. Default is 25.
-            fields: str
-                The fields to return. Default is all fields.
-                Example: "id,name,description,alternative_identifiers,file_size_bytes,md5_checksum,data_object_type,url,type"
-            all_pages: bool
-                True to return all pages. False to return the first page. Default is False.
+        Parameters
+        ----------
+        filter: str
+            The filter to use to query the collection. Must be in MonogDB query format.
+                Resources found here - https://www.mongodb.com/docs/manual/reference/method/db.collection.find/#std-label-method-find-query
+            Example: {"name":{"my record name"}}
+        max_page_size: int
+            The number of results to return per page. Default is 25.
+        fields: str
+            The fields to return. Default is all fields.
+            Example: "id,name,description,alternative_identifiers,file_size_bytes,md5_checksum,data_object_type,url,type"
+        all_pages: bool
+            True to return all pages. False to return the first page. Default is False.
+        Returns
+        -------
+        list[dict]
+            A list of dictionaries containing the records.
+        Raises
+        ------
         """
         results = self.get_records(filter, max_page_size, fields, all_pages)
         return results
 
     def get_record_by_attribute(
         self,
-        attribute_name,
-        attribute_value,
-        max_page_size=25,
-        fields="",
-        all_pages=False,
-        exact_match=False,
+        attribute_name: str,
+        attribute_value: str,
+        max_page_size: int = 25,
+        fields: str = "",
+        all_pages: bool = False,
+        exact_match: bool = False,
     ):
         """
         Get a record from the NMDC API by its name. Records can be filtered based on their attributes found https://microbiomedata.github.io/nmdc-schema/.
-        params:
-            attribute_name: str
-                The name of the attribute to filter by.
-            attribute_value: str
-                The value of the attribute to filter by.
-            max_page_size: int
-                The number of results to return per page. Default is 25.
-            fields: str
-                The fields to return. Default is all fields.
-            all_pages: bool
-                True to return all pages. False to return the first page. Default is False.
-            exact_match: bool
-                This var is used to determine if the inputted attribute value is an exact match or a partial match. Default is False, meaning the user does not need to input an exact match.
-                Under the hood this is used to determine if the inputted attribute value should be wrapped in a regex expression.
+        Parameters
+        ----------
+        attribute_name: str
+            The name of the attribute to filter by.
+        attribute_value: str
+            The value of the attribute to filter by.
+        max_page_size: int
+            The number of results to return per page. Default is 25.
+        fields: str
+            The fields to return. Default is all fields.
+        all_pages: bool
+            True to return all pages. False to return the first page. Default is False.
+        exact_match: bool
+            This var is used to determine if the inputted attribute value is an exact match or a partial match. Default is False, meaning the user does not need to input an exact match.
+            Under the hood this is used to determine if the inputted attribute value should be wrapped in a regex expression.
+        Returns
+        -------
+        list[dict]
+            A list of dictionaries containing the records.
         """
 
         if exact_match:
             filter = f'{{"{attribute_name}":"{attribute_value}"}}'
         else:
             # escape special characters - mongo db filters require special characters to be double escaped ex. GC\\-MS \\(2009\\)
-            escaped_value = re.sub(r'([\W])', r'\\\\\1', attribute_value)
-            filter = f'{{"{attribute_name}":{{"$regex":"{escaped_value}","$options":"i"}}}}'
+            escaped_value = re.sub(r"([\W])", r"\\\\\1", attribute_value)
+            filter = (
+                f'{{"{attribute_name}":{{"$regex":"{escaped_value}","$options":"i"}}}}'
+            )
         logging.debug(f"get_record_by_attribute Filter: {filter}")
         results = self.get_records(filter, max_page_size, fields, all_pages)
         return results
@@ -149,16 +198,25 @@ class CollectionSearch(NMDCSearch):
         collection_id: str,
         max_page_size: int = 100,
         fields: str = "",
-    ):
+    ) -> list[dict]:
         """
         Get a collection of data from the NMDC API by id.
-        params:
-            collection_id: str
-                The id of the collection.
-            max_page_size: int
-                The maximum number of items to return per page. Default is 100.
-            fields: str
-                The fields to return. Default is all fields.
+        Parameters
+        ----------
+        collection_id: str
+            The id of the collection.
+        max_page_size: int
+            The maximum number of items to return per page. Default is 100.
+        fields: str
+            The fields to return. Default is all fields.
+        Returns
+        -------
+        list[dict]
+            A list of dictionaries containing the records.
+        Raises
+        ------
+        RuntimeError
+            If the API request fails.
         """
         url = f"{self.base_url}/nmdcschema/{self.collection_name}/{collection_id}?max_page_size={max_page_size}&projection={fields}"
         # get the reponse
@@ -174,8 +232,10 @@ class CollectionSearch(NMDCSearch):
             )
         results = response.json()
         return results
-    
-    def check_ids_exist(self, ids: list, chunk_size=100, return_missing_ids=False) -> bool:
+
+    def check_ids_exist(
+        self, ids: list, chunk_size: int = 100, return_missing_ids: bool = False
+    ) -> bool:
         """
         Check if the IDs exist in the collection.
 
@@ -193,45 +253,47 @@ class CollectionSearch(NMDCSearch):
         -------
         bool
             True if all IDs exist in the collection, False otherwise.
-
-        Raises
-        ------
-        requests.RequestException
-            If there's an error in making the API request.
         """
         # chunk the input list of IDs into smaller lists of 100 IDs each
         # to avoid the maximum URL length limit
         ids_test = list(set(ids))
         for i in range(0, len(ids_test), chunk_size):
-            chunk = ids_test[i:i + chunk_size]
-            filter_dict = {
-            "id": {"$in": chunk}
-            }
-            filter_json_string = json.dumps(filter_dict, separators=(',', ':'))
+            chunk = ids_test[i : i + chunk_size]
+            filter_dict = {"id": {"$in": chunk}}
+            filter_json_string = json.dumps(filter_dict, separators=(",", ":"))
 
-            results = self.get_records(filter=filter_json_string, max_page_size=len(chunk), fields="id")
+            results = self.get_records(
+                filter=filter_json_string, max_page_size=len(chunk), fields="id"
+            )
             if len(results) != len(chunk) and return_missing_ids:
-                missing_ids = list(set(chunk) - set([record["id"] for record in results]))
+                missing_ids = list(
+                    set(chunk) - set([record["id"] for record in results])
+                )
                 return False, missing_ids
             elif len(results) != len(chunk) and not return_missing_ids:
                 return False
         return True
-    
-    def get_batch_records(self, id_list: list, search_field:str, chunk_size=100, fields="") -> list:
+
+    def get_batch_records(
+        self, id_list: list, search_field: str, chunk_size=100, fields=""
+    ) -> list[dict]:
         """
         Get a batch of records from the collection by a list of input IDs. This method is used to identify records that include any of the IDs from the input list, matching the search_field.
         This is using the MongoDB filter keyword $in to identify other records that include the input IDs.
-        params:
-            id_list: list
-                A list of IDs to get records for.
-            search_field: str
-                The field to search for. This must match a field from the NMDC Schema. 
-            chunk_size: int
-                The number of IDs to get in each query. Default is 100.
-            fields: str
-                The fields to return. Default is all fields.
-        returns:
-            list: A list of records.
+        Parameters
+        ---------
+        id_list: list
+            A list of IDs to get records for.
+        search_field: str
+            The field to search for. This must match a field from the NMDC Schema.
+        chunk_size: int
+            The number of IDs to get in each query. Default is 100.
+        fields: str
+            The fields to return. Default is all fields.
+        Returns
+        -------
+        list[dict]
+            A list of dictionaries containing the records.
         """
         dp = DataProcessing()
         results = []
@@ -240,7 +302,9 @@ class CollectionSearch(NMDCSearch):
         for chunk in chunks:
             chunk = dp._string_mongo_list(data=chunk)
             filter = f'{{"{search_field}": {{"$in": {chunk}}}}}'
-            res = self.get_records(filter=filter, max_page_size=len(chunk), fields=fields, all_pages=True)
+            res = self.get_records(
+                filter=filter, max_page_size=len(chunk), fields=fields, all_pages=True
+            )
             results += res
         return results
 

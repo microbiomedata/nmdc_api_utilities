@@ -1,10 +1,14 @@
-from nmdc_api_utilities.data_object_search import DataObjectSearch  
+# -*- coding: utf-8 -*-
+from nmdc_api_utilities.data_object_search import DataObjectSearch
 import logging
+
 logging.basicConfig(level=logging.DEBUG)
 from dotenv import load_dotenv
 import os
+
 load_dotenv()
 ENV = os.getenv("ENV")
+
 
 def test_get_do_by_study():
     """

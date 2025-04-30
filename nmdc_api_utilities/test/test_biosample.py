@@ -3,7 +3,9 @@ from nmdc_api_utilities.biosample_search import BiosampleSearch
 import logging
 from nmdc_api_utilities.data_processing import DataProcessing
 import logging
+
 logging.basicConfig(level=logging.DEBUG)
+
 
 def test_find_biosample_by_id():
     biosample = BiosampleSearch()
@@ -71,6 +73,6 @@ def test_biosample_build_filter_2():
     u = DataProcessing()
     b = BiosampleSearch()
     filter = u.build_filter({"name": "G6R2_NF_20JUN2016", "id": "nmdc:bsm-11-006pnx90"})
-    logging.debug("Biosample test filter:",filter)
+    logging.debug("Biosample test filter:", filter)
     results = b.get_record_by_filter(filter)
     assert len(results) == 1

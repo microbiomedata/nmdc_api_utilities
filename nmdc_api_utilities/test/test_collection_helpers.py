@@ -1,8 +1,11 @@
+# -*- coding: utf-8 -*-
 from nmdc_api_utilities.collection_helpers import CollectionHelpers
 from dotenv import load_dotenv
 import os
+
 load_dotenv()
 ENV = os.getenv("ENV")
+
 
 def test_get_record_name_from_id():
     ch = CollectionHelpers(env=ENV)

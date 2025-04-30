@@ -12,4 +12,3 @@ class InstrumentSearch(CollectionSearch):
 
     def __init__(self, env="prod"):
         super().__init__(collection_name="instrument_set", env=env)
-
