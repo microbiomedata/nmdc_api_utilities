@@ -20,6 +20,7 @@ class Minter(NMDCSearch):
     def mint(self, nmdc_type: str, client_id: str, client_secret: str) -> str:
         """
         Mint a new identifier for a collection.
+
         Parameters
         ----------
         nmdc_type : str
@@ -29,19 +30,23 @@ class Minter(NMDCSearch):
             The client ID for the NMDC API.
         client_secret : str
             The client secret for the NMDC API.
+
         Returns
         -------
         str
             The minted identifier.
+
         Raises
         ------
         RuntimeError
             If the API request fails.
+
         Notes
         -----
         Security Warning: Your client_id and client_secret should be stored in a secure location.
             We recommend using environment variables.
             Do not hard code these values in your code.
+
         """
         # get the token
         client = oauthlib.oauth2.BackendApplicationClient(client_id=client_id)

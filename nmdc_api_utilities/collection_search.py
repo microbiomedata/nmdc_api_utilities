@@ -126,11 +126,13 @@ class CollectionSearch(NMDCSearch):
     ) -> list[dict]:
         """
         Get a record from the NMDC API by its id.
+
         Parameters
         ----------
         filter: str
             The filter to use to query the collection. Must be in MonogDB query format.
                 Resources found here - https://www.mongodb.com/docs/manual/reference/method/db.collection.find/#std-label-method-find-query
+
             Example: {"name":{"my record name"}}
         max_page_size: int
             The number of results to return per page. Default is 25.
@@ -139,12 +141,12 @@ class CollectionSearch(NMDCSearch):
             Example: "id,name,description,alternative_identifiers,file_size_bytes,md5_checksum,data_object_type,url,type"
         all_pages: bool
             True to return all pages. False to return the first page. Default is False.
+
         Returns
         -------
         list[dict]
             A list of dictionaries containing the records.
-        Raises
-        ------
+
         """
         results = self.get_records(filter, max_page_size, fields, all_pages)
         return results
@@ -160,6 +162,7 @@ class CollectionSearch(NMDCSearch):
     ):
         """
         Get a record from the NMDC API by its name. Records can be filtered based on their attributes found https://microbiomedata.github.io/nmdc-schema/.
+
         Parameters
         ----------
         attribute_name: str
@@ -173,12 +176,13 @@ class CollectionSearch(NMDCSearch):
         all_pages: bool
             True to return all pages. False to return the first page. Default is False.
         exact_match: bool
-            This var is used to determine if the inputted attribute value is an exact match or a partial match. Default is False, meaning the user does not need to input an exact match.
-            Under the hood this is used to determine if the inputted attribute value should be wrapped in a regex expression.
+            This var is used to determine if the inputted attribute value is an exact match or a partial match. Default is False, meaning the user does not need to input an exact match. Under the hood this is used to determine if the inputted attribute value should be wrapped in a regex expression.
+
         Returns
         -------
         list[dict]
             A list of dictionaries containing the records.
+
         """
 
         if exact_match:

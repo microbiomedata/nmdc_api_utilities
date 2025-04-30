@@ -61,6 +61,7 @@ class DataProcessing:
     def rename_columns(self, df: pd.DataFrame, new_col_names: list) -> pd.DataFrame:
         """
         Rename columns in a pandas dataframe.
+
         Parameters
         ----------
         df: pd.DataFrame
@@ -70,10 +71,12 @@ class DataProcessing:
             Example:
                 If the current column names are - ['old_col1', 'old_col2', 'old_col3']
                 You will need to pass in the new names like - ['new_col1', 'new_col2', 'new_col3']
+
         Returns
         -------
         pd.DataFrame
             A pandas dataframe with renamed columns.
+
         """
         df.columns = new_col_names
         return df
@@ -187,6 +190,7 @@ class DataProcessing:
         -------
         list
             A list of values for the specified field.
+
         """
         field_list = []
         for item in api_results:
