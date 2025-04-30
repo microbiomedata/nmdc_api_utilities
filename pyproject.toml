@@ -18,4 +18,4 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies = ["pandas~=2.2.3", "requests~=2.32.3", "matplotlib~=3.10.0"]
-license = { file = "LICENSE" }
+license-files = ["LICENSE"]
