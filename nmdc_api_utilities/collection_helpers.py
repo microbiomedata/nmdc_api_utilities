@@ -29,10 +29,12 @@ class CollectionHelpers(NMDCSearch):
         -------
         str
             The collection name of the document.
+
         Raises
         ------
         RuntimeError
             If the API request fails.
+
         """
         url = f"{self.base_url}/nmdcschema/ids/{doc_id}/collection-name"
         try:

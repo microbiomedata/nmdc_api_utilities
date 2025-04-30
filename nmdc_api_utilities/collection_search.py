@@ -28,6 +28,7 @@ class CollectionSearch(NMDCSearch):
     ) -> list[dict]:
         """
         Get a collection of data from the NMDC API. Generic function to get a collection of data from the NMDC API. Can provide a specific filter if desired.
+
         Parameters
         ----------
         filter: str
@@ -38,14 +39,17 @@ class CollectionSearch(NMDCSearch):
             The fields to return. Default is all fields.
         all_pages: bool
             True to return all pages. False to return the first page. Default is False.
+
         Returns
         -------
         list[dict]
             A list of dictionaries containing the records.
+
         Raises
         ------
         RuntimeError
             If the API request fails.
+
         """
         logging.debug(f"get_records Filter: {filter}")
         filter = urllib.parse.quote(filter)
@@ -80,6 +84,7 @@ class CollectionSearch(NMDCSearch):
     ):
         """
         Get all pages of data from the NMDC API. This is a helper function to get all pages of data from the NMDC API.
+
         Parameters
         ----------
         response: requests.models.Response
@@ -90,14 +95,17 @@ class CollectionSearch(NMDCSearch):
             The maximum number of items to return per page. Default is 100.
         fields: str
             The fields to return. Default is all fields.
+
         Returns
         -------
         list[dict]
             A list of dictionaries containing the records.
+
         Raises
         ------
         RuntimeError
             If the API request fails.
+
         """
 
         results = response.json()
@@ -132,7 +140,6 @@ class CollectionSearch(NMDCSearch):
         filter: str
             The filter to use to query the collection. Must be in MonogDB query format.
                 Resources found here - https://www.mongodb.com/docs/manual/reference/method/db.collection.find/#std-label-method-find-query
-
             Example: {"name":{"my record name"}}
         max_page_size: int
             The number of results to return per page. Default is 25.
@@ -205,6 +212,7 @@ class CollectionSearch(NMDCSearch):
     ) -> list[dict]:
         """
         Get a collection of data from the NMDC API by id.
+
         Parameters
         ----------
         collection_id: str
@@ -213,14 +221,17 @@ class CollectionSearch(NMDCSearch):
             The maximum number of items to return per page. Default is 100.
         fields: str
             The fields to return. Default is all fields.
+
         Returns
         -------
         list[dict]
             A list of dictionaries containing the records.
+
         Raises
         ------
         RuntimeError
             If the API request fails.
+
         """
         url = f"{self.base_url}/nmdcschema/{self.collection_name}/{collection_id}?max_page_size={max_page_size}&projection={fields}"
         # get the reponse
@@ -253,10 +264,12 @@ class CollectionSearch(NMDCSearch):
             The number of IDs to check in each query. Default is 100.
         return_missing_ids : bool
             If True, and if ids are missing in the collection, return the list of IDs that do not exist in the collection. Default is False.
+
         Returns
         -------
         bool
             True if all IDs exist in the collection, False otherwise.
+
         """
         # chunk the input list of IDs into smaller lists of 100 IDs each
         # to avoid the maximum URL length limit
@@ -284,6 +297,7 @@ class CollectionSearch(NMDCSearch):
         """
         Get a batch of records from the collection by a list of input IDs. This method is used to identify records that include any of the IDs from the input list, matching the search_field.
         This is using the MongoDB filter keyword $in to identify other records that include the input IDs.
+
         Parameters
         ---------
         id_list: list
@@ -294,10 +308,12 @@ class CollectionSearch(NMDCSearch):
             The number of IDs to get in each query. Default is 100.
         fields: str
             The fields to return. Default is all fields.
+
         Returns
         -------
         list[dict]
             A list of dictionaries containing the records.
+
         """
         dp = DataProcessing()
         results = []
