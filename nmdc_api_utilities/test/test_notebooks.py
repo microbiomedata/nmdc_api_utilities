@@ -2,15 +2,20 @@
 from nmdc_api_utilities.data_processing import DataProcessing
 from nmdc_api_utilities.data_object_search import DataObjectSearch
 from nmdc_api_utilities.workflow_execution_search import WorkflowExecutionSearch
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+ENV = os.getenv("ENV")
 
 
 def test_nom_notebook():
-    dos_client = DataObjectSearch()
+    dos_client = DataObjectSearch(env=ENV)
 
     dp_client = DataProcessing()
     processed_nom = dos_client.get_record_by_attribute(
         attribute_name="data_object_type",
-        attribute_value="FT ICR-MS Analysis Results",
+        attribute_value="Direct Infusion FT-ICR MS Analysis Results",
         max_page_size=100,
         fields="id,md5_checksum,url",
         all_pages=True,
