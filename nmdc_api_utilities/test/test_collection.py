@@ -69,7 +69,6 @@ class TestCollection(unittest.TestCase):
             "nmdc:bsm-11-01g9wf51",
             "nmdc:bsm-11-01jah904",
             "nmdc:bsm-11-01teww33",
-            "nmdc:bsm-11-01vt2q72",
             "nmdc:bsm-11-024rsd62",
             "nmdc:bsm-11-02kcw433",
             "nmdc:bsm-11-02n85875",
