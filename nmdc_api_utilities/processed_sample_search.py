@@ -10,5 +10,5 @@ class ProcessedSampleSearch(CollectionSearch):
     Class to interact with the NMDC API to get process sample sets.
     """
 
-    def __init__(self):
-        super().__init__(collection_name="processed_sample_set", env="prod")
+    def __init__(self, env="prod"):
+        super().__init__(collection_name="processed_sample_set", env=env)
