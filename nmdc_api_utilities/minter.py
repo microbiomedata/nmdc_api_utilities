@@ -2,8 +2,7 @@
 from nmdc_api_utilities.nmdc_search import NMDCSearch
 import logging
 import requests
-import oauthlib
-import requests_oauthlib
+from nmdc_api_utilities.auth import NMDCAuth
 import json
 
 logger = logging.getLogger(__name__)
@@ -60,17 +59,17 @@ class Minter(NMDCSearch):
             raise ValueError("count must be at least 1")
 
         # get the token
-        client = oauthlib.oauth2.BackendApplicationClient(client_id=client_id)
-        oauth = requests_oauthlib.OAuth2Session(client=client)
-        oauth.fetch_token(
-            token_url=f"{self.base_url}/token",
-            client_id=client_id,
-            client_secret=client_secret,
-        )
+        auth_client = NMDCAuth(client_id, client_secret, self.env)
+        token = auth_client.get_token()
+
         url = f"{self.base_url}/pids/mint"
         payload = {"schema_class": {"id": nmdc_type}, "how_many": count}
         try:
-            response = oauth.post(url, data=json.dumps(payload))
+            response = requests.post(
+                url,
+                headers={"Authorization": f"Bearer {token}"},
+                data=json.dumps(payload),
+            )
             response.raise_for_status()
         except requests.exceptions.RequestException as e:
             logger.error("API request failed", exc_info=True)
