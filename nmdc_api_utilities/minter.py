@@ -14,6 +14,7 @@ class Minter(NMDCSearch):
     """
 
     def __init__(self, env="prod"):
+        self.env = env
         super().__init__(env=env)
 
     def mint(

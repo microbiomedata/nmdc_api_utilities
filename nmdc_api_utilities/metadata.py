@@ -14,11 +14,10 @@ class Metadata(NMDCSearch):
     """
 
     def __init__(self, env="prod"):
+        self.env = env
         super().__init__(env=env)
 
-    def validate_json(
-        self, json_records: list[dict] | str, client_id: str, client_secret: str
-    ) -> int:
+    def validate_json(self, json_records: list[dict] | str) -> int:
         """
         Validates a json file using the NMDC json validate endpoint.
 
