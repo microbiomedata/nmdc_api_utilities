@@ -65,6 +65,3 @@ def test_mint_no_auth():
         mint.mint("nmdc:DataObject")
     assert exc_info.type is AuthenticationError
     assert "requires authentication" in str(exc_info.value)
-
-
-test_mint_no_auth()

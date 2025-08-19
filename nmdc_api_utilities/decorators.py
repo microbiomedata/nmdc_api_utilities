@@ -16,7 +16,7 @@ def requires_auth(f):
     def wrapper(self, *args, **kwargs):
         if not self.auth.has_credentials():
             raise AuthenticationError(
-                f"{f.__name__} requires authentication. Either provide `client_id` and `client_secret` or `username` and `password`."
+                f"{f.__name__} requires authentication. Either provide `client_id` and `client_secret` OR `username` and `password`."
             )
         return f(self, *args, **kwargs)
 

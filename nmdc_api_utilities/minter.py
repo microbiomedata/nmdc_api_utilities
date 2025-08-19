@@ -12,6 +12,11 @@ logger = logging.getLogger(__name__)
 class Minter(NMDCSearch):
     """
     Class to interact with the NMDC API to mint new identifiers.
+
+    Parameters
+    ----------
+    auth : NMDCAuth
+        An instance of the NMDCAuth class for authentication.
     """
 
     def __init__(self, env="prod", auth: NMDCAuth = None):
@@ -29,8 +34,7 @@ class Minter(NMDCSearch):
         nmdc_type : str
             The type of NMDC ID to mint (e.g., 'nmdc:MassSpectrometry',
             'nmdc:DataObject').
-        auth : NMDCAuth
-            The authentication object for NMDC API. Initialized via auth.NMDCAuth()
+
         count : int, optional
             The number of identifiers to mint. Default is 1.
 
@@ -46,13 +50,6 @@ class Minter(NMDCSearch):
             If the API request fails.
         ValueError
             If count is less than 1.
-
-        Notes
-        -----
-        Security Warning: Your client_id and client_secret should be stored in a secure location.
-            We recommend using environment variables.
-            Do not hard code these values in your code.
-
         """
         # Validate count parameter
         if count < 1:

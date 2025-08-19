@@ -11,7 +11,12 @@ logger = logging.getLogger(__name__)
 
 class Metadata(NMDCSearch):
     """
-    Class to interact with the NMDC API metadata.
+    Class to interact with the NMDC API metadata endpoints. These deal mostly with metadata management, including validation and submission.
+
+    Parameters
+    ----------
+    auth : NMDCAuth
+        An instance of the NMDCAuth class for authentication.
     """
 
     def __init__(self, env="prod", auth: NMDCAuth = None):
@@ -84,12 +89,6 @@ class Metadata(NMDCSearch):
         ------
         Exception
             If the submission fails.
-
-        Notes
-        -----
-        Security Warning: Your client_id and client_secret should be stored in a secure location.
-            We recommend using environment variables.
-            Do not hard code these values in your code.
 
         """
         # if a file is passed in, load the json

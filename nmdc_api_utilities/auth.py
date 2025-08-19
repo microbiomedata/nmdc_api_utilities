@@ -10,7 +10,27 @@ logger = logging.getLogger(__name__)
 class NMDCAuth(NMDCSearch):
     """
     Authentication handler for NMDC API operations.
-    Must pass in either client_id and client_secret OR username and password.
+
+    You must provide either:
+      - client_id and client_secret (for client credentials grant), OR
+      - username and password (for password grant).
+
+    Parameters
+    ----------
+    client_id : str
+        The client ID for NMDC API authentication (required if using client credentials grant).
+    client_secret : str
+        The client secret for NMDC API authentication (required if using client credentials grant).
+    username : str
+        The username for NMDC API authentication (required if using password grant).
+    password : str
+        The password for NMDC API authentication (required if using password grant).
+
+    Notes
+    -----
+    Security Warning: Your client_id and client_secret should be stored in a secure location.
+        We recommend using environment variables.
+        Do not hard code these values in your code.
     """
 
     def __init__(
