@@ -4,6 +4,7 @@ import requests
 import logging
 import json
 from nmdc_api_utilities.auth import NMDCAuth
+from nmdc_api_utilities.decorators import requires_auth
 
 logger = logging.getLogger(__name__)
 
@@ -13,8 +14,9 @@ class Metadata(NMDCSearch):
     Class to interact with the NMDC API metadata.
     """
 
-    def __init__(self, env="prod"):
+    def __init__(self, env="prod", auth: NMDCAuth = None):
         self.env = env
+        self.auth = auth or NMDCAuth()
         super().__init__(env=env)
 
     def validate_json(self, json_records: list[dict] | str) -> int:
@@ -63,9 +65,8 @@ class Metadata(NMDCSearch):
 
         return response.status_code
 
-    def submit_json(
-        self, json_records: list[dict] | str, client_id: str, client_secret: str
-    ) -> int:
+    @requires_auth
+    def submit_json(self, json_records: list[dict] | str) -> int:
         """
         Submits a json file to the NMDC API metadata.
 
@@ -95,9 +96,8 @@ class Metadata(NMDCSearch):
         if isinstance(json_records, str):
             with open(json_records, "r") as f:
                 json_records = json.load(f)
-        # auth
-        auth_client = NMDCAuth(client_id, client_secret, self.env)
-        token = auth_client.get_token()
+
+        token = self.auth.get_token()
 
         # api request
         url = f"{self.base_url}/metadata/json:submit"

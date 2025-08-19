@@ -10,16 +10,38 @@ logger = logging.getLogger(__name__)
 class NMDCAuth(NMDCSearch):
     """
     Authentication handler for NMDC API operations.
-    Manages OAuth2 client credentials flow with token caching and refresh.
+    Must pass in either client_id and client_secret OR username and password.
     """
 
-    def __init__(self, client_id: str, client_secret: str, env: str = "prod"):
+    def __init__(
+        self,
+        client_id: str = None,
+        client_secret: str = None,
+        username: str = None,
+        password: str = None,
+        env: str = "prod",
+    ):
         super().__init__(env=env)
         self.client_id = client_id
         self.client_secret = client_secret
+        self.username = username
+        self.password = password
         self._token = None
         self._token_expires_at = None
         self._oauth_session = None
+        self.grant_type = (
+            "client_credentials"
+            if (self.client_id and self.client_secret)
+            else "password"
+        )
+
+    def has_credentials(self) -> bool:
+        """Check if the credentials are passed in properly."""
+        if self.client_id and self.client_secret:
+            return True
+        elif self.username and self.password:
+            return True
+        return False
 
     def get_token(self) -> str:
         """Get a valid access token, refreshing if necessary."""
@@ -35,11 +57,18 @@ class NMDCAuth(NMDCSearch):
 
     def _refresh_token(self) -> str:
         """Refresh the access token."""
-        token_request_body = {
-            "grant_type": "client_credentials",
-            "client_id": self.client_id,
-            "client_secret": self.client_secret,
-        }
+        if self.grant_type == "client_credentials":
+            token_request_body = {
+                "grant_type": "client_credentials",
+                "client_id": self.client_id,
+                "client_secret": self.client_secret,
+            }
+        elif self.grant_type == "password":
+            token_request_body = {
+                "grant_type": "password",
+                "username": self.username,
+                "password": self.password,
+            }
 
         response = requests.post(f"{self.base_url}/token", data=token_request_body)
         token_response = response.json()

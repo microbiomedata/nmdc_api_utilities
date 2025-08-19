@@ -3,6 +3,7 @@ from nmdc_api_utilities.nmdc_search import NMDCSearch
 import logging
 import requests
 from nmdc_api_utilities.auth import NMDCAuth
+from nmdc_api_utilities.decorators import requires_auth
 import json
 
 logger = logging.getLogger(__name__)
@@ -13,13 +14,13 @@ class Minter(NMDCSearch):
     Class to interact with the NMDC API to mint new identifiers.
     """
 
-    def __init__(self, env="prod"):
+    def __init__(self, env="prod", auth: NMDCAuth = None):
         self.env = env
+        self.auth = auth or NMDCAuth()
         super().__init__(env=env)
 
-    def mint(
-        self, nmdc_type: str, client_id: str, client_secret: str, count: int = 1
-    ) -> str | list[str]:
+    @requires_auth
+    def mint(self, nmdc_type: str, count: int = 1) -> str | list[str]:
         """
         Mint new identifier(s) for a collection.
 
@@ -28,10 +29,8 @@ class Minter(NMDCSearch):
         nmdc_type : str
             The type of NMDC ID to mint (e.g., 'nmdc:MassSpectrometry',
             'nmdc:DataObject').
-        client_id : str
-            The client ID for the NMDC API.
-        client_secret : str
-            The client secret for the NMDC API.
+        auth : NMDCAuth
+            The authentication object for NMDC API. Initialized via auth.NMDCAuth()
         count : int, optional
             The number of identifiers to mint. Default is 1.
 
@@ -60,8 +59,7 @@ class Minter(NMDCSearch):
             raise ValueError("count must be at least 1")
 
         # get the token
-        auth_client = NMDCAuth(client_id, client_secret, self.env)
-        token = auth_client.get_token()
+        token = self.auth.get_token()
 
         url = f"{self.base_url}/pids/mint"
         payload = {"schema_class": {"id": nmdc_type}, "how_many": count}
