@@ -65,3 +65,14 @@ def test_mint_no_auth():
         mint.mint("nmdc:DataObject")
     assert exc_info.type is AuthenticationError
     assert "requires authentication" in str(exc_info.value)
+
+
+def test_old_auth():
+    """Test that using client_id and client_secret directly works for authentication."""
+    mint = Minter(env=ENV)
+    results = mint.mint(
+        "nmdc:DataObject", client_id=CLIENT_ID, client_secret=CLIENT_SECRET
+    )
+    assert results
+    assert isinstance(results, str)
+    assert "nmdc:dobj" in results
