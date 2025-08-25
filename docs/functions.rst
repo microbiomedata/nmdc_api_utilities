@@ -187,3 +187,17 @@ Utils
    :members:
    :undoc-members:
    :show-inheritance:
+
+Auth
+~~~~
+.. autoclass:: nmdc_api_utilities.auth.NMDCAuth
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Decorators
+~~~~~~~~~~
+.. autoclass:: nmdc_api_utilities.decorators
+   :members:
+   :undoc-members:
+   :show-inheritance:
