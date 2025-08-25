@@ -25,7 +25,13 @@ class Minter(NMDCSearch):
         super().__init__(env=env)
 
     @requires_auth
-    def mint(self, nmdc_type: str, count: int = 1) -> str | list[str]:
+    def mint(
+        self,
+        nmdc_type: str,
+        count: int = 1,
+        client_id: str = None,
+        client_secret: str = None,
+    ) -> str | list[str]:
         """
         Mint new identifier(s) for a collection.
 
@@ -37,6 +43,12 @@ class Minter(NMDCSearch):
 
         count : int, optional
             The number of identifiers to mint. Default is 1.
+
+        client_id : str
+            The client ID for authentication. Kept for backwards compatibility.
+
+        client_secret : str
+            The client secret for authentication. Kept for backwards compatibility.
 
         Returns
         -------
@@ -50,7 +62,17 @@ class Minter(NMDCSearch):
             If the API request fails.
         ValueError
             If count is less than 1.
+
+        Note
+        ----
+        If client_id and client_secret are provided, a new NMDCAuth object will be created. The newest and preferred method for authentication is to use the NMDCAuth class directly.
+
         """
+        # if they are passed into the function, create the auth object
+        if client_id and client_secret:
+            self.auth = NMDCAuth(
+                client_id=client_id, client_secret=client_secret, env=self.env
+            )
         # Validate count parameter
         if count < 1:
             raise ValueError("count must be at least 1")
