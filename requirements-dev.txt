@@ -1,10 +1,4 @@
 pre-commit
-pandas
-requests
-matplotlib
-oauthlib
-requests_oauthlib
-dotenv
 sphinx
 sphinx_rtd_theme
 pytest

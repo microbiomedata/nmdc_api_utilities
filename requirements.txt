@@ -1,6 +1,4 @@
 pandas
 requests
 matplotlib
-oauthlib
-requests_oauthlib
 dotenv
