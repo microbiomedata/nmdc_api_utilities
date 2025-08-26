@@ -2,8 +2,8 @@
 from nmdc_api_utilities.nmdc_search import NMDCSearch
 import logging
 import requests
-import oauthlib
-import requests_oauthlib
+from nmdc_api_utilities.auth import NMDCAuth
+from nmdc_api_utilities.decorators import requires_auth
 import json
 
 logger = logging.getLogger(__name__)
@@ -12,13 +12,25 @@ logger = logging.getLogger(__name__)
 class Minter(NMDCSearch):
     """
     Class to interact with the NMDC API to mint new identifiers.
+
+    Parameters
+    ----------
+    auth : NMDCAuth
+        An instance of the NMDCAuth class for authentication.
     """
 
-    def __init__(self, env="prod"):
+    def __init__(self, env="prod", auth: NMDCAuth = None):
+        self.env = env
+        self.auth = auth or NMDCAuth()
         super().__init__(env=env)
 
+    @requires_auth
     def mint(
-        self, nmdc_type: str, client_id: str, client_secret: str, count: int = 1
+        self,
+        nmdc_type: str,
+        count: int = 1,
+        client_id: str = None,
+        client_secret: str = None,
     ) -> str | list[str]:
         """
         Mint new identifier(s) for a collection.
@@ -28,12 +40,15 @@ class Minter(NMDCSearch):
         nmdc_type : str
             The type of NMDC ID to mint (e.g., 'nmdc:MassSpectrometry',
             'nmdc:DataObject').
-        client_id : str
-            The client ID for the NMDC API.
-        client_secret : str
-            The client secret for the NMDC API.
+
         count : int, optional
             The number of identifiers to mint. Default is 1.
+
+        client_id : str
+            The client ID for authentication. Kept for backwards compatibility.
+
+        client_secret : str
+            The client secret for authentication. Kept for backwards compatibility.
 
         Returns
         -------
@@ -48,29 +63,31 @@ class Minter(NMDCSearch):
         ValueError
             If count is less than 1.
 
-        Notes
-        -----
-        Security Warning: Your client_id and client_secret should be stored in a secure location.
-            We recommend using environment variables.
-            Do not hard code these values in your code.
+        Note
+        ----
+        If client_id and client_secret are provided, a new NMDCAuth object will be created. The newest and preferred method for authentication is to use the NMDCAuth class directly.
 
         """
+        # if they are passed into the function, create the auth object
+        if client_id and client_secret:
+            self.auth = NMDCAuth(
+                client_id=client_id, client_secret=client_secret, env=self.env
+            )
         # Validate count parameter
         if count < 1:
             raise ValueError("count must be at least 1")
 
         # get the token
-        client = oauthlib.oauth2.BackendApplicationClient(client_id=client_id)
-        oauth = requests_oauthlib.OAuth2Session(client=client)
-        oauth.fetch_token(
-            token_url=f"{self.base_url}/token",
-            client_id=client_id,
-            client_secret=client_secret,
-        )
+        token = self.auth.get_token()
+
         url = f"{self.base_url}/pids/mint"
         payload = {"schema_class": {"id": nmdc_type}, "how_many": count}
         try:
-            response = oauth.post(url, data=json.dumps(payload))
+            response = requests.post(
+                url,
+                headers={"Authorization": f"Bearer {token}"},
+                data=json.dumps(payload),
+            )
             response.raise_for_status()
         except requests.exceptions.RequestException as e:
             logger.error("API request failed", exc_info=True)

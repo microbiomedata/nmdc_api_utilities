@@ -13,4 +13,4 @@ ENV = os.getenv("ENV")
 def test_validate():
     metadata = Metadata(env=ENV)
     results = metadata.validate_json("nmdc_api_utilities/test/test_data/test.json")
-    assert results == None
+    assert results == 200
