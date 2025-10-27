@@ -2,15 +2,10 @@
 from nmdc_api_utilities.data_processing import DataProcessing
 from nmdc_api_utilities.data_object_search import DataObjectSearch
 from nmdc_api_utilities.workflow_execution_search import WorkflowExecutionSearch
-from dotenv import load_dotenv
-import os
-
-load_dotenv()
-ENV = os.getenv("ENV")
 
 
-def test_nom_notebook():
-    dos_client = DataObjectSearch(env=ENV)
+def test_nom_notebook(env):
+    dos_client = DataObjectSearch(env=env)
 
     dp_client = DataProcessing()
     processed_nom = dos_client.get_record_by_attribute(
@@ -30,7 +25,7 @@ def test_nom_notebook():
     # processed_nom_df = dp_client.convert_to_df(processed_nom)
 
     # since we are querying the WorkflowExecution collection, we need to create an instance of it
-    we_client = WorkflowExecutionSearch(env=ENV)
+    we_client = WorkflowExecutionSearch(env=env)
     # use utility function to get a list of the ids from processed_nom
     result_ids = dp_client.extract_field(processed_nom, "processed_nom_id")
     # get the analysis data objects

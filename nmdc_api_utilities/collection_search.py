@@ -5,6 +5,7 @@ import urllib.parse
 from nmdc_api_utilities.nmdc_search import NMDCSearch
 import logging
 import re
+import time
 
 logger = logging.getLogger(__name__)
 import json
@@ -50,19 +51,50 @@ class CollectionSearch(NMDCSearch):
         RuntimeError
             If the API request fails.
 
+        Examples
+        --------
+        >>> from nmdc_api_utilities.biosample_search import BiosampleSearch
+        >>> client = BiosampleSearch()
+        >>> # Get first page of results
+        >>> records = client.get_records(max_page_size=10)
+        >>> isinstance(records, list)
+        True
+        >>> len(records) <= 10
+        True
+
         """
-        logging.debug(f"get_records Filter: {filter}")
+        logger.debug(f"get_records Filter: {filter}")
         filter = urllib.parse.quote(filter)
-        logging.debug(f"get_records encoded Filter: {filter}")
+        logger.debug(f"get_records encoded Filter: {filter}")
         url = f"{self.base_url}/nmdcschema/{self.collection_name}?filter={filter}&max_page_size={max_page_size}&projection={fields}"
+
+        logger.info(f"Making API request to: {url}")
+        start_time = time.time()
+
         try:
             response = requests.get(url)
+            elapsed = time.time() - start_time
+            logger.info(f"API request completed in {elapsed:.2f}s (status: {response.status_code})")
             response.raise_for_status()
         except requests.exceptions.RequestException as e:
-            logger.error("API request failed", exc_info=True)
-            raise RuntimeError("Failed to get collection from NMDC API") from e
+            elapsed = time.time() - start_time
+            logger.error(f"API request failed after {elapsed:.2f}s", exc_info=True)
+
+            # Try to extract API error details
+            error_detail = None
+            try:
+                if hasattr(e, 'response') and e.response is not None:
+                    error_json = e.response.json()
+                    error_detail = error_json.get('detail', None)
+            except:
+                pass
+
+            if error_detail:
+                raise RuntimeError(f"NMDC API error: {error_detail}") from e
+            else:
+                raise RuntimeError("Failed to get collection from NMDC API") from e
         else:
-            logging.debug(
+            logger.debug(
                 f"API request response: {response.json()}\n API Status Code: {response.status_code}"
             )
 
@@ -232,17 +264,33 @@ class CollectionSearch(NMDCSearch):
         RuntimeError
             If the API request fails.
 
+        Examples
+        --------
+        >>> from nmdc_api_utilities.biosample_search import BiosampleSearch
+        >>> client = BiosampleSearch()
+        >>> record = client.get_record_by_id("nmdc:bsm-13-amrnys72")
+        >>> isinstance(record, dict)
+        True
+        >>> 'id' in record
+        True
+
         """
         url = f"{self.base_url}/nmdcschema/{self.collection_name}/{collection_id}?max_page_size={max_page_size}&projection={fields}"
-        # get the reponse
+        # get the response
+        logger.info(f"Making API request to: {url}")
+        start_time = time.time()
+
         try:
             response = requests.get(url)
+            elapsed = time.time() - start_time
+            logger.info(f"API request completed in {elapsed:.2f}s (status: {response.status_code})")
             response.raise_for_status()
         except requests.exceptions.RequestException as e:
-            logger.error("API request failed", exc_info=True)
+            elapsed = time.time() - start_time
+            logger.error(f"API request failed after {elapsed:.2f}s", exc_info=True)
             raise RuntimeError("Failed to get collection by id from NMDC API") from e
         else:
-            logging.debug(
+            logger.debug(
                 f"API request response: {response.json()}\n API Status Code: {response.status_code}"
             )
         results = response.json()

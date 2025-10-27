@@ -31,6 +31,20 @@ class NMDCAuth(NMDCSearch):
     Security Warning: Your client_id and client_secret should be stored in a secure location.
         We recommend using environment variables.
         Do not hard code these values in your code.
+
+    Examples
+    --------
+    >>> from nmdc_api_utilities.auth import NMDCAuth
+    >>> # Create auth with client credentials
+    >>> auth = NMDCAuth(client_id="test_id", client_secret="test_secret")
+    >>> auth.grant_type
+    'client_credentials'
+    >>> auth.has_credentials()
+    True
+    >>> # Auth without credentials
+    >>> auth_no_creds = NMDCAuth()
+    >>> auth_no_creds.has_credentials()
+    False
     """
 
     def __init__(

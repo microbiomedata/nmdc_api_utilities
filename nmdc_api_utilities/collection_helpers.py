@@ -35,6 +35,14 @@ class CollectionHelpers(NMDCSearch):
         RuntimeError
             If the API request fails.
 
+        Examples
+        --------
+        >>> from nmdc_api_utilities.collection_helpers import CollectionHelpers
+        >>> helper = CollectionHelpers()
+        >>> collection = helper.get_record_name_from_id("nmdc:bsm-13-amrnys72")
+        >>> collection
+        'biosample_set'
+
         """
         url = f"{self.base_url}/nmdcschema/ids/{doc_id}/collection-name"
         try:

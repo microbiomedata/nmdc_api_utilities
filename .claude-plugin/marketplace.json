@@ -1,0 +1,40 @@
+{
+  "name": "microbiome-skills",
+  "owner": {
+    "name": "Chris Mungall",
+    "email": "cjmungall@lbl.gov"
+  },
+  "metadata": {
+    "description": "Microbiome skills",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "nmdc-data",
+      "description": "Skills for querying NMDC",
+      "source": "./..",
+      "strict": false,
+      "skills": [
+        "./nmdc-skills/nmdc-data"
+      ]
+    },
+    {
+      "name": "gff-analysis",
+      "description": "Skills for analyzing GFF",
+      "source": "./..",
+      "strict": false,
+      "skills": [
+        "./nmdc-skills/gff-analysis"
+      ]
+    },
+    {
+      "name": "enrichment",
+      "description": "Skills for performing enrichment analyses",
+      "source": "./..",
+      "strict": false,
+      "skills": [
+        "./nmdc-skills/enrichment-analysis"
+      ]
+    }
+  ]
+}

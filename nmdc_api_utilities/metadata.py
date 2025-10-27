@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from typing import Union
 from nmdc_api_utilities.nmdc_search import NMDCSearch
 import requests
 import logging
@@ -24,7 +25,7 @@ class Metadata(NMDCSearch):
         self.auth = auth or NMDCAuth()
         super().__init__(env=env)
 
-    def validate_json(self, json_records: list[dict] | str) -> int:
+    def validate_json(self, json_records: Union[list[dict], str]) -> int:
         """
         Validates a json file using the NMDC json validate endpoint.
 
@@ -32,7 +33,7 @@ class Metadata(NMDCSearch):
 
         Parameters
         ----------
-        json_records : list[dict] | str
+        json_records : Union[list[dict], str]
             The json records to be validated. Can be passed in as a file path or list of dictionaries.
 
         Returns
@@ -71,13 +72,13 @@ class Metadata(NMDCSearch):
         return response.status_code
 
     @requires_auth
-    def submit_json(self, json_records: list[dict] | str) -> int:
+    def submit_json(self, json_records: Union[list[dict], str]) -> int:
         """
         Submits a json file to the NMDC API metadata.
 
         Parameters
         ----------
-        json_records : list[dict] | str
+        json_records : Union[list[dict], str]
             The json records to be submitted. Can be passed in as a file path or list of dictionaries.
 
         Returns

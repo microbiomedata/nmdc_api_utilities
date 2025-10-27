@@ -7,8 +7,9 @@ Welcome to NMDC API Utilities documentation. This package provides tools for int
    :maxdepth: 2
    :caption: Contents:
 
-   functions
    usage
+   filters
+   functions
 
 Indices and tables
 ==================

@@ -1,3 +1,5 @@
+tmp/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 nmdc_api_utilities/__pycache__/
@@ -79,6 +81,9 @@ target/
 
 # Jupyter Notebook
 .ipynb_checkpoints
+# Executed notebooks and HTML exports
+*_executed.ipynb
+*_executed.html
 
 # IPython
 profile_default/
@@ -112,6 +117,11 @@ ipython_config.py
 .pdm.toml
 .pdm-python
 .pdm-build/
+
+# uv
+#   uv.lock should be committed for reproducible builds
+#   .venv is the virtual environment directory
+.python-version
 
 # PEP 582; used by e.g. github.com/David-OConnor/pyflow and github.com/pdm-project/pdm
 __pypackages__/

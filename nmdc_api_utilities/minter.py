@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from typing import Union
 from nmdc_api_utilities.nmdc_search import NMDCSearch
 import logging
 import requests
@@ -31,7 +32,7 @@ class Minter(NMDCSearch):
         count: int = 1,
         client_id: str = None,
         client_secret: str = None,
-    ) -> str | list[str]:
+    ) -> Union[str, list[str]]:
         """
         Mint new identifier(s) for a collection.
 
