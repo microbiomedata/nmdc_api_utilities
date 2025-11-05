@@ -51,6 +51,19 @@ class DataProcessing:
         Returns
         -------
         list: A list of lists.
+
+        Examples
+        --------
+        >>> from nmdc_api_utilities.data_processing import DataProcessing
+        >>> dp = DataProcessing()
+        >>> data = list(range(10))
+        >>> chunks = dp.split_list(data, chunk_size=3)
+        >>> len(chunks)
+        4
+        >>> chunks[0]
+        [0, 1, 2]
+        >>> chunks[-1]
+        [9]
         """
         result = []
         for i in range(0, len(input_list), chunk_size):
@@ -191,6 +204,18 @@ class DataProcessing:
         list
             A list of values for the specified field.
 
+        Examples
+        --------
+        >>> from nmdc_api_utilities.data_processing import DataProcessing
+        >>> dp = DataProcessing()
+        >>> data = [
+        ...     {"id": "nmdc:1", "name": "sample1"},
+        ...     {"id": "nmdc:2", "name": "sample2"}
+        ... ]
+        >>> ids = dp.extract_field(data, "id")
+        >>> ids
+        ['nmdc:1', 'nmdc:2']
+
         """
         field_list = []
         for item in api_results:
@@ -200,3 +225,113 @@ class DataProcessing:
                 for another_item in item[field_name]:
                     field_list.append(another_item)
         return field_list
+
+    def bbox_to_filter(
+        self,
+        min_latitude: float,
+        min_longitude: float,
+        max_latitude: float,
+        max_longitude: float
+    ) -> str:
+        """
+        Convert bounding box coordinates to a MongoDB filter string.
+
+        Parameters
+        ----------
+        min_latitude : float
+            Southern boundary (must be between -90 and 90)
+        min_longitude : float
+            Western boundary (must be between -180 and 180)
+        max_latitude : float
+            Northern boundary (must be between -90 and 90)
+        max_longitude : float
+            Eastern boundary (must be between -180 and 180)
+
+        Returns
+        -------
+        str
+            MongoDB filter JSON string
+
+        Raises
+        ------
+        ValueError
+            If any coordinate is out of valid range
+
+        Examples
+        --------
+        >>> from nmdc_api_utilities.data_processing import DataProcessing
+        >>> dp = DataProcessing()
+        >>> # California region
+        >>> filter_str = dp.bbox_to_filter(32.5, -124.5, 42.0, -114.0)
+        >>> import json
+        >>> filter_dict = json.loads(filter_str)
+        >>> filter_dict['lat_lon.latitude']['$gte']
+        32.5
+        >>> filter_dict['lat_lon.latitude']['$lte']
+        42.0
+        """
+        import json
+
+        # Validate latitude
+        if not (-90 <= min_latitude <= 90):
+            raise ValueError(f"min_latitude must be between -90 and 90, got {min_latitude}")
+        if not (-90 <= max_latitude <= 90):
+            raise ValueError(f"max_latitude must be between -90 and 90, got {max_latitude}")
+
+        # Validate longitude
+        if not (-180 <= min_longitude <= 180):
+            raise ValueError(f"min_longitude must be between -180 and 180, got {min_longitude}")
+        if not (-180 <= max_longitude <= 180):
+            raise ValueError(f"max_longitude must be between -180 and 180, got {max_longitude}")
+
+        # Build filter
+        filter_dict = {
+            "lat_lon.latitude": {"$gte": min_latitude, "$lte": max_latitude},
+            "lat_lon.longitude": {"$gte": min_longitude, "$lte": max_longitude}
+        }
+
+        return json.dumps(filter_dict)
+
+    def merge_filters(self, filter1: str, filter2: str) -> str:
+        """
+        Merge two MongoDB filter JSON strings.
+
+        Simple merge strategy: later values override earlier ones for conflicting keys.
+        For complex cases requiring $and logic, construct the filter manually.
+
+        Parameters
+        ----------
+        filter1 : str
+            First MongoDB filter JSON string (can be empty string)
+        filter2 : str
+            Second MongoDB filter JSON string (can be empty string)
+
+        Returns
+        -------
+        str
+            Merged MongoDB filter JSON string
+
+        Examples
+        --------
+        >>> from nmdc_api_utilities.data_processing import DataProcessing
+        >>> dp = DataProcessing()
+        >>> f1 = '{"ecosystem_category": "Terrestrial"}'
+        >>> f2 = '{"lat_lon.latitude": {"$gte": 30, "$lte": 40}}'
+        >>> merged = dp.merge_filters(f1, f2)
+        >>> import json
+        >>> result = json.loads(merged)
+        >>> result['ecosystem_category']
+        'Terrestrial'
+        >>> result['lat_lon.latitude']['$gte']
+        30
+        """
+        import json
+
+        # Parse filters (handle empty strings)
+        dict1 = json.loads(filter1) if filter1 else {}
+        dict2 = json.loads(filter2) if filter2 else {}
+
+        # Simple merge - later values override
+        merged = {**dict1, **dict2}
+
+        return json.dumps(merged)
