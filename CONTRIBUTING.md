@@ -5,7 +5,8 @@
 
 The following is a set of guidelines for contributing to the nmdc_api_utilities repo. This guide is aimed primarily at the developers for the notebooks and this repo, although anyone is welcome to contribute.
 
-The following is a set of guidelines for contributing to [nmdc_api_utilities repo](https://github.com/microbiomedata/nmdc_api_utilities). This guide is aimed primarily at the developers for the notebooks and this repo, although anyone is welcome to contribute.
+Unlike other repos for data exploration, the code in this repo is used by many moving parts in the NMDC stack. We strive to hold best and interpretable practices for development, as small changes could impact downstream processes. If you want to experiment with large changes we suggest forking or meeting with the maintainers first.
+
 
 ## Table Of Contents
 
@@ -14,7 +15,7 @@ The following is a set of guidelines for contributing to [nmdc_api_utilities rep
     * [Reporting issues](#reporting-issues)
     * [Making pull requests](#pull-requests)
 - [Best practices](#best-practices)
-- [Dependency Management](#dependency-management)
+- [Development](#development)
 
 <a id="code-of-conduct"></a>
 
@@ -69,11 +70,9 @@ We recommend also reading [GitHub Pull Requests: 10 Tips to Know](https://blog.m
 [about-pulls]: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests
 
 
-## Dependency Management
+## Development
 
-<a id="dependency-management"></a>
-
-### R
+<a id="Development"></a>
 
 This project uses `venv` for package management.
 
@@ -85,20 +84,27 @@ This project uses pip paired with venv to manage dependencies. Note that require
 
 1. Clone the github repository
 2. create a virtual environment:
+
     `python -m venv venv`
 3. Activate the virtual environment:
+
     `source venv/bin/activate`
 4. Install the necessary packages:
+
     `pip install -r requirements.txt`
+
     **Note** to update your package installations:
         `pip install -U -r requirements.txt`
 5. Install the necessary development packages:
+
     `pip install -r requirements-dev.txt`
 
 #### Set up pre commit
 
-1. Install precommit hooks to run formatting before committing.
-    ```
-    shell
-    pre-commit install
-    ```
+1. Install precommit hooks to run formatting before committing:
+
+    `pre-commit install`
+
+#### Major refactoring
+
+Major refactoring should be scoped with the main developers of the repo.
