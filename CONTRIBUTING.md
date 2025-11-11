@@ -3,7 +3,7 @@
 
 👍 First of all: Thank you for taking the time to contribute!
 
-The following is a set of guidelines for contributing to the nmdc_api_utilities repo. This guide is aimed primarily at the developers for the notebooks and this repo, although anyone is welcome to contribute.
+The following is a set of guidelines for contributing to the nmdc_api_utilities repo. This guide is aimed primarily at the developers, although anyone is welcome to contribute.
 
 Unlike other repos for data exploration, the code in this repo is used by many moving parts in the NMDC stack. We strive to hold best and interpretable practices for development, as small changes could impact downstream processes. If you want to experiment with large changes we suggest forking or meeting with the maintainers first.
 
@@ -32,7 +32,7 @@ Please carefully read NMDC's [Code of Conduct](https://github.com/microbiomedata
 
 <a id="reporting-issues"></a>
 
-### Reporting issues with exisiting notebooks
+### Reporting issues
 
 Please use the [Issue Tracker](https://github.com/microbiomedata/nmdc_api_utilities/issues/) for reporting problems or suggest enhancements for the package. Issues should be focused and actionable (a PR could close an issue). Complex issues should be broken down into simpler issues where possible.
 
