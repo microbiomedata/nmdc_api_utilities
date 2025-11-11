@@ -24,7 +24,7 @@ Then, make an issue associated with your changes. Connect the issue to a PR. Eac
     ```
 
 
-3. Edit and add modules as needed. Make sure you adhere to the current software structure and coding conventions as outlined in the [project documentation](./docs/DEVELOPMENT_GUIDELINES.md) (or ask a maintainer if unsure). If you have questions about this, please reach out.
+3. Edit and add modules as needed. Make sure you adhere to the current software structure and coding conventions (ask a maintainer if unsure). If you have questions about this, please reach out.
 
 4. Edit and add modules as needed. Make sure you adhere to the current software pattern. If you have questions about this, please reach out.
 
