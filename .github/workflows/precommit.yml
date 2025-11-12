@@ -1,6 +1,8 @@
 name: Run pre-commit hooks & push changes
 
 on:
+  push:
+    branches: [ main ]
   pull_request:
     paths:
       - '**.py'
