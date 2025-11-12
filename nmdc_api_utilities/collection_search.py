@@ -207,8 +207,7 @@ class CollectionSearch(NMDCSearch):
     def get_record_by_id(
         self,
         collection_id: str,
-        max_page_size: int = 100,
-        fields: str = "",
+        max_page_size: int = 100, fields: str = "",
     ) -> list[dict]:
         """
         Get a collection of data from the NMDC API by id.
