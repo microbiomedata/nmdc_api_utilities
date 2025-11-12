@@ -207,7 +207,9 @@ class CollectionSearch(NMDCSearch):
     def get_record_by_id(
         self,
         collection_id: str,
-        max_page_size: int = 100,fields: str = "",) -> list[dict]:
+        max_page_size: int = 100,
+        fields: str = "",
+    ) -> list[dict]:
         """
         Get a collection of data from the NMDC API by id.
 
@@ -240,7 +242,9 @@ class CollectionSearch(NMDCSearch):
             logger.error("API request failed", exc_info=True)
             raise RuntimeError("Failed to get collection by id from NMDC API") from e
         else:
-            logging.debug(f"API request response: {response.json()}\n API Status Code: {response.status_code}")
+            logging.debug(
+                f"API request response: {response.json()}\n API Status Code: {response.status_code}"
+            )
         results = response.json()
         return results
 

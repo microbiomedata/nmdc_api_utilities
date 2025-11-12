@@ -12,4 +12,3 @@ class CalibrationSearch(CollectionSearch):
 
     def __init__(self, env="prod"):
         super().__init__(collection_name="calibration_set", env=env)
-        
