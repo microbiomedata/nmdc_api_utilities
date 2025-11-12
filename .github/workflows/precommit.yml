@@ -5,6 +5,13 @@ on:
     paths:
       - '**.py'
 
+
+permissions:
+  contents: write
+  issues: write
+  workflows: write
+
+
 jobs:
   run-hooks:
     name: Run Pre-Commit hooks and push changes back
