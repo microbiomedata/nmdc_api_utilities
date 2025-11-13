@@ -537,3 +537,14 @@ def test_get_linked_instance_mutiple_types():
     )
 
     assert "nmdc:DataObject" and "nmdc:Study" in [x["type"] for x in result]
+
+
+def test_get_linked_instance_strings():
+    """
+    Test to get a record by a non-standard attribute.
+    """
+    ll_client = LinkedInstances(env=ENV)
+    id = "nmdc:bsm-11-002vgm56"
+    result = ll_client.linked_instances(types="nmdc:Study", ids=id)
+
+    assert len(result) == 2

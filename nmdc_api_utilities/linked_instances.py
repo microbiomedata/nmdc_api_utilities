@@ -13,13 +13,17 @@ class LinkedInstances(NMDCSearch):
     def __init__(self, env="prod"):
         super().__init__(env=env)
 
-    def linked_instances(self, types: list[str], ids: list[str]):
+    def linked_instances(
+        self, types: list[str] | str, ids: list[str] | str
+    ) -> list[dict]:
         """
         Given a list of sample ids, find the associated study ids.
 
         Parameters
         ----------
-        ids : list[str]
+        types : list[str] | str
+            The types of instances you want to return
+        ids : list[str] | str
             The ids to search for.
 
         Returns
@@ -27,6 +31,7 @@ class LinkedInstances(NMDCSearch):
         list[dict]
             A list of linked instance records.
         """
+        # highest number I could get to without a timeout
         batch_size = 250
         batch_records = []
         url = f"{self.base_url}/nmdcschema/linked_instances"
