@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from nmdc_api_utilities.linked_instances import LinkedInstances
 import logging
 from dotenv import load_dotenv
 import os
@@ -8,13 +7,14 @@ from itertools import chain
 load_dotenv()
 ENV = os.getenv("ENV")
 logging.basicConfig(level=logging.DEBUG)
+from nmdc_api_utilities.nmdc_search import NMDCSearch
 
 
 def test_get_linked_instance():
     """
     Test to get a record by a non-standard attribute.
     """
-    ll_client = LinkedInstances(env=ENV)
+    ll_client = NMDCSearch(env=ENV)
     ids = [
         "nmdc:bsm-11-002vgm56",
         "nmdc:bsm-11-006pnx90",
@@ -517,7 +517,7 @@ def test_get_linked_instance():
         "nmdc:bsm-11-189gwh62",
         "nmdc:bsm-11-189wmf56",
     ]
-    result = ll_client.linked_instances(types=["nmdc:Study"], ids=ids)
+    result = ll_client.get_linked_instances(types=["nmdc:Study"], ids=ids)
     # make a list of all unique _upstream_of ids in result
     result_ids = list(set(chain.from_iterable(x["_upstream_of"] for x in result)))
 
@@ -530,9 +530,9 @@ def test_get_linked_instance_mutiple_types():
     """
     Test to get a record by a non-standard attribute.
     """
-    ll_client = LinkedInstances(env=ENV)
+    ll_client = NMDCSearch(env=ENV)
     ids = ["nmdc:bsm-11-002vgm56", "nmdc:bsm-11-006pnx90"]
-    result = ll_client.linked_instances(
+    result = ll_client.get_linked_instances(
         types=["nmdc:Study", "nmdc:DataObject"], ids=ids
     )
 
@@ -543,16 +543,16 @@ def test_get_linked_instance_strings():
     """
     Test to get a record by a non-standard attribute.
     """
-    ll_client = LinkedInstances(env=ENV)
+    ll_client = NMDCSearch(env=ENV)
     id = "nmdc:bsm-11-002vgm56"
-    result = ll_client.linked_instances(types="nmdc:Study", ids=id)
+    result = ll_client.get_linked_instances(types="nmdc:Study", ids=id)
 
     assert len(result) == 2
 
 
 def test_association():
-    ll_client = LinkedInstances(env=ENV)
-    association = ll_client.associate_ids_with_linked_instances(
+    ll_client = NMDCSearch(env=ENV)
+    association = ll_client.get_linked_instances_and_associate_ids(
         types=["nmdc:Study"], ids=["nmdc:bsm-11-002vgm56", "nmdc:bsm-11-006pnx90"]
     )
     assert "nmdc:bsm-11-002vgm56" and "nmdc:bsm-11-006pnx90" in association.keys()
