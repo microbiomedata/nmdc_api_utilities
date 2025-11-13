@@ -28,7 +28,7 @@ def test_get_by_non_standard_attribute_case_insensitive():
     Test to get a record by a non-standard attribute. Using the wrong case.
     """
     is_client = InstrumentSearch(env=ENV)
-    instrument_name = "Agilent 7980A GC-MS"
+    instrument_name = "Agilent 7980A gc-ms"
     result = is_client.get_record_by_attribute(
         attribute_name="name", attribute_value=instrument_name
     )
