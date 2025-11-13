@@ -1,11 +1,13 @@
 name: dev tests
 
 on:
+  push:
+    branches: [ main ]
   pull_request:
+    types: [opened, synchronize, reopened]
   workflow_dispatch:
   schedule:
     - cron: '0 0 * * *'
-
 
 permissions:
   contents: write
@@ -34,7 +36,7 @@ jobs:
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
           CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
           ENV : "dev"
-        run: pytest -r nmdc_api_utilities/test/
+        run: pytest -x nmdc_api_utilities/test/
       - name: Create Issue
         if: failure() && github.event.pull_request == null && github.event_name == 'schedule'
         uses: actions/github-script@v6
