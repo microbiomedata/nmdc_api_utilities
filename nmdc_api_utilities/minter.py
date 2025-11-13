@@ -21,7 +21,7 @@ class Minter(NMDCSearch):
 
     def __init__(self, env="prod", auth: NMDCAuth = None):
         self.env = env
-        self.auth = auth or NMDCAuth()
+        self.auth = auth or NMDCAuth(env=env)
         super().__init__(env=env)
 
     @requires_auth

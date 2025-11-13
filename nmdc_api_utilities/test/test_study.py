@@ -54,6 +54,3 @@ def test_get_studies():
     studies = st.get_records(max_page_size=100)
     print(studies)
     assert len(studies) > 32
-
-
-test_find_study_by_attribute()
