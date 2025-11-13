@@ -42,7 +42,7 @@ def test_get_by_standard_attribute():
     Test to get a record by a standard attribute.
     """
     is_client = InstrumentSearch(env=ENV)
-    instrument_name = "Agilent 7980A GC-MS"
+    instrument_name = "Agilent 7980A"
     result = is_client.get_record_by_attribute(
         attribute_name="name", attribute_value=instrument_name
     )
