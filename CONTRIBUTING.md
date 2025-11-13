@@ -16,6 +16,7 @@ Unlike other repos for data exploration, the code in this repo is used by many m
     * [Making pull requests](#pull-requests)
 - [Best practices](#best-practices)
 - [Development](#development)
+- [Making a release](#release)
 
 <a id="code-of-conduct"></a>
 
@@ -108,3 +109,7 @@ This project uses pip paired with venv to manage dependencies. Note that require
 #### Major refactoring
 
 Major refactoring should be scoped with the main developers of the repo.
+
+<a id="release"></a>
+## Making a release
+Right now, only the maintainer of this repository can make a release to PyPi. This process may change in the future. If you need to make a release please contact Olivia Hess. 
