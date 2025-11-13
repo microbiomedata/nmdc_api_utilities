@@ -13,7 +13,7 @@ class LinkedInstances(NMDCSearch):
     def __init__(self, env="prod"):
         super().__init__(env=env)
 
-    def find_associated_ids(self, ids: list[str]):
+    def linked_instances(self, types: list[str], ids: list[str]):
         """
         Given a list of sample ids, find the associated study ids.
 
@@ -24,6 +24,8 @@ class LinkedInstances(NMDCSearch):
 
         Returns
         -------
+        list[dict]
+            A list of linked instance records.
         """
         batch_size = 250
         batch_records = []
@@ -31,7 +33,7 @@ class LinkedInstances(NMDCSearch):
         # split the ids into batches
         for i in range(0, len(ids), batch_size):
             batch = ids[i : i + batch_size]
-            params = {"types": "nmdc:Study", "ids": batch}
+            params = {"types": types, "ids": batch}
             response = requests.get(url=self.base_url, params=params)
             if response.status_code == 200:
                 batch_resources = response.json().get("resources", [])
@@ -40,7 +42,7 @@ class LinkedInstances(NMDCSearch):
                 if next_page:
                     while next_page:
                         params = {
-                            "types": "nmdc:Study",
+                            "types": types,
                             "ids": batch,
                             "page_token": next_page,
                         }
@@ -50,7 +52,7 @@ class LinkedInstances(NMDCSearch):
                             batch_records.extend(batch_resources)
                             next_page = response.json().get("next_page_token", None)
             else:
-                print(
-                    f"Error: Failed to fetch batch starting at index {i}, Status Code: {response.status_code}"
+                raise RuntimeError(
+                    f"Error fetching linked instances: {response.status_code} {response.text}"
                 )
         return batch_records
