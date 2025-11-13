@@ -28,7 +28,11 @@ class NMDCSearch:
             raise ValueError("env must be one of the following: prod, dev")
 
     def get_linked_instances(
-        self, ids: list[str] | str, hydrate: bool = False, types: list[str] | str = None
+        self,
+        ids: list[str] | str,
+        hydrate: bool = False,
+        types: list[str] | str = None,
+        max_page_size: int = 500,
     ) -> list[dict]:
         """
         Given a list of input ids, get the linked records from the NMDC API.
@@ -41,6 +45,8 @@ class NMDCSearch:
             Whether to include full documents in the response. The default is False.
         types : list[str] | str = None
             The types of instances you want to return. Default is None, which returns all types.
+        max_page_size : int = 500
+            The maximum number of records to return per page. Default is 500.
 
         Returns
         -------
@@ -54,7 +60,12 @@ class NMDCSearch:
         # split the ids into batches
         for i in range(0, len(ids), batch_size):
             batch = ids[i : i + batch_size]
-            params = {"types": types, "ids": batch, "hydrate": hydrate}
+            params = {
+                "types": types,
+                "ids": batch,
+                "hydrate": hydrate,
+                "max_page_size": max_page_size,
+            }
             response = requests.get(url=url, params=params)
             if response.status_code == 200:
                 batch_resources = response.json().get("resources", [])
@@ -79,7 +90,11 @@ class NMDCSearch:
         return batch_records
 
     def get_linked_instances_and_associate_ids(
-        self, ids: list[str] | str, types: list[str] | str = None, hydrate: bool = False
+        self,
+        ids: list[str] | str,
+        types: list[str] | str = None,
+        hydrate: bool = False,
+        max_page_size: int = 500,
     ) -> dict[str, list[str]]:
         """
         Given a list of ids, find the associated linked mongo records and
@@ -97,6 +112,8 @@ class NMDCSearch:
             The types of instances you want to return. Default is None, which returns all types.
         hydrate : bool = False
             Whether to include full documents in the response. The default is False.
+        max_page_size : int = 500
+            The maximum number of records to return per page. Default is 500.
 
         Returns
         -------
@@ -104,7 +121,9 @@ class NMDCSearch:
             A dictionary mapping each input id to a list of its linked instance records.
         """
         # get the linked instances
-        linked_instances = self.get_linked_instances(types=types, ids=ids)
+        linked_instances = self.get_linked_instances(
+            types=types, ids=ids, hydrate=hydrate, max_page_size=max_page_size
+        )
         association = {}
         # loop through the linked instances and build the association
         for record in linked_instances:
