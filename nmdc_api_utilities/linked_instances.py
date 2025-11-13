@@ -61,3 +61,36 @@ class LinkedInstances(NMDCSearch):
                     f"Error fetching linked instances: {response.status_code} {response.text}"
                 )
         return batch_records
+
+    def associate_ids_with_linked_instances(
+        self, types: list[str] | str, ids: list[str] | str
+    ) -> dict[str, list[str]]:
+        """
+        Given a list of ids, find the associated linked instances and
+        return a dictionary mapping each id to its linked instances.
+
+        Parameters
+        ----------
+        types : list[str] | str
+            The types of instances you want to return
+        ids : list[str] | str
+            The ids to search for.
+
+        Returns
+        -------
+        dict[str, list[str]]
+            A dictionary mapping each input id to a list of its linked instance records.
+        """
+        # get the linked instances
+        linked_instances = self.linked_instances(types=types, ids=ids)
+        association = {}
+        # loop through the linked instances and build the association
+        for record in linked_instances:
+            study_id = record["id"]
+            if "_upstream_of" in record:
+                for upstream_id in record["_upstream_of"]:
+                    if upstream_id not in association:
+                        association[upstream_id] = []
+                    association[upstream_id].append(study_id)
+
+        return association

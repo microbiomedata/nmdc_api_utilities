@@ -548,3 +548,11 @@ def test_get_linked_instance_strings():
     result = ll_client.linked_instances(types="nmdc:Study", ids=id)
 
     assert len(result) == 2
+
+
+def test_association():
+    ll_client = LinkedInstances(env=ENV)
+    association = ll_client.associate_ids_with_linked_instances(
+        types=["nmdc:Study"], ids=["nmdc:bsm-11-002vgm56", "nmdc:bsm-11-006pnx90"]
+    )
+    assert "nmdc:bsm-11-002vgm56" and "nmdc:bsm-11-006pnx90" in association.keys()
