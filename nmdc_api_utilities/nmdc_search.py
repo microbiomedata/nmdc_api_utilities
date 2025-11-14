@@ -26,6 +26,7 @@ class NMDCSearch:
             self.base_url = "https://api-dev.microbiomedata.org"
         else:
             raise ValueError("env must be one of the following: prod, dev")
+        self.env = env
 
     def get_linked_instances(
         self,
@@ -140,3 +141,67 @@ class NMDCSearch:
                     association[upstream_id].append(study_id)
 
         return association
+
+    def get_record_name_from_id(self, doc_id: str) -> str:
+        """
+        Used when you have an id but not the collection name.
+        Determine the schema class by which the id belongs to.
+
+        Parameters
+        ----------
+        doc_id: str
+            The id of the document.
+
+        Returns
+        -------
+        str
+            The collection name of the document.
+
+        Raises
+        ------
+        RuntimeError
+            If the API request fails.
+
+        """
+        url = f"{self.base_url}/nmdcschema/ids/{doc_id}/collection-name"
+        try:
+            response = requests.get(url)
+            response.raise_for_status()
+        except requests.exceptions.RequestException as e:
+            logger.error("API request failed", exc_info=True)
+            raise RuntimeError("Failed to get record from NMDC API") from e
+        else:
+            logging.debug(
+                f"API request response: {response.json()}\n API Status Code: {response.status_code}"
+            )
+
+        collection_name = response.json()["collection_name"]
+        return collection_name
+
+    def get_records_by_id(self, id: str) -> dict:
+        """
+        Retrieve records by their ID.
+
+        Parameters
+        ----------
+        id : str
+            The ID of the record to retrieve.
+
+        Returns
+        -------
+        dict
+            The record data.
+        """
+        collection_name = self.get_record_name_from_id(id)
+        url = f"{self.base_url}/{collection_name}/{id}"
+        try:
+            response = requests.get(url)
+            response.raise_for_status()
+        except requests.exceptions.RequestException as e:
+            logger.error("API request failed", exc_info=True)
+            raise RuntimeError("Failed to get record from NMDC API") from e
+        else:
+            logging.debug(
+                f"API request response: {response.json()}\n API Status Code: {response.status_code}"
+            )
+        return response.json()
