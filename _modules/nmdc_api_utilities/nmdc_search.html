@@ -1,0 +1,253 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>nmdc_api_utilities.nmdc_search &mdash; nmdc_api_utilities 2/1/2025 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=62c20008"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            nmdc_api_utilities
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../functions.html">NMDC API Utilities Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">NMDC API Utilities Usage Notes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">nmdc_api_utilities</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">nmdc_api_utilities.nmdc_search</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for nmdc_api_utilities.nmdc_search</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="NMDCSearch">
+<a class="viewcode-back" href="../../functions.html#nmdc_api_utilities.nmdc_search.NMDCSearch">[docs]</a>
+<span class="k">class</span> <span class="nc">NMDCSearch</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class for interacting with the NMDC API. Sets the base URL for the API based on the environment.</span>
+<span class="sd">    Environment is defaulted to the production isntance of the API. This functionality is in place for monthly testing of the runtime updates to the API.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    env: str</span>
+<span class="sd">        The environment to use. Default is prod. Must be one of the following:</span>
+<span class="sd">            prod</span>
+<span class="sd">            dev</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="s2">&quot;prod&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">env</span> <span class="o">==</span> <span class="s2">&quot;prod&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">=</span> <span class="s2">&quot;https://api.microbiomedata.org&quot;</span>
+        <span class="k">elif</span> <span class="n">env</span> <span class="o">==</span> <span class="s2">&quot;dev&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">=</span> <span class="s2">&quot;https://api-dev.microbiomedata.org&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;env must be one of the following: prod, dev&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="NMDCSearch.get_linked_instances">
+<a class="viewcode-back" href="../../functions.html#nmdc_api_utilities.nmdc_search.NMDCSearch.get_linked_instances">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_linked_instances</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">ids</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">hydrate</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">types</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">max_page_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Given a list of input ids, get the linked records from the NMDC API.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        ids : list[str] | str</span>
+<span class="sd">            The ids to search for.</span>
+<span class="sd">        hydrate : bool = False</span>
+<span class="sd">            Whether to include full documents in the response. The default is False.</span>
+<span class="sd">        types : list[str] | str = None</span>
+<span class="sd">            The types of instances you want to return. Default is None, which returns all types.</span>
+<span class="sd">        max_page_size : int = 500</span>
+<span class="sd">            The maximum number of records to return per page. Default is 500.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list[dict]</span>
+<span class="sd">            A list of linked instance records.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># highest number I could get to without a timeout</span>
+        <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">250</span>
+        <span class="n">batch_records</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="si">}</span><span class="s2">/nmdcschema/linked_instances&quot;</span>
+        <span class="c1"># split the ids into batches</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">ids</span><span class="p">),</span> <span class="n">batch_size</span><span class="p">):</span>
+            <span class="n">batch</span> <span class="o">=</span> <span class="n">ids</span><span class="p">[</span><span class="n">i</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="n">batch_size</span><span class="p">]</span>
+            <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;types&quot;</span><span class="p">:</span> <span class="n">types</span><span class="p">,</span>
+                <span class="s2">&quot;ids&quot;</span><span class="p">:</span> <span class="n">batch</span><span class="p">,</span>
+                <span class="s2">&quot;hydrate&quot;</span><span class="p">:</span> <span class="n">hydrate</span><span class="p">,</span>
+                <span class="s2">&quot;max_page_size&quot;</span><span class="p">:</span> <span class="n">max_page_size</span><span class="p">,</span>
+            <span class="p">}</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+                <span class="n">batch_resources</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;resources&quot;</span><span class="p">,</span> <span class="p">[])</span>
+                <span class="n">next_page</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;next_page_token&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+                <span class="n">batch_records</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">batch_resources</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">next_page</span><span class="p">:</span>
+                    <span class="k">while</span> <span class="n">next_page</span><span class="p">:</span>
+                        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+                            <span class="s2">&quot;types&quot;</span><span class="p">:</span> <span class="n">types</span><span class="p">,</span>
+                            <span class="s2">&quot;ids&quot;</span><span class="p">:</span> <span class="n">batch</span><span class="p">,</span>
+                            <span class="s2">&quot;page_token&quot;</span><span class="p">:</span> <span class="n">next_page</span><span class="p">,</span>
+                        <span class="p">}</span>
+                        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+                            <span class="n">batch_resources</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;resources&quot;</span><span class="p">,</span> <span class="p">[])</span>
+                            <span class="n">batch_records</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">batch_resources</span><span class="p">)</span>
+                            <span class="n">next_page</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;next_page_token&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Error fetching linked instances: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+        <span class="k">return</span> <span class="n">batch_records</span></div>
+
+
+<div class="viewcode-block" id="NMDCSearch.get_linked_instances_and_associate_ids">
+<a class="viewcode-back" href="../../functions.html#nmdc_api_utilities.nmdc_search.NMDCSearch.get_linked_instances_and_associate_ids">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_linked_instances_and_associate_ids</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">ids</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">types</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">hydrate</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">max_page_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Given a list of ids, find the associated linked mongo records and</span>
+<span class="sd">        return a dictionary mapping each id to its linked instances.</span>
+<span class="sd">        Example:</span>
+<span class="sd">            If I want to find all the Mongo records (studies, data objects, mass spectrometry records, etc) associated with the biosample `nmdc:bsm-11-002vgm56`</span>
+<span class="sd">            This function would return to me a dictionary where `nmdc:bsm-11-002vgm56` is the key, and the value is a list of ids that are related to it:</span>
+<span class="sd">            {&quot;nmdc:bsm-11-002vgm56&quot;: [&quot;nmdc:sty-11-nxrz9m96&quot;, &quot;nmdc:sty-11-34xj1150&quot;]}</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        ids : list[str] | str</span>
+<span class="sd">            The ids to search for.</span>
+<span class="sd">        types : list[str] | str = None</span>
+<span class="sd">            The types of instances you want to return. Default is None, which returns all types.</span>
+<span class="sd">        hydrate : bool = False</span>
+<span class="sd">            Whether to include full documents in the response. The default is False.</span>
+<span class="sd">        max_page_size : int = 500</span>
+<span class="sd">            The maximum number of records to return per page. Default is 500.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict[str, list[str]]</span>
+<span class="sd">            A dictionary mapping each input id to a list of its linked instance records.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># get the linked instances</span>
+        <span class="n">linked_instances</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_linked_instances</span><span class="p">(</span>
+            <span class="n">types</span><span class="o">=</span><span class="n">types</span><span class="p">,</span> <span class="n">ids</span><span class="o">=</span><span class="n">ids</span><span class="p">,</span> <span class="n">hydrate</span><span class="o">=</span><span class="n">hydrate</span><span class="p">,</span> <span class="n">max_page_size</span><span class="o">=</span><span class="n">max_page_size</span>
+        <span class="p">)</span>
+        <span class="n">association</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="c1"># loop through the linked instances and build the association</span>
+        <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">linked_instances</span><span class="p">:</span>
+            <span class="n">study_id</span> <span class="o">=</span> <span class="n">record</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="s2">&quot;_upstream_of&quot;</span> <span class="ow">in</span> <span class="n">record</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">upstream_id</span> <span class="ow">in</span> <span class="n">record</span><span class="p">[</span><span class="s2">&quot;_upstream_of&quot;</span><span class="p">]:</span>
+                    <span class="k">if</span> <span class="n">upstream_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">association</span><span class="p">:</span>
+                        <span class="n">association</span><span class="p">[</span><span class="n">upstream_id</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+                    <span class="n">association</span><span class="p">[</span><span class="n">upstream_id</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">study_id</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;_downstream_of&quot;</span> <span class="ow">in</span> <span class="n">record</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">upstream_id</span> <span class="ow">in</span> <span class="n">record</span><span class="p">[</span><span class="s2">&quot;_downstream_of&quot;</span><span class="p">]:</span>
+                    <span class="k">if</span> <span class="n">upstream_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">association</span><span class="p">:</span>
+                        <span class="n">association</span><span class="p">[</span><span class="n">upstream_id</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+                    <span class="n">association</span><span class="p">[</span><span class="n">upstream_id</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">study_id</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">association</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Olivia Hess.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
