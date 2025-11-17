@@ -178,30 +178,45 @@ class NMDCSearch:
         collection_name = response.json()["collection_name"]
         return collection_name
 
-    def get_records_by_id(self, id: str) -> dict:
+    def get_records_by_id(
+        self,
+        id: str,
+        filter: str = "",
+        max_page_size: int = 100,
+        fields: str = "",
+        all_pages: bool = False,
+    ) -> list[dict]:
         """
-        Retrieve records by their ID.
+        Retrieve collection level records by a single ID.
+        Example: Input nmdc:sty-11-8fb6t785 and get back multiple study records.
 
         Parameters
         ----------
         id : str
-            The ID of the record to retrieve.
+            The ID of the record type to retrieve.
+        filter : str
+            Additional filter to apply to the records.
+        max_page_size : int
+            The maximum number of records to return per page. Default is 100.
+        fields : str
+            Comma-separated list of fields to include in the response.
+        all_pages : bool
+            Whether to retrieve all pages of results. Default is False.
+
 
         Returns
         -------
-        dict
+        list[dict]
             The record data.
         """
+        # import in function to circumvent circular import error
+        from nmdc_api_utilities.collection_search import CollectionSearch
+
         collection_name = self.get_record_name_from_id(id)
-        url = f"{self.base_url}/{collection_name}/{id}"
-        try:
-            response = requests.get(url)
-            response.raise_for_status()
-        except requests.exceptions.RequestException as e:
-            logger.error("API request failed", exc_info=True)
-            raise RuntimeError("Failed to get record from NMDC API") from e
-        else:
-            logging.debug(
-                f"API request response: {response.json()}\n API Status Code: {response.status_code}"
-            )
-        return response.json()
+        cs = CollectionSearch(collection_name=collection_name, env=self.env)
+        return cs.get_records(
+            filter=filter,
+            max_page_size=max_page_size,
+            fields=fields,
+            all_pages=all_pages,
+        )
