@@ -169,7 +169,7 @@ class NMDCSearch:
             response.raise_for_status()
         except requests.exceptions.RequestException as e:
             logger.error("API request failed", exc_info=True)
-            raise RuntimeError("Failed to get record from NMDC API") from e
+            raise RuntimeError("Failed to get record name from NMDC API") from e
         else:
             logging.debug(
                 f"API request response: {response.json()}\n API Status Code: {response.status_code}"
@@ -220,3 +220,22 @@ class NMDCSearch:
             fields=fields,
             all_pages=all_pages,
         )
+
+    def get_schema_version(self) -> str:
+        """
+        Get the current NMDC schema version that the NMDC API is running off of.
+
+        Returns
+        -------
+        str
+            The NMDC schema version
+        """
+
+        url = f"{self.base_url}/version"
+        try:
+            response = requests.get(url)
+            response.raise_for_status()
+        except requests.exceptions.RequestException as e:
+            logger.error("API request failed", exc_info=True)
+            raise RuntimeError("Failed to version from NMDC API") from e
+        return response.json()["nmdc-schema"]

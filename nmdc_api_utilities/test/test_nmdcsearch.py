@@ -16,3 +16,10 @@ def test_get_records_by_id():
     )
     logging.debug(f"Record fetched by ID: {resp}")
     assert len(resp) == 20
+
+
+def test_get_schema_version():
+    nmdc_client = NMDCSearch(env=ENV)
+    schema_version = nmdc_client.get_schema_version()
+    logging.debug(f"NMDC Schema Version: {schema_version}")
+    assert isinstance(schema_version, str)
