@@ -23,3 +23,10 @@ def test_get_schema_version():
     schema_version = nmdc_client.get_schema_version()
     logging.debug(f"NMDC Schema Version: {schema_version}")
     assert isinstance(schema_version, str)
+
+
+def test_get_record_from_id():
+    nmdc_client = NMDCSearch(env=ENV)
+    record = nmdc_client.get_record_from_id("nmdc:sty-11-8fb6t785", fields="id,name")
+    logging.debug(f"Record fetched from ID: {record}")
+    assert record["id"] == "nmdc:sty-11-8fb6t785"

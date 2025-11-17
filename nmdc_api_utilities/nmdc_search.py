@@ -239,3 +239,35 @@ class NMDCSearch:
             logger.error("API request failed", exc_info=True)
             raise RuntimeError("Failed to version from NMDC API") from e
         return response.json()["nmdc-schema"]
+
+    def get_record_from_id(self, id: str, filter: str = "", fields: str = "") -> dict:
+        """
+        Given a record ID, retrieve the full record from the NMDC API.
+
+        Parameters
+        ----------
+        id : str
+            The ID of the record type to retrieve.
+        filter : str
+            Additional filter to apply to the records.
+        fields : str
+            Comma-separated list of fields to include in the response.
+
+        Returns
+        -------
+        dict
+            The full record data.
+        """
+        collection_name = self.get_record_name_from_id(id)
+        url = f"{self.base_url}/nmdcschema/{collection_name}/{id}"
+        params = {
+            "filter": filter,
+            "projection": fields,
+        }
+        try:
+            response = requests.get(url, params=params)
+            response.raise_for_status()
+        except requests.exceptions.RequestException as e:
+            logger.error("API request failed", exc_info=True)
+            raise RuntimeError(f"Failed to get record {id} from NMDC API") from e
+        return response.json()
