@@ -145,7 +145,7 @@ class NMDCSearch:
     def get_collection_name_from_id(self, doc_id: str) -> str:
         """
         Used when you have an id but not the collection name.
-        Determine the schema class by which the id belongs to.
+        Determine the collection the id is stored in.
 
         Parameters
         ----------
