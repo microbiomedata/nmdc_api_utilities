@@ -38,7 +38,7 @@ def test_get_record_from_id():
     assert record["id"] == "nmdc:sty-11-8fb6t785"
 
 
-def test_get_record_name_from_id():
+def test_get_collection_name_from_id():
     ch = NMDCSearch(env=ENV)
     result = ch.get_collection_name_from_id("nmdc:sty-11-8fb6t785")
     assert result == "study_set"
