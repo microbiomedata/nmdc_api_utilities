@@ -112,4 +112,4 @@ Major refactoring should be scoped with the main developers of the repo.
 
 <a id="release"></a>
 ## Making a release
-Right now, only the maintainer of this repository can make a release to PyPi. This process may change in the future. If you need to make a release please contact Olivia Hess. 
+Right now, only the maintainer of this repository can make a release to PyPi. This process may change in the future. If you need to make a release please contact Olivia Hess.
