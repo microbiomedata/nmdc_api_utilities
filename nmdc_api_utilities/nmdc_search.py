@@ -266,7 +266,7 @@ class NMDCSearch:
         dict
             The full record data.
         """
-        collection_name = self.get_record_name_from_id(id)
+        collection_name = self.get_collection_name_from_id(id)
         url = f"{self.base_url}/nmdcschema/{collection_name}/{id}"
         params = {
             "filter": filter,
