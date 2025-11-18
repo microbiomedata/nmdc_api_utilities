@@ -11,11 +11,17 @@ from nmdc_api_utilities.nmdc_search import NMDCSearch
 
 def test_get_records_by_id():
     nmdc_client = NMDCSearch(env=ENV)
-    resp = nmdc_client.get_records_by_id(
-        id="nmdc:sty-11-8fb6t785", max_page_size=20, fields="id,name", all_pages=False
-    )
-    logging.debug(f"Record fetched by ID: {resp}")
-    assert len(resp) == 20
+    ids = [
+        "nmdc:sty-11-8fb6t785",
+        "nmdc:bsm-11-002vgm56",
+        "nmdc:bsm-11-006pnx90",
+        "nmdc:bsm-11-00dkyf35",
+        "nmdc:dobj-11-0001ab10",
+        "nmdc:dobj-11-00095294",
+    ]
+    resp = nmdc_client.get_records_by_id(ids=ids, fields="id,name")
+
+    assert len(resp) == len(ids)
 
 
 def test_get_schema_version():

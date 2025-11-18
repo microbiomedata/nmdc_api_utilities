@@ -142,7 +142,7 @@ class NMDCSearch:
 
         return association
 
-    def get_record_name_from_id(self, doc_id: str) -> str:
+    def get_collection_name_from_id(self, doc_id: str) -> str:
         """
         Used when you have an id but not the collection name.
         Determine the schema class by which the id belongs to.
@@ -180,46 +180,54 @@ class NMDCSearch:
 
     def get_records_by_id(
         self,
-        id: str,
-        filter: str = "",
-        max_page_size: int = 100,
+        ids: list[str] | str,
         fields: str = "",
-        all_pages: bool = False,
     ) -> list[dict]:
         """
-        Retrieve collection level records by a single ID.
-        Example: Input nmdc:sty-11-8fb6t785 and get back multiple study records.
+        Retrieve records from the NMDC API based on a list of IDs.
+        The input ids can be from multiple collections.
+        Example: Input ["nmdc:sty-11-8fb6t785", "nmdc:bsm-11-002vgm56", "nmdc:dobj-11-00095294"] and get back each of these records in a list of dictionaries.
 
         Parameters
         ----------
-        id : str
+        ids : list[str] | str
             The ID of the record type to retrieve.
-        filter : str
-            Additional filter to apply to the records.
-        max_page_size : int
-            The maximum number of records to return per page. Default is 100.
         fields : str
             Comma-separated list of fields to include in the response.
-        all_pages : bool
-            Whether to retrieve all pages of results. Default is False.
-
 
         Returns
         -------
         list[dict]
-            The record data.
+            The record(s) data.
         """
-        # import in function to circumvent circular import error
-        from nmdc_api_utilities.collection_search import CollectionSearch
 
-        collection_name = self.get_record_name_from_id(id)
-        cs = CollectionSearch(collection_name=collection_name, env=self.env)
-        return cs.get_records(
-            filter=filter,
-            max_page_size=max_page_size,
-            fields=fields,
-            all_pages=all_pages,
-        )
+        resources = []
+        # sort the input ids
+        sorted_ids = sorted(ids) if isinstance(ids, list) else [ids]
+        id_dict = {}
+        # group ids by their collection subset nmdc:sty, nmdc:bsm, etc
+        for id in sorted_ids:
+            cur_group = id.split("-")[0]
+            if cur_group not in id_dict:
+                id_dict[cur_group] = []
+            id_dict[cur_group].append(id)
+
+        for cur_group in id_dict:
+            # process each group of ids
+            id_list = id_dict[cur_group]
+            # for each group, get the collection name from one of the ids
+            collection_name = self.get_collection_name_from_id(id_list[0])
+            # import in function to circumvent circular import error
+            from nmdc_api_utilities.collection_search import CollectionSearch
+
+            cs = CollectionSearch(collection_name=collection_name, env=self.env)
+            records = cs.get_batch_records(
+                id_list=id_list,
+                search_field="id",
+                fields=fields,
+            )
+            resources.extend(records)
+        return resources
 
     def get_schema_version(self) -> str:
         """
