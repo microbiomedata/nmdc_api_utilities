@@ -14,7 +14,13 @@ class JGISequencingProjectAPI(NMDCSearch):
     Class to interact with the NMDC API to get JGI samples.
     """
 
-    def __init__(self, env="prod", auth: NMDCAuth = None, client_id: str = None, client_secret: str = None):
+    def __init__(
+        self,
+        env="prod",
+        auth: NMDCAuth = None,
+        client_id: str = None,
+        client_secret: str = None,
+    ):
         self.env = env
         self.auth = auth or NMDCAuth()
         if client_id and client_secret:
@@ -22,7 +28,7 @@ class JGISequencingProjectAPI(NMDCSearch):
                 client_id=client_id, client_secret=client_secret, env=self.env
             )
         super().__init__(env=env)
-    
+
     @requires_auth
     def create_jgi_sequencing_project(
         self,
@@ -46,7 +52,7 @@ class JGISequencingProjectAPI(NMDCSearch):
         Exception
             If the creation fails.
         """
-        
+
         url = f"{self.base_url}/wf_file_staging/jgi_sequencing_projects"
         headers = {
             "accept": "application/json",
@@ -65,7 +71,7 @@ class JGISequencingProjectAPI(NMDCSearch):
             )
 
         return response.json()
-    
+
     @requires_auth
     def list_jgi_sequencing_projects(self, params: dict = None) -> dict:
         """
@@ -98,8 +104,8 @@ class JGISequencingProjectAPI(NMDCSearch):
                 f"API request response: {response.json()}\n API Status Code: {response.status_code}"
             )
 
-        return response.json()['resources']
-    
+        return response.json()["resources"]
+
     @requires_auth
     def get_jgi_sequencing_project(self, sequencing_project_name: str) -> dict:
         """
@@ -132,24 +138,30 @@ class JGISequencingProjectAPI(NMDCSearch):
             )
 
         return response.json()
-    
+
 
 class JGISampleSearchAPI(NMDCSearch):
     """
     Class to interact with the NMDC API to get JGI samples.
     """
 
-    def __init__(self, auth: NMDCAuth = None, env="prod", client_id: str = None, client_secret: str = None):
+    def __init__(
+        self,
+        auth: NMDCAuth = None,
+        env="prod",
+        client_id: str = None,
+        client_secret: str = None,
+    ):
         self.env = env
         self.auth = auth or NMDCAuth()
         if client_id and client_secret:
             self.auth = NMDCAuth(
                 client_id=client_id, client_secret=client_secret, env=self.env
             )
-        super().__init__(env=env) 
+        super().__init__(env=env)
 
     @requires_auth
-    def get_jgi_samples(self, query: dict=None) -> dict:
+    def get_jgi_samples(self, query: dict = None) -> dict:
         """
         Get a specific JGI sample by name.
 
@@ -163,14 +175,14 @@ class JGISampleSearchAPI(NMDCSearch):
         dict
             The JGI sample record.
         """
-        
+
         try:
             query = query if query else {}
-            query_params = {"filter": f'{json.dumps(query)}', "max_page_size": 20}
+            query_params = {"filter": f"{json.dumps(query)}", "max_page_size": 20}
             response = requests.get(
-                self.base_url + '/wf_file_staging/jgi_samples',
+                self.base_url + "/wf_file_staging/jgi_samples",
                 headers={"Authorization": f"Bearer {self.auth.get_token()}"},
-                params=query_params
+                params=query_params,
             )
             response.raise_for_status()
         except requests.RequestException as e:
@@ -181,11 +193,13 @@ class JGISampleSearchAPI(NMDCSearch):
                 f"API request response: {response.json()}\n API Status Code: {response.status_code}"
             )
 
-        return response.json()['resources']
-    
+        return response.json()["resources"]
+
     @requires_auth
-    def insert_jgi_sample(self, 
-                           jgi_sample: dict,) -> dict:
+    def insert_jgi_sample(
+        self,
+        jgi_sample: dict,
+    ) -> dict:
         """
         Insert JGI samples into the NMDC database.
 
@@ -223,11 +237,13 @@ class JGISampleSearchAPI(NMDCSearch):
             )
 
         return response.json()
-    
+
     @requires_auth
-    def update_jgi_sample(self,
-                          jgi_file_id: str,
-                          jgi_sample: dict,) -> dict:
+    def update_jgi_sample(
+        self,
+        jgi_file_id: str,
+        jgi_sample: dict,
+    ) -> dict:
         """
         Update JGI samples in the NMDC database.
 
@@ -270,20 +286,27 @@ class JGISampleSearchAPI(NMDCSearch):
             )
 
         return response.json()
-    
+
+
 class GlobusTaskAPI(NMDCSearch):
     """
     Class to interact with the NMDC API for Globus tasks.
     """
 
-    def __init__(self, env="prod", auth: NMDCAuth = None, client_id: str = None, client_secret: str = None):
+    def __init__(
+        self,
+        env="prod",
+        auth: NMDCAuth = None,
+        client_id: str = None,
+        client_secret: str = None,
+    ):
         self.env = env
         if client_id and client_secret:
             self.auth = NMDCAuth(
                 client_id=client_id, client_secret=client_secret, env=self.env
             )
-        super().__init__(env=env) 
-    
+        super().__init__(env=env)
+
     @requires_auth
     def get_globus_tasks(self, query: dict = None) -> dict:
         """
@@ -306,7 +329,7 @@ class GlobusTaskAPI(NMDCSearch):
             "Authorization": f"Bearer {self.auth.get_token()}",
         }
         query = query if query else {}
-        query_params = {"filter": f'{json.dumps(query)}', "max_page_size": 20}
+        query_params = {"filter": f"{json.dumps(query)}", "max_page_size": 20}
         try:
             response = requests.get(url, headers=headers, params=query_params)
             response.raise_for_status()
@@ -318,11 +341,13 @@ class GlobusTaskAPI(NMDCSearch):
                 f"API request response: {response.json()}\n API Status Code: {response.status_code}"
             )
 
-        return response.json()['resources']
-    
+        return response.json()["resources"]
+
     @requires_auth
-    def create_globus_task(self, 
-                           globus_task: dict,) -> dict:
+    def create_globus_task(
+        self,
+        globus_task: dict,
+    ) -> dict:
         """
         Create a new Globus task in the NMDC database.
 
@@ -341,7 +366,7 @@ class GlobusTaskAPI(NMDCSearch):
         Exception
             If the creation fails.
         """
-        
+
         url = f"{self.base_url}/wf_file_staging/globus_tasks"
         headers = {
             "accept": "application/json",
@@ -360,11 +385,13 @@ class GlobusTaskAPI(NMDCSearch):
             )
 
         return response.json()
-    
+
     @requires_auth
-    def update_globus_task(self, 
-                           globus_task_id: str,
-                           globus_task: dict,) -> dict:
+    def update_globus_task(
+        self,
+        globus_task_id: str,
+        globus_task: dict,
+    ) -> dict:
         """
         Update a Globus task in the NMDC database.
 
@@ -401,4 +428,3 @@ class GlobusTaskAPI(NMDCSearch):
             )
 
         return response.json()
-
