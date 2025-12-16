@@ -47,7 +47,6 @@ def mock_auth_response():
         mock_auth_api_response = MagicMock()
         mock_auth_api_response.get_token.return_value = "abcd123"
         mock_auth_api_response.has_credentials.return_value = True
-        # mock_auth_api_response.status_code.return_value = 200
         mock_auth.return_value = mock_auth_api_response
         mock_auth.status_code.return_value = 200
         yield mock_auth
