@@ -54,7 +54,8 @@ class CollectionSearch(NMDCSearch):
         logging.debug(f"get_records Filter: {filter}")
         filter = urllib.parse.quote(filter)
         logging.debug(f"get_records encoded Filter: {filter}")
-        url = f"{self.base_url}/nmdcschema/{self.collection_name}?filter={filter}&max_page_size={max_page_size}&projection={fields}"
+        url_prefix = f"{self.base_url}/nmdcschema/{self.collection_name}"
+        url = f"{url_prefix}?filter={filter}&max_page_size={max_page_size}&projection={fields}"
         try:
             response = requests.get(url)
             response.raise_for_status()
@@ -69,64 +70,10 @@ class CollectionSearch(NMDCSearch):
         results = response.json()["resources"]
         # otherwise, get all pages
         if all_pages:
-            results = self._get_all_pages(response, filter, max_page_size, fields)[
-                "resources"
-            ]
+            results = self._get_all_pages(
+                response, url_prefix, filter, max_page_size, fields
+            )["resources"]
 
-        return results
-
-    def _get_all_pages(
-        self,
-        response: requests.models.Response,
-        filter: str = "",
-        max_page_size: int = 100,
-        fields: str = "",
-    ):
-        """
-        Get all pages of data from the NMDC API. This is a helper function to get all pages of data from the NMDC API.
-
-        Parameters
-        ----------
-        response: requests.models.Response
-            The response object from the API request.
-        filter: str
-            The filter to apply to the query. Default is an empty string.
-        max_page_size: int
-            The maximum number of items to return per page. Default is 100.
-        fields: str
-            The fields to return. Default is all fields.
-
-        Returns
-        -------
-        list[dict]
-            A list of dictionaries containing the records.
-
-        Raises
-        ------
-        RuntimeError
-            If the API request fails.
-
-        """
-
-        results = response.json()
-
-        while True:
-            if response.json().get("next_page_token"):
-                next_page_token = response.json()["next_page_token"]
-            else:
-                break
-            url = f"{self.base_url}/nmdcschema/{self.collection_name}?filter={filter}&max_page_size={max_page_size}&projection={fields}&page_token={next_page_token}"
-            try:
-                response = requests.get(url)
-                response.raise_for_status()
-            except requests.exceptions.RequestException as e:
-                logger.error("API request failed", exc_info=True)
-                raise RuntimeError("Failed to get collection from NMDC API") from e
-            else:
-                logging.debug(
-                    f"API request response: {response.json()}\n API Status Code: {response.status_code}"
-                )
-            results = {"resources": results["resources"] + response.json()["resources"]}
         return results
 
     def get_record_by_filter(
