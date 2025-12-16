@@ -183,8 +183,8 @@ class JGISampleSearchAPI(NMDCSearch):
             self.auth = NMDCAuth(
                 client_id=client_id, client_secret=client_secret, env=self.env
             )
-        else:
-            raise ValueError("client_id and client_secret must be provided")
+        elif not self.auth.has_credentials():
+            raise ValueError("credentials must be provided")
         super().__init__(env=env)
 
     @requires_auth
@@ -351,8 +351,8 @@ class GlobusTaskAPI(NMDCSearch):
             self.auth = NMDCAuth(
                 client_id=client_id, client_secret=client_secret, env=self.env
             )
-        else:
-            raise ValueError("client_id and client_secret must be provided")
+        elif not self.auth.has_credentials():
+            raise ValueError("credentials must be provided")
         super().__init__(env=env)
 
     @requires_auth
