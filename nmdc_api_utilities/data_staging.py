@@ -27,8 +27,8 @@ class JGISequencingProjectAPI(NMDCSearch):
             self.auth = NMDCAuth(
                 client_id=client_id, client_secret=client_secret, env=self.env
             )
-        else:
-            raise ValueError("client_id and client_secret must be provided")
+        elif not self.auth.has_credentials():
+            raise ValueError("credentials must be provided")
         super().__init__(env=env)
 
     @requires_auth
@@ -188,7 +188,13 @@ class JGISampleSearchAPI(NMDCSearch):
         super().__init__(env=env)
 
     @requires_auth
-    def get_jgi_samples(self, query: dict = None) -> dict:
+    def get_jgi_samples(
+        self,
+        filter: str = None,
+        max_page_size: int = 20,
+        fields: str = "",
+        all_pages: bool = False,
+    ) -> dict:
         """
         Get a specific JGI sample by name.
 
@@ -204,8 +210,12 @@ class JGISampleSearchAPI(NMDCSearch):
         """
 
         try:
-            query = query if query else {}
-            query_params = {"filter": f"{json.dumps(query)}", "max_page_size": 20}
+            query = filter if filter else {}
+            query_params = {
+                "filter": f"{json.dumps(query)}",
+                "max_page_size": max_page_size,
+                "projection": fields,
+            }
             response = requests.get(
                 self.base_url + "/wf_file_staging/jgi_samples",
                 headers={"Authorization": f"Bearer {self.auth.get_token()}"},
@@ -219,6 +229,14 @@ class JGISampleSearchAPI(NMDCSearch):
             logging.debug(
                 f"API request response: {response.json()}\n API Status Code: {response.status_code}"
             )
+        if all_pages:
+            return self._get_all_pages(
+                response,
+                self.base_url + "/wf_file_staging/jgi_samples",
+                filter,
+                max_page_size,
+                fields,
+            )["resources"]
 
         return response.json()["resources"]
 
@@ -328,6 +346,7 @@ class GlobusTaskAPI(NMDCSearch):
         client_secret: str = None,
     ):
         self.env = env
+        self.auth = auth or NMDCAuth(env=self.env)
         if client_id and client_secret:
             self.auth = NMDCAuth(
                 client_id=client_id, client_secret=client_secret, env=self.env
@@ -337,7 +356,13 @@ class GlobusTaskAPI(NMDCSearch):
         super().__init__(env=env)
 
     @requires_auth
-    def get_globus_tasks(self, query: dict = None) -> dict:
+    def get_globus_tasks(
+        self,
+        filter: str = None,
+        max_page_size: int = 20,
+        fields: str = "",
+        all_pages: bool = False,
+    ) -> dict:
         """
         Get Globus tasks, optionally filtered by task_id.
 
@@ -357,7 +382,7 @@ class GlobusTaskAPI(NMDCSearch):
             "Content-Type": "application/json",
             "Authorization": f"Bearer {self.auth.get_token()}",
         }
-        query = query if query else {}
+        query = filter if filter else {}
         query_params = {"filter": f"{json.dumps(query)}", "max_page_size": 20}
         try:
             response = requests.get(url, headers=headers, params=query_params)
@@ -369,7 +394,10 @@ class GlobusTaskAPI(NMDCSearch):
             logging.debug(
                 f"API request response: {response.json()}\n API Status Code: {response.status_code}"
             )
-
+        if all_pages:
+            return self._get_all_pages(response, url, filter, max_page_size, fields)[
+                "resources"
+            ]
         return response.json()["resources"]
 
     @requires_auth

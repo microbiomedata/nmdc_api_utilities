@@ -13,9 +13,6 @@ from nmdc_api_utilities.decorators import AuthenticationError
 from unittest.mock import patch, MagicMock
 
 load_dotenv()
-ENV = os.getenv("ENV")
-CLIENT_ID = os.getenv("CLIENT_ID")
-CLIENT_SECRET = os.getenv("CLIENT_SECRET")
 
 
 @pytest.fixture
