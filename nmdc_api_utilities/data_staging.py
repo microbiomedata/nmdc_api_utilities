@@ -78,15 +78,25 @@ class JGISequencingProjectAPI(NMDCSearch):
 
     @requires_auth
     def list_jgi_sequencing_projects(
-        self, filter: str = None, max_page_size: int = 20
+        self,
+        filter: str = None,
+        max_page_size: int = 20,
+        fields: str = "",
+        all_pages: bool = False,
     ) -> dict:
         """
         List JGI sequencing projects from the NMDC database.
 
         Parameters
         ----------
-        params : dict, optional
-            Query parameters to filter the JGI sequencing projects.
+        filter : str, optional
+            Filter to apply to the API call.
+        max_page_size : int, optional
+            The maximum number of items to return per page.
+        fields : str, optional
+            The fields to return.
+        all_pages : bool, optional
+            True to return all pages. False to return the first page.
 
         Returns
         -------
@@ -103,6 +113,7 @@ class JGISequencingProjectAPI(NMDCSearch):
             query_params = {
                 "filter": f"{json.dumps(filter)}",
                 "max_page_size": max_page_size,
+                "projection": fields,
             }
             response = requests.get(url, headers=headers, params=query_params)
             response.raise_for_status()
@@ -113,6 +124,10 @@ class JGISequencingProjectAPI(NMDCSearch):
             logging.debug(
                 f"API request response: {response.json()}\n API Status Code: {response.status_code}"
             )
+        if all_pages:
+            return self._get_all_pages(response, url, filter, max_page_size, fields)[
+                "resources"
+            ]
 
         return response.json()["resources"]
 
