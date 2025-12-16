@@ -22,7 +22,7 @@ class JGISequencingProjectAPI(NMDCSearch):
         client_secret: str = None,
     ):
         self.env = env
-        self.auth = auth or NMDCAuth()
+        self.auth = auth or NMDCAuth(env=self.env)
         if client_id and client_secret:
             self.auth = NMDCAuth(
                 client_id=client_id, client_secret=client_secret, env=self.env
@@ -163,7 +163,7 @@ class JGISampleSearchAPI(NMDCSearch):
         client_secret: str = None,
     ):
         self.env = env
-        self.auth = auth or NMDCAuth()
+        self.auth = auth or NMDCAuth(env=self.env)
         if client_id and client_secret:
             self.auth = NMDCAuth(
                 client_id=client_id, client_secret=client_secret, env=self.env
