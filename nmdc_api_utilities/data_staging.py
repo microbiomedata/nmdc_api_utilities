@@ -36,6 +36,8 @@ class JGISequencingProjectAPI(NMDCSearch):
     ) -> dict:
         """
         Create a new JGI sequencing project in the NMDC database.
+        For more information on available keys, visit the NMDC API Docs
+        https://api.microbiomedata.org/docs#/Workflow%20management/create_sequencing_record_wf_file_staging_jgi_sequencing_projects_post
 
         Parameters
         ----------
@@ -202,6 +204,8 @@ class JGISampleSearchAPI(NMDCSearch):
     ) -> dict:
         """
         Insert JGI samples into the NMDC database.
+        For more information on keys, visit the NMDC API Docs
+        https://api.microbiomedata.org/docs#/Workflow%20management/create_jgi_sample_wf_file_staging_jgi_samples_post
 
         Parameters
         ----------
@@ -246,6 +250,8 @@ class JGISampleSearchAPI(NMDCSearch):
     ) -> dict:
         """
         Update JGI samples in the NMDC database.
+        For more information on available keys, visit the NMDC API Docs
+        https://api.microbiomedata.org/docs#/Workflow%20management/update_jgi_samples_wf_file_staging_jgi_samples__jdp_file_id__patch
 
         Parameters
         ----------
@@ -253,10 +259,6 @@ class JGISampleSearchAPI(NMDCSearch):
             The JGI file ID of the sample to be updated.
         jgi_sample : dict
             The updated JGI sample data.
-        client_id : str, optional
-            The client ID for authentication.
-        client_secret : str, optional
-            The client secret for authentication.
 
         Returns
         -------
@@ -397,6 +399,8 @@ class GlobusTaskAPI(NMDCSearch):
 
         Parameters
         ----------
+        globus_task_id: str
+            The ID of the Globus task to be updated.
         globus_task : dict
             The Globus task data to be updated.
 
