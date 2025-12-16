@@ -27,6 +27,8 @@ class JGISequencingProjectAPI(NMDCSearch):
             self.auth = NMDCAuth(
                 client_id=client_id, client_secret=client_secret, env=self.env
             )
+        else:
+            raise ValueError("client_id and client_secret must be provided")
         super().__init__(env=env)
 
     @requires_auth
@@ -75,7 +77,9 @@ class JGISequencingProjectAPI(NMDCSearch):
         return response.json()
 
     @requires_auth
-    def list_jgi_sequencing_projects(self, params: dict = None) -> dict:
+    def list_jgi_sequencing_projects(
+        self, filter: str = None, max_page_size: int = 20
+    ) -> dict:
         """
         List JGI sequencing projects from the NMDC database.
 
@@ -96,7 +100,11 @@ class JGISequencingProjectAPI(NMDCSearch):
             "Authorization": f"Bearer {self.auth.get_token()}",
         }
         try:
-            response = requests.get(url, headers=headers, params=params)
+            query_params = {
+                "filter": f"{json.dumps(filter)}",
+                "max_page_size": max_page_size,
+            }
+            response = requests.get(url, headers=headers, params=query_params)
             response.raise_for_status()
         except requests.RequestException as e:
             logger.error(f"Request failed: {e}")
@@ -160,6 +168,8 @@ class JGISampleSearchAPI(NMDCSearch):
             self.auth = NMDCAuth(
                 client_id=client_id, client_secret=client_secret, env=self.env
             )
+        else:
+            raise ValueError("client_id and client_secret must be provided")
         super().__init__(env=env)
 
     @requires_auth
@@ -307,6 +317,8 @@ class GlobusTaskAPI(NMDCSearch):
             self.auth = NMDCAuth(
                 client_id=client_id, client_secret=client_secret, env=self.env
             )
+        else:
+            raise ValueError("client_id and client_secret must be provided")
         super().__init__(env=env)
 
     @requires_auth
