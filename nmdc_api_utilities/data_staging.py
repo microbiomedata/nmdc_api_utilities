@@ -16,19 +16,18 @@ class JGISequencingProjectAPI(NMDCSearch):
 
     def __init__(
         self,
+        auth: NMDCAuth,
         env="prod",
-        auth: NMDCAuth = None,
-        client_id: str = None,
-        client_secret: str = None,
     ):
         self.env = env
-        self.auth = auth or NMDCAuth(env=self.env)
-        if client_id and client_secret:
-            self.auth = NMDCAuth(
-                client_id=client_id, client_secret=client_secret, env=self.env
-            )
-        elif not self.auth.has_credentials():
+        self.auth = auth
+        if not self.auth.has_credentials():
             raise ValueError("credentials must be provided")
+        # make sure the env is the same
+        if self.auth.env != self.env:
+            raise ValueError(
+                "`env` must be the same for NMDCAuth and JGISequencingProjectAPI"
+            )
         super().__init__(env=env)
 
     @requires_auth
@@ -132,7 +131,7 @@ class JGISequencingProjectAPI(NMDCSearch):
         return response.json()["resources"]
 
     @requires_auth
-    def get_jgi_sequencing_project(self, sequencing_project_name: str) -> dict:
+    def get_jgi_sequencing_project_by_name(self, project_name: str) -> dict:
         """
         Get a specific JGI sequencing project by name.
 
@@ -146,7 +145,7 @@ class JGISequencingProjectAPI(NMDCSearch):
         dict
             The JGI sequencing project record.
         """
-        url = f"{self.base_url}/wf_file_staging/jgi_sequencing_projects/{sequencing_project_name}"
+        url = f"{self.base_url}/wf_file_staging/jgi_sequencing_projects/{project_name}"
         headers = {
             "accept": "application/json",
             "Authorization": f"Bearer {self.auth.get_token()}",
@@ -172,43 +171,48 @@ class JGISampleSearchAPI(NMDCSearch):
 
     def __init__(
         self,
-        auth: NMDCAuth = None,
+        auth: NMDCAuth,
         env="prod",
-        client_id: str = None,
-        client_secret: str = None,
     ):
         self.env = env
-        self.auth = auth or NMDCAuth(env=self.env)
-        if client_id and client_secret:
-            self.auth = NMDCAuth(
-                client_id=client_id, client_secret=client_secret, env=self.env
-            )
-        elif not self.auth.has_credentials():
+        self.auth = auth
+        if not self.auth.has_credentials():
             raise ValueError("credentials must be provided")
+        # make sure the env is the same
+        if self.auth.env != self.env:
+            raise ValueError(
+                "`env` must be the same for NMDCAuth and JGISampleSearchAPI"
+            )
         super().__init__(env=env)
 
     @requires_auth
-    def get_jgi_samples(
+    def list_jgi_samples(
         self,
         filter: str = None,
         max_page_size: int = 20,
         fields: str = "",
         all_pages: bool = False,
-    ) -> dict:
+    ) -> list[dict]:
         """
         Get a specific JGI sample by name.
 
         Parameters
         ----------
-        sample_name : str
-            The name of the JGI sample to retrieve.
+        filter : str, optional
+            Filter to apply to the API call.
+        max_page_size : int, optional
+            The maximum number of items to return per page.
+        fields : str, optional
+            The fields to return.
+        all_pages : bool, optional
+            True to return all pages. False to return the first page.
 
         Returns
         -------
-        dict
-            The JGI sample record.
+        list[dict]
+            The list of JGI sample records.
         """
-
+        url = f"{self.base_url}/wf_file_staging/jgi_samples"
         try:
             query = filter if filter else {}
             query_params = {
@@ -217,7 +221,7 @@ class JGISampleSearchAPI(NMDCSearch):
                 "projection": fields,
             }
             response = requests.get(
-                self.base_url + "/wf_file_staging/jgi_samples",
+                url,
                 headers={"Authorization": f"Bearer {self.auth.get_token()}"},
                 params=query_params,
             )
@@ -231,11 +235,11 @@ class JGISampleSearchAPI(NMDCSearch):
             )
         if all_pages:
             return self._get_all_pages(
-                response,
-                self.base_url + "/wf_file_staging/jgi_samples",
-                filter,
-                max_page_size,
-                fields,
+                response=response,
+                url=url,
+                filter=filter,
+                max_page_size=max_page_size,
+                fields=fields,
             )["resources"]
 
         return response.json()["resources"]
@@ -252,7 +256,7 @@ class JGISampleSearchAPI(NMDCSearch):
 
         Parameters
         ----------
-        jgi_samples : list
+        jgi_sample : dict
             The JGI sample data to be inserted.
 
         Returns
@@ -271,7 +275,6 @@ class JGISampleSearchAPI(NMDCSearch):
             "Content-Type": "application/json",
             "Authorization": f"Bearer {self.auth.get_token()}",
         }
-        print(headers)
         try:
             response = requests.post(url, headers=headers, json=jgi_sample)
             response.raise_for_status()
@@ -340,41 +343,44 @@ class GlobusTaskAPI(NMDCSearch):
 
     def __init__(
         self,
+        auth: NMDCAuth,
         env="prod",
-        auth: NMDCAuth = None,
-        client_id: str = None,
-        client_secret: str = None,
     ):
         self.env = env
-        self.auth = auth or NMDCAuth(env=self.env)
-        if client_id and client_secret:
-            self.auth = NMDCAuth(
-                client_id=client_id, client_secret=client_secret, env=self.env
-            )
-        elif not self.auth.has_credentials():
+        self.auth = auth
+        if not self.auth.has_credentials():
             raise ValueError("credentials must be provided")
+        # make sure the env is the same
+        if self.auth.env != self.env:
+            raise ValueError("`env` must be the same for NMDCAuth and GlobusTaskAPI")
         super().__init__(env=env)
 
     @requires_auth
-    def get_globus_tasks(
+    def list_globus_tasks(
         self,
         filter: str = None,
         max_page_size: int = 20,
         fields: str = "",
         all_pages: bool = False,
-    ) -> dict:
+    ) -> list[dict]:
         """
-        Get Globus tasks, optionally filtered by task_id.
+        Get Globus tasks from the NMDC database.
 
         Parameters
         ----------
-        task_id : str, optional
-            The task_id to filter Globus tasks.
+        filter : str, optional
+            Filter to apply to the API call.
+        max_page_size : int, optional
+            The maximum number of items to return per page.
+        fields : str, optional
+            The fields to return.
+        all_pages : bool, optional
+            True to return all pages. False to return the first page.
 
         Returns
         -------
-        dict
-            The list of Globus tasks.
+        list[dict]
+            The list of Globus task records.
         """
         url = f"{self.base_url}/wf_file_staging/globus_tasks"
         headers = {
@@ -382,8 +388,11 @@ class GlobusTaskAPI(NMDCSearch):
             "Content-Type": "application/json",
             "Authorization": f"Bearer {self.auth.get_token()}",
         }
-        query = filter if filter else {}
-        query_params = {"filter": f"{json.dumps(query)}", "max_page_size": 20}
+        query_params = {
+            "filter": f"{json.dumps(filter)}",
+            "max_page_size": max_page_size,
+            "projection": fields,
+        }
         try:
             response = requests.get(url, headers=headers, params=query_params)
             response.raise_for_status()
@@ -407,6 +416,8 @@ class GlobusTaskAPI(NMDCSearch):
     ) -> dict:
         """
         Create a new Globus task in the NMDC database.
+        For more information on available keys, visit the NMDC API Docs
+        https://api.microbiomedata.org/docs#/Workflow%20management/create_globus_tasks_wf_file_staging_globus_tasks_post
 
         Parameters
         ----------
@@ -451,6 +462,8 @@ class GlobusTaskAPI(NMDCSearch):
     ) -> dict:
         """
         Update a Globus task in the NMDC database.
+        For more information on available keys, visit the NMDC API Docs
+        https://api.microbiomedata.org/docs#/Workflow%20management/update_globus_tasks_wf_file_staging_globus_tasks__task_id__patch
 
         Parameters
         ----------

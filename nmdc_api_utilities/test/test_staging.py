@@ -5,14 +5,8 @@ from nmdc_api_utilities.data_staging import (
     GlobusTaskAPI,
 )
 
-from nmdc_api_utilities.auth import NMDCAuth
-import os
-from dotenv import load_dotenv
 import pytest
-from nmdc_api_utilities.decorators import AuthenticationError
 from unittest.mock import patch, MagicMock
-
-load_dotenv()
 
 
 @pytest.fixture
@@ -34,7 +28,7 @@ def mock_patch_response():
 
 
 @pytest.fixture
-def mock_auth_response():
+def mock_auth():
     with patch(
         "nmdc_api_utilities.data_staging.NMDCAuth",
         env="dev",
@@ -49,39 +43,39 @@ def mock_auth_response():
         yield mock_auth
 
 
-def test_list_sequencing_projects(mock_auth_response, mock_get_response):
+def test_list_sequencing_projects(mock_auth, mock_get_response):
     mock_get_response.return_value.json.return_value = {
         "resources": [{"key1": "value1"}, {"key2": "value2"}]
     }
-    client = JGISequencingProjectAPI(env="dev", client_id="test", client_secret="test")
+    client = JGISequencingProjectAPI(env="dev", auth=mock_auth)
     url = "http://example.com/api"
     result = client.list_jgi_sequencing_projects()
     assert result == [{"key1": "value1"}, {"key2": "value2"}]
     mock_get_response.assert_called_once()
 
 
-def test_create_sequencing_project(mock_auth_response, mock_post_response):
+def test_create_sequencing_project(mock_auth, mock_post_response):
     mock_post_response.return_value.json.return_value = {"resources": {"key": "value"}}
-    client = JGISequencingProjectAPI(env="dev", client_id="test", client_secret="test")
+    client = JGISequencingProjectAPI(env="dev", auth=mock_auth)
     url = "http://example.com/api"
     result = client.create_jgi_sequencing_project({"key": "value"})
     assert result == {"resources": {"key": "value"}}
     mock_post_response.assert_called_once()
 
 
-def test_get_sequencing_projects(mock_auth_response, mock_get_response):
+def test_get_sequencing_projects(mock_auth, mock_get_response):
     mock_get_response.return_value.json.return_value = {"resources": {"key1": "value1"}}
-    client = JGISequencingProjectAPI(env="dev", client_id="test", client_secret="test")
+    client = JGISequencingProjectAPI(env="dev", auth=mock_auth)
     result = client.list_jgi_sequencing_projects()
     assert result == {"key1": "value1"}
     mock_get_response.assert_called_once()
 
 
-def test_get_jgi_samples(mock_auth_response, mock_get_response):
+def test_get_jgi_samples(mock_auth, mock_get_response):
     mock_get_response.return_value.json.return_value = {"resources": {"key1": "value1"}}
-    client = JGISampleSearchAPI(env="dev", client_id="test", client_secret="test")
+    client = JGISampleSearchAPI(env="dev", auth=mock_auth)
     url = "http://example.com/api"
-    result = client.get_jgi_samples({"key1": "value1"})
+    result = client.list_jgi_samples({"key1": "value1"})
     assert result == {"key1": "value1"}
     mock_get_response.assert_called_once()
     assert len(mock_get_response.call_args) == 2
@@ -91,45 +85,45 @@ def test_get_jgi_samples(mock_auth_response, mock_get_response):
     )
 
 
-def test_insert_jgi_samples(mock_auth_response, mock_post_response):
+def test_insert_jgi_samples(mock_auth, mock_post_response):
     mock_post_response.return_value.json.return_value = {"resources": {"key": "value"}}
-    client = JGISampleSearchAPI(env="dev", client_id="test", client_secret="test")
+    client = JGISampleSearchAPI(env="dev", auth=mock_auth)
     result = client.insert_jgi_sample({"key": "value"})
     assert result == {"resources": {"key": "value"}}
     mock_post_response.assert_called_once()
 
 
-def test_update_jgi_samples(mock_auth_response, mock_patch_response):
+def test_update_jgi_samples(mock_auth, mock_patch_response):
     mock_patch_response.return_value.json.return_value = {"resources": {"key": "value"}}
-    client = JGISampleSearchAPI(env="dev", client_id="test", client_secret="test")
+    client = JGISampleSearchAPI(env="dev", auth=mock_auth)
     result = client.update_jgi_sample("sample", {"sample": "value"})
     assert result == {"resources": {"key": "value"}}
     mock_patch_response.assert_called_once()
 
 
-def test_get_globus_tasks(mock_get_response, mock_auth_response):
+def test_get_globus_tasks(mock_get_response, mock_auth):
     mock_get_response.return_value.json.return_value = {
         "resources": {"task_id": "54321", "task_status": "ACTIVE"}
     }
-    client = GlobusTaskAPI(env="dev", client_id="test", client_secret="test")
-    result = client.get_globus_tasks({"task_status": {"$ne": "SUCCEEDED"}})
+    client = GlobusTaskAPI(env="dev", auth=mock_auth)
+    result = client.list_globus_tasks({"task_status": {"$ne": "SUCCEEDED"}})
     assert result == {"task_id": "54321", "task_status": "ACTIVE"}
 
 
-def test_create_globus_task(mock_auth_response, mock_post_response):
+def test_create_globus_task(mock_auth, mock_post_response):
     mock_post_response.return_value.json.return_value = {
         "resources": {"task_id": "54321", "task_status": "ACTIVE"}
     }
-    client = GlobusTaskAPI(env="dev", client_id="test", client_secret="test")
+    client = GlobusTaskAPI(env="dev", auth=mock_auth)
     result = client.create_globus_task({"task_id": "54321", "task_status": "ACTIVE"})
     assert result == {"resources": {"task_id": "54321", "task_status": "ACTIVE"}}
 
 
-def test_update_globus_task(mock_auth_response, mock_patch_response):
+def test_update_globus_task(mock_auth, mock_patch_response):
     mock_patch_response.return_value.json.return_value = {
         "resources": {"task_id": "54321", "task_status": "ACTIVE"}
     }
-    client = GlobusTaskAPI(env="dev", client_id="test", client_secret="test")
+    client = GlobusTaskAPI(env="dev", auth=mock_auth)
     result = client.update_globus_task(
         "54321", {"task_id": "54321", "task_status": "ACTIVE"}
     )
