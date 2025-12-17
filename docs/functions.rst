@@ -34,13 +34,6 @@ Functional Search Module
    :undoc-members:
    :show-inheritance:
 
-Collection Helpers
-~~~~~~~~~~~~~~~~~~~
-.. autoclass:: nmdc_api_utilities.collection_helpers.CollectionHelpers
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 Metadata Module
 ~~~~~~~~~~~~~~~~
 .. autoclass:: nmdc_api_utilities.metadata.Metadata

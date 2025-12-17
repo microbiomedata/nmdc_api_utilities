@@ -14,7 +14,7 @@ CLIENT_SECRET = os.getenv("CLIENT_SECRET")
 
 def test_mint_single():
     """Test minting a single ID (default behavior)."""
-    auth = NMDCAuth(client_id=CLIENT_ID, client_secret=CLIENT_SECRET)
+    auth = NMDCAuth(client_id=CLIENT_ID, client_secret=CLIENT_SECRET, env=ENV)
     mint = Minter(env=ENV, auth=auth)
     results = mint.mint("nmdc:DataObject")
     assert results
@@ -24,7 +24,7 @@ def test_mint_single():
 
 def test_mint_single_explicit():
     """Test minting a single ID with explicit count=1."""
-    auth = NMDCAuth(client_id=CLIENT_ID, client_secret=CLIENT_SECRET)
+    auth = NMDCAuth(client_id=CLIENT_ID, client_secret=CLIENT_SECRET, env=ENV)
     mint = Minter(env=ENV, auth=auth)
     results = mint.mint("nmdc:DataObject", count=1)
     assert results
@@ -34,7 +34,7 @@ def test_mint_single_explicit():
 
 def test_mint_multiple():
     """Test minting multiple IDs."""
-    auth = NMDCAuth(client_id=CLIENT_ID, client_secret=CLIENT_SECRET)
+    auth = NMDCAuth(client_id=CLIENT_ID, client_secret=CLIENT_SECRET, env=ENV)
     mint = Minter(env=ENV, auth=auth)
     results = mint.mint("nmdc:DataObject", count=3)
     assert results
@@ -47,7 +47,7 @@ def test_mint_multiple():
 
 def test_mint_invalid_count():
     """Test that invalid count values raise ValueError."""
-    auth = NMDCAuth(client_id=CLIENT_ID, client_secret=CLIENT_SECRET)
+    auth = NMDCAuth(client_id=CLIENT_ID, client_secret=CLIENT_SECRET, env=ENV)
     mint = Minter(env=ENV, auth=auth)
     with pytest.raises(ValueError, match="count must be at least 1"):
         mint.mint("nmdc:DataObject", count=0)

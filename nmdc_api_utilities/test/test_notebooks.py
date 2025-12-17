@@ -27,7 +27,6 @@ def test_nom_notebook():
         dataobject["processed_nom_url"] = dataobject.pop("url")
 
     # convert to df
-    # processed_nom_df = dp_client.convert_to_df(processed_nom)
 
     # since we are querying the WorkflowExecution collection, we need to create an instance of it
     we_client = WorkflowExecutionSearch(env=ENV)
