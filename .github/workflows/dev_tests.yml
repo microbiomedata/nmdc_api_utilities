@@ -48,6 +48,6 @@ jobs:
               owner,
               repo,
               title: "notebook_api_utilities production tests failed",
-              body: "The production tests have failed in the latest run. Please investigate the issue.",
+              body: "The dev tests have failed in the latest run. Please investigate the issue.",
               labels: ["report", "automated issue"]
             });
