@@ -1,0 +1,1273 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NMDC API Utilities Documentation &mdash; nmdc_api_utilities 2/1/2025 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=62c20008"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="NMDC API Utilities Usage Notes" href="usage.html" />
+    <link rel="prev" title="NMDC API Utilities Documentation" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            nmdc_api_utilities
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">NMDC API Utilities Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#nmdc-module">NMDC Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nmdc_api_utilities.nmdc_search.NMDCSearch"><code class="docutils literal notranslate"><span class="pre">NMDCSearch</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.nmdc_search.NMDCSearch.get_collection_name_from_id"><code class="docutils literal notranslate"><span class="pre">NMDCSearch.get_collection_name_from_id()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.nmdc_search.NMDCSearch.get_linked_instances"><code class="docutils literal notranslate"><span class="pre">NMDCSearch.get_linked_instances()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.nmdc_search.NMDCSearch.get_linked_instances_and_associate_ids"><code class="docutils literal notranslate"><span class="pre">NMDCSearch.get_linked_instances_and_associate_ids()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.nmdc_search.NMDCSearch.get_record_from_id"><code class="docutils literal notranslate"><span class="pre">NMDCSearch.get_record_from_id()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.nmdc_search.NMDCSearch.get_records_by_id"><code class="docutils literal notranslate"><span class="pre">NMDCSearch.get_records_by_id()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.nmdc_search.NMDCSearch.get_schema_version"><code class="docutils literal notranslate"><span class="pre">NMDCSearch.get_schema_version()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#collection-module">Collection Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nmdc_api_utilities.collection_search.CollectionSearch"><code class="docutils literal notranslate"><span class="pre">CollectionSearch</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.collection_search.CollectionSearch.check_ids_exist"><code class="docutils literal notranslate"><span class="pre">CollectionSearch.check_ids_exist()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.collection_search.CollectionSearch.get_batch_records"><code class="docutils literal notranslate"><span class="pre">CollectionSearch.get_batch_records()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.collection_search.CollectionSearch.get_record_by_attribute"><code class="docutils literal notranslate"><span class="pre">CollectionSearch.get_record_by_attribute()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.collection_search.CollectionSearch.get_record_by_filter"><code class="docutils literal notranslate"><span class="pre">CollectionSearch.get_record_by_filter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.collection_search.CollectionSearch.get_record_by_id"><code class="docutils literal notranslate"><span class="pre">CollectionSearch.get_record_by_id()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.collection_search.CollectionSearch.get_records"><code class="docutils literal notranslate"><span class="pre">CollectionSearch.get_records()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#latitude-longitude-module">Latitude Longitude Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nmdc_api_utilities.lat_long_filters.LatLongFilters"><code class="docutils literal notranslate"><span class="pre">LatLongFilters</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.lat_long_filters.LatLongFilters.get_record_by_lat_long"><code class="docutils literal notranslate"><span class="pre">LatLongFilters.get_record_by_lat_long()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.lat_long_filters.LatLongFilters.get_record_by_latitude"><code class="docutils literal notranslate"><span class="pre">LatLongFilters.get_record_by_latitude()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.lat_long_filters.LatLongFilters.get_record_by_longitude"><code class="docutils literal notranslate"><span class="pre">LatLongFilters.get_record_by_longitude()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#functional-search-module">Functional Search Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nmdc_api_utilities.functional_search.FunctionalSearch"><code class="docutils literal notranslate"><span class="pre">FunctionalSearch</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.functional_search.FunctionalSearch.get_functional_annotations"><code class="docutils literal notranslate"><span class="pre">FunctionalSearch.get_functional_annotations()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.functional_search.FunctionalSearch.get_records"><code class="docutils literal notranslate"><span class="pre">FunctionalSearch.get_records()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#metadata-module">Metadata Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nmdc_api_utilities.metadata.Metadata"><code class="docutils literal notranslate"><span class="pre">Metadata</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.metadata.Metadata.submit_json"><code class="docutils literal notranslate"><span class="pre">Metadata.submit_json()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.metadata.Metadata.validate_json"><code class="docutils literal notranslate"><span class="pre">Metadata.validate_json()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#mint-module">Mint Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nmdc_api_utilities.minter.Minter"><code class="docutils literal notranslate"><span class="pre">Minter</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.minter.Minter.mint"><code class="docutils literal notranslate"><span class="pre">Minter.mint()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#biosample-subclass">BioSample Subclass</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nmdc_api_utilities.biosample_search.BiosampleSearch"><code class="docutils literal notranslate"><span class="pre">BiosampleSearch</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#calibration-subclass">Calibration Subclass</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nmdc_api_utilities.calibration_search.CalibrationSearch"><code class="docutils literal notranslate"><span class="pre">CalibrationSearch</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#chemical-entity-subclass">Chemical Entity Subclass</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nmdc_api_utilities.chemical_entity_search.ChemicalEntitySearch"><code class="docutils literal notranslate"><span class="pre">ChemicalEntitySearch</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#collecting-biosamples-from-site-subclass">Collecting Biosamples From Site Subclass</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nmdc_api_utilities.collecting_biosamples_from_site_search.CollectingBiosamplesFromSiteSearch"><code class="docutils literal notranslate"><span class="pre">CollectingBiosamplesFromSiteSearch</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#configuration-subclass">Configuration Subclass</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nmdc_api_utilities.configuration_search.ConfigurationSearch"><code class="docutils literal notranslate"><span class="pre">ConfigurationSearch</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#data-generation-subclass">Data Generation Subclass</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nmdc_api_utilities.data_generation_search.DataGenerationSearch"><code class="docutils literal notranslate"><span class="pre">DataGenerationSearch</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#data-object-subclass">Data Object Subclass</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nmdc_api_utilities.data_object_search.DataObjectSearch"><code class="docutils literal notranslate"><span class="pre">DataObjectSearch</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.data_object_search.DataObjectSearch.get_data_objects_for_studies"><code class="docutils literal notranslate"><span class="pre">DataObjectSearch.get_data_objects_for_studies()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#field-research-from-site-subclass">Field Research From Site Subclass</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nmdc_api_utilities.field_research_site_search.FieldResearchSiteSearch"><code class="docutils literal notranslate"><span class="pre">FieldResearchSiteSearch</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#instrument-subclass">Instrument Subclass</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nmdc_api_utilities.instrument_search.InstrumentSearch"><code class="docutils literal notranslate"><span class="pre">InstrumentSearch</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#manifest-subclass">Manifest Subclass</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nmdc_api_utilities.manifest_search.ManifestSearch"><code class="docutils literal notranslate"><span class="pre">ManifestSearch</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#material-subclass">Material Subclass</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nmdc_api_utilities.material_processing_search.MaterialProcessingSearch"><code class="docutils literal notranslate"><span class="pre">MaterialProcessingSearch</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#processed-sample-subclass">Processed Sample Subclass</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nmdc_api_utilities.processed_sample_search.ProcessedSampleSearch"><code class="docutils literal notranslate"><span class="pre">ProcessedSampleSearch</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#protocol-execution-subclass">Protocol Execution Subclass</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nmdc_api_utilities.protocol_execution_search.ProtocolExecutionSearch"><code class="docutils literal notranslate"><span class="pre">ProtocolExecutionSearch</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#storage-process-subclass">Storage Process Subclass</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nmdc_api_utilities.storage_process_search.StorageProcessSearch"><code class="docutils literal notranslate"><span class="pre">StorageProcessSearch</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#study-subclass">Study Subclass</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nmdc_api_utilities.study_search.StudySearch"><code class="docutils literal notranslate"><span class="pre">StudySearch</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#functional-annotation-agg-subclass">Functional Annotation Agg Subclass</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nmdc_api_utilities.functional_annotation_agg_search.FunctionalAnnotationAggSearch"><code class="docutils literal notranslate"><span class="pre">FunctionalAnnotationAggSearch</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#workflow-execution-subclass">Workflow Execution Subclass</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nmdc_api_utilities.workflow_execution_search.WorkflowExecutionSearch"><code class="docutils literal notranslate"><span class="pre">WorkflowExecutionSearch</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#data-processing">Data Processing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nmdc_api_utilities.data_processing.DataProcessing"><code class="docutils literal notranslate"><span class="pre">DataProcessing</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.data_processing.DataProcessing.build_filter"><code class="docutils literal notranslate"><span class="pre">DataProcessing.build_filter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.data_processing.DataProcessing.convert_to_df"><code class="docutils literal notranslate"><span class="pre">DataProcessing.convert_to_df()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.data_processing.DataProcessing.extract_field"><code class="docutils literal notranslate"><span class="pre">DataProcessing.extract_field()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.data_processing.DataProcessing.merge_dataframes"><code class="docutils literal notranslate"><span class="pre">DataProcessing.merge_dataframes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.data_processing.DataProcessing.merge_df"><code class="docutils literal notranslate"><span class="pre">DataProcessing.merge_df()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.data_processing.DataProcessing.rename_columns"><code class="docutils literal notranslate"><span class="pre">DataProcessing.rename_columns()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.data_processing.DataProcessing.split_list"><code class="docutils literal notranslate"><span class="pre">DataProcessing.split_list()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#utils">Utils</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nmdc_api_utilities.utils.Utils"><code class="docutils literal notranslate"><span class="pre">Utils</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#auth">Auth</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nmdc_api_utilities.auth.NMDCAuth"><code class="docutils literal notranslate"><span class="pre">NMDCAuth</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.auth.NMDCAuth.get_token"><code class="docutils literal notranslate"><span class="pre">NMDCAuth.get_token()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.auth.NMDCAuth.has_credentials"><code class="docutils literal notranslate"><span class="pre">NMDCAuth.has_credentials()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#decorators">Decorators</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nmdc_api_utilities.decorators"><code class="docutils literal notranslate"><span class="pre">decorators</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">NMDC API Utilities Usage Notes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">nmdc_api_utilities</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">NMDC API Utilities Documentation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/functions.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="nmdc-api-utilities-documentation">
+<h1>NMDC API Utilities Documentation<a class="headerlink" href="#nmdc-api-utilities-documentation" title="Link to this heading"></a></h1>
+<p>Welcome to NMDC API Utilities documentation. This package provides tools for interacting with the NMDC API.</p>
+<p>The Collection Module is a foundational component that defines common behaviors and properties between collections.</p>
+<p>Each subclass is designed to be more user-friendly and specific for certain collections, making them the recommended entry points for using the package. Each function of CollectionSearch can be accessed via each subclass.</p>
+<section id="nmdc-module">
+<h2>NMDC Module<a class="headerlink" href="#nmdc-module" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nmdc_api_utilities.nmdc_search.NMDCSearch">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nmdc_api_utilities.nmdc_search.</span></span><span class="sig-name descname"><span class="pre">NMDCSearch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'prod'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/nmdc_search.html#NMDCSearch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.nmdc_search.NMDCSearch" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Base class for interacting with the NMDC API. Sets the base URL for the API based on the environment.
+Environment is defaulted to the production isntance of the API. This functionality is in place for monthly testing of the runtime updates to the API.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>env</strong> (<em>str</em>) – <dl class="simple">
+<dt>The environment to use. Default is prod. Must be one of the following:</dt><dd><p>prod
+dev</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.nmdc_search.NMDCSearch.get_collection_name_from_id">
+<span class="sig-name descname"><span class="pre">get_collection_name_from_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">doc_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/nmdc_api_utilities/nmdc_search.html#NMDCSearch.get_collection_name_from_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.nmdc_search.NMDCSearch.get_collection_name_from_id" title="Link to this definition"></a></dt>
+<dd><p>Used when you have an id but not the collection name.
+Determine the collection the id is stored in.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>doc_id</strong> (<em>str</em>) – The id of the document.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The collection name of the document.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – If the API request fails.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.nmdc_search.NMDCSearch.get_linked_instances">
+<span class="sig-name descname"><span class="pre">get_linked_instances</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hydrate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">types</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_page_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">500</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/nmdc_api_utilities/nmdc_search.html#NMDCSearch.get_linked_instances"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.nmdc_search.NMDCSearch.get_linked_instances" title="Link to this definition"></a></dt>
+<dd><p>Given a list of input ids, get the linked records from the NMDC API.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ids</strong> (<em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>str</em>) – The ids to search for.</p></li>
+<li><p><strong>hydrate</strong> (<em>bool = False</em>) – Whether to include full documents in the response. The default is False.</p></li>
+<li><p><strong>types</strong> (<em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>str = None</em>) – The types of instances you want to return. Default is None, which returns all types.</p></li>
+<li><p><strong>max_page_size</strong> (<em>int = 500</em>) – The maximum number of records to return per page. Default is 500.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of linked instance records.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[dict]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.nmdc_search.NMDCSearch.get_linked_instances_and_associate_ids">
+<span class="sig-name descname"><span class="pre">get_linked_instances_and_associate_ids</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">types</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hydrate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_page_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">500</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/nmdc_api_utilities/nmdc_search.html#NMDCSearch.get_linked_instances_and_associate_ids"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.nmdc_search.NMDCSearch.get_linked_instances_and_associate_ids" title="Link to this definition"></a></dt>
+<dd><p>Given a list of ids, find the associated linked mongo records and
+return a dictionary mapping each id to its linked instances.
+.. rubric:: Example</p>
+<p>If I want to find all the Mongo records (studies, data objects, mass spectrometry records, etc) associated with the biosample <cite>nmdc:bsm-11-002vgm56</cite>
+This function would return to me a dictionary where <cite>nmdc:bsm-11-002vgm56</cite> is the key, and the value is a list of ids that are related to it:
+{“nmdc:bsm-11-002vgm56”: [“nmdc:sty-11-nxrz9m96”, “nmdc:sty-11-34xj1150”]}</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ids</strong> (<em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>str</em>) – The ids to search for.</p></li>
+<li><p><strong>types</strong> (<em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>str = None</em>) – The types of instances you want to return. Default is None, which returns all types.</p></li>
+<li><p><strong>hydrate</strong> (<em>bool = False</em>) – Whether to include full documents in the response. The default is False.</p></li>
+<li><p><strong>max_page_size</strong> (<em>int = 500</em>) – The maximum number of records to return per page. Default is 500.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary mapping each input id to a list of its linked instance records.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str, list[str]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.nmdc_search.NMDCSearch.get_record_from_id">
+<span class="sig-name descname"><span class="pre">get_record_from_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/nmdc_api_utilities/nmdc_search.html#NMDCSearch.get_record_from_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.nmdc_search.NMDCSearch.get_record_from_id" title="Link to this definition"></a></dt>
+<dd><p>Given a record ID, retrieve the full record from the NMDC API.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>str</em>) – The ID of the record type to retrieve.</p></li>
+<li><p><strong>filter</strong> (<em>str</em>) – Additional filter to apply to the records.</p></li>
+<li><p><strong>fields</strong> (<em>str</em>) – Comma-separated list of fields to include in the response.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The full record data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.nmdc_search.NMDCSearch.get_records_by_id">
+<span class="sig-name descname"><span class="pre">get_records_by_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/nmdc_api_utilities/nmdc_search.html#NMDCSearch.get_records_by_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.nmdc_search.NMDCSearch.get_records_by_id" title="Link to this definition"></a></dt>
+<dd><p>Retrieve records from the NMDC API based on a list of IDs.
+The input ids can be from multiple collections.
+Example: Input [“nmdc:sty-11-8fb6t785”, “nmdc:bsm-11-002vgm56”, “nmdc:dobj-11-00095294”] and get back each of these records in a list of dictionaries.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ids</strong> (<em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>str</em>) – The ID of the record type to retrieve.</p></li>
+<li><p><strong>fields</strong> (<em>str</em>) – Comma-separated list of fields to include in the response.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The record(s) data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[dict]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.nmdc_search.NMDCSearch.get_schema_version">
+<span class="sig-name descname"><span class="pre">get_schema_version</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/nmdc_api_utilities/nmdc_search.html#NMDCSearch.get_schema_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.nmdc_search.NMDCSearch.get_schema_version" title="Link to this definition"></a></dt>
+<dd><p>Get the current NMDC schema version that the NMDC API is running off of.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The NMDC schema version</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="collection-module">
+<h2>Collection Module<a class="headerlink" href="#collection-module" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nmdc_api_utilities.collection_search.CollectionSearch">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nmdc_api_utilities.collection_search.</span></span><span class="sig-name descname"><span class="pre">CollectionSearch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">collection_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'prod'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/collection_search.html#CollectionSearch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.collection_search.CollectionSearch" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nmdc_api_utilities.nmdc_search.NMDCSearch" title="nmdc_api_utilities.nmdc_search.NMDCSearch"><code class="xref py py-class docutils literal notranslate"><span class="pre">NMDCSearch</span></code></a></p>
+<p>Class to interact with the NMDC API to get collections of data. Must know the collection name to query.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.collection_search.CollectionSearch.check_ids_exist">
+<span class="sig-name descname"><span class="pre">check_ids_exist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_missing_ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/nmdc_api_utilities/collection_search.html#CollectionSearch.check_ids_exist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.collection_search.CollectionSearch.check_ids_exist" title="Link to this definition"></a></dt>
+<dd><p>Check if the IDs exist in the collection.</p>
+<p>This method constructs a query to the API to filter the collection based on the given IDs, and checks if all IDs exist in the collection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ids</strong> (<em>list</em>) – A list of IDs to check if they exist in the collection.</p></li>
+<li><p><strong>chunk_size</strong> (<em>int</em>) – The number of IDs to check in each query. Default is 100.</p></li>
+<li><p><strong>return_missing_ids</strong> (<em>bool</em>) – If True, and if ids are missing in the collection, return the list of IDs that do not exist in the collection. Default is False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if all IDs exist in the collection, False otherwise.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.collection_search.CollectionSearch.get_batch_records">
+<span class="sig-name descname"><span class="pre">get_batch_records</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_field</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/nmdc_api_utilities/collection_search.html#CollectionSearch.get_batch_records"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.collection_search.CollectionSearch.get_batch_records" title="Link to this definition"></a></dt>
+<dd><p>Get a batch of records from the collection by a list of input IDs. This method is used to identify records that include any of the IDs from the input list, matching the search_field.
+This is using the MongoDB filter keyword $in to identify other records that include the input IDs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id_list</strong> (<em>list</em>) – A list of IDs to get records for.</p></li>
+<li><p><strong>search_field</strong> (<em>str</em>) – The field to search for. This must match a field from the NMDC Schema.</p></li>
+<li><p><strong>chunk_size</strong> (<em>int</em>) – The number of IDs to get in each query. Default is 100.</p></li>
+<li><p><strong>fields</strong> (<em>str</em>) – The fields to return. Default is all fields.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of dictionaries containing the records.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[dict]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.collection_search.CollectionSearch.get_record_by_attribute">
+<span class="sig-name descname"><span class="pre">get_record_by_attribute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attribute_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attribute_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_page_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">25</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_pages</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exact_match</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/collection_search.html#CollectionSearch.get_record_by_attribute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.collection_search.CollectionSearch.get_record_by_attribute" title="Link to this definition"></a></dt>
+<dd><p>Get a record from the NMDC API by its name. Records can be filtered based on their attributes found <a class="reference external" href="https://microbiomedata.github.io/nmdc-schema/">https://microbiomedata.github.io/nmdc-schema/</a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>attribute_name</strong> (<em>str</em>) – The name of the attribute to filter by.</p></li>
+<li><p><strong>attribute_value</strong> (<em>str</em>) – The value of the attribute to filter by.</p></li>
+<li><p><strong>max_page_size</strong> (<em>int</em>) – The number of results to return per page. Default is 25.</p></li>
+<li><p><strong>fields</strong> (<em>str</em>) – The fields to return. Default is all fields.</p></li>
+<li><p><strong>all_pages</strong> (<em>bool</em>) – True to return all pages. False to return the first page. Default is False.</p></li>
+<li><p><strong>exact_match</strong> (<em>bool</em>) – This var is used to determine if the inputted attribute value is an exact match or a partial match. Default is False, meaning the user does not need to input an exact match. Under the hood this is used to determine if the inputted attribute value should be wrapped in a regex expression.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of dictionaries containing the records.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[dict]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.collection_search.CollectionSearch.get_record_by_filter">
+<span class="sig-name descname"><span class="pre">get_record_by_filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_page_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">25</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_pages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/nmdc_api_utilities/collection_search.html#CollectionSearch.get_record_by_filter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.collection_search.CollectionSearch.get_record_by_filter" title="Link to this definition"></a></dt>
+<dd><p>Get a record from the NMDC API by its id.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filter</strong> (<em>str</em>) – <dl class="simple">
+<dt>The filter to use to query the collection. Must be in MonogDB query format.</dt><dd><p>Resources found here - <a class="reference external" href="https://www.mongodb.com/docs/manual/reference/method/db.collection.find/#std-label-method-find-query">https://www.mongodb.com/docs/manual/reference/method/db.collection.find/#std-label-method-find-query</a></p>
+</dd>
+</dl>
+<p>Example: {“name”:{“my record name”}}</p>
+</p></li>
+<li><p><strong>max_page_size</strong> (<em>int</em>) – The number of results to return per page. Default is 25.</p></li>
+<li><p><strong>fields</strong> (<em>str</em>) – The fields to return. Default is all fields.
+Example: “id,name,description,alternative_identifiers,file_size_bytes,md5_checksum,data_object_type,url,type”</p></li>
+<li><p><strong>all_pages</strong> (<em>bool</em>) – True to return all pages. False to return the first page. Default is False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of dictionaries containing the records.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[dict]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.collection_search.CollectionSearch.get_record_by_id">
+<span class="sig-name descname"><span class="pre">get_record_by_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">collection_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_page_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/nmdc_api_utilities/collection_search.html#CollectionSearch.get_record_by_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.collection_search.CollectionSearch.get_record_by_id" title="Link to this definition"></a></dt>
+<dd><p>Get a collection of data from the NMDC API by id.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>collection_id</strong> (<em>str</em>) – The id of the collection.</p></li>
+<li><p><strong>max_page_size</strong> (<em>int</em>) – The maximum number of items to return per page. Default is 100.</p></li>
+<li><p><strong>fields</strong> (<em>str</em>) – The fields to return. Default is all fields.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of dictionaries containing the records.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[dict]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – If the API request fails.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.collection_search.CollectionSearch.get_records">
+<span class="sig-name descname"><span class="pre">get_records</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_page_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_pages</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/nmdc_api_utilities/collection_search.html#CollectionSearch.get_records"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.collection_search.CollectionSearch.get_records" title="Link to this definition"></a></dt>
+<dd><p>Get a collection of data from the NMDC API. Generic function to get a collection of data from the NMDC API. Can provide a specific filter if desired.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filter</strong> (<em>str</em>) – The filter to apply to the query. Default is an empty string.</p></li>
+<li><p><strong>max_page_size</strong> (<em>int</em>) – The maximum number of items to return per page. Default is 100.</p></li>
+<li><p><strong>fields</strong> (<em>str</em>) – The fields to return. Default is all fields.</p></li>
+<li><p><strong>all_pages</strong> (<em>bool</em>) – True to return all pages. False to return the first page. Default is False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of dictionaries containing the records.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[dict]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – If the API request fails.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="latitude-longitude-module">
+<h2>Latitude Longitude Module<a class="headerlink" href="#latitude-longitude-module" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nmdc_api_utilities.lat_long_filters.LatLongFilters">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nmdc_api_utilities.lat_long_filters.</span></span><span class="sig-name descname"><span class="pre">LatLongFilters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">collection_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'prod'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/lat_long_filters.html#LatLongFilters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.lat_long_filters.LatLongFilters" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nmdc_api_utilities.collection_search.CollectionSearch" title="nmdc_api_utilities.collection_search.CollectionSearch"><code class="xref py py-class docutils literal notranslate"><span class="pre">CollectionSearch</span></code></a></p>
+<p>Class to interact with the NMDC API to filter sets by latitude and longitude.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.lat_long_filters.LatLongFilters.get_record_by_lat_long">
+<span class="sig-name descname"><span class="pre">get_record_by_lat_long</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lat_comparison</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">long_comparison</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">longitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">25</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_pages</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/nmdc_api_utilities/lat_long_filters.html#LatLongFilters.get_record_by_lat_long"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.lat_long_filters.LatLongFilters.get_record_by_lat_long" title="Link to this definition"></a></dt>
+<dd><p>Get a record from the NMDC API by latitude and longitude comparison.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lat_comparison</strong> (<em>str</em>) – <dl class="simple">
+<dt>The comparison to use to query the record for latitude. MUST BE ONE OF THE FOLLOWING:</dt><dd><p>eq    - Matches values that are equal to the given value.
+gt    - Matches if values are greater than the given value.
+lt    - Matches if values are less than the given value.
+gte    - Matches if values are greater or equal to the given value.
+lte - Matches if values are less or equal to the given value.</p>
+</dd>
+</dl>
+</p></li>
+<li><p><strong>long_comparison</strong> (<em>str</em>) – <dl class="simple">
+<dt>The comparison to use to query the record for longitude. MUST BE ONE OF THE FOLLOWING:</dt><dd><p>eq    - Matches values that are equal to the given value.
+gt    - Matches if values are greater than the given value.
+lt    - Matches if values are less than the given value.
+gte    - Matches if values are greater or equal to the given value.
+lte - Matches if values are less or equal to the given value.</p>
+</dd>
+</dl>
+</p></li>
+<li><p><strong>latitude</strong> (<em>float</em>) – The latitude of the record to query.</p></li>
+<li><p><strong>longitude</strong> (<em>float</em>) – The longitude of the record to query.</p></li>
+<li><p><strong>page_size</strong> (<em>int</em>) – The number of results to return per page. Default is 25.</p></li>
+<li><p><strong>fields</strong> (<em>str</em>) – The fields to return. Default is all fields.
+Example: “id,name,description,alternative_identifiers,file_size_bytes,md5_checksum,data_object_type,url,type”</p></li>
+<li><p><strong>all_pages</strong> (<em>bool</em>) – True to return all pages. False to return the first page. Default is False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of records.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[dict]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the comparison is not one of the allowed comparisons.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.lat_long_filters.LatLongFilters.get_record_by_latitude">
+<span class="sig-name descname"><span class="pre">get_record_by_latitude</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">comparison</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">25</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_pages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/lat_long_filters.html#LatLongFilters.get_record_by_latitude"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.lat_long_filters.LatLongFilters.get_record_by_latitude" title="Link to this definition"></a></dt>
+<dd><p>Get a record from the NMDC API by latitude comparison.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>comparison</strong> (<em>str</em>) – <dl class="simple">
+<dt>The comparison to use to query the record. MUST BE ONE OF THE FOLLOWING:</dt><dd><p>eq    - Matches values that are equal to the given value.
+gt    - Matches if values are greater than the given value.
+lt    - Matches if values are less than the given value.
+gte    - Matches if values are greater or equal to the given value.
+lte - Matches if values are less or equal to the given value.</p>
+</dd>
+</dl>
+</p></li>
+<li><p><strong>latitude</strong> (<em>float</em>) – The latitude of the record to query.</p></li>
+<li><p><strong>page_size</strong> (<em>int</em>) – The number of results to return per page. Default is 25.</p></li>
+<li><p><strong>fields</strong> (<em>str</em>) – The fields to return. Default is all fields.
+Example: “id,name,description,alternative_identifiers,file_size_bytes,md5_checksum,data_object_type,url,type”</p></li>
+<li><p><strong>all_pages</strong> (<em>bool</em>) – True to return all pages. False to return the first page. Default is False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of records.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[dict]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the comparison is not one of the allowed comparisons.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.lat_long_filters.LatLongFilters.get_record_by_longitude">
+<span class="sig-name descname"><span class="pre">get_record_by_longitude</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">comparison</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">longitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">25</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_pages</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/nmdc_api_utilities/lat_long_filters.html#LatLongFilters.get_record_by_longitude"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.lat_long_filters.LatLongFilters.get_record_by_longitude" title="Link to this definition"></a></dt>
+<dd><p>Get a record from the NMDC API by longitude comparison.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>comparison</strong> (<em>str</em>) – <dl class="simple">
+<dt>The comparison to use to query the record. MUST BE ONE OF THE FOLLOWING:</dt><dd><p>eq    - Matches values that are equal to the given value.
+gt    - Matches if values are greater than the given value.
+lt    - Matches if values are less than the given value.
+gte    - Matches if values are greater or equal to the given value.
+lte - Matches if values are less or equal to the given value.</p>
+</dd>
+</dl>
+</p></li>
+<li><p><strong>longitude</strong> (<em>float</em>) – The longitude of the record to query.</p></li>
+<li><p><strong>page_size</strong> (<em>int</em>) – The number of results to return per page. Default is 25.</p></li>
+<li><p><strong>fields</strong> (<em>str</em>) – The fields to return. Default is all fields.
+Example: “id,name,description,alternative_identifiers,file_size_bytes,md5_checksum,data_object_type,url,type”</p></li>
+<li><p><strong>all_pages</strong> (<em>bool</em>) – True to return all pages. False to return the first page. Default is False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of records.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[dict]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the comparison is not one of the allowed comparisons.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="functional-search-module">
+<h2>Functional Search Module<a class="headerlink" href="#functional-search-module" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nmdc_api_utilities.functional_search.FunctionalSearch">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nmdc_api_utilities.functional_search.</span></span><span class="sig-name descname"><span class="pre">FunctionalSearch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'prod'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/functional_search.html#FunctionalSearch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.functional_search.FunctionalSearch" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class to interact with the NMDC API to filter functional annotations by KEGG, COG, or PFAM ids.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.functional_search.FunctionalSearch.get_functional_annotations">
+<span class="sig-name descname"><span class="pre">get_functional_annotations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">annotation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotation_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">25</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_pages</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/nmdc_api_utilities/functional_search.html#FunctionalSearch.get_functional_annotations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.functional_search.FunctionalSearch.get_functional_annotations" title="Link to this definition"></a></dt>
+<dd><p>Get a record from the NMDC API by id. ID types can be KEGG, COG, or PFAM.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>annotation</strong> (<em>str</em>) – The data base id to query the function annotations.</p></li>
+<li><p><strong>annotation_type</strong> – <dl class="simple">
+<dt>The type of id to query. MUST be one of the following:</dt><dd><p>KEGG
+COG
+PFAM</p>
+</dd>
+</dl>
+</p></li>
+<li><p><strong>page_size</strong> (<em>int</em>) – The number of results to return per page. Default is 25.</p></li>
+<li><p><strong>fields</strong> (<em>str</em>) – The fields to return. Default is all fields.
+Example: “id,name”</p></li>
+<li><p><strong>all_pages</strong> (<em>bool</em>) – True to return all pages. False to return the first page. Default is False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of functional annotations.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[dict]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.functional_search.FunctionalSearch.get_records">
+<span class="sig-name descname"><span class="pre">get_records</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_page_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_pages</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/nmdc_api_utilities/functional_search.html#FunctionalSearch.get_records"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.functional_search.FunctionalSearch.get_records" title="Link to this definition"></a></dt>
+<dd><p>Get a collection of data from the NMDC API. Generic function to get a collection of data from the NMDC API. Can provide a specific filter if desired.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filter</strong> (<em>str</em>) – The filter to apply to the query. Default is an empty string.</p></li>
+<li><p><strong>max_page_size</strong> (<em>int</em>) – The maximum number of items to return per page. Default is 100.</p></li>
+<li><p><strong>fields</strong> (<em>str</em>) – The fields to return. Default is all fields.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of records.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[dict]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="metadata-module">
+<h2>Metadata Module<a class="headerlink" href="#metadata-module" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nmdc_api_utilities.metadata.Metadata">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nmdc_api_utilities.metadata.</span></span><span class="sig-name descname"><span class="pre">Metadata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'prod'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#nmdc_api_utilities.auth.NMDCAuth" title="nmdc_api_utilities.auth.NMDCAuth"><span class="pre">NMDCAuth</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/metadata.html#Metadata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.metadata.Metadata" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nmdc_api_utilities.nmdc_search.NMDCSearch" title="nmdc_api_utilities.nmdc_search.NMDCSearch"><code class="xref py py-class docutils literal notranslate"><span class="pre">NMDCSearch</span></code></a></p>
+<p>Class to interact with the NMDC API metadata endpoints. These deal mostly with metadata management, including validation and submission.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>auth</strong> (<a class="reference internal" href="#nmdc_api_utilities.auth.NMDCAuth" title="nmdc_api_utilities.auth.NMDCAuth"><em>NMDCAuth</em></a>) – An instance of the NMDCAuth class for authentication.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.metadata.Metadata.submit_json">
+<span class="sig-name descname"><span class="pre">submit_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_records</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="_modules/nmdc_api_utilities/metadata.html#Metadata.submit_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.metadata.Metadata.submit_json" title="Link to this definition"></a></dt>
+<dd><p>Submits a json file to the NMDC API metadata.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>json_records</strong> (<em>list</em><em>[</em><em>dict</em><em>] </em><em>| </em><em>str</em>) – The json records to be submitted. Can be passed in as a file path or list of dictionaries.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The HTTP status code of the submission request.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If the submission fails.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.metadata.Metadata.validate_json">
+<span class="sig-name descname"><span class="pre">validate_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_records</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="_modules/nmdc_api_utilities/metadata.html#Metadata.validate_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.metadata.Metadata.validate_json" title="Link to this definition"></a></dt>
+<dd><p>Validates a json file using the NMDC json validate endpoint.</p>
+<p>If the validation passes, the method returns without any side effects.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>json_records</strong> (<em>list</em><em>[</em><em>dict</em><em>] </em><em>| </em><em>str</em>) – The json records to be validated. Can be passed in as a file path or list of dictionaries.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The HTTP status code of the validation request.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If the validation fails.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="mint-module">
+<h2>Mint Module<a class="headerlink" href="#mint-module" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nmdc_api_utilities.minter.Minter">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nmdc_api_utilities.minter.</span></span><span class="sig-name descname"><span class="pre">Minter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'prod'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#nmdc_api_utilities.auth.NMDCAuth" title="nmdc_api_utilities.auth.NMDCAuth"><span class="pre">NMDCAuth</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/minter.html#Minter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.minter.Minter" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nmdc_api_utilities.nmdc_search.NMDCSearch" title="nmdc_api_utilities.nmdc_search.NMDCSearch"><code class="xref py py-class docutils literal notranslate"><span class="pre">NMDCSearch</span></code></a></p>
+<p>Class to interact with the NMDC API to mint new identifiers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>auth</strong> (<a class="reference internal" href="#nmdc_api_utilities.auth.NMDCAuth" title="nmdc_api_utilities.auth.NMDCAuth"><em>NMDCAuth</em></a>) – An instance of the NMDCAuth class for authentication.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.minter.Minter.mint">
+<span class="sig-name descname"><span class="pre">mint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nmdc_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_secret</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/nmdc_api_utilities/minter.html#Minter.mint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.minter.Minter.mint" title="Link to this definition"></a></dt>
+<dd><p>Mint new identifier(s) for a collection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nmdc_type</strong> (<em>str</em>) – The type of NMDC ID to mint (e.g., ‘nmdc:MassSpectrometry’,
+‘nmdc:DataObject’).</p></li>
+<li><p><strong>count</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of identifiers to mint. Default is 1.</p></li>
+<li><p><strong>client_id</strong> (<em>str</em>) – The client ID for authentication. Kept for backwards compatibility.</p></li>
+<li><p><strong>client_secret</strong> (<em>str</em>) – The client secret for authentication. Kept for backwards compatibility.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>If count is 1, returns a single minted identifier as a string.
+If count is greater than 1, returns a list of minted identifiers.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str or list[str]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>RuntimeError</strong> – If the API request fails.</p></li>
+<li><p><strong>ValueError</strong> – If count is less than 1.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If client_id and client_secret are provided, a new NMDCAuth object will be created. The newest and preferred method for authentication is to use the NMDCAuth class directly.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="biosample-subclass">
+<h2>BioSample Subclass<a class="headerlink" href="#biosample-subclass" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nmdc_api_utilities.biosample_search.BiosampleSearch">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nmdc_api_utilities.biosample_search.</span></span><span class="sig-name descname"><span class="pre">BiosampleSearch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'prod'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/biosample_search.html#BiosampleSearch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.biosample_search.BiosampleSearch" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nmdc_api_utilities.lat_long_filters.LatLongFilters" title="nmdc_api_utilities.lat_long_filters.LatLongFilters"><code class="xref py py-class docutils literal notranslate"><span class="pre">LatLongFilters</span></code></a>, <a class="reference internal" href="#nmdc_api_utilities.collection_search.CollectionSearch" title="nmdc_api_utilities.collection_search.CollectionSearch"><code class="xref py py-class docutils literal notranslate"><span class="pre">CollectionSearch</span></code></a></p>
+<p>Class to interact with the NMDC API to get biosamples.</p>
+</dd></dl>
+
+</section>
+<section id="calibration-subclass">
+<h2>Calibration Subclass<a class="headerlink" href="#calibration-subclass" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nmdc_api_utilities.calibration_search.CalibrationSearch">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nmdc_api_utilities.calibration_search.</span></span><span class="sig-name descname"><span class="pre">CalibrationSearch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'prod'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/calibration_search.html#CalibrationSearch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.calibration_search.CalibrationSearch" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nmdc_api_utilities.collection_search.CollectionSearch" title="nmdc_api_utilities.collection_search.CollectionSearch"><code class="xref py py-class docutils literal notranslate"><span class="pre">CollectionSearch</span></code></a></p>
+<p>Class to interact with the NMDC API to get calibration records.</p>
+</dd></dl>
+
+</section>
+<section id="chemical-entity-subclass">
+<h2>Chemical Entity Subclass<a class="headerlink" href="#chemical-entity-subclass" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nmdc_api_utilities.chemical_entity_search.ChemicalEntitySearch">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nmdc_api_utilities.chemical_entity_search.</span></span><span class="sig-name descname"><span class="pre">ChemicalEntitySearch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'prod'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/chemical_entity_search.html#ChemicalEntitySearch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.chemical_entity_search.ChemicalEntitySearch" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nmdc_api_utilities.collection_search.CollectionSearch" title="nmdc_api_utilities.collection_search.CollectionSearch"><code class="xref py py-class docutils literal notranslate"><span class="pre">CollectionSearch</span></code></a></p>
+<p>Class to interact with the NMDC API to get chemical entities.</p>
+</dd></dl>
+
+</section>
+<section id="collecting-biosamples-from-site-subclass">
+<h2>Collecting Biosamples From Site Subclass<a class="headerlink" href="#collecting-biosamples-from-site-subclass" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nmdc_api_utilities.collecting_biosamples_from_site_search.CollectingBiosamplesFromSiteSearch">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nmdc_api_utilities.collecting_biosamples_from_site_search.</span></span><span class="sig-name descname"><span class="pre">CollectingBiosamplesFromSiteSearch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'prod'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/collecting_biosamples_from_site_search.html#CollectingBiosamplesFromSiteSearch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.collecting_biosamples_from_site_search.CollectingBiosamplesFromSiteSearch" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nmdc_api_utilities.collection_search.CollectionSearch" title="nmdc_api_utilities.collection_search.CollectionSearch"><code class="xref py py-class docutils literal notranslate"><span class="pre">CollectionSearch</span></code></a></p>
+<p>Class to interact with the NMDC API to get collecting biosamples from site sets.</p>
+</dd></dl>
+
+</section>
+<section id="configuration-subclass">
+<h2>Configuration Subclass<a class="headerlink" href="#configuration-subclass" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nmdc_api_utilities.configuration_search.ConfigurationSearch">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nmdc_api_utilities.configuration_search.</span></span><span class="sig-name descname"><span class="pre">ConfigurationSearch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'prod'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/configuration_search.html#ConfigurationSearch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.configuration_search.ConfigurationSearch" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nmdc_api_utilities.collection_search.CollectionSearch" title="nmdc_api_utilities.collection_search.CollectionSearch"><code class="xref py py-class docutils literal notranslate"><span class="pre">CollectionSearch</span></code></a></p>
+<p>Class to interact with the NMDC API to get cofiguration sets.</p>
+</dd></dl>
+
+</section>
+<section id="data-generation-subclass">
+<h2>Data Generation Subclass<a class="headerlink" href="#data-generation-subclass" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nmdc_api_utilities.data_generation_search.DataGenerationSearch">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nmdc_api_utilities.data_generation_search.</span></span><span class="sig-name descname"><span class="pre">DataGenerationSearch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'prod'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/data_generation_search.html#DataGenerationSearch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.data_generation_search.DataGenerationSearch" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nmdc_api_utilities.collection_search.CollectionSearch" title="nmdc_api_utilities.collection_search.CollectionSearch"><code class="xref py py-class docutils literal notranslate"><span class="pre">CollectionSearch</span></code></a></p>
+<p>Class to interact with the NMDC API to get data generation sets.</p>
+</dd></dl>
+
+</section>
+<section id="data-object-subclass">
+<h2>Data Object Subclass<a class="headerlink" href="#data-object-subclass" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nmdc_api_utilities.data_object_search.DataObjectSearch">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nmdc_api_utilities.data_object_search.</span></span><span class="sig-name descname"><span class="pre">DataObjectSearch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'prod'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/data_object_search.html#DataObjectSearch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.data_object_search.DataObjectSearch" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nmdc_api_utilities.collection_search.CollectionSearch" title="nmdc_api_utilities.collection_search.CollectionSearch"><code class="xref py py-class docutils literal notranslate"><span class="pre">CollectionSearch</span></code></a></p>
+<p>Class to interact with the NMDC API to get data object sets.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.data_object_search.DataObjectSearch.get_data_objects_for_studies">
+<span class="sig-name descname"><span class="pre">get_data_objects_for_studies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">study_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_page_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/nmdc_api_utilities/data_object_search.html#DataObjectSearch.get_data_objects_for_studies"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.data_object_search.DataObjectSearch.get_data_objects_for_studies" title="Link to this definition"></a></dt>
+<dd><p>Get data objects by study id.
+:param study_id: The study id to search for.
+:type study_id: str
+:param max_page_size: The maximum number of items to return per page. Default is 100
+:type max_page_size: int</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of data objects.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list[dict]</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>RuntimeError</strong> – If the API request fails.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="field-research-from-site-subclass">
+<h2>Field Research From Site Subclass<a class="headerlink" href="#field-research-from-site-subclass" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nmdc_api_utilities.field_research_site_search.FieldResearchSiteSearch">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nmdc_api_utilities.field_research_site_search.</span></span><span class="sig-name descname"><span class="pre">FieldResearchSiteSearch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'prod'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/field_research_site_search.html#FieldResearchSiteSearch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.field_research_site_search.FieldResearchSiteSearch" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nmdc_api_utilities.lat_long_filters.LatLongFilters" title="nmdc_api_utilities.lat_long_filters.LatLongFilters"><code class="xref py py-class docutils literal notranslate"><span class="pre">LatLongFilters</span></code></a>, <a class="reference internal" href="#nmdc_api_utilities.collection_search.CollectionSearch" title="nmdc_api_utilities.collection_search.CollectionSearch"><code class="xref py py-class docutils literal notranslate"><span class="pre">CollectionSearch</span></code></a></p>
+<p>Class to interact with the NMDC API to get field research site sets.</p>
+</dd></dl>
+
+</section>
+<section id="instrument-subclass">
+<h2>Instrument Subclass<a class="headerlink" href="#instrument-subclass" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nmdc_api_utilities.instrument_search.InstrumentSearch">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nmdc_api_utilities.instrument_search.</span></span><span class="sig-name descname"><span class="pre">InstrumentSearch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'prod'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/instrument_search.html#InstrumentSearch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.instrument_search.InstrumentSearch" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nmdc_api_utilities.collection_search.CollectionSearch" title="nmdc_api_utilities.collection_search.CollectionSearch"><code class="xref py py-class docutils literal notranslate"><span class="pre">CollectionSearch</span></code></a></p>
+<p>Class to interact with the NMDC API to get instrument sets.</p>
+</dd></dl>
+
+</section>
+<section id="manifest-subclass">
+<h2>Manifest Subclass<a class="headerlink" href="#manifest-subclass" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nmdc_api_utilities.manifest_search.ManifestSearch">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nmdc_api_utilities.manifest_search.</span></span><span class="sig-name descname"><span class="pre">ManifestSearch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'prod'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/manifest_search.html#ManifestSearch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.manifest_search.ManifestSearch" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nmdc_api_utilities.collection_search.CollectionSearch" title="nmdc_api_utilities.collection_search.CollectionSearch"><code class="xref py py-class docutils literal notranslate"><span class="pre">CollectionSearch</span></code></a></p>
+<p>Class to interact with the NMDC API to get genome menifest sets.</p>
+</dd></dl>
+
+</section>
+<section id="material-subclass">
+<h2>Material Subclass<a class="headerlink" href="#material-subclass" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nmdc_api_utilities.material_processing_search.MaterialProcessingSearch">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nmdc_api_utilities.material_processing_search.</span></span><span class="sig-name descname"><span class="pre">MaterialProcessingSearch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'prod'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/material_processing_search.html#MaterialProcessingSearch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.material_processing_search.MaterialProcessingSearch" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nmdc_api_utilities.collection_search.CollectionSearch" title="nmdc_api_utilities.collection_search.CollectionSearch"><code class="xref py py-class docutils literal notranslate"><span class="pre">CollectionSearch</span></code></a></p>
+<p>Class to interact with the NMDC API to get material processing sets.</p>
+</dd></dl>
+
+</section>
+<section id="processed-sample-subclass">
+<h2>Processed Sample Subclass<a class="headerlink" href="#processed-sample-subclass" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nmdc_api_utilities.processed_sample_search.ProcessedSampleSearch">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nmdc_api_utilities.processed_sample_search.</span></span><span class="sig-name descname"><span class="pre">ProcessedSampleSearch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'prod'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/processed_sample_search.html#ProcessedSampleSearch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.processed_sample_search.ProcessedSampleSearch" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nmdc_api_utilities.collection_search.CollectionSearch" title="nmdc_api_utilities.collection_search.CollectionSearch"><code class="xref py py-class docutils literal notranslate"><span class="pre">CollectionSearch</span></code></a></p>
+<p>Class to interact with the NMDC API to get process sample sets.</p>
+</dd></dl>
+
+</section>
+<section id="protocol-execution-subclass">
+<h2>Protocol Execution Subclass<a class="headerlink" href="#protocol-execution-subclass" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nmdc_api_utilities.protocol_execution_search.ProtocolExecutionSearch">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nmdc_api_utilities.protocol_execution_search.</span></span><span class="sig-name descname"><span class="pre">ProtocolExecutionSearch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'prod'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/protocol_execution_search.html#ProtocolExecutionSearch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.protocol_execution_search.ProtocolExecutionSearch" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nmdc_api_utilities.collection_search.CollectionSearch" title="nmdc_api_utilities.collection_search.CollectionSearch"><code class="xref py py-class docutils literal notranslate"><span class="pre">CollectionSearch</span></code></a></p>
+<p>Class to interact with the NMDC API to get protocol execution sets.</p>
+</dd></dl>
+
+</section>
+<section id="storage-process-subclass">
+<h2>Storage Process Subclass<a class="headerlink" href="#storage-process-subclass" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nmdc_api_utilities.storage_process_search.StorageProcessSearch">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nmdc_api_utilities.storage_process_search.</span></span><span class="sig-name descname"><span class="pre">StorageProcessSearch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'prod'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/storage_process_search.html#StorageProcessSearch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.storage_process_search.StorageProcessSearch" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nmdc_api_utilities.collection_search.CollectionSearch" title="nmdc_api_utilities.collection_search.CollectionSearch"><code class="xref py py-class docutils literal notranslate"><span class="pre">CollectionSearch</span></code></a></p>
+<p>Class to interact with the NMDC API to get storage process sets.</p>
+</dd></dl>
+
+</section>
+<section id="study-subclass">
+<h2>Study Subclass<a class="headerlink" href="#study-subclass" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nmdc_api_utilities.study_search.StudySearch">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nmdc_api_utilities.study_search.</span></span><span class="sig-name descname"><span class="pre">StudySearch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'prod'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/study_search.html#StudySearch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.study_search.StudySearch" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nmdc_api_utilities.collection_search.CollectionSearch" title="nmdc_api_utilities.collection_search.CollectionSearch"><code class="xref py py-class docutils literal notranslate"><span class="pre">CollectionSearch</span></code></a></p>
+<p>Class to interact with the NMDC API to get studies.</p>
+</dd></dl>
+
+</section>
+<section id="functional-annotation-agg-subclass">
+<h2>Functional Annotation Agg Subclass<a class="headerlink" href="#functional-annotation-agg-subclass" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nmdc_api_utilities.functional_annotation_agg_search.FunctionalAnnotationAggSearch">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nmdc_api_utilities.functional_annotation_agg_search.</span></span><span class="sig-name descname"><span class="pre">FunctionalAnnotationAggSearch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'prod'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/functional_annotation_agg_search.html#FunctionalAnnotationAggSearch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.functional_annotation_agg_search.FunctionalAnnotationAggSearch" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nmdc_api_utilities.functional_search.FunctionalSearch" title="nmdc_api_utilities.functional_search.FunctionalSearch"><code class="xref py py-class docutils literal notranslate"><span class="pre">FunctionalSearch</span></code></a></p>
+<p>Class to interact with the NMDC API to get functional annotation agg sets. These are most helpful when trying identify workflows associted with a KEGG, COG, or PFAM ids.</p>
+</dd></dl>
+
+</section>
+<section id="workflow-execution-subclass">
+<h2>Workflow Execution Subclass<a class="headerlink" href="#workflow-execution-subclass" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nmdc_api_utilities.workflow_execution_search.WorkflowExecutionSearch">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nmdc_api_utilities.workflow_execution_search.</span></span><span class="sig-name descname"><span class="pre">WorkflowExecutionSearch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'prod'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/workflow_execution_search.html#WorkflowExecutionSearch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.workflow_execution_search.WorkflowExecutionSearch" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nmdc_api_utilities.collection_search.CollectionSearch" title="nmdc_api_utilities.collection_search.CollectionSearch"><code class="xref py py-class docutils literal notranslate"><span class="pre">CollectionSearch</span></code></a></p>
+<p>Class to interact with the NMDC API to get workflow execution sets.</p>
+</dd></dl>
+
+</section>
+<section id="data-processing">
+<h2>Data Processing<a class="headerlink" href="#data-processing" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nmdc_api_utilities.data_processing.DataProcessing">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nmdc_api_utilities.data_processing.</span></span><span class="sig-name descname"><span class="pre">DataProcessing</span></span><a class="reference internal" href="_modules/nmdc_api_utilities/data_processing.html#DataProcessing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.data_processing.DataProcessing" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.data_processing.DataProcessing.build_filter">
+<span class="sig-name descname"><span class="pre">build_filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attributes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exact_match</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/nmdc_api_utilities/data_processing.html#DataProcessing.build_filter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.data_processing.DataProcessing.build_filter" title="Link to this definition"></a></dt>
+<dd><p>Create a MongoDB filter using $regex for each attribute in the input dictionary. For nested attributes, use dot notation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>attributes</strong> (<em>dict</em>) – Dictionary of attribute names and their corresponding values to match using regex.
+Example: {“name”: “example”, “description”: “example”, “geo_loc_name”: “example”}</p></li>
+<li><p><strong>exact_match</strong> (<em>bool</em>) – This var is used to determine if the inputted attribute value is an exact match or a partial match. Default is False, meaning the user does not need to input an exact match.
+Under the hood this is used to determine if the inputted attribute value should be wrapped in a regex expression.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary representing the MongoDB filter.
+Example: {“name”: {“$regex”: “example”, “$options”: “i”}, “description”: {“$regex”: “example”, “$options”: “i”}}</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.data_processing.DataProcessing.convert_to_df">
+<span class="sig-name descname"><span class="pre">convert_to_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/nmdc_api_utilities/data_processing.html#DataProcessing.convert_to_df"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.data_processing.DataProcessing.convert_to_df" title="Link to this definition"></a></dt>
+<dd><p>Convert a list of dictionaries to a pandas dataframe.
+:param data: A list of dictionaries.
+:type data: list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A pandas dataframe.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.data_processing.DataProcessing.extract_field">
+<span class="sig-name descname"><span class="pre">extract_field</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_results</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="reference internal" href="_modules/nmdc_api_utilities/data_processing.html#DataProcessing.extract_field"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.data_processing.DataProcessing.extract_field" title="Link to this definition"></a></dt>
+<dd><p>This function is used to extract a field from the API results.
+:param api_results: A list of dictionaries.
+:type api_results: list
+:param field_name: The name of the field to extract.
+:type field_name: str</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of values for the specified field.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.data_processing.DataProcessing.merge_dataframes">
+<span class="sig-name descname"><span class="pre">merge_dataframes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">column</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/nmdc_api_utilities/data_processing.html#DataProcessing.merge_dataframes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.data_processing.DataProcessing.merge_dataframes" title="Link to this definition"></a></dt>
+<dd><p>Merge two dataframes.
+:param column: The column to merge on.
+:type column: str
+:param df1: The first dataframe to merge.
+:type df1: pd.DataFrame
+:param df2: The second dataframe to merge.
+:type df2: pd.DataFrame</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A pandas dataframe with the merged data.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.data_processing.DataProcessing.merge_df">
+<span class="sig-name descname"><span class="pre">merge_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/nmdc_api_utilities/data_processing.html#DataProcessing.merge_df"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.data_processing.DataProcessing.merge_df" title="Link to this definition"></a></dt>
+<dd><p>Define a merging function to join results
+This function merges new results with the previous results that were used for the new API request. It uses two keys from each result to match on.
+:param df1: The first dataframe to merge.
+:type df1: pd.DataFrame
+:param df2: The second dataframe to merge.
+:type df2: pd.DataFrame
+:param key1: The key in df1 to match with key2 in df2.
+:type key1: str
+:param key2: The key in df2 to match with key1 in df1.
+:type key2: str</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A pandas dataframe with the merged data.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.data_processing.DataProcessing.rename_columns">
+<span class="sig-name descname"><span class="pre">rename_columns</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_col_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/nmdc_api_utilities/data_processing.html#DataProcessing.rename_columns"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.data_processing.DataProcessing.rename_columns" title="Link to this definition"></a></dt>
+<dd><p>Rename columns in a pandas dataframe.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pd.DataFrame</em>) – The pandas dataframe to rename columns.</p></li>
+<li><p><strong>new_col_names</strong> (<em>list</em>) – <p>A list of new column names. Names MUST be in order of the columns in the dataframe.</p>
+<dl class="simple">
+<dt>Example:</dt><dd><p>If the current column names are - [‘old_col1’, ‘old_col2’, ‘old_col3’]
+You will need to pass in the new names like - [‘new_col1’, ‘new_col2’, ‘new_col3’]</p>
+</dd>
+</dl>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A pandas dataframe with renamed columns.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.data_processing.DataProcessing.split_list">
+<span class="sig-name descname"><span class="pre">split_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="reference internal" href="_modules/nmdc_api_utilities/data_processing.html#DataProcessing.split_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.data_processing.DataProcessing.split_list" title="Link to this definition"></a></dt>
+<dd><p>Split a list into chunks of a specified size.
+:param input_list: The list to split.
+:type input_list: list
+:param chunk_size: The size of each chunk.
+:type chunk_size: int</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>list</strong></p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of lists.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="utils">
+<h2>Utils<a class="headerlink" href="#utils" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nmdc_api_utilities.utils.Utils">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nmdc_api_utilities.utils.</span></span><span class="sig-name descname"><span class="pre">Utils</span></span><a class="reference internal" href="_modules/nmdc_api_utilities/utils.html#Utils"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.utils.Utils" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+</section>
+<section id="auth">
+<h2>Auth<a class="headerlink" href="#auth" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nmdc_api_utilities.auth.NMDCAuth">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nmdc_api_utilities.auth.</span></span><span class="sig-name descname"><span class="pre">NMDCAuth</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_secret</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'prod'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/auth.html#NMDCAuth"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.auth.NMDCAuth" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nmdc_api_utilities.nmdc_search.NMDCSearch" title="nmdc_api_utilities.nmdc_search.NMDCSearch"><code class="xref py py-class docutils literal notranslate"><span class="pre">NMDCSearch</span></code></a></p>
+<p>Authentication handler for NMDC API operations.</p>
+<dl class="simple">
+<dt>You must provide either:</dt><dd><ul class="simple">
+<li><p>client_id and client_secret (for client credentials grant), OR</p></li>
+<li><p>username and password (for password grant).</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>client_id</strong> (<em>str</em>) – The client ID for NMDC API authentication (required if using client credentials grant).</p></li>
+<li><p><strong>client_secret</strong> (<em>str</em>) – The client secret for NMDC API authentication (required if using client credentials grant).</p></li>
+<li><p><strong>username</strong> (<em>str</em>) – The username for NMDC API authentication (required if using password grant).</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – The password for NMDC API authentication (required if using password grant).</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<dl class="simple">
+<dt>Security Warning: Your client_id and client_secret should be stored in a secure location.</dt><dd><p>We recommend using environment variables.
+Do not hard code these values in your code.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.auth.NMDCAuth.get_token">
+<span class="sig-name descname"><span class="pre">get_token</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/nmdc_api_utilities/auth.html#NMDCAuth.get_token"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.auth.NMDCAuth.get_token" title="Link to this definition"></a></dt>
+<dd><p>Get a valid access token, refreshing if necessary.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.auth.NMDCAuth.has_credentials">
+<span class="sig-name descname"><span class="pre">has_credentials</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/nmdc_api_utilities/auth.html#NMDCAuth.has_credentials"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.auth.NMDCAuth.has_credentials" title="Link to this definition"></a></dt>
+<dd><p>Check if the credentials are passed in properly.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="decorators">
+<h2>Decorators<a class="headerlink" href="#decorators" title="Link to this heading"></a></h2>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmdc_api_utilities.decorators">
+<span class="sig-prename descclassname"><span class="pre">nmdc_api_utilities.</span></span><span class="sig-name descname"><span class="pre">decorators</span></span><a class="headerlink" href="#nmdc_api_utilities.decorators" title="Link to this definition"></a></dt>
+<dd><p>alias of &lt;module ‘nmdc_api_utilities.decorators’ from ‘/home/runner/work/nmdc_api_utilities/nmdc_api_utilities/nmdc_api_utilities/decorators.py’&gt;</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="NMDC API Utilities Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="usage.html" class="btn btn-neutral float-right" title="NMDC API Utilities Usage Notes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Olivia Hess.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

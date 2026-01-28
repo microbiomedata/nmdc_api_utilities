@@ -1,0 +1,328 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>nmdc_api_utilities.data_processing &mdash; nmdc_api_utilities 2/1/2025 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=62c20008"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            nmdc_api_utilities
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../functions.html">NMDC API Utilities Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">NMDC API Utilities Usage Notes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">nmdc_api_utilities</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">nmdc_api_utilities.data_processing</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for nmdc_api_utilities.data_processing</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="DataProcessing">
+<a class="viewcode-back" href="../../functions.html#nmdc_api_utilities.data_processing.DataProcessing">[docs]</a>
+<span class="k">class</span> <span class="nc">DataProcessing</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">_string_mongo_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert elements in a list to use double quotes instead of single quotes.</span>
+<span class="sd">        This is required for mongo queries.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data: list</span>
+<span class="sd">            A list of dictionaries.</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            A string representation of the list with double quotes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s1">&#39;&quot;&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="DataProcessing.convert_to_df">
+<a class="viewcode-back" href="../../functions.html#nmdc_api_utilities.data_processing.DataProcessing.convert_to_df">[docs]</a>
+    <span class="k">def</span> <span class="nf">convert_to_df</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert a list of dictionaries to a pandas dataframe.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data: list</span>
+<span class="sd">            A list of dictionaries.</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pd.DataFrame</span>
+<span class="sd">            A pandas dataframe.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DataProcessing.split_list">
+<a class="viewcode-back" href="../../functions.html#nmdc_api_utilities.data_processing.DataProcessing.split_list">[docs]</a>
+    <span class="k">def</span> <span class="nf">split_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_list</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">chunk_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Split a list into chunks of a specified size.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        input_list: list</span>
+<span class="sd">            The list to split.</span>
+<span class="sd">        chunk_size: int</span>
+<span class="sd">            The size of each chunk.</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list: A list of lists.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">input_list</span><span class="p">),</span> <span class="n">chunk_size</span><span class="p">):</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">input_list</span><span class="p">[</span><span class="n">i</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="n">chunk_size</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="DataProcessing.rename_columns">
+<a class="viewcode-back" href="../../functions.html#nmdc_api_utilities.data_processing.DataProcessing.rename_columns">[docs]</a>
+    <span class="k">def</span> <span class="nf">rename_columns</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">new_col_names</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Rename columns in a pandas dataframe.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        df: pd.DataFrame</span>
+<span class="sd">            The pandas dataframe to rename columns.</span>
+<span class="sd">        new_col_names: list</span>
+<span class="sd">            A list of new column names. Names MUST be in order of the columns in the dataframe.\n</span>
+<span class="sd">            Example:</span>
+<span class="sd">                If the current column names are - [&#39;old_col1&#39;, &#39;old_col2&#39;, &#39;old_col3&#39;]</span>
+<span class="sd">                You will need to pass in the new names like - [&#39;new_col1&#39;, &#39;new_col2&#39;, &#39;new_col3&#39;]</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pd.DataFrame</span>
+<span class="sd">            A pandas dataframe with renamed columns.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">new_col_names</span>
+        <span class="k">return</span> <span class="n">df</span></div>
+
+
+<div class="viewcode-block" id="DataProcessing.merge_dataframes">
+<a class="viewcode-back" href="../../functions.html#nmdc_api_utilities.data_processing.DataProcessing.merge_dataframes">[docs]</a>
+    <span class="k">def</span> <span class="nf">merge_dataframes</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">column</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">df1</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">df2</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Merge two dataframes.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        column: str</span>
+<span class="sd">            The column to merge on.</span>
+<span class="sd">        df1: pd.DataFrame</span>
+<span class="sd">            The first dataframe to merge.</span>
+<span class="sd">        df2: pd.DataFrame</span>
+<span class="sd">            The second dataframe to merge.</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pd.DataFrame</span>
+<span class="sd">            A pandas dataframe with the merged data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df1</span><span class="p">,</span> <span class="n">df2</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="n">column</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;inner&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DataProcessing.merge_df">
+<a class="viewcode-back" href="../../functions.html#nmdc_api_utilities.data_processing.DataProcessing.merge_df">[docs]</a>
+    <span class="k">def</span> <span class="nf">merge_df</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">df1</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+        <span class="n">df2</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+        <span class="n">key1</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">key2</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Define a merging function to join results</span>
+<span class="sd">        This function merges new results with the previous results that were used for the new API request. It uses two keys from each result to match on.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        df1: pd.DataFrame</span>
+<span class="sd">            The first dataframe to merge.</span>
+<span class="sd">        df2: pd.DataFrame</span>
+<span class="sd">            The second dataframe to merge.</span>
+<span class="sd">        key1: str</span>
+<span class="sd">            The key in df1 to match with key2 in df2.</span>
+<span class="sd">        key2: str</span>
+<span class="sd">            The key in df2 to match with key1 in df1.</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pd.DataFrame</span>
+<span class="sd">            A pandas dataframe with the merged data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># This function automatically identifies columns that need to be exploded because they contain list-like elements, as drop_duplicates can&#39;t handle list elements.</span>
+        <span class="k">def</span> <span class="nf">identify_and_explode</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]):</span>
+                    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">explode</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">df</span>
+
+        <span class="n">df1</span> <span class="o">=</span> <span class="n">identify_and_explode</span><span class="p">(</span><span class="n">df1</span><span class="p">)</span>
+        <span class="n">df2</span> <span class="o">=</span> <span class="n">identify_and_explode</span><span class="p">(</span><span class="n">df2</span><span class="p">)</span>
+
+        <span class="c1"># Merge dataframes</span>
+        <span class="n">merged_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df1</span><span class="p">,</span> <span class="n">df2</span><span class="p">,</span> <span class="n">left_on</span><span class="o">=</span><span class="n">key1</span><span class="p">,</span> <span class="n">right_on</span><span class="o">=</span><span class="n">key2</span><span class="p">)</span>
+        <span class="c1"># Drop any duplicated rows</span>
+        <span class="n">merged_df</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">keep</span><span class="o">=</span><span class="s2">&quot;first&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">merged_df</span></div>
+
+
+<div class="viewcode-block" id="DataProcessing.build_filter">
+<a class="viewcode-back" href="../../functions.html#nmdc_api_utilities.data_processing.DataProcessing.build_filter">[docs]</a>
+    <span class="k">def</span> <span class="nf">build_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attributes</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">exact_match</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a MongoDB filter using $regex for each attribute in the input dictionary. For nested attributes, use dot notation.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        attributes: dict</span>
+<span class="sd">            Dictionary of attribute names and their corresponding values to match using regex.</span>
+<span class="sd">            Example: {&quot;name&quot;: &quot;example&quot;, &quot;description&quot;: &quot;example&quot;, &quot;geo_loc_name&quot;: &quot;example&quot;}</span>
+<span class="sd">        exact_match: bool</span>
+<span class="sd">            This var is used to determine if the inputted attribute value is an exact match or a partial match. Default is False, meaning the user does not need to input an exact match.</span>
+<span class="sd">            Under the hood this is used to determine if the inputted attribute value should be wrapped in a regex expression.</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            A dictionary representing the MongoDB filter.</span>
+<span class="sd">            Example: {&quot;name&quot;: {&quot;$regex&quot;: &quot;example&quot;, &quot;$options&quot;: &quot;i&quot;}, &quot;description&quot;: {&quot;$regex&quot;: &quot;example&quot;, &quot;$options&quot;: &quot;i&quot;}}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filter_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">exact_match</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">attribute_name</span><span class="p">,</span> <span class="n">attribute_value</span> <span class="ow">in</span> <span class="n">attributes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">filter_dict</span><span class="p">[</span><span class="n">attribute_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">attribute_value</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">attribute_name</span><span class="p">,</span> <span class="n">attribute_value</span> <span class="ow">in</span> <span class="n">attributes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="c1"># escape special characters - mongo db filters require special characters to be double escaped ex. GC\\-MS \\(2009\\)</span>
+                <span class="n">escaped_value</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;([\W])&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">\1&quot;</span><span class="p">,</span> <span class="n">attribute_value</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Escaped value: </span><span class="si">{</span><span class="n">escaped_value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Attribute name: </span><span class="si">{</span><span class="n">attribute_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">filter_dict</span><span class="p">[</span><span class="n">attribute_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;$regex&quot;</span><span class="p">:</span> <span class="n">escaped_value</span><span class="p">,</span> <span class="s2">&quot;$options&quot;</span><span class="p">:</span> <span class="s2">&quot;i&quot;</span><span class="p">}</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Filter dict: </span><span class="si">{</span><span class="n">filter_dict</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">clean</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_string_mongo_list</span><span class="p">(</span><span class="n">filter_dict</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Filter cleaned: </span><span class="si">{</span><span class="n">clean</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">clean</span></div>
+
+
+<div class="viewcode-block" id="DataProcessing.extract_field">
+<a class="viewcode-back" href="../../functions.html#nmdc_api_utilities.data_processing.DataProcessing.extract_field">[docs]</a>
+    <span class="k">def</span> <span class="nf">extract_field</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">api_results</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">field_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function is used to extract a field from the API results.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        api_results: list</span>
+<span class="sd">            A list of dictionaries.</span>
+<span class="sd">        field_name: str</span>
+<span class="sd">            The name of the field to extract.</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list</span>
+<span class="sd">            A list of values for the specified field.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">field_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">api_results</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="n">field_name</span><span class="p">])</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span>
+                <span class="n">field_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="n">field_name</span><span class="p">])</span>
+            <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="n">field_name</span><span class="p">])</span> <span class="o">==</span> <span class="nb">list</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">another_item</span> <span class="ow">in</span> <span class="n">item</span><span class="p">[</span><span class="n">field_name</span><span class="p">]:</span>
+                    <span class="n">field_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">another_item</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">field_list</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Olivia Hess.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
