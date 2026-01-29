@@ -235,11 +235,11 @@ class JGISampleSearchAPI(NMDCSearch):
             )
         if all_pages:
             return self._get_all_pages(
-                response=response,
-                url=url,
-                filter=filter,
-                max_page_size=max_page_size,
-                fields=fields,
+                response,
+                url,
+                filter,
+                max_page_size,
+                fields,
             )["resources"]
 
         return response.json()["resources"]
