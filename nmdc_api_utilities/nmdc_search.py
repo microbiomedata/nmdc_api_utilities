@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import logging
 import requests
+import json
 
 logger = logging.getLogger(__name__)
 
@@ -71,9 +72,22 @@ class NMDCSearch:
                 next_page_token = response.json()["next_page_token"]
             else:
                 break
+            query_params = {
+                "filter": f"{json.dumps(filter)}",
+                "max_page_size": max_page_size,
+                "projection": fields,
+                "page_token": next_page_token,
+            }
+            headers = {
+                "accept": "application/json",
+                "Content-Type": "application/json",
+                "Authorization": f"Bearer {self.auth.get_token()}",
+            }
             url = f"{url_prefix}?filter={filter}&max_page_size={max_page_size}&projection={fields}&page_token={next_page_token}"
             try:
-                response = requests.get(url)
+                response = requests.get(
+                    url_prefix, headers=headers, params=query_params
+                )
                 response.raise_for_status()
             except requests.exceptions.RequestException as e:
                 logger.error("API request failed", exc_info=True)
