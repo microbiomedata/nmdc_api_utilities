@@ -3,6 +3,7 @@ import logging
 import requests
 import json
 
+
 logger = logging.getLogger(__name__)
 
 
@@ -36,6 +37,7 @@ class NMDCSearch:
         filter: str = "",
         max_page_size: int = 100,
         fields: str = "",
+        auth_token: str = "",
     ):
         """
         Get all pages of data from the NMDC API. This is a helper function to get all pages of data from the NMDC API.
@@ -81,9 +83,9 @@ class NMDCSearch:
             headers = {
                 "accept": "application/json",
                 "Content-Type": "application/json",
-                "Authorization": f"Bearer {self.auth.get_token()}",
+                "Authorization": f"Bearer {auth_token}",
             }
-            url = f"{url_prefix}?filter={filter}&max_page_size={max_page_size}&projection={fields}&page_token={next_page_token}"
+
             try:
                 response = requests.get(
                     url_prefix, headers=headers, params=query_params
