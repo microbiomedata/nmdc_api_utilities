@@ -80,10 +80,11 @@ class NMDCSearch:
                 "projection": fields,
                 "page_token": next_page_token,
             }
+
             headers = {
                 "accept": "application/json",
                 "Content-Type": "application/json",
-                "Authorization": f"Bearer {auth_token}",
+                "Authorization": f"Bearer {auth_token}" if auth_token else "",
             }
 
             try:
