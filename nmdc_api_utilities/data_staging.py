@@ -124,9 +124,9 @@ class JGISequencingProjectAPI(NMDCSearch):
                 f"API request response: {response.json()}\n API Status Code: {response.status_code}"
             )
         if all_pages:
-            return self._get_all_pages(response, url, filter, max_page_size, fields)[
-                "resources"
-            ]
+            return self._get_all_pages(
+                response, url, filter, max_page_size, fields, self.auth.get_token()
+            )["resources"]
 
         return response.json()["resources"]
 
@@ -240,6 +240,7 @@ class JGISampleSearchAPI(NMDCSearch):
                 filter,
                 max_page_size,
                 fields,
+                self.auth.get_token(),
             )["resources"]
 
         return response.json()["resources"]
@@ -404,9 +405,9 @@ class GlobusTaskAPI(NMDCSearch):
                 f"API request response: {response.json()}\n API Status Code: {response.status_code}"
             )
         if all_pages:
-            return self._get_all_pages(response, url, filter, max_page_size, fields)[
-                "resources"
-            ]
+            return self._get_all_pages(
+                response, url, filter, max_page_size, fields, self.auth.get_token()
+            )["resources"]
         return response.json()["resources"]
 
     @requires_auth
