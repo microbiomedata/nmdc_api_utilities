@@ -125,7 +125,12 @@ class JGISequencingProjectAPI(NMDCSearch):
             )
         if all_pages:
             return self._get_all_pages(
-                response, url, filter, max_page_size, fields, self.auth.get_token()
+                response,
+                url,
+                filter,
+                max_page_size,
+                fields,
+                access_token=self.auth.get_token(),
             )["resources"]
 
         return response.json()["resources"]

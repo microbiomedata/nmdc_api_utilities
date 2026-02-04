@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 import logging
 import requests
-import json
-
+from typing import Optional
 
 logger = logging.getLogger(__name__)
 
@@ -37,7 +36,7 @@ class NMDCSearch:
         filter: str = "",
         max_page_size: int = 100,
         fields: str = "",
-        auth_token: str = "",
+        access_token: Optional[str] = None,
     ):
         """
         Get all pages of data from the NMDC API. This is a helper function to get all pages of data from the NMDC API.
@@ -54,6 +53,8 @@ class NMDCSearch:
             The maximum number of items to return per page. Default is 100.
         fields: str
             The fields to return. Default is all fields.
+        access_token: Optional[str]
+            Optional access token to include in the API request.
 
         Returns
         -------
@@ -74,18 +75,22 @@ class NMDCSearch:
                 next_page_token = response.json()["next_page_token"]
             else:
                 break
+
+            # Define the query parameters for getting the next page.
             query_params = {
-                "filter": f"{json.dumps(filter)}",
+                "filter": filter,
                 "max_page_size": max_page_size,
                 "projection": fields,
                 "page_token": next_page_token,
             }
 
+            # Define the HTTP headers, which may include an access token.
             headers = {
-                "accept": "application/json",
+                "Accept": "application/json",
                 "Content-Type": "application/json",
-                "Authorization": f"Bearer {auth_token}" if auth_token else "",
             }
+            if isinstance(access_token, str):
+                headers["Authorization"] = f"Bearer {access_token}"
 
             try:
                 response = requests.get(
