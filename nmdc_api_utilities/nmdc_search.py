@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import logging
 import requests
+from typing import Optional
 
 logger = logging.getLogger(__name__)
 
@@ -35,6 +36,7 @@ class NMDCSearch:
         filter: str = "",
         max_page_size: int = 100,
         fields: str = "",
+        access_token: Optional[str] = None,
     ):
         """
         Get all pages of data from the NMDC API. This is a helper function to get all pages of data from the NMDC API.
@@ -51,6 +53,8 @@ class NMDCSearch:
             The maximum number of items to return per page. Default is 100.
         fields: str
             The fields to return. Default is all fields.
+        access_token: Optional[str]
+            Optional access token to include in the API request.
 
         Returns
         -------
@@ -71,9 +75,23 @@ class NMDCSearch:
                 next_page_token = response.json()["next_page_token"]
             else:
                 break
+
+            # Define the HTTP headers, which may include an access token.
+            headers = {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+            }
+            if isinstance(access_token, str):
+                headers["Authorization"] = f"Bearer {access_token}"
+
+            # TODO: Consider using the `params` argument of `requests.get` to handle building the
+            #       URL's query string. That way, we would be delegating the responsibility of
+            #       encoding query parameters, to the `requests` library.
+            #       Reference: https://requests.readthedocs.io/en/latest/user/quickstart/#passing-parameters-in-urls
+            #
             url = f"{url_prefix}?filter={filter}&max_page_size={max_page_size}&projection={fields}&page_token={next_page_token}"
             try:
-                response = requests.get(url)
+                response = requests.get(url, headers=headers)
                 response.raise_for_status()
             except requests.exceptions.RequestException as e:
                 logger.error("API request failed", exc_info=True)
