@@ -76,14 +76,6 @@ class NMDCSearch:
             else:
                 break
 
-            # Define the query parameters for getting the next page.
-            query_params = {
-                "filter": filter,
-                "max_page_size": max_page_size,
-                "projection": fields,
-                "page_token": next_page_token,
-            }
-
             # Define the HTTP headers, which may include an access token.
             headers = {
                 "Accept": "application/json",
@@ -92,10 +84,14 @@ class NMDCSearch:
             if isinstance(access_token, str):
                 headers["Authorization"] = f"Bearer {access_token}"
 
+            # TODO: Considering using the `params` argument of `requests.get` to handle building the
+            #       URL's query string. That way, we could delegate the responsibility of encoding
+            #       query parameters, to the `requests` library.
+            #       Reference: https://requests.readthedocs.io/en/latest/user/quickstart/#passing-parameters-in-urls
+            #
+            url = f"{url_prefix}?filter={filter}&max_page_size={max_page_size}&projection={fields}&page_token={next_page_token}"
             try:
-                response = requests.get(
-                    url_prefix, headers=headers, params=query_params
-                )
+                response = requests.get(url, headers=headers)
                 response.raise_for_status()
             except requests.exceptions.RequestException as e:
                 logger.error("API request failed", exc_info=True)
