@@ -84,9 +84,9 @@ class NMDCSearch:
             if isinstance(access_token, str):
                 headers["Authorization"] = f"Bearer {access_token}"
 
-            # TODO: Considering using the `params` argument of `requests.get` to handle building the
-            #       URL's query string. That way, we could delegate the responsibility of encoding
-            #       query parameters, to the `requests` library.
+            # TODO: Consider using the `params` argument of `requests.get` to handle building the
+            #       URL's query string. That way, we would be delegating the responsibility of
+            #       encoding query parameters, to the `requests` library.
             #       Reference: https://requests.readthedocs.io/en/latest/user/quickstart/#passing-parameters-in-urls
             #
             url = f"{url_prefix}?filter={filter}&max_page_size={max_page_size}&projection={fields}&page_token={next_page_token}"
