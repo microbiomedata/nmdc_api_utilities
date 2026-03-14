@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import logging
 import requests
+import urllib.parse
 from typing import Optional
 
 logger = logging.getLogger(__name__)
@@ -9,14 +10,22 @@ logger = logging.getLogger(__name__)
 class NMDCSearch:
     """
     Base class for interacting with the NMDC API. Sets the base URL for the API based on the environment.
-    Environment is defaulted to the production isntance of the API. This functionality is in place for monthly testing of the runtime updates to the API.
+    Environment is defaulted to the production instance of the API. This functionality is in place for monthly testing of the runtime updates to the API.
 
     Parameters
     ----------
     env: str
-        The environment to use. Default is prod. Must be one of the following:
+        The environment to use. Default is prod. Can be one of the following
+        predefined values, or an arbitrary base URL (e.g. ``http://localhost:8000``
+        or ``http://host.docker.internal:3000``) to point the library at a local
+        or custom NMDC Runtime API instance:
+
             prod
+                Uses ``https://api.microbiomedata.org``
             dev
+                Uses ``https://api-dev.microbiomedata.org``
+            <custom URL>
+                Uses the provided URL directly as the base URL.
 
     """
 
@@ -27,7 +36,14 @@ class NMDCSearch:
         elif env == "dev":
             self.base_url = "https://api-dev.microbiomedata.org"
         else:
-            raise ValueError("env must be one of the following: prod, dev")
+            parsed = urllib.parse.urlparse(env)
+            if not parsed.scheme or not parsed.netloc:
+                raise ValueError(
+                    f"Invalid value for env: {env!r}. "
+                    "Must be 'prod', 'dev', or a valid base URL "
+                    "(e.g. 'http://localhost:8000' or 'http://host.docker.internal:3000')."
+                )
+            self.base_url = env
 
     def _get_all_pages(
         self,

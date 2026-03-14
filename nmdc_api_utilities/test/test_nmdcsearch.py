@@ -9,6 +9,35 @@ logging.basicConfig(level=logging.DEBUG)
 from nmdc_api_utilities.nmdc_search import NMDCSearch
 
 
+def test_base_url_prod():
+    nmdc_client = NMDCSearch(env="prod")
+    assert nmdc_client.base_url == "https://api.microbiomedata.org"
+
+
+def test_base_url_dev():
+    nmdc_client = NMDCSearch(env="dev")
+    assert nmdc_client.base_url == "https://api-dev.microbiomedata.org"
+
+
+def test_base_url_local():
+    local_url = "http://localhost:8000"
+    nmdc_client = NMDCSearch(env=local_url)
+    assert nmdc_client.base_url == local_url
+
+
+def test_base_url_custom():
+    custom_url = "http://host.docker.internal:3000"
+    nmdc_client = NMDCSearch(env=custom_url)
+    assert nmdc_client.base_url == custom_url
+
+
+def test_base_url_invalid():
+    import pytest
+
+    with pytest.raises(ValueError, match="Invalid value for env"):
+        NMDCSearch(env="not-a-valid-url")
+
+
 def test_get_records_by_id():
     nmdc_client = NMDCSearch(env=ENV)
     ids = [
