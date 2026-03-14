@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 import logging
+import os
 import requests
-import urllib.parse
 from typing import Optional
 
 logger = logging.getLogger(__name__)
+
+#: Name of the environment variable that holds the base URL when ``env="custom"`` is used.
+NMDC_API_BASE_URL_VAR = "NMDC_API_BASE_URL"
 
 
 class NMDCSearch:
@@ -15,17 +18,18 @@ class NMDCSearch:
     Parameters
     ----------
     env: str
-        The environment to use. Default is prod. Can be one of the following
-        predefined values, or an arbitrary base URL (e.g. ``http://localhost:8000``
-        or ``http://host.docker.internal:3000``) to point the library at a local
-        or custom NMDC Runtime API instance:
+        The environment to use. Default is ``prod``. Must be one of the following:
 
             prod
                 Uses ``https://api.microbiomedata.org``
             dev
                 Uses ``https://api-dev.microbiomedata.org``
-            <custom URL>
-                Uses the provided URL directly as the base URL.
+            custom
+                Uses the URL stored in the ``NMDC_API_BASE_URL`` environment variable.
+                This allows you to point the library at an arbitrary NMDC Runtime API
+                instance, such as a local development server
+                (e.g. ``http://localhost:8000``) or a container-accessible host
+                (e.g. ``http://host.docker.internal:3000``).
 
     """
 
@@ -35,15 +39,20 @@ class NMDCSearch:
             self.base_url = "https://api.microbiomedata.org"
         elif env == "dev":
             self.base_url = "https://api-dev.microbiomedata.org"
-        else:
-            parsed = urllib.parse.urlparse(env)
-            if not parsed.scheme or not parsed.netloc:
+        elif env == "custom":
+            custom_url = os.environ.get(NMDC_API_BASE_URL_VAR)
+            if not custom_url:
                 raise ValueError(
-                    f"Invalid value for env: {env!r}. "
-                    "Must be 'prod', 'dev', or a valid base URL "
+                    f"env='custom' requires the {NMDC_API_BASE_URL_VAR} "
+                    "environment variable to be set to a valid base URL "
                     "(e.g. 'http://localhost:8000' or 'http://host.docker.internal:3000')."
                 )
-            self.base_url = env
+            self.base_url = custom_url
+        else:
+            raise ValueError(
+                f"Invalid value for env: {env!r}. "
+                "Must be 'prod', 'dev', or 'custom'."
+            )
 
     def _get_all_pages(
         self,
