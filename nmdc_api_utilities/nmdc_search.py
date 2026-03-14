@@ -41,13 +41,18 @@ class NMDCSearch:
             self.base_url = "https://api-dev.microbiomedata.org"
         elif env == "custom":
             custom_url = os.environ.get(NMDC_API_BASE_URL_VAR)
-            if not custom_url:
+            # Ensure the custom URL is provided and normalize it by stripping
+            # whitespace and removing any trailing slash so that subsequent
+            # URL constructions like f"{self.base_url}/path" do not result
+            # in a double slash.
+            if not custom_url or not custom_url.strip():
                 raise ValueError(
                     f"env='custom' requires the {NMDC_API_BASE_URL_VAR} "
                     "environment variable to be set to a valid base URL "
                     "(e.g. 'http://localhost:8000' or 'http://host.docker.internal:3000')."
                 )
-            self.base_url = custom_url
+            normalized_url = custom_url.strip().rstrip("/")
+            self.base_url = normalized_url
         else:
             raise ValueError(
                 f"Invalid value for env: {env!r}. "
