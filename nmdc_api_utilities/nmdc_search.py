@@ -21,19 +21,19 @@ class NMDCSearch:
             dev
                 Uses ``https://api-dev.microbiomedata.org``
             custom
-                Uses the URL supplied via the ``base_url`` kwarg. This allows you
+                Uses the URL supplied via the ``custom_base_url`` kwarg. This allows you
                 to point the library at an arbitrary NMDC Runtime API instance,
                 such as a local development server (e.g. ``http://localhost:8000``)
                 or a container-accessible host
                 (e.g. ``http://host.docker.internal:3000``).
 
-    base_url: str, optional
+    custom_base_url: str, optional
         The base URL to use when ``env="custom"``. Ignored for other ``env`` values.
         Trailing slashes are stripped automatically.
 
     """
 
-    def __init__(self, env="prod", base_url=None):
+    def __init__(self, env="prod", custom_base_url=None):
         self.env = env
         if env == "prod":
             self.base_url = "https://api.microbiomedata.org"
@@ -42,12 +42,12 @@ class NMDCSearch:
         elif env == "custom":
             # Normalize: strip whitespace and remove trailing slash so that
             # URL constructions like f"{self.base_url}/path" never produce "//path".
-            if not base_url or not str(base_url).strip():
+            if not custom_base_url or not str(custom_base_url).strip():
                 raise ValueError(
-                    "env='custom' requires the 'base_url' kwarg to be set to a valid base URL "
+                    "env='custom' requires the 'custom_base_url' kwarg to be set to a valid base URL "
                     "(e.g. 'http://localhost:8000' or 'http://host.docker.internal:3000')."
                 )
-            self.base_url = str(base_url).strip().rstrip("/")
+            self.base_url = str(custom_base_url).strip().rstrip("/")
         else:
             raise ValueError(
                 f"Invalid value for env: {env!r}. "
@@ -323,7 +323,7 @@ class NMDCSearch:
             cs = CollectionSearch(
                 collection_name=collection_name,
                 env=self.env,
-                base_url=self.base_url if self.env == "custom" else None,
+                custom_base_url=self.base_url if self.env == "custom" else None,
             )
             records = cs.get_batch_records(
                 id_list=id_list,
