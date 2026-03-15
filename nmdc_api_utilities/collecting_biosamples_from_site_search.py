@@ -11,4 +11,6 @@ class CollectingBiosamplesFromSiteSearch(CollectionSearch):
     """
 
     def __init__(self, env="prod", **kwargs):
-        super().__init__(collection_name="collecting_biosamples_from_site_set", env=env, **kwargs)
+        super().__init__(
+            collection_name="collecting_biosamples_from_site_set", env=env, **kwargs
+        )
