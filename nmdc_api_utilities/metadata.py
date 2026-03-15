@@ -19,10 +19,10 @@ class Metadata(NMDCSearch):
         An instance of the NMDCAuth class for authentication.
     """
 
-    def __init__(self, env="prod", auth: NMDCAuth = None):
+    def __init__(self, env="prod", auth: NMDCAuth = None, **kwargs):
         self.env = env
         self.auth = auth or NMDCAuth()
-        super().__init__(env=env)
+        super().__init__(env=env, **kwargs)
 
     def validate_json(self, json_records: list[dict] | str) -> int:
         """

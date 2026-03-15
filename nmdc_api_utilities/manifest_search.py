@@ -10,5 +10,5 @@ class ManifestSearch(CollectionSearch):
     Class to interact with the NMDC API to get genome menifest sets.
     """
 
-    def __init__(self, env="prod"):
-        super().__init__(collection_name="manifest_set", env=env)
+    def __init__(self, env="prod", **kwargs):
+        super().__init__(collection_name="manifest_set", env=env, **kwargs)

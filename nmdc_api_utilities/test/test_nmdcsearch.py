@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import logging
+import pytest
 from dotenv import load_dotenv
 import os
 
@@ -7,6 +8,37 @@ load_dotenv()
 ENV = os.getenv("ENV")
 logging.basicConfig(level=logging.DEBUG)
 from nmdc_api_utilities.nmdc_search import NMDCSearch
+
+
+def test_base_url_prod():
+    nmdc_client = NMDCSearch(env="prod")
+    assert nmdc_client.base_url == "https://api.microbiomedata.org"
+
+
+def test_base_url_dev():
+    nmdc_client = NMDCSearch(env="dev")
+    assert nmdc_client.base_url == "https://api-dev.microbiomedata.org"
+
+
+def test_base_url_custom():
+    custom_url = "http://localhost:8000"
+    nmdc_client = NMDCSearch(env="custom", custom_base_url=custom_url)
+    assert nmdc_client.base_url == custom_url
+
+
+def test_base_url_custom_trailing_slash_stripped():
+    nmdc_client = NMDCSearch(env="custom", custom_base_url="http://localhost:8000/")
+    assert nmdc_client.base_url == "http://localhost:8000"
+
+
+def test_base_url_custom_missing_base_url():
+    with pytest.raises(ValueError, match="custom_base_url"):
+        NMDCSearch(env="custom")
+
+
+def test_base_url_invalid():
+    with pytest.raises(ValueError, match="Invalid value for env"):
+        NMDCSearch(env="not-a-valid-value")
 
 
 def test_get_records_by_id():

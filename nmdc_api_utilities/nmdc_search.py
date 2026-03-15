@@ -9,25 +9,50 @@ logger = logging.getLogger(__name__)
 class NMDCSearch:
     """
     Base class for interacting with the NMDC API. Sets the base URL for the API based on the environment.
-    Environment is defaulted to the production isntance of the API. This functionality is in place for monthly testing of the runtime updates to the API.
+    Environment is defaulted to the production instance of the API. This functionality is in place for monthly testing of the runtime updates to the API.
 
     Parameters
     ----------
     env: str
-        The environment to use. Default is prod. Must be one of the following:
+        The environment to use. Default is ``prod``. Must be one of the following:
+
             prod
+                Uses ``https://api.microbiomedata.org``
             dev
+                Uses ``https://api-dev.microbiomedata.org``
+            custom
+                Uses the URL supplied via the ``custom_base_url`` kwarg. This allows you
+                to point the library at an arbitrary NMDC Runtime API instance,
+                such as a local development server (e.g. ``http://localhost:8000``)
+                or a container-accessible host
+                (e.g. ``http://host.docker.internal:3000``).
+
+    custom_base_url: str, optional
+        The base URL to use when ``env="custom"``. Ignored for other ``env`` values.
+        Trailing slashes are stripped automatically.
 
     """
 
-    def __init__(self, env="prod"):
+    def __init__(self, env="prod", custom_base_url=None):
         self.env = env
         if env == "prod":
             self.base_url = "https://api.microbiomedata.org"
         elif env == "dev":
             self.base_url = "https://api-dev.microbiomedata.org"
+        elif env == "custom":
+            # Normalize: strip whitespace and remove trailing slash so that
+            # URL constructions like f"{self.base_url}/path" never produce "//path".
+            if not custom_base_url or not str(custom_base_url).strip():
+                raise ValueError(
+                    "env='custom' requires the 'custom_base_url' kwarg to be set to a valid base URL "
+                    "(e.g. 'http://localhost:8000' or 'http://host.docker.internal:3000')."
+                )
+            self.base_url = str(custom_base_url).strip().rstrip("/")
         else:
-            raise ValueError("env must be one of the following: prod, dev")
+            raise ValueError(
+                f"Invalid value for env: {env!r}. "
+                "Must be 'prod', 'dev', or 'custom'."
+            )
 
     def _get_all_pages(
         self,
@@ -295,7 +320,11 @@ class NMDCSearch:
             # import in function to circumvent circular import error
             from nmdc_api_utilities.collection_search import CollectionSearch
 
-            cs = CollectionSearch(collection_name=collection_name, env=self.env)
+            cs = CollectionSearch(
+                collection_name=collection_name,
+                env=self.env,
+                custom_base_url=self.base_url if self.env == "custom" else None,
+            )
             records = cs.get_batch_records(
                 id_list=id_list,
                 search_field="id",

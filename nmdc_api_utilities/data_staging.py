@@ -18,6 +18,7 @@ class JGISequencingProjectAPI(NMDCSearch):
         self,
         auth: NMDCAuth,
         env="prod",
+        **kwargs,
     ):
         self.env = env
         self.auth = auth
@@ -28,7 +29,7 @@ class JGISequencingProjectAPI(NMDCSearch):
             raise ValueError(
                 "`env` must be the same for NMDCAuth and JGISequencingProjectAPI"
             )
-        super().__init__(env=env)
+        super().__init__(env=env, **kwargs)
 
     @requires_auth
     def create_jgi_sequencing_project(
@@ -178,6 +179,7 @@ class JGISampleSearchAPI(NMDCSearch):
         self,
         auth: NMDCAuth,
         env="prod",
+        **kwargs,
     ):
         self.env = env
         self.auth = auth
@@ -188,7 +190,7 @@ class JGISampleSearchAPI(NMDCSearch):
             raise ValueError(
                 "`env` must be the same for NMDCAuth and JGISampleSearchAPI"
             )
-        super().__init__(env=env)
+        super().__init__(env=env, **kwargs)
 
     @requires_auth
     def list_jgi_samples(
@@ -351,6 +353,7 @@ class GlobusTaskAPI(NMDCSearch):
         self,
         auth: NMDCAuth,
         env="prod",
+        **kwargs,
     ):
         self.env = env
         self.auth = auth
@@ -359,7 +362,7 @@ class GlobusTaskAPI(NMDCSearch):
         # make sure the env is the same
         if self.auth.env != self.env:
             raise ValueError("`env` must be the same for NMDCAuth and GlobusTaskAPI")
-        super().__init__(env=env)
+        super().__init__(env=env, **kwargs)
 
     @requires_auth
     def list_globus_tasks(

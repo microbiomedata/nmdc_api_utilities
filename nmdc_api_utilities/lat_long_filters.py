@@ -10,9 +10,9 @@ class LatLongFilters(CollectionSearch):
     Class to interact with the NMDC API to filter sets by latitude and longitude.
     """
 
-    def __init__(self, collection_name, env="prod"):
+    def __init__(self, collection_name, env="prod", **kwargs):
         self.collection_name = collection_name
-        super().__init__(collection_name=self.collection_name, env=env)
+        super().__init__(collection_name=self.collection_name, env=env, **kwargs)
 
     def get_record_by_latitude(
         self, comparison: str, latitude: float, page_size=25, fields="", all_pages=False
