@@ -15,9 +15,9 @@ class CollectionSearch(NMDCSearch):
     Class to interact with the NMDC API to get collections of data. Must know the collection name to query.
     """
 
-    def __init__(self, collection_name, env="prod"):
+    def __init__(self, collection_name, env="prod", **kwargs):
         self.collection_name = collection_name
-        super().__init__(env=env)
+        super().__init__(env=env, **kwargs)
 
     def get_records(
         self,

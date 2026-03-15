@@ -7,7 +7,7 @@ import os
 load_dotenv()
 ENV = os.getenv("ENV")
 logging.basicConfig(level=logging.DEBUG)
-from nmdc_api_utilities.nmdc_search import NMDCSearch, NMDC_API_BASE_URL_VAR
+from nmdc_api_utilities.nmdc_search import NMDCSearch
 
 
 def test_base_url_prod():
@@ -20,16 +20,19 @@ def test_base_url_dev():
     assert nmdc_client.base_url == "https://api-dev.microbiomedata.org"
 
 
-def test_base_url_custom(monkeypatch):
+def test_base_url_custom():
     custom_url = "http://localhost:8000"
-    monkeypatch.setenv(NMDC_API_BASE_URL_VAR, custom_url)
-    nmdc_client = NMDCSearch(env="custom")
+    nmdc_client = NMDCSearch(env="custom", base_url=custom_url)
     assert nmdc_client.base_url == custom_url
 
 
-def test_base_url_custom_missing_env_var(monkeypatch):
-    monkeypatch.delenv(NMDC_API_BASE_URL_VAR, raising=False)
-    with pytest.raises(ValueError, match=NMDC_API_BASE_URL_VAR):
+def test_base_url_custom_trailing_slash_stripped():
+    nmdc_client = NMDCSearch(env="custom", base_url="http://localhost:8000/")
+    assert nmdc_client.base_url == "http://localhost:8000"
+
+
+def test_base_url_custom_missing_base_url():
+    with pytest.raises(ValueError, match="base_url"):
         NMDCSearch(env="custom")
 
 

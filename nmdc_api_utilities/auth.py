@@ -40,8 +40,9 @@ class NMDCAuth(NMDCSearch):
         username: str = None,
         password: str = None,
         env: str = "prod",
+        **kwargs,
     ):
-        super().__init__(env=env)
+        super().__init__(env=env, **kwargs)
         self.env = env
         self.client_id = client_id
         self.client_secret = client_secret

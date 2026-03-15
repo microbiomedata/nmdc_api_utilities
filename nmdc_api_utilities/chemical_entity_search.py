@@ -10,5 +10,5 @@ class ChemicalEntitySearch(CollectionSearch):
     Class to interact with the NMDC API to get chemical entities.
     """
 
-    def __init__(self, env="prod"):
-        super().__init__(collection_name="chemical_entity_set", env=env)
+    def __init__(self, env="prod", **kwargs):
+        super().__init__(collection_name="chemical_entity_set", env=env, **kwargs)

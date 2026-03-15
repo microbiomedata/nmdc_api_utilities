@@ -1,13 +1,9 @@
 # -*- coding: utf-8 -*-
 import logging
-import os
 import requests
 from typing import Optional
 
 logger = logging.getLogger(__name__)
-
-#: Name of the environment variable that holds the base URL when ``env="custom"`` is used.
-NMDC_API_BASE_URL_VAR = "NMDC_API_BASE_URL"
 
 
 class NMDCSearch:
@@ -25,34 +21,33 @@ class NMDCSearch:
             dev
                 Uses ``https://api-dev.microbiomedata.org``
             custom
-                Uses the URL stored in the ``NMDC_API_BASE_URL`` environment variable.
-                This allows you to point the library at an arbitrary NMDC Runtime API
-                instance, such as a local development server
-                (e.g. ``http://localhost:8000``) or a container-accessible host
+                Uses the URL supplied via the ``base_url`` kwarg. This allows you
+                to point the library at an arbitrary NMDC Runtime API instance,
+                such as a local development server (e.g. ``http://localhost:8000``)
+                or a container-accessible host
                 (e.g. ``http://host.docker.internal:3000``).
+
+    base_url: str, optional
+        The base URL to use when ``env="custom"``. Ignored for other ``env`` values.
+        Trailing slashes are stripped automatically.
 
     """
 
-    def __init__(self, env="prod"):
+    def __init__(self, env="prod", base_url=None):
         self.env = env
         if env == "prod":
             self.base_url = "https://api.microbiomedata.org"
         elif env == "dev":
             self.base_url = "https://api-dev.microbiomedata.org"
         elif env == "custom":
-            custom_url = os.environ.get(NMDC_API_BASE_URL_VAR)
-            # Ensure the custom URL is provided and normalize it by stripping
-            # whitespace and removing any trailing slash so that subsequent
-            # URL constructions like f"{self.base_url}/path" do not result
-            # in a double slash.
-            if not custom_url or not custom_url.strip():
+            # Normalize: strip whitespace and remove trailing slash so that
+            # URL constructions like f"{self.base_url}/path" never produce "//path".
+            if not base_url or not str(base_url).strip():
                 raise ValueError(
-                    f"env='custom' requires the {NMDC_API_BASE_URL_VAR} "
-                    "environment variable to be set to a valid base URL "
+                    "env='custom' requires the 'base_url' kwarg to be set to a valid base URL "
                     "(e.g. 'http://localhost:8000' or 'http://host.docker.internal:3000')."
                 )
-            normalized_url = custom_url.strip().rstrip("/")
-            self.base_url = normalized_url
+            self.base_url = str(base_url).strip().rstrip("/")
         else:
             raise ValueError(
                 f"Invalid value for env: {env!r}. "
@@ -325,7 +320,11 @@ class NMDCSearch:
             # import in function to circumvent circular import error
             from nmdc_api_utilities.collection_search import CollectionSearch
 
-            cs = CollectionSearch(collection_name=collection_name, env=self.env)
+            cs = CollectionSearch(
+                collection_name=collection_name,
+                env=self.env,
+                base_url=self.base_url if self.env == "custom" else None,
+            )
             records = cs.get_batch_records(
                 id_list=id_list,
                 search_field="id",
