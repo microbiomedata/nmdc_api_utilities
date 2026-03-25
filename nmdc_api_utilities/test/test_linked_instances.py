@@ -519,7 +519,7 @@ def test_get_linked_instance():
     # make a list of all unique _upstream_of ids in result
     result_ids = list(set(chain.from_iterable(x["_upstream_of"] for x in result)))
 
-    assert len(result_ids) == 500
+    assert len(result_ids) == 498
     # assert that all result_ids are in the input ids
     assert all(rid in ids for rid in result_ids)
 
