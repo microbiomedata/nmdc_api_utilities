@@ -37,7 +37,7 @@ class DataObjectSearch(CollectionSearch):
         RuntimeError
             If the API request fails.
         """
-        url = f"{self.base_url}/data_objects/study/{study_id}?max_page_size={max_page_size}"
+        url = f"{self.api_base_url}/data_objects/study/{study_id}?max_page_size={max_page_size}"
         try:
             response = requests.get(url)
             response.raise_for_status()

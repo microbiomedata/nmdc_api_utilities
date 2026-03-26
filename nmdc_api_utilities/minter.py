@@ -83,7 +83,7 @@ class Minter(NMDCSearch):
         # get the token
         token = self.auth.get_token()
 
-        url = f"{self.base_url}/pids/mint"
+        url = f"{self.api_base_url}/pids/mint"
         payload = {"schema_class": {"id": nmdc_type}, "how_many": count}
         try:
             response = requests.post(

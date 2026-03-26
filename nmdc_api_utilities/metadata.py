@@ -56,7 +56,7 @@ class Metadata(NMDCSearch):
         if "placeholder" in json.dumps(data):
             raise Exception("Placeholder values found in json!")
 
-        url = f"{self.base_url}/metadata/json:validate"
+        url = f"{self.api_base_url}/metadata/json:validate"
         headers = {"accept": "application/json", "Content-Type": "application/json"}
         response = requests.post(url, headers=headers, json=data)
         if response.text != '{"result":"All Okay!"}' or response.status_code != 200:
@@ -100,7 +100,7 @@ class Metadata(NMDCSearch):
         token = self.auth.get_token()
 
         # api request
-        url = f"{self.base_url}/metadata/json:submit"
+        url = f"{self.api_base_url}/metadata/json:submit"
         headers = {
             "accept": "application/json",
             "Content-Type": "application/json",

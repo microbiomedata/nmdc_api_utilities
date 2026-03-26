@@ -134,7 +134,7 @@ class NMDCSearch:
         # highest number I could get to without a timeout
         batch_size = 250
         batch_records = []
-        url = f"{self.base_url}/nmdcschema/linked_instances"
+        url = f"{self.api_base_url}/nmdcschema/linked_instances"
         # split the ids into batches
         for i in range(0, len(ids), batch_size):
             batch = ids[i : i + batch_size]
@@ -240,7 +240,7 @@ class NMDCSearch:
             If the API request fails.
 
         """
-        url = f"{self.base_url}/nmdcschema/ids/{doc_id}/collection-name"
+        url = f"{self.api_base_url}/nmdcschema/ids/{doc_id}/collection-name"
         try:
             response = requests.get(url)
             response.raise_for_status()
@@ -318,7 +318,7 @@ class NMDCSearch:
             The NMDC schema version
         """
 
-        url = f"{self.base_url}/version"
+        url = f"{self.api_base_url}/version"
         try:
             response = requests.get(url)
             response.raise_for_status()
@@ -346,7 +346,7 @@ class NMDCSearch:
             The full record data.
         """
         collection_name = self.get_collection_name_from_id(id)
-        url = f"{self.base_url}/nmdcschema/{collection_name}/{id}"
+        url = f"{self.api_base_url}/nmdcschema/{collection_name}/{id}"
         params = {
             "filter": filter,
             "projection": fields,

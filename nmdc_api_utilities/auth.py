@@ -92,7 +92,7 @@ class NMDCAuth(NMDCSearch):
                 "password": self.password,
             }
 
-        response = requests.post(f"{self.base_url}/token", data=token_request_body)
+        response = requests.post(f"{self.api_base_url}/token", data=token_request_body)
         token_response = response.json()
 
         if "access_token" not in token_response:

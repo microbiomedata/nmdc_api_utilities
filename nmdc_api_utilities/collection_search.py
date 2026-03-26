@@ -55,7 +55,7 @@ class CollectionSearch(NMDCSearch):
         logging.debug(f"get_records Filter: {filter}")
         filter = urllib.parse.quote(filter)
         logging.debug(f"get_records encoded Filter: {filter}")
-        url_prefix = f"{self.base_url}/nmdcschema/{self.collection_name}"
+        url_prefix = f"{self.api_base_url}/nmdcschema/{self.collection_name}"
         url = f"{url_prefix}?filter={filter}&max_page_size={max_page_size}&projection={fields}"
         try:
             response = requests.get(url)
@@ -181,7 +181,7 @@ class CollectionSearch(NMDCSearch):
             If the API request fails.
 
         """
-        url = f"{self.base_url}/nmdcschema/{self.collection_name}/{collection_id}?max_page_size={max_page_size}&projection={fields}"
+        url = f"{self.api_base_url}/nmdcschema/{self.collection_name}/{collection_id}?max_page_size={max_page_size}&projection={fields}"
         # get the reponse
         try:
             response = requests.get(url)

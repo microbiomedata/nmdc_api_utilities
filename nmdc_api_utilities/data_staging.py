@@ -59,7 +59,7 @@ class JGISequencingProjectAPI(NMDCSearch):
             If the creation fails.
         """
 
-        url = f"{self.base_url}/wf_file_staging/jgi_sequencing_projects"
+        url = f"{self.api_base_url}/wf_file_staging/jgi_sequencing_projects"
         headers = {
             "accept": "application/json",
             "Content-Type": "application/json",
@@ -105,7 +105,7 @@ class JGISequencingProjectAPI(NMDCSearch):
         dict
             The list of JGI sequencing projects.
         """
-        url = f"{self.base_url}/wf_file_staging/jgi_sequencing_projects"
+        url = f"{self.api_base_url}/wf_file_staging/jgi_sequencing_projects"
         headers = {
             "accept": "application/json",
             "Content-Type": "application/json",
@@ -153,7 +153,7 @@ class JGISequencingProjectAPI(NMDCSearch):
         dict
             The JGI sequencing project record.
         """
-        url = f"{self.base_url}/wf_file_staging/jgi_sequencing_projects/{project_name}"
+        url = f"{self.api_base_url}/wf_file_staging/jgi_sequencing_projects/{project_name}"
         headers = {
             "accept": "application/json",
             "Authorization": f"Bearer {self.auth.get_token()}",
@@ -222,7 +222,7 @@ class JGISampleSearchAPI(NMDCSearch):
         list[dict]
             The list of JGI sample records.
         """
-        url = f"{self.base_url}/wf_file_staging/jgi_samples"
+        url = f"{self.api_base_url}/wf_file_staging/jgi_samples"
         try:
             query = filter if filter else {}
             query_params = {
@@ -280,7 +280,7 @@ class JGISampleSearchAPI(NMDCSearch):
         Exception
             If the insertion fails.
         """
-        url = f"{self.base_url}/wf_file_staging/jgi_samples"
+        url = f"{self.api_base_url}/wf_file_staging/jgi_samples"
         headers = {
             "accept": "application/json",
             "Content-Type": "application/json",
@@ -327,7 +327,7 @@ class JGISampleSearchAPI(NMDCSearch):
         Exception
             If the update fails.
         """
-        url = f"{self.base_url}/wf_file_staging/jgi_samples/{jgi_file_id}"
+        url = f"{self.api_base_url}/wf_file_staging/jgi_samples/{jgi_file_id}"
         headers = {
             "accept": "application/json",
             "Content-Type": "application/json",
@@ -397,7 +397,7 @@ class GlobusTaskAPI(NMDCSearch):
         list[dict]
             The list of Globus task records.
         """
-        url = f"{self.base_url}/wf_file_staging/globus_tasks"
+        url = f"{self.api_base_url}/wf_file_staging/globus_tasks"
         headers = {
             "accept": "application/json",
             "Content-Type": "application/json",
@@ -450,7 +450,7 @@ class GlobusTaskAPI(NMDCSearch):
             If the creation fails.
         """
 
-        url = f"{self.base_url}/wf_file_staging/globus_tasks"
+        url = f"{self.api_base_url}/wf_file_staging/globus_tasks"
         headers = {
             "accept": "application/json",
             "Content-Type": "application/json",
@@ -497,7 +497,7 @@ class GlobusTaskAPI(NMDCSearch):
         Exception
             If the update fails.
         """
-        url = f"{self.base_url}/wf_file_staging/globus_tasks/{globus_task_id}"
+        url = f"{self.api_base_url}/wf_file_staging/globus_tasks/{globus_task_id}"
         headers = {
             "accept": "application/json",
             "Content-Type": "application/json",
