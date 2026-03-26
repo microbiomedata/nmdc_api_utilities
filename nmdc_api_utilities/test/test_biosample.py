@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
+import logging
+
 from nmdc_api_utilities.biosample_search import BiosampleSearch
-import logging
 from nmdc_api_utilities.data_processing import DataProcessing
-import logging
 
 logging.basicConfig(level=logging.DEBUG)
 import os
+
 from dotenv import load_dotenv
 
 load_dotenv()

@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
-from nmdc_api_utilities.data_staging import (
-    JGISampleSearchAPI,
-    JGISequencingProjectAPI,
-    GlobusTaskAPI,
-)
+from unittest.mock import MagicMock, patch
 
 import pytest
-from unittest.mock import patch, MagicMock
+
+from nmdc_api_utilities.data_staging import (
+    GlobusTaskAPI,
+    JGISampleSearchAPI,
+    JGISequencingProjectAPI,
+)
 
 
 @pytest.fixture

@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
-from nmdc_api_utilities.minter import Minter
-from nmdc_api_utilities.auth import NMDCAuth
 import os
-from dotenv import load_dotenv
+
 import pytest
+from dotenv import load_dotenv
+
+from nmdc_api_utilities.auth import NMDCAuth
 from nmdc_api_utilities.decorators import AuthenticationError
+from nmdc_api_utilities.minter import Minter
 
 load_dotenv()
 ENV = os.getenv("ENV")

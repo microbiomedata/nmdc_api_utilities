@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
-import requests
-from datetime import datetime, timedelta
-from nmdc_api_utilities.nmdc_search import NMDCSearch
 import logging
+from datetime import datetime, timedelta
+
+import requests
+
+from nmdc_api_utilities.nmdc_search import NMDCSearch
 
 logger = logging.getLogger(__name__)
 

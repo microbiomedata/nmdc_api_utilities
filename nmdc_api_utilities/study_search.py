@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import logging
+
 from nmdc_api_utilities.collection_search import CollectionSearch
 
 logger = logging.getLogger(__name__)

@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
-from nmdc_api_utilities.collection_search import CollectionSearch
+import os
 import unittest
 
 from dotenv import load_dotenv
-import os
+
+from nmdc_api_utilities.collection_search import CollectionSearch
 
 load_dotenv()
 ENV = os.getenv("ENV")

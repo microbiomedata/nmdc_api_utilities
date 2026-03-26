@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
-from nmdc_api_utilities.metadata import Metadata
 import os
+
 from dotenv import load_dotenv
+
+from nmdc_api_utilities.metadata import Metadata
 
 load_dotenv()
 ENV = os.getenv("ENV")

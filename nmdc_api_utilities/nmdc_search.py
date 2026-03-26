@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 import logging
-import requests
 from typing import Optional
+
+import requests
 
 logger = logging.getLogger(__name__)
 

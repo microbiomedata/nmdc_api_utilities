@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
-from nmdc_api_utilities.study_search import StudySearch
 import logging
 import os
+
 from dotenv import load_dotenv
+
+from nmdc_api_utilities.study_search import StudySearch
 
 load_dotenv()
 ENV = os.getenv("ENV")

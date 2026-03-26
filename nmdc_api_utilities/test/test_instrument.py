@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
-from nmdc_api_utilities.instrument_search import InstrumentSearch
 import logging
-from dotenv import load_dotenv
 import os
+
+from dotenv import load_dotenv
+
+from nmdc_api_utilities.instrument_search import InstrumentSearch
 
 load_dotenv()
 ENV = os.getenv("ENV")

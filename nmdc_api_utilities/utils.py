@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
-from nmdc_api_utilities.collection_search import CollectionSearch
-import requests
-from nmdc_api_utilities.nmdc_search import NMDCSearch
 import logging
+
+import requests
+
+from nmdc_api_utilities.collection_search import CollectionSearch
+from nmdc_api_utilities.nmdc_search import NMDCSearch
 
 logger = logging.getLogger(__name__)
 

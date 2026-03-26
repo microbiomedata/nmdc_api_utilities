@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
+import logging
+import os
+import unittest
+
+from dotenv import load_dotenv
+
 from nmdc_api_utilities.functional_annotation_agg_search import (
     FunctionalAnnotationAggSearch,
 )
-import logging
-import unittest
-from dotenv import load_dotenv
-import os
 
 load_dotenv()
 ENV = os.getenv("ENV")

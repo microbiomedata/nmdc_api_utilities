@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
+import logging
+
 from nmdc_api_utilities.collection_search import CollectionSearch
 from nmdc_api_utilities.lat_long_filters import LatLongFilters
-import logging
 
 logger = logging.getLogger(__name__)
 
