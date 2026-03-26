@@ -29,7 +29,7 @@ class NMDCSearch:
         ):
             raise ValueError(f"Invalid api_base_url: {api_base_url}")
 
-        self.api_base_url = api_base_url
+        self.api_base_url = api_base_url.rstrip("/")
 
     def _get_all_pages(
         self,
