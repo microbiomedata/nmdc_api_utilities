@@ -74,7 +74,7 @@ class Minter(NMDCSearch):
             self.auth = NMDCAuth(
                 client_id=client_id,
                 client_secret=client_secret,
-                api_base_url=DEFAULT_API_BASE_URL,
+                api_base_url=self.api_base_url,
             )
         # Validate count parameter
         if count < 1:
