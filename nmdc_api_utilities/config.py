@@ -17,6 +17,4 @@ if not isinstance(api_base_url_raw, str) or not re.match(
     r"^https?://", api_base_url_raw
 ):
     raise ValueError(f"Invalid API_BASE_URL: {api_base_url_raw}")
-API_BASE_URL = api_base_url_raw.rstrip(
-    "/"
-)  # e.g. "http://host:8000/" -> "http://host:8000"
+API_BASE_URL = api_base_url_raw.rstrip("/")
