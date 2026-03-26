@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import unittest
+import logging
 
 from dotenv import load_dotenv
 
@@ -8,7 +9,6 @@ from nmdc_api_utilities.collection_search import CollectionSearch
 
 load_dotenv()
 ENV = os.getenv("ENV")
-import logging
 
 logging.basicConfig(level=logging.DEBUG)
 

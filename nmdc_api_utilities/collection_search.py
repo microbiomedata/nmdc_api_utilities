@@ -2,6 +2,7 @@
 import logging
 import re
 import urllib.parse
+import json
 
 import requests
 
@@ -9,7 +10,6 @@ from nmdc_api_utilities.data_processing import DataProcessing
 from nmdc_api_utilities.nmdc_search import NMDCSearch
 
 logger = logging.getLogger(__name__)
-import json
 
 
 class CollectionSearch(NMDCSearch):

@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 import logging
 import os
+from nmdc_api_utilities.nmdc_search import NMDCSearch
 
 from dotenv import load_dotenv
 
 load_dotenv()
 ENV = os.getenv("ENV")
 logging.basicConfig(level=logging.DEBUG)
-from nmdc_api_utilities.nmdc_search import NMDCSearch
 
 
 def test_get_records_by_id():

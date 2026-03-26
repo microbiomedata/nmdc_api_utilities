@@ -2,13 +2,12 @@
 import logging
 import os
 from itertools import chain
-
 from dotenv import load_dotenv
+from nmdc_api_utilities.nmdc_search import NMDCSearch
 
 load_dotenv()
 ENV = os.getenv("ENV")
 logging.basicConfig(level=logging.DEBUG)
-from nmdc_api_utilities.nmdc_search import NMDCSearch
 
 
 def test_get_linked_instance():

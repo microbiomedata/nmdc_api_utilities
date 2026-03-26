@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 import logging
+import os
+from dotenv import load_dotenv
 
 from nmdc_api_utilities.data_object_search import DataObjectSearch
 
 logging.basicConfig(level=logging.DEBUG)
-import os
-
-from dotenv import load_dotenv
 
 load_dotenv()
 ENV = os.getenv("ENV")
