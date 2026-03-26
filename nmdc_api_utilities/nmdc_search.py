@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import logging
+import re
 import requests
 from typing import Optional
 
@@ -22,6 +23,12 @@ class NMDCSearch:
     """
 
     def __init__(self, api_base_url: str = DEFAULT_API_BASE_URL):
+        # Check whether the specified API base URL resembles a URL.
+        if not isinstance(api_base_url, str) or not re.match(
+            r"^https?://", api_base_url, flags=re.IGNORECASE
+        ):
+            raise ValueError(f"Invalid api_base_url: {api_base_url}")
+
         self.api_base_url = api_base_url
 
     def _get_all_pages(
