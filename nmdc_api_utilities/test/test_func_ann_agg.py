@@ -1,15 +1,10 @@
 # -*- coding: utf-8 -*-
+import unittest
+
 from nmdc_api_utilities.config import API_BASE_URL
 from nmdc_api_utilities.functional_annotation_agg_search import (
     FunctionalAnnotationAggSearch,
 )
-import logging
-import unittest
-from dotenv import load_dotenv
-import os
-
-load_dotenv()
-API_BASE_URL = os.getenv("API_BASE_URL", DEFAULT_API_BASE_URL)
 
 
 class TestFunctionalAnnotation(unittest.TestCase):

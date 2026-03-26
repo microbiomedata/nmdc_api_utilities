@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
+import logging
+
 from nmdc_api_utilities.config import API_BASE_URL
 from nmdc_api_utilities.instrument_search import InstrumentSearch
-import logging
-from dotenv import load_dotenv
-import os
 
-load_dotenv()
-API_BASE_URL = os.getenv("API_BASE_URL", DEFAULT_API_BASE_URL)
+
 logging.basicConfig(level=logging.DEBUG)
 
 

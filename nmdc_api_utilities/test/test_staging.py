@@ -1,25 +1,18 @@
 # -*- coding: utf-8 -*-
-import os
 from unittest.mock import patch, MagicMock
 
 import pytest
-from dotenv import load_dotenv
 
+# Note: Before we switched from the `env` kwarg to the `api_base_url` kwarg, all of the occurrences
+#       of the `env` kwarg in this module were being set to `"dev"`. When we switched to the
+#       `api_base_url` kwarg, we set their values to whatever the `API_BASE_URL` environment
+#       variable contained (which, by default, is the base URL of the production NMDC Runtime API).
 from nmdc_api_utilities.config import API_BASE_URL
 from nmdc_api_utilities.data_staging import (
     JGISampleSearchAPI,
     JGISequencingProjectAPI,
     GlobusTaskAPI,
 )
-
-
-load_dotenv()
-
-# Note: Before we switched from the `env` kwarg to the `api_base_url` kwarg, all of the occurrences
-#       of the `env` kwarg in this module were being set to `"dev"`. When we switched to the
-#       `api_base_url` kwarg, we set their values to whatever the `API_BASE_URL` environment
-#       variable contained (which, by default, is the base URL of the production NMDC Runtime API).
-API_BASE_URL = os.getenv("API_BASE_URL", DEFAULT_API_BASE_URL)
 
 
 @pytest.fixture

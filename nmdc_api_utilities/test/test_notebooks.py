@@ -1,13 +1,8 @@
 # -*- coding: utf-8 -*-
 from nmdc_api_utilities.config import API_BASE_URL
-from nmdc_api_utilities.data_processing import DataProcessing
 from nmdc_api_utilities.data_object_search import DataObjectSearch
+from nmdc_api_utilities.data_processing import DataProcessing
 from nmdc_api_utilities.workflow_execution_search import WorkflowExecutionSearch
-from dotenv import load_dotenv
-import os
-
-load_dotenv()
-API_BASE_URL = os.getenv("API_BASE_URL", DEFAULT_API_BASE_URL)
 
 
 def test_nom_notebook():

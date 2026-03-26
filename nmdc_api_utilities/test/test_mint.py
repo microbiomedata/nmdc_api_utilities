@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
+import os
+
+import pytest
+from dotenv import load_dotenv
+
 from nmdc_api_utilities.config import API_BASE_URL
 from nmdc_api_utilities.minter import Minter
 from nmdc_api_utilities.auth import NMDCAuth
-import os
-from dotenv import load_dotenv
-import pytest
 from nmdc_api_utilities.decorators import AuthenticationError
 
+
 load_dotenv()
-API_BASE_URL = os.getenv("API_BASE_URL", DEFAULT_API_BASE_URL)
 CLIENT_ID = os.getenv("CLIENT_ID")
 CLIENT_SECRET = os.getenv("CLIENT_SECRET")
 

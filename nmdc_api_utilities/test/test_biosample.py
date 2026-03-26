@@ -1,16 +1,10 @@
 # -*- coding: utf-8 -*-
 from nmdc_api_utilities.biosample_search import BiosampleSearch
-import logging
 from nmdc_api_utilities.config import API_BASE_URL
 from nmdc_api_utilities.data_processing import DataProcessing
 import logging
 
 logging.basicConfig(level=logging.DEBUG)
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
-API_BASE_URL = os.getenv("API_BASE_URL", DEFAULT_API_BASE_URL)
 
 
 def test_find_biosample_by_id():

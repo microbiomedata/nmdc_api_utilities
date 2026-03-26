@@ -1,14 +1,11 @@
 # -*- coding: utf-8 -*-
 import logging
-from dotenv import load_dotenv
-import os
 
 from nmdc_api_utilities.config import API_BASE_URL
-
-load_dotenv()
-API_BASE_URL = os.getenv("API_BASE_URL", DEFAULT_API_BASE_URL)
-logging.basicConfig(level=logging.DEBUG)
 from nmdc_api_utilities.nmdc_search import NMDCSearch
+
+
+logging.basicConfig(level=logging.DEBUG)
 
 
 def test_get_records_by_id():

@@ -1,15 +1,10 @@
 # -*- coding: utf-8 -*-
-from nmdc_api_utilities.collection_search import CollectionSearch
-from nmdc_api_utilities.config import API_BASE_URL
+import logging
 import unittest
 
-from dotenv import load_dotenv
-import os
+from nmdc_api_utilities.collection_search import CollectionSearch
+from nmdc_api_utilities.config import API_BASE_URL
 
-
-load_dotenv()
-API_BASE_URL = os.getenv("API_BASE_URL", DEFAULT_API_BASE_URL)
-import logging
 
 logging.basicConfig(level=logging.DEBUG)
 

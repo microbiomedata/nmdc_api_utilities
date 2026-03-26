@@ -1,14 +1,10 @@
 # -*- coding: utf-8 -*-
-from nmdc_api_utilities.config import API_BASE_URL
-from nmdc_api_utilities.data_object_search import DataObjectSearch
 import logging
 
-logging.basicConfig(level=logging.DEBUG)
-from dotenv import load_dotenv
-import os
+from nmdc_api_utilities.config import API_BASE_URL
+from nmdc_api_utilities.data_object_search import DataObjectSearch
 
-load_dotenv()
-API_BASE_URL = os.getenv("API_BASE_URL", DEFAULT_API_BASE_URL)
+logging.basicConfig(level=logging.DEBUG)
 
 
 def test_get_do_by_study():
