@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from nmdc_api_utilities.constants import DEFAULT_API_BASE_URL
 from nmdc_api_utilities.data_processing import DataProcessing
 from nmdc_api_utilities.data_object_search import DataObjectSearch
 from nmdc_api_utilities.workflow_execution_search import WorkflowExecutionSearch
@@ -6,11 +7,11 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
-ENV = os.getenv("ENV")
+API_BASE_URL = os.getenv("API_BASE_URL", DEFAULT_API_BASE_URL)
 
 
 def test_nom_notebook():
-    dos_client = DataObjectSearch(env=ENV)
+    dos_client = DataObjectSearch(api_base_url=API_BASE_URL)
 
     dp_client = DataProcessing()
     processed_nom = dos_client.get_record_by_attribute(
@@ -29,7 +30,7 @@ def test_nom_notebook():
     # convert to df
 
     # since we are querying the WorkflowExecution collection, we need to create an instance of it
-    we_client = WorkflowExecutionSearch(env=ENV)
+    we_client = WorkflowExecutionSearch(api_base_url=API_BASE_URL)
     # use utility function to get a list of the ids from processed_nom
     result_ids = dp_client.extract_field(processed_nom, "processed_nom_id")
     # get the analysis data objects

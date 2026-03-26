@@ -3,31 +3,26 @@ import logging
 import requests
 from typing import Optional
 
+from nmdc_api_utilities.constants import DEFAULT_API_BASE_URL
+
 logger = logging.getLogger(__name__)
 
 
 class NMDCSearch:
     """
-    Base class for interacting with the NMDC API. Sets the base URL for the API based on the environment.
-    Environment is defaulted to the production isntance of the API. This functionality is in place for monthly testing of the runtime updates to the API.
+    Base class for interacting with the NMDC API.
 
     Parameters
     ----------
-    env: str
-        The environment to use. Default is prod. Must be one of the following:
-            prod
-            dev
+    api_base_url: str
+        The base URL of an instance of the NMDC Runtime API. By default, this is the base URL of
+        the production instance. NMDC team members will occasionally set this to the base URL of
+        a different instance; for example, a self-hosted instance used for testing.
 
     """
 
-    def __init__(self, env="prod"):
-        self.env = env
-        if env == "prod":
-            self.base_url = "https://api.microbiomedata.org"
-        elif env == "dev":
-            self.base_url = "https://api-dev.microbiomedata.org"
-        else:
-            raise ValueError("env must be one of the following: prod, dev")
+    def __init__(self, api_base_url: str = DEFAULT_API_BASE_URL):
+        self.api_base_url = api_base_url
 
     def _get_all_pages(
         self,
@@ -295,7 +290,9 @@ class NMDCSearch:
             # import in function to circumvent circular import error
             from nmdc_api_utilities.collection_search import CollectionSearch
 
-            cs = CollectionSearch(collection_name=collection_name, env=self.env)
+            cs = CollectionSearch(
+                collection_name=collection_name, api_base_url=self.api_base_url
+            )
             records = cs.get_batch_records(
                 id_list=id_list,
                 search_field="id",

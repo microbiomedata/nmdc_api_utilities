@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from nmdc_api_utilities.constants import DEFAULT_API_BASE_URL
 from nmdc_api_utilities.minter import Minter
 from nmdc_api_utilities.auth import NMDCAuth
 import os
@@ -7,15 +8,17 @@ import pytest
 from nmdc_api_utilities.decorators import AuthenticationError
 
 load_dotenv()
-ENV = os.getenv("ENV")
+API_BASE_URL = os.getenv("API_BASE_URL", DEFAULT_API_BASE_URL)
 CLIENT_ID = os.getenv("CLIENT_ID")
 CLIENT_SECRET = os.getenv("CLIENT_SECRET")
 
 
 def test_mint_single():
     """Test minting a single ID (default behavior)."""
-    auth = NMDCAuth(client_id=CLIENT_ID, client_secret=CLIENT_SECRET, env=ENV)
-    mint = Minter(env=ENV, auth=auth)
+    auth = NMDCAuth(
+        client_id=CLIENT_ID, client_secret=CLIENT_SECRET, api_base_url=API_BASE_URL
+    )
+    mint = Minter(api_base_url=API_BASE_URL, auth=auth)
     results = mint.mint("nmdc:DataObject")
     assert results
     assert isinstance(results, str)
@@ -24,8 +27,10 @@ def test_mint_single():
 
 def test_mint_single_explicit():
     """Test minting a single ID with explicit count=1."""
-    auth = NMDCAuth(client_id=CLIENT_ID, client_secret=CLIENT_SECRET, env=ENV)
-    mint = Minter(env=ENV, auth=auth)
+    auth = NMDCAuth(
+        client_id=CLIENT_ID, client_secret=CLIENT_SECRET, api_base_url=API_BASE_URL
+    )
+    mint = Minter(api_base_url=API_BASE_URL, auth=auth)
     results = mint.mint("nmdc:DataObject", count=1)
     assert results
     assert isinstance(results, str)
@@ -34,8 +39,10 @@ def test_mint_single_explicit():
 
 def test_mint_multiple():
     """Test minting multiple IDs."""
-    auth = NMDCAuth(client_id=CLIENT_ID, client_secret=CLIENT_SECRET, env=ENV)
-    mint = Minter(env=ENV, auth=auth)
+    auth = NMDCAuth(
+        client_id=CLIENT_ID, client_secret=CLIENT_SECRET, api_base_url=API_BASE_URL
+    )
+    mint = Minter(api_base_url=API_BASE_URL, auth=auth)
     results = mint.mint("nmdc:DataObject", count=3)
     assert results
     assert isinstance(results, list)
@@ -47,8 +54,10 @@ def test_mint_multiple():
 
 def test_mint_invalid_count():
     """Test that invalid count values raise ValueError."""
-    auth = NMDCAuth(client_id=CLIENT_ID, client_secret=CLIENT_SECRET, env=ENV)
-    mint = Minter(env=ENV, auth=auth)
+    auth = NMDCAuth(
+        client_id=CLIENT_ID, client_secret=CLIENT_SECRET, api_base_url=API_BASE_URL
+    )
+    mint = Minter(api_base_url=API_BASE_URL, auth=auth)
     with pytest.raises(ValueError, match="count must be at least 1"):
         mint.mint("nmdc:DataObject", count=0)
 
@@ -58,7 +67,7 @@ def test_mint_invalid_count():
 
 def test_mint_no_auth():
     """Test that missing authentication raises AuthenticationError."""
-    mint = Minter(env=ENV)
+    mint = Minter(api_base_url=API_BASE_URL)
     with pytest.raises(
         AuthenticationError, match="requires authentication"
     ) as exc_info:
@@ -69,7 +78,7 @@ def test_mint_no_auth():
 
 def test_old_auth():
     """Test that using client_id and client_secret directly works for authentication."""
-    mint = Minter(env=ENV)
+    mint = Minter(api_base_url=API_BASE_URL)
     results = mint.mint(
         "nmdc:DataObject", client_id=CLIENT_ID, client_secret=CLIENT_SECRET
     )

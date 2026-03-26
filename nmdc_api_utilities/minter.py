@@ -3,6 +3,7 @@ from nmdc_api_utilities.nmdc_search import NMDCSearch
 import logging
 import requests
 from nmdc_api_utilities.auth import NMDCAuth
+from nmdc_api_utilities.constants import DEFAULT_API_BASE_URL
 from nmdc_api_utilities.decorators import requires_auth
 import json
 
@@ -19,10 +20,10 @@ class Minter(NMDCSearch):
         An instance of the NMDCAuth class for authentication.
     """
 
-    def __init__(self, env="prod", auth: NMDCAuth = None):
-        self.env = env
-        self.auth = auth or NMDCAuth(env=env)
-        super().__init__(env=env)
+    def __init__(self, api_base_url: str = DEFAULT_API_BASE_URL, auth: NMDCAuth = None):
+        self.api_base_url = api_base_url
+        self.auth = auth or NMDCAuth(api_base_url=api_base_url)
+        super().__init__(api_base_url=api_base_url)
 
     @requires_auth
     def mint(
@@ -71,7 +72,9 @@ class Minter(NMDCSearch):
         # if they are passed into the function, create the auth object
         if client_id and client_secret:
             self.auth = NMDCAuth(
-                client_id=client_id, client_secret=client_secret, env=self.env
+                client_id=client_id,
+                client_secret=client_secret,
+                api_base_url=DEFAULT_API_BASE_URL,
             )
         # Validate count parameter
         if count < 1:

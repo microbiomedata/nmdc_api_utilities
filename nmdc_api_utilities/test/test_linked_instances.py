@@ -3,9 +3,10 @@ import logging
 from dotenv import load_dotenv
 import os
 from itertools import chain
+from nmdc_api_utilities.constants import DEFAULT_API_BASE_URL
 
 load_dotenv()
-ENV = os.getenv("ENV")
+API_BASE_URL = os.getenv("API_BASE_URL", DEFAULT_API_BASE_URL)
 logging.basicConfig(level=logging.DEBUG)
 from nmdc_api_utilities.nmdc_search import NMDCSearch
 
@@ -14,7 +15,7 @@ def test_get_linked_instance():
     """
     Test to get a record by a non-standard attribute.
     """
-    ll_client = NMDCSearch(env=ENV)
+    ll_client = NMDCSearch(api_base_url=API_BASE_URL)
     ids = [
         "nmdc:bsm-11-002vgm56",
         "nmdc:bsm-11-006pnx90",
@@ -530,7 +531,7 @@ def test_get_linked_instance_mutiple_types():
     """
     Test to get a record by a non-standard attribute.
     """
-    ll_client = NMDCSearch(env=ENV)
+    ll_client = NMDCSearch(api_base_url=API_BASE_URL)
     ids = ["nmdc:bsm-11-002vgm56", "nmdc:bsm-11-006pnx90"]
     result = ll_client.get_linked_instances(
         types=["nmdc:Study", "nmdc:DataObject"], ids=ids
@@ -543,7 +544,7 @@ def test_get_linked_instance_strings():
     """
     Test to get a record by a non-standard attribute.
     """
-    ll_client = NMDCSearch(env=ENV)
+    ll_client = NMDCSearch(api_base_url=API_BASE_URL)
     id = "nmdc:bsm-11-002vgm56"
     result = ll_client.get_linked_instances(types="nmdc:Study", ids=id)
 
@@ -551,7 +552,7 @@ def test_get_linked_instance_strings():
 
 
 def test_association():
-    ll_client = NMDCSearch(env=ENV)
+    ll_client = NMDCSearch(api_base_url=API_BASE_URL)
     association = ll_client.get_linked_instances_and_associate_ids(
         types=["nmdc:Study"], ids=["nmdc:bsm-11-002vgm56", "nmdc:bsm-11-006pnx90"]
     )
