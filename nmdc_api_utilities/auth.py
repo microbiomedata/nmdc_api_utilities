@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import requests
 from datetime import datetime, timedelta
-from nmdc_api_utilities.constants import DEFAULT_API_BASE_URL
+from nmdc_api_utilities.config import API_BASE_URL
 from nmdc_api_utilities.nmdc_search import NMDCSearch
 import logging
 
@@ -40,7 +40,7 @@ class NMDCAuth(NMDCSearch):
         client_secret: str = None,
         username: str = None,
         password: str = None,
-        api_base_url: str = DEFAULT_API_BASE_URL,
+        api_base_url: str = API_BASE_URL,
     ):
         super().__init__(api_base_url=api_base_url)
         self.api_base_url = api_base_url

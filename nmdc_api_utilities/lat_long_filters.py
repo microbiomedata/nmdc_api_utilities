@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from nmdc_api_utilities.collection_search import CollectionSearch
-from nmdc_api_utilities.constants import DEFAULT_API_BASE_URL
+from nmdc_api_utilities.config import API_BASE_URL
 import logging
 
 logger = logging.getLogger(__name__)
@@ -11,7 +11,7 @@ class LatLongFilters(CollectionSearch):
     Class to interact with the NMDC API to filter sets by latitude and longitude.
     """
 
-    def __init__(self, collection_name, api_base_url: str = DEFAULT_API_BASE_URL):
+    def __init__(self, collection_name, api_base_url: str = API_BASE_URL):
         self.collection_name = collection_name
         super().__init__(
             collection_name=self.collection_name, api_base_url=api_base_url

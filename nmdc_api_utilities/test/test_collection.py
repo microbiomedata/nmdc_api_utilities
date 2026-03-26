@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from nmdc_api_utilities.collection_search import CollectionSearch
-from nmdc_api_utilities.constants import DEFAULT_API_BASE_URL
+from nmdc_api_utilities.config import API_BASE_URL
 import unittest
 
 from dotenv import load_dotenv

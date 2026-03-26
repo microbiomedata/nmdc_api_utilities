@@ -4,7 +4,7 @@ import logging
 import requests
 from nmdc_api_utilities.auth import NMDCAuth
 from nmdc_api_utilities.decorators import requires_auth
-from nmdc_api_utilities.constants import DEFAULT_API_BASE_URL
+from nmdc_api_utilities.config import API_BASE_URL
 import json
 
 logger = logging.getLogger(__name__)
@@ -18,7 +18,7 @@ class JGISequencingProjectAPI(NMDCSearch):
     def __init__(
         self,
         auth: NMDCAuth,
-        api_base_url: str = DEFAULT_API_BASE_URL,
+        api_base_url: str = API_BASE_URL,
     ):
         self.api_base_url = api_base_url
         self.auth = auth
@@ -180,7 +180,7 @@ class JGISampleSearchAPI(NMDCSearch):
     def __init__(
         self,
         auth: NMDCAuth,
-        api_base_url: str = DEFAULT_API_BASE_URL,
+        api_base_url: str = API_BASE_URL,
     ):
         self.api_base_url = api_base_url
         self.auth = auth
@@ -355,7 +355,7 @@ class GlobusTaskAPI(NMDCSearch):
     def __init__(
         self,
         auth: NMDCAuth,
-        api_base_url: str = DEFAULT_API_BASE_URL,
+        api_base_url: str = API_BASE_URL,
     ):
         self.api_base_url = api_base_url
         self.auth = auth

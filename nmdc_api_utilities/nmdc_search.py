@@ -4,7 +4,7 @@ import re
 import requests
 from typing import Optional
 
-from nmdc_api_utilities.constants import DEFAULT_API_BASE_URL
+from nmdc_api_utilities.config import API_BASE_URL
 
 logger = logging.getLogger(__name__)
 
@@ -22,7 +22,7 @@ class NMDCSearch:
 
     """
 
-    def __init__(self, api_base_url: str = DEFAULT_API_BASE_URL):
+    def __init__(self, api_base_url: str = API_BASE_URL):
         # Check whether the specified API base URL resembles a URL.
         if not isinstance(api_base_url, str) or not re.match(
             r"^https?://", api_base_url, flags=re.IGNORECASE

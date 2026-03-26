@@ -3,7 +3,7 @@ import logging
 from dotenv import load_dotenv
 import os
 from itertools import chain
-from nmdc_api_utilities.constants import DEFAULT_API_BASE_URL
+from nmdc_api_utilities.config import API_BASE_URL
 
 load_dotenv()
 API_BASE_URL = os.getenv("API_BASE_URL", DEFAULT_API_BASE_URL)

@@ -4,7 +4,7 @@ import requests
 import logging
 import json
 from nmdc_api_utilities.auth import NMDCAuth
-from nmdc_api_utilities.constants import DEFAULT_API_BASE_URL
+from nmdc_api_utilities.config import API_BASE_URL
 from nmdc_api_utilities.decorators import requires_auth
 
 logger = logging.getLogger(__name__)
@@ -20,7 +20,7 @@ class Metadata(NMDCSearch):
         An instance of the NMDCAuth class for authentication.
     """
 
-    def __init__(self, api_base_url: str = DEFAULT_API_BASE_URL, auth: NMDCAuth = None):
+    def __init__(self, api_base_url: str = API_BASE_URL, auth: NMDCAuth = None):
         self.api_base_url = api_base_url
         self.auth = auth or NMDCAuth()
         super().__init__(api_base_url=api_base_url)

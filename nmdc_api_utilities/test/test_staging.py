@@ -5,7 +5,7 @@ from unittest.mock import patch, MagicMock
 import pytest
 from dotenv import load_dotenv
 
-from nmdc_api_utilities.constants import DEFAULT_API_BASE_URL
+from nmdc_api_utilities.config import API_BASE_URL
 from nmdc_api_utilities.data_staging import (
     JGISampleSearchAPI,
     JGISequencingProjectAPI,

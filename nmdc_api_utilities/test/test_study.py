@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from nmdc_api_utilities.constants import DEFAULT_API_BASE_URL
+from nmdc_api_utilities.config import API_BASE_URL
 from nmdc_api_utilities.study_search import StudySearch
 import logging
 import os
