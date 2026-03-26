@@ -38,11 +38,25 @@ repos:
     rev: 23.3.0
     hooks:
       - id: black
+  
   - repo: https://github.com/jsh9/pydoclint
     rev: 0.6.6
     hooks:
       - id: pydoclint 
         args: [--style=sphinx]
+  
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.12.10
+    hooks:
+      - id: ruff
+        name: ruff-check
+        args: ["--select", "I"]  # Only enable import-related rules
+        additional_dependencies: []  # Add specific ruff version if needed
+        
+      - id: ruff
+        name: ruff-format
+        args: ["--select", "I", "--fix"]  # Automatically fix import formatting
+        additional_dependencies: []
 
   # - repo: https://github.com/thclark/pre-commit-sphinx
   #   rev: 0.0.1

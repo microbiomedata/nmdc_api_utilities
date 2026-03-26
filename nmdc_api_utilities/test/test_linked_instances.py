@@ -2,7 +2,9 @@
 import logging
 import os
 from itertools import chain
+
 from dotenv import load_dotenv
+
 from nmdc_api_utilities.nmdc_search import NMDCSearch
 
 load_dotenv()

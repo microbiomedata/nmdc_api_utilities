@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
+import logging
 import os
 import unittest
-import logging
 
 from dotenv import load_dotenv
 

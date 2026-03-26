@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-import os
-from dotenv import load_dotenv
 import logging
+import os
+
+from dotenv import load_dotenv
 
 from nmdc_api_utilities.biosample_search import BiosampleSearch
 from nmdc_api_utilities.data_processing import DataProcessing

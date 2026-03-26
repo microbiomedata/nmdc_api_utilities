@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
+import json
 import logging
 import re
 import urllib.parse
-import json
 
 import requests
 

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import logging
 import os
+
 from dotenv import load_dotenv
 
 from nmdc_api_utilities.data_object_search import DataObjectSearch
