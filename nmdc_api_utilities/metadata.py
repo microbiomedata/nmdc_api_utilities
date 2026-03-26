@@ -22,7 +22,7 @@ class Metadata(NMDCSearch):
 
     def __init__(self, api_base_url: str = API_BASE_URL, auth: NMDCAuth = None):
         self.api_base_url = api_base_url
-        self.auth = auth or NMDCAuth()
+        self.auth = auth or NMDCAuth(api_base_url=api_base_url)
         super().__init__(api_base_url=api_base_url)
 
     def validate_json(self, json_records: list[dict] | str) -> int:
