@@ -19,9 +19,9 @@ def get_api_base_url(api_base_url: str = PRODUCTION_API_BASE_URL, env: str = "")
     The logic for determining the base URL is as follows:
     1. If `env` is set to "prod", use the production NMDC Runtime API base URL.
     2. If `env` is set to "dev", use the development NMDC Runtime API base URL.
-    3. If the `api_base_url` environment variable is set to anything resembling a URL,
+    3. If `api_base_url` is set to anything resembling a URL,
        use that after removing any trailing forward slashes from it.
-    4. If the `api_base_url` environment variable is set to anything else, raise an error.
+    4. If `api_base_url` is set to anything else, raise an error.
 
     Parameters:
         api_base_url: The base URL of an instance of the NMDC Runtime API.
@@ -60,7 +60,7 @@ def get_api_base_url(api_base_url: str = PRODUCTION_API_BASE_URL, env: str = "")
     elif env == "dev":
         return DEVELOPMENT_API_BASE_URL
     else:
-        # Check whether `api_base_url_raw` is set to anything resembling a URL.
+        # Check whether `api_base_url` is set to anything resembling a URL.
         if re.match(r"^https?://", api_base_url):
             return api_base_url.rstrip("/")
         else:
