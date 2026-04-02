@@ -123,7 +123,6 @@ def test_get_linked_instance():
         "nmdc:bsm-11-078st260",
         "nmdc:bsm-11-07ar1j63",
         "nmdc:bsm-11-07asnb39",
-        "nmdc:bsm-11-07dyqv24",
         "nmdc:bsm-11-07fkx546",
         "nmdc:bsm-11-07hz4140",
         "nmdc:bsm-11-07js9c68",
@@ -179,7 +178,6 @@ def test_get_linked_instance():
         "nmdc:bsm-11-0bq1t133",
         "nmdc:bsm-11-0br06j81",
         "nmdc:bsm-11-0bsqbq85",
-        "nmdc:bsm-11-0byf2s84",
         "nmdc:bsm-11-0c0bmh09",
         "nmdc:bsm-11-0c5jqf27",
         "nmdc:bsm-11-0c5mdg78",
@@ -497,7 +495,6 @@ def test_get_linked_instance():
         "nmdc:bsm-11-168xmm55",
         "nmdc:bsm-11-16svk968",
         "nmdc:bsm-11-16sx3p77",
-        "nmdc:bsm-11-16t3g930",
         "nmdc:bsm-11-16t5jt45",
         "nmdc:bsm-11-16thhh67",
         "nmdc:bsm-11-16yk2m32",
@@ -509,7 +506,6 @@ def test_get_linked_instance():
         "nmdc:bsm-11-17hg1e09",
         "nmdc:bsm-11-17mk1p49",
         "nmdc:bsm-11-17nrhs76",
-        "nmdc:bsm-11-17rsbh94",
         "nmdc:bsm-11-17yggv08",
         "nmdc:bsm-11-182t3n64",
         "nmdc:bsm-11-185e5f56",
@@ -523,7 +519,7 @@ def test_get_linked_instance():
     # make a list of all unique _upstream_of ids in result
     result_ids = list(set(chain.from_iterable(x["_upstream_of"] for x in result)))
 
-    assert len(result_ids) == 500
+    assert len(result_ids) == 496
     # assert that all result_ids are in the input ids
     assert all(rid in ids for rid in result_ids)
 
