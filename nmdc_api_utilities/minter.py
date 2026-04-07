@@ -20,10 +20,17 @@ class Minter(NMDCSearch):
         An instance of the NMDCAuth class for authentication.
     """
 
-    def __init__(self, api_base_url: str = API_BASE_URL, auth: NMDCAuth = None):
-        self.api_base_url = api_base_url
-        self.auth = auth or NMDCAuth(api_base_url=api_base_url)
-        super().__init__(api_base_url=api_base_url)
+    def __init__(
+        self,
+        api_base_url: str = API_BASE_URL,
+        auth: NMDCAuth = None,
+        env: str = "",
+    ):
+        super().__init__(
+            api_base_url=api_base_url,
+            env=env,
+        )
+        self.auth = auth or NMDCAuth(api_base_url=self.api_base_url)
 
     @requires_auth
     def mint(

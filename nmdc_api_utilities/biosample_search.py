@@ -12,5 +12,9 @@ class BiosampleSearch(LatLongFilters, CollectionSearch):
     Class to interact with the NMDC API to get biosamples.
     """
 
-    def __init__(self, api_base_url: str = API_BASE_URL):
-        super().__init__(collection_name="biosample_set", api_base_url=api_base_url)
+    def __init__(self, api_base_url: str = API_BASE_URL, env: str = ""):
+        super().__init__(
+            collection_name="biosample_set",
+            api_base_url=api_base_url,
+            env=env,
+        )

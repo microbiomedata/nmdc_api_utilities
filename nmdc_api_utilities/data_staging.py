@@ -19,11 +19,15 @@ class JGISequencingProjectAPI(NMDCSearch):
         self,
         auth: NMDCAuth,
         api_base_url: str = API_BASE_URL,
+        env: str = "",
     ):
-        self.api_base_url = api_base_url
         self.auth = auth
         if not self.auth.has_credentials():
             raise ValueError("credentials must be provided")
+        super().__init__(
+            api_base_url=api_base_url,
+            env=env,
+        )
         # make sure the `api_base_url` is the same
         # TODO: Use a global "settings" object to store the `api_base_url` in a single place.
         #       Example: https://github.com/pydantic/pydantic-settings
@@ -31,7 +35,6 @@ class JGISequencingProjectAPI(NMDCSearch):
             raise ValueError(
                 "`api_base_url` must be the same for NMDCAuth and JGISequencingProjectAPI"
             )
-        super().__init__(api_base_url=api_base_url)
 
     @requires_auth
     def create_jgi_sequencing_project(
@@ -181,11 +184,15 @@ class JGISampleSearchAPI(NMDCSearch):
         self,
         auth: NMDCAuth,
         api_base_url: str = API_BASE_URL,
+        env: str = "",
     ):
-        self.api_base_url = api_base_url
         self.auth = auth
         if not self.auth.has_credentials():
             raise ValueError("credentials must be provided")
+        super().__init__(
+            api_base_url=api_base_url,
+            env=env,
+        )
         # make sure the `api_base_url` is the same
         # TODO: Use a global "settings" object to store the `api_base_url` in a single place.
         #       Example: https://github.com/pydantic/pydantic-settings
@@ -193,7 +200,6 @@ class JGISampleSearchAPI(NMDCSearch):
             raise ValueError(
                 "`api_base_url` must be the same for NMDCAuth and JGISampleSearchAPI"
             )
-        super().__init__(api_base_url=api_base_url)
 
     @requires_auth
     def list_jgi_samples(
@@ -356,11 +362,15 @@ class GlobusTaskAPI(NMDCSearch):
         self,
         auth: NMDCAuth,
         api_base_url: str = API_BASE_URL,
+        env: str = "",
     ):
-        self.api_base_url = api_base_url
         self.auth = auth
         if not self.auth.has_credentials():
             raise ValueError("credentials must be provided")
+        super().__init__(
+            api_base_url=api_base_url,
+            env=env,
+        )
         # make sure the `api_base_url` is the same
         # TODO: Use a global "settings" object to store the `api_base_url` in a single place.
         #       Example: https://github.com/pydantic/pydantic-settings
@@ -368,7 +378,6 @@ class GlobusTaskAPI(NMDCSearch):
             raise ValueError(
                 "`api_base_url` must be the same for NMDCAuth and GlobusTaskAPI"
             )
-        super().__init__(api_base_url=api_base_url)
 
     @requires_auth
     def list_globus_tasks(

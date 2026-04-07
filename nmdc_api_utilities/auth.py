@@ -41,9 +41,12 @@ class NMDCAuth(NMDCSearch):
         username: str = None,
         password: str = None,
         api_base_url: str = API_BASE_URL,
+        env: str = "",
     ):
-        super().__init__(api_base_url=api_base_url)
-        self.api_base_url = api_base_url
+        super().__init__(
+            api_base_url=api_base_url,
+            env=env,
+        )
         self.client_id = client_id
         self.client_secret = client_secret
         self.username = username
