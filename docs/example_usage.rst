@@ -1,11 +1,11 @@
 Example Usage
 =============
 
-This page collects example Jupyter notebooks that use the NMDC API Utilities package to interact with the NMDC API.
+This page collects example Jupyter notebooks in the `nmdc_notebooks <https://github.com/microbiomedata/nmdc_notebooks>`_ repository
+that use the NMDC API Utilities package to interact with the NMDC API.
 These notebooks cover a range of topics, including how to use the package to retrieve and analyze data from the NMDC API,
 as well as how to integrate the package with other tools and libraries for data analysis and visualization.
 
-Note that these links will take you to notebooks in the `nmdc_notebooks <https://github.com/microbiomedata/nmdc_notebooks>`_ repository, and may not be up-to-date with the latest version of the library.
 If you find any issues with the notebooks, please consider contributing a fix or opening an issue in the `nmdc_notebooks <https://github.com/microbiomedata/nmdc_notebooks>`_ repository.
 
 - `Bioscales Biogeochemical Metadata <https://microbiomedata.github.io/nmdc_notebooks/bioscales_python.html>`_
