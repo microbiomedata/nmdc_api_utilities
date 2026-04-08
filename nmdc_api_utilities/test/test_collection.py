@@ -1,13 +1,10 @@
 # -*- coding: utf-8 -*-
-from nmdc_api_utilities.collection_search import CollectionSearch
+import logging
 import unittest
 
-from dotenv import load_dotenv
-import os
+from nmdc_api_utilities.collection_search import CollectionSearch
+from nmdc_api_utilities.config import API_BASE_URL
 
-load_dotenv()
-ENV = os.getenv("ENV")
-import logging
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -19,13 +16,13 @@ class TestCollection(unittest.TestCase):
 
     def test_get_records(self):
         # simple test to check if the get_records method returns a list of records
-        collection = CollectionSearch("study_set", env=ENV)
+        collection = CollectionSearch("study_set", api_base_url=API_BASE_URL)
         results = collection.get_records(max_page_size=10)
         assert len(results) == 10
 
     def test_get_record_by_filter(self):
         # simple test to check if the get_record_by_filter method returns a record
-        collection = CollectionSearch("study_set", env=ENV)
+        collection = CollectionSearch("study_set", api_base_url=API_BASE_URL)
         results = collection.get_record_by_filter(
             filter='{"id": "nmdc:sty-11-8fb6t785"}'
         )
@@ -34,7 +31,7 @@ class TestCollection(unittest.TestCase):
 
     def test_get_record_by_attribute(self):
         # simple test to check if the get_record_by_attribute method returns a record
-        collection = CollectionSearch("study_set", env=ENV)
+        collection = CollectionSearch("study_set", api_base_url=API_BASE_URL)
         results = collection.get_record_by_attribute(
             "name",
             "Lab enrichment of tropical soil microbial communities from Luquillo Experimental Forest, Puerto Rico",
@@ -43,13 +40,13 @@ class TestCollection(unittest.TestCase):
 
     def test_get_record_by_id(self):
         # simple test to check if the get_record_by_id method returns a record
-        collection = CollectionSearch("study_set", env=ENV)
+        collection = CollectionSearch("study_set", api_base_url=API_BASE_URL)
         results = collection.get_record_by_id("nmdc:sty-11-8fb6t785")
         assert results["id"] == "nmdc:sty-11-8fb6t785"
 
     def test_check_ids_exist(self):
         # simple test to check if the check_ids_exist method returns a boolean
-        collection = CollectionSearch("study_set", env=ENV)
+        collection = CollectionSearch("study_set", api_base_url=API_BASE_URL)
         results = collection.check_ids_exist(["nmdc:sty-11-8fb6t785"])
         assert results == True
 
@@ -76,6 +73,6 @@ class TestCollection(unittest.TestCase):
             "nmdc:bsm-11-034x5t48",
         ]
         # ids = ['nmdc:bsm-11-002vgm56','nmdc:bsm-11-006pnx90']
-        collection = CollectionSearch("biosample_set", env=ENV)
+        collection = CollectionSearch("biosample_set", api_base_url=API_BASE_URL)
         results = collection.check_ids_exist(ids)
         assert results == True

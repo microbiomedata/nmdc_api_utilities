@@ -4,6 +4,7 @@ import requests
 import logging
 import json
 from nmdc_api_utilities.auth import NMDCAuth
+from nmdc_api_utilities.config import API_BASE_URL
 from nmdc_api_utilities.decorators import requires_auth
 
 logger = logging.getLogger(__name__)
@@ -19,10 +20,17 @@ class Metadata(NMDCSearch):
         An instance of the NMDCAuth class for authentication.
     """
 
-    def __init__(self, env="prod", auth: NMDCAuth = None):
-        self.env = env
-        self.auth = auth or NMDCAuth()
-        super().__init__(env=env)
+    def __init__(
+        self,
+        api_base_url: str = API_BASE_URL,
+        auth: NMDCAuth = None,
+        env: str = "",
+    ):
+        super().__init__(
+            api_base_url=api_base_url,
+            env=env,
+        )
+        self.auth = auth or NMDCAuth(api_base_url=self.api_base_url)
 
     def validate_json(self, json_records: list[dict] | str) -> int:
         """
@@ -55,7 +63,7 @@ class Metadata(NMDCSearch):
         if "placeholder" in json.dumps(data):
             raise Exception("Placeholder values found in json!")
 
-        url = f"{self.base_url}/metadata/json:validate"
+        url = f"{self.api_base_url}/metadata/json:validate"
         headers = {"accept": "application/json", "Content-Type": "application/json"}
         response = requests.post(url, headers=headers, json=data)
         if response.text != '{"result":"All Okay!"}' or response.status_code != 200:
@@ -99,7 +107,7 @@ class Metadata(NMDCSearch):
         token = self.auth.get_token()
 
         # api request
-        url = f"{self.base_url}/metadata/json:submit"
+        url = f"{self.api_base_url}/metadata/json:submit"
         headers = {
             "accept": "application/json",
             "Content-Type": "application/json",

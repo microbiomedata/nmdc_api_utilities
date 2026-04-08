@@ -4,6 +4,7 @@ import logging
 import requests
 from nmdc_api_utilities.auth import NMDCAuth
 from nmdc_api_utilities.decorators import requires_auth
+from nmdc_api_utilities.config import API_BASE_URL
 import json
 
 logger = logging.getLogger(__name__)
@@ -17,18 +18,23 @@ class JGISequencingProjectAPI(NMDCSearch):
     def __init__(
         self,
         auth: NMDCAuth,
-        env="prod",
+        api_base_url: str = API_BASE_URL,
+        env: str = "",
     ):
-        self.env = env
         self.auth = auth
         if not self.auth.has_credentials():
             raise ValueError("credentials must be provided")
-        # make sure the env is the same
-        if self.auth.env != self.env:
+        super().__init__(
+            api_base_url=api_base_url,
+            env=env,
+        )
+        # make sure the `api_base_url` is the same
+        # TODO: Use a global "settings" object to store the `api_base_url` in a single place.
+        #       Example: https://github.com/pydantic/pydantic-settings
+        if self.auth.api_base_url != self.api_base_url:
             raise ValueError(
-                "`env` must be the same for NMDCAuth and JGISequencingProjectAPI"
+                "`api_base_url` must be the same for NMDCAuth and JGISequencingProjectAPI"
             )
-        super().__init__(env=env)
 
     @requires_auth
     def create_jgi_sequencing_project(
@@ -56,7 +62,7 @@ class JGISequencingProjectAPI(NMDCSearch):
             If the creation fails.
         """
 
-        url = f"{self.base_url}/wf_file_staging/jgi_sequencing_projects"
+        url = f"{self.api_base_url}/wf_file_staging/jgi_sequencing_projects"
         headers = {
             "accept": "application/json",
             "Content-Type": "application/json",
@@ -102,7 +108,7 @@ class JGISequencingProjectAPI(NMDCSearch):
         dict
             The list of JGI sequencing projects.
         """
-        url = f"{self.base_url}/wf_file_staging/jgi_sequencing_projects"
+        url = f"{self.api_base_url}/wf_file_staging/jgi_sequencing_projects"
         headers = {
             "accept": "application/json",
             "Content-Type": "application/json",
@@ -150,7 +156,7 @@ class JGISequencingProjectAPI(NMDCSearch):
         dict
             The JGI sequencing project record.
         """
-        url = f"{self.base_url}/wf_file_staging/jgi_sequencing_projects/{project_name}"
+        url = f"{self.api_base_url}/wf_file_staging/jgi_sequencing_projects/{project_name}"
         headers = {
             "accept": "application/json",
             "Authorization": f"Bearer {self.auth.get_token()}",
@@ -177,18 +183,23 @@ class JGISampleSearchAPI(NMDCSearch):
     def __init__(
         self,
         auth: NMDCAuth,
-        env="prod",
+        api_base_url: str = API_BASE_URL,
+        env: str = "",
     ):
-        self.env = env
         self.auth = auth
         if not self.auth.has_credentials():
             raise ValueError("credentials must be provided")
-        # make sure the env is the same
-        if self.auth.env != self.env:
+        super().__init__(
+            api_base_url=api_base_url,
+            env=env,
+        )
+        # make sure the `api_base_url` is the same
+        # TODO: Use a global "settings" object to store the `api_base_url` in a single place.
+        #       Example: https://github.com/pydantic/pydantic-settings
+        if self.auth.api_base_url != self.api_base_url:
             raise ValueError(
-                "`env` must be the same for NMDCAuth and JGISampleSearchAPI"
+                "`api_base_url` must be the same for NMDCAuth and JGISampleSearchAPI"
             )
-        super().__init__(env=env)
 
     @requires_auth
     def list_jgi_samples(
@@ -217,7 +228,7 @@ class JGISampleSearchAPI(NMDCSearch):
         list[dict]
             The list of JGI sample records.
         """
-        url = f"{self.base_url}/wf_file_staging/jgi_samples"
+        url = f"{self.api_base_url}/wf_file_staging/jgi_samples"
         try:
             query = filter if filter else {}
             query_params = {
@@ -275,7 +286,7 @@ class JGISampleSearchAPI(NMDCSearch):
         Exception
             If the insertion fails.
         """
-        url = f"{self.base_url}/wf_file_staging/jgi_samples"
+        url = f"{self.api_base_url}/wf_file_staging/jgi_samples"
         headers = {
             "accept": "application/json",
             "Content-Type": "application/json",
@@ -322,7 +333,7 @@ class JGISampleSearchAPI(NMDCSearch):
         Exception
             If the update fails.
         """
-        url = f"{self.base_url}/wf_file_staging/jgi_samples/{jgi_file_id}"
+        url = f"{self.api_base_url}/wf_file_staging/jgi_samples/{jgi_file_id}"
         headers = {
             "accept": "application/json",
             "Content-Type": "application/json",
@@ -350,16 +361,23 @@ class GlobusTaskAPI(NMDCSearch):
     def __init__(
         self,
         auth: NMDCAuth,
-        env="prod",
+        api_base_url: str = API_BASE_URL,
+        env: str = "",
     ):
-        self.env = env
         self.auth = auth
         if not self.auth.has_credentials():
             raise ValueError("credentials must be provided")
-        # make sure the env is the same
-        if self.auth.env != self.env:
-            raise ValueError("`env` must be the same for NMDCAuth and GlobusTaskAPI")
-        super().__init__(env=env)
+        super().__init__(
+            api_base_url=api_base_url,
+            env=env,
+        )
+        # make sure the `api_base_url` is the same
+        # TODO: Use a global "settings" object to store the `api_base_url` in a single place.
+        #       Example: https://github.com/pydantic/pydantic-settings
+        if self.auth.api_base_url != self.api_base_url:
+            raise ValueError(
+                "`api_base_url` must be the same for NMDCAuth and GlobusTaskAPI"
+            )
 
     @requires_auth
     def list_globus_tasks(
@@ -388,7 +406,7 @@ class GlobusTaskAPI(NMDCSearch):
         list[dict]
             The list of Globus task records.
         """
-        url = f"{self.base_url}/wf_file_staging/globus_tasks"
+        url = f"{self.api_base_url}/wf_file_staging/globus_tasks"
         headers = {
             "accept": "application/json",
             "Content-Type": "application/json",
@@ -441,7 +459,7 @@ class GlobusTaskAPI(NMDCSearch):
             If the creation fails.
         """
 
-        url = f"{self.base_url}/wf_file_staging/globus_tasks"
+        url = f"{self.api_base_url}/wf_file_staging/globus_tasks"
         headers = {
             "accept": "application/json",
             "Content-Type": "application/json",
@@ -488,7 +506,7 @@ class GlobusTaskAPI(NMDCSearch):
         Exception
             If the update fails.
         """
-        url = f"{self.base_url}/wf_file_staging/globus_tasks/{globus_task_id}"
+        url = f"{self.api_base_url}/wf_file_staging/globus_tasks/{globus_task_id}"
         headers = {
             "accept": "application/json",
             "Content-Type": "application/json",

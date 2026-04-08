@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
-from nmdc_api_utilities.instrument_search import InstrumentSearch
 import logging
-from dotenv import load_dotenv
-import os
 
-load_dotenv()
-ENV = os.getenv("ENV")
+from nmdc_api_utilities.config import API_BASE_URL
+from nmdc_api_utilities.instrument_search import InstrumentSearch
+
+
 logging.basicConfig(level=logging.DEBUG)
 
 
@@ -13,7 +12,7 @@ def test_get_by_non_standard_attribute():
     """
     Test to get a record by a non-standard attribute.
     """
-    is_client = InstrumentSearch(env=ENV)
+    is_client = InstrumentSearch(api_base_url=API_BASE_URL)
     instrument_name = "Agilent 7980A GC-MS"
     result = is_client.get_record_by_attribute(
         attribute_name="name", attribute_value=instrument_name
@@ -27,7 +26,7 @@ def test_get_by_non_standard_attribute_case_insensitive():
     """
     Test to get a record by a non-standard attribute. Using the wrong case.
     """
-    is_client = InstrumentSearch(env=ENV)
+    is_client = InstrumentSearch(api_base_url=API_BASE_URL)
     instrument_name = "Agilent 7980A gc-ms"
     result = is_client.get_record_by_attribute(
         attribute_name="name", attribute_value=instrument_name
@@ -41,7 +40,7 @@ def test_get_by_standard_attribute():
     """
     Test to get a record by a standard attribute.
     """
-    is_client = InstrumentSearch(env=ENV)
+    is_client = InstrumentSearch(api_base_url=API_BASE_URL)
     instrument_name = "Agilent 7980A"
     result = is_client.get_record_by_attribute(
         attribute_name="name", attribute_value=instrument_name
