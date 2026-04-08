@@ -1,18 +1,14 @@
 # -*- coding: utf-8 -*-
 import logging
-import os
 
-from dotenv import load_dotenv
-
+from nmdc_api_utilities.config import API_BASE_URL
 from nmdc_api_utilities.study_search import StudySearch
 
-load_dotenv()
-ENV = os.getenv("ENV")
 logging.basicConfig(level=logging.DEBUG)
 
 
 def test_find_study_by_attribute():
-    st = StudySearch(env=ENV)
+    st = StudySearch(api_base_url=API_BASE_URL)
     stu = st.get_record_by_attribute(
         "name",
         "Lab enrichment of tropical soil microbial communities from Luquillo Experimental Forest, Puerto Rico",
@@ -26,14 +22,14 @@ def test_find_study_by_attribute():
 
 
 def test_find_study_by_id():
-    st = StudySearch(env=ENV)
+    st = StudySearch(api_base_url=API_BASE_URL)
     stu = st.get_record_by_id("nmdc:sty-11-8fb6t785")
     assert len(stu) > 0
     assert stu["id"] == "nmdc:sty-11-8fb6t785"
 
 
 def test_find_study_by_filter():
-    st = StudySearch(env=ENV)
+    st = StudySearch(api_base_url=API_BASE_URL)
     stu = st.get_record_by_filter(
         '{"name":"Lab enrichment of tropical soil microbial communities from Luquillo Experimental Forest, Puerto Rico"}'
     )
@@ -45,14 +41,14 @@ def test_find_study_by_filter():
 
 
 def test_get_studies_all_pages():
-    st = StudySearch(env=ENV)
+    st = StudySearch(api_base_url=API_BASE_URL)
     studies = st.get_records(max_page_size=20, all_pages=True)
     print(studies)
     assert len(studies) > 32
 
 
 def test_get_studies():
-    st = StudySearch(env=ENV)
+    st = StudySearch(api_base_url=API_BASE_URL)
     studies = st.get_records(max_page_size=100)
     print(studies)
     assert len(studies) > 32

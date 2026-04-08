@@ -1,22 +1,17 @@
 # -*- coding: utf-8 -*-
 import logging
-import os
 
-from dotenv import load_dotenv
-
+from nmdc_api_utilities.config import API_BASE_URL
 from nmdc_api_utilities.data_object_search import DataObjectSearch
 
 logging.basicConfig(level=logging.DEBUG)
-
-load_dotenv()
-ENV = os.getenv("ENV")
 
 
 def test_get_do_by_study():
     """
     Test the get_data_objects_for_studies method.
     """
-    do_search = DataObjectSearch(env=ENV)
+    do_search = DataObjectSearch(api_base_url=API_BASE_URL)
 
     study_id = "nmdc:sty-11-aygzgv51"
     results = do_search.get_data_objects_for_studies(study_id)

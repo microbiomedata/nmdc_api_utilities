@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
+
 import logging
 from datetime import datetime, timedelta
 
 import requests
 
+from nmdc_api_utilities.config import API_BASE_URL
 from nmdc_api_utilities.nmdc_search import NMDCSearch
 
 logger = logging.getLogger(__name__)
@@ -41,10 +43,13 @@ class NMDCAuth(NMDCSearch):
         client_secret: str = None,
         username: str = None,
         password: str = None,
-        env: str = "prod",
+        api_base_url: str = API_BASE_URL,
+        env: str = "",
     ):
-        super().__init__(env=env)
-        self.env = env
+        super().__init__(
+            api_base_url=api_base_url,
+            env=env,
+        )
         self.client_id = client_id
         self.client_secret = client_secret
         self.username = username
@@ -93,7 +98,7 @@ class NMDCAuth(NMDCSearch):
                 "password": self.password,
             }
 
-        response = requests.post(f"{self.base_url}/token", data=token_request_body)
+        response = requests.post(f"{self.api_base_url}/token", data=token_request_body)
         token_response = response.json()
 
         if "access_token" not in token_response:

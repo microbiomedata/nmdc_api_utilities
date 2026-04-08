@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 import json
 import logging
 import re
@@ -6,6 +7,7 @@ import urllib.parse
 
 import requests
 
+from nmdc_api_utilities.config import API_BASE_URL
 from nmdc_api_utilities.data_processing import DataProcessing
 from nmdc_api_utilities.nmdc_search import NMDCSearch
 
@@ -17,9 +19,17 @@ class CollectionSearch(NMDCSearch):
     Class to interact with the NMDC API to get collections of data. Must know the collection name to query.
     """
 
-    def __init__(self, collection_name, env="prod"):
+    def __init__(
+        self,
+        collection_name,
+        api_base_url: str = API_BASE_URL,
+        env: str = "",
+    ):
         self.collection_name = collection_name
-        super().__init__(env=env)
+        super().__init__(
+            api_base_url=api_base_url,
+            env=env,
+        )
 
     def get_records(
         self,
@@ -56,7 +66,7 @@ class CollectionSearch(NMDCSearch):
         logging.debug(f"get_records Filter: {filter}")
         filter = urllib.parse.quote(filter)
         logging.debug(f"get_records encoded Filter: {filter}")
-        url_prefix = f"{self.base_url}/nmdcschema/{self.collection_name}"
+        url_prefix = f"{self.api_base_url}/nmdcschema/{self.collection_name}"
         url = f"{url_prefix}?filter={filter}&max_page_size={max_page_size}&projection={fields}"
         try:
             response = requests.get(url)
@@ -182,7 +192,7 @@ class CollectionSearch(NMDCSearch):
             If the API request fails.
 
         """
-        url = f"{self.base_url}/nmdcschema/{self.collection_name}/{collection_id}?max_page_size={max_page_size}&projection={fields}"
+        url = f"{self.api_base_url}/nmdcschema/{self.collection_name}/{collection_id}?max_page_size={max_page_size}&projection={fields}"
         # get the reponse
         try:
             response = requests.get(url)

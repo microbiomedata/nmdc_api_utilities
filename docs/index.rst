@@ -9,6 +9,7 @@ Welcome to NMDC API Utilities documentation. This package provides tools for int
 
    functions
    usage
+   example_usage
 
 Indices and tables
 ==================
