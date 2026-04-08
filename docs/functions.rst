@@ -62,13 +62,6 @@ Calibration Subclass
    :undoc-members:
    :show-inheritance:
 
-Chemical Entity Subclass
-~~~~~~~~~~~~~~~~~~~~~~~~~
-.. autoclass:: nmdc_api_utilities.chemical_entity_search.ChemicalEntitySearch
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 Collecting Biosamples From Site Subclass
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 .. autoclass:: nmdc_api_utilities.collecting_biosamples_from_site_search.CollectingBiosamplesFromSiteSearch
