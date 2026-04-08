@@ -7,7 +7,6 @@ import os
 import re
 from typing import Literal
 
-
 # (Deprecated) Name of the environment hosting an instance of the NMDC Runtime API.
 EnvName = Literal["dev", "prod", ""]
 
