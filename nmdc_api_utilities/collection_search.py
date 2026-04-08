@@ -1,14 +1,17 @@
 # -*- coding: utf-8 -*-
-import requests
-from nmdc_api_utilities.config import API_BASE_URL
-from nmdc_api_utilities.data_processing import DataProcessing
-import urllib.parse
-from nmdc_api_utilities.nmdc_search import NMDCSearch
+
+import json
 import logging
 import re
+import urllib.parse
+
+import requests
+
+from nmdc_api_utilities.config import API_BASE_URL
+from nmdc_api_utilities.data_processing import DataProcessing
+from nmdc_api_utilities.nmdc_search import NMDCSearch
 
 logger = logging.getLogger(__name__)
-import json
 
 
 class CollectionSearch(NMDCSearch):

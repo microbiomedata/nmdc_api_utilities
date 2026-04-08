@@ -5,7 +5,6 @@ import unittest
 from nmdc_api_utilities.collection_search import CollectionSearch
 from nmdc_api_utilities.config import API_BASE_URL
 
-
 logging.basicConfig(level=logging.DEBUG)
 
 

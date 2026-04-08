@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-import pandas as pd
 import logging
 import re
+
+import pandas as pd
 
 logger = logging.getLogger(__name__)
 

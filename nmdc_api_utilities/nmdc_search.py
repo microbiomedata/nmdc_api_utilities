@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 import logging
-import requests
-from typing import Optional
 import warnings
+from typing import Optional
+
+import requests
 
 from nmdc_api_utilities.config import API_BASE_URL, get_api_base_url
 
