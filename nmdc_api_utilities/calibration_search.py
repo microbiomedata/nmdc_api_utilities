@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
+
+import logging
+
 from nmdc_api_utilities.collection_search import CollectionSearch
 from nmdc_api_utilities.config import API_BASE_URL
-import logging
 
 logger = logging.getLogger(__name__)
 

@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
+import logging
+
 from nmdc_api_utilities.biosample_search import BiosampleSearch
 from nmdc_api_utilities.config import API_BASE_URL
 from nmdc_api_utilities.data_processing import DataProcessing
-import logging
 
 logging.basicConfig(level=logging.DEBUG)
 

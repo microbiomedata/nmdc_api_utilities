@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
+import logging
+
 from nmdc_api_utilities.config import API_BASE_URL
 from nmdc_api_utilities.functional_search import FunctionalSearch
-import logging
 
 logger = logging.getLogger(__name__)
 

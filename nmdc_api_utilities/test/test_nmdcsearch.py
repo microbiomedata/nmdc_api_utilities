@@ -4,7 +4,6 @@ import logging
 from nmdc_api_utilities.config import API_BASE_URL
 from nmdc_api_utilities.nmdc_search import NMDCSearch
 
-
 logging.basicConfig(level=logging.DEBUG)
 
 

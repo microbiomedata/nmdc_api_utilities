@@ -4,11 +4,10 @@ import os
 import pytest
 from dotenv import load_dotenv
 
-from nmdc_api_utilities.config import API_BASE_URL
-from nmdc_api_utilities.minter import Minter
 from nmdc_api_utilities.auth import NMDCAuth
+from nmdc_api_utilities.config import API_BASE_URL
 from nmdc_api_utilities.decorators import AuthenticationError
-
+from nmdc_api_utilities.minter import Minter
 
 load_dotenv()
 CLIENT_ID = os.getenv("CLIENT_ID")

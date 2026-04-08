@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
-from nmdc_api_utilities.nmdc_search import NMDCSearch
-import logging
-import requests
-from nmdc_api_utilities.auth import NMDCAuth
-from nmdc_api_utilities.decorators import requires_auth
-from nmdc_api_utilities.config import API_BASE_URL
 import json
+import logging
+
+import requests
+
+from nmdc_api_utilities.auth import NMDCAuth
+from nmdc_api_utilities.config import API_BASE_URL
+from nmdc_api_utilities.decorators import requires_auth
+from nmdc_api_utilities.nmdc_search import NMDCSearch
 
 logger = logging.getLogger(__name__)
 

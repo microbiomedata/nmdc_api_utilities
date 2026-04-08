@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock, patch
 
 import pytest
 
@@ -9,9 +9,9 @@ import pytest
 #       variable contained (which, by default, is the base URL of the production NMDC Runtime API).
 from nmdc_api_utilities.config import API_BASE_URL
 from nmdc_api_utilities.data_staging import (
+    GlobusTaskAPI,
     JGISampleSearchAPI,
     JGISequencingProjectAPI,
-    GlobusTaskAPI,
 )
 
 

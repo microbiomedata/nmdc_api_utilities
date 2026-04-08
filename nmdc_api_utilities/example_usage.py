@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from nmdc_api_utilities.data_processing import DataProcessing
 from nmdc_api_utilities.data_object_search import DataObjectSearch
+from nmdc_api_utilities.data_processing import DataProcessing
 from nmdc_api_utilities.workflow_execution_search import WorkflowExecutionSearch
 
 dos_client = DataObjectSearch()
