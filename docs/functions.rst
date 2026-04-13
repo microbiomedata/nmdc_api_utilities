@@ -125,13 +125,6 @@ Processed Sample Subclass
    :undoc-members:
    :show-inheritance:
 
-Protocol Execution Subclass
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-.. autoclass:: nmdc_api_utilities.protocol_execution_search.ProtocolExecutionSearch
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 Storage Process Subclass
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 .. autoclass:: nmdc_api_utilities.storage_process_search.StorageProcessSearch
@@ -177,13 +170,6 @@ Utils
 Auth
 ~~~~
 .. autoclass:: nmdc_api_utilities.auth.NMDCAuth
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Decorators
-~~~~~~~~~~
-.. autoclass:: nmdc_api_utilities.decorators
    :members:
    :undoc-members:
    :show-inheritance:
