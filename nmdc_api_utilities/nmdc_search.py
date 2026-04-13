@@ -26,10 +26,14 @@ class NMDCSearch:
 
     def __init__(self, api_base_url: str = API_BASE_URL, env: str = ""):
         if env != "":
+            # Note: `stacklevel=2` makes it so the displayed warning focuses on the function call
+            #       that _used_ the deprecated parameter (since that is where action is required)
+            #       rather than focusing on this call of `warnings.warn`, itself.
             warnings.warn(
                 "`env` is deprecated and will be removed in a future release. "
                 "Use `api_base_url` instead.",
-                DeprecationWarning,
+                category=DeprecationWarning,
+                stacklevel=2,
             )
         self.api_base_url = get_api_base_url(api_base_url=api_base_url, env=env)
 
