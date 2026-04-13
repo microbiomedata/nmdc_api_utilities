@@ -5,14 +5,15 @@ from typing import Optional
 
 import requests
 
-from nmdc_api_utilities.config import API_BASE_URL, get_api_base_url
+from nmdc_api_utilities.api_client import NMDCAPIClient
+from nmdc_api_utilities.config import API_BASE_URL
 
 logger = logging.getLogger(__name__)
 
 
-class NMDCSearch:
+class NMDCSearch(NMDCAPIClient):
     """
-    Base class for interacting with the NMDC API.
+    Base class for searching the NMDC metadata database via the NMDC runtime API
 
     Parameters
     ----------
@@ -24,13 +25,7 @@ class NMDCSearch:
     """
 
     def __init__(self, api_base_url: str = API_BASE_URL, env: str = ""):
-        if env != "":
-            warnings.warn(
-                "`env` is deprecated and will be removed in a future release. "
-                "Use `api_base_url` instead.",
-                DeprecationWarning,
-            )
-        self.api_base_url = get_api_base_url(api_base_url=api_base_url, env=env)
+        super().__init__(api_base_url=api_base_url, env=env)
 
     def _get_all_pages(
         self,
