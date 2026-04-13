@@ -28,4 +28,5 @@ def get_package_version(package_name: str) -> Optional[str]:
 
 
 # The version identifier of this package.
-__version__ = get_package_version("nmdc_api_utilities")
+_version = get_package_version("nmdc_api_utilities")
+__version__ = _version if _version is not None else "0.0.0"

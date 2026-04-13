@@ -58,8 +58,8 @@ class NMDCSearch:
         """
 
         # Customize the "User-Agent" header so NMDC API administrators can distinguish requests
-        # coming from this package from other requests. When not using a distributable version
-        # of this package, the package version will be "None".
+        # coming from this package from other requests. If this package is being run from source
+        # instead of an installed distribution, the package version will be "0.0.0".
         user_agent = f"nmdc-python-client/{package_version}"
         headers = {"User-Agent": user_agent}
 
