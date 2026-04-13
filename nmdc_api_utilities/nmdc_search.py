@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 
 class NMDCSearch(NMDCAPIClient):
     """
-    Base class for searching the NMDC metadata database via the NMDC runtime API
+    Base class for searching the NMDC metadata database via the NMDC Runtime API
 
     Parameters
     ----------
