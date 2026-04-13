@@ -33,8 +33,8 @@ class NMDCAPIClient(ABC):
             )
         self.api_base_url = get_api_base_url(api_base_url=api_base_url, env=env)
 
+    @staticmethod
     def _build_http_request_headers(
-        self,
         access_token: Optional[str] = None,
         accept: Optional[str] = None,
         content_type: Optional[str] = None,
@@ -44,9 +44,8 @@ class NMDCAPIClient(ABC):
         Builds HTTP headers that can be included with HTTP requests sent by instances of this class
         and its subclasses.
 
-        >>> from nmdc_api_utilities.nmdc_search import NMDCSearch
-        >>> searcher = NMDCSearch()
-        >>> headers = searcher._build_http_request_headers(
+        >>> from nmdc_api_utilities.api_client import NMDCAPIClient
+        >>> headers = NMDCAPIClient._build_http_request_headers(
         ...     access_token="abc123",
         ...     accept="application/json",
         ...     additional_headers={"X-FOO": "BAR"},
