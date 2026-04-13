@@ -39,13 +39,18 @@ class DataObjectSearch(CollectionSearch):
             category=DeprecationWarning,
             stacklevel=2,
         )
-        return self.get_data_objects_for_study(study_id, max_page_size)
 
-    def get_data_objects_for_study(
-        self,
-        study_id: str,
-        max_page_size: Optional[int] = None,
-    ) -> list[dict]:
+        if max_page_size is not None:
+            warnings.warn(
+                "The `max_page_size` parameter is deprecated and will be removed in "
+                "a future release. It has no effect.",
+                category=DeprecationWarning,
+                stacklevel=2,
+            )
+
+        return self.get_data_objects_for_study(study_id)
+
+    def get_data_objects_for_study(self, study_id: str) -> list[dict]:
         """
         Get all data objects related to the specified study.
 
@@ -53,8 +58,6 @@ class DataObjectSearch(CollectionSearch):
         ----------
         study_id: str
             The ID of the study.
-        max_page_size: Optional[int]
-            (Deprecated) This parameter has no effect.
         Returns
         -------
         list[dict]
@@ -64,13 +67,6 @@ class DataObjectSearch(CollectionSearch):
         RuntimeError
             If the API request fails.
         """
-
-        if max_page_size is not None:
-            warnings.warn(
-                "The `max_page_size` parameter is deprecated and will be removed in a future release.",
-                category=DeprecationWarning,
-                stacklevel=2,
-            )
 
         url = f"{self.api_base_url}/data_objects/study/{study_id}"
         try:
