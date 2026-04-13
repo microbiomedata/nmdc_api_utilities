@@ -5,6 +5,7 @@ from typing import Optional
 
 import requests
 
+from nmdc_api_utilities import __version__ as package_version
 from nmdc_api_utilities.config import API_BASE_URL, get_api_base_url
 
 logger = logging.getLogger(__name__)
@@ -31,6 +32,46 @@ class NMDCSearch:
                 DeprecationWarning,
             )
         self.api_base_url = get_api_base_url(api_base_url=api_base_url, env=env)
+
+    def _build_http_request_headers(
+        self,
+        access_token: Optional[str] = None,
+        accept: Optional[str] = None,
+        content_type: Optional[str] = None,
+        additional_headers: Optional[dict[str, str]] = None,
+    ) -> dict[str, str]:
+        """
+        Builds HTTP headers that can be included with HTTP requests sent by instances of this class
+        and its subclasses.
+
+        >>> searcher = NMDCSearch()
+        >>> headers = searcher._build_http_request_headers(
+        ...     access_token="abc123",
+        ...     accept="application/json",
+        ...     additional_headers={"X-FOO": "BAR"},
+        ... )
+        >>> assert headers.keys() == {"User-Agent", "Authorization", "Accept", "X-FOO"}
+        >>> assert headers["User-Agent"].startswith("nmdc-python-client/")
+        >>> assert headers["Authorization"] == "Bearer abc123"
+        >>> assert headers["Accept"] == "application/json"
+        >>> assert headers["X-FOO"] == "BAR"
+        """
+
+        # Customize the "User-Agent" header so NMDC API administrators can distinguish requests
+        # coming from this package from other requests. When not using a distributable version
+        # of this package, the package version will be "None".
+        user_agent = f"nmdc-python-client/{package_version}"
+        headers = {"User-Agent": user_agent}
+
+        if isinstance(access_token, str):
+            headers["Authorization"] = f"Bearer {access_token}"
+        if isinstance(accept, str):
+            headers["Accept"] = accept
+        if isinstance(content_type, str):
+            headers["Content-Type"] = content_type
+        if additional_headers is not None:
+            headers.update(additional_headers)
+        return headers
 
     def _get_all_pages(
         self,
@@ -80,12 +121,11 @@ class NMDCSearch:
                 break
 
             # Define the HTTP headers, which may include an access token.
-            headers = {
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-            }
-            if isinstance(access_token, str):
-                headers["Authorization"] = f"Bearer {access_token}"
+            headers = self._build_http_request_headers(
+                access_token=access_token,
+                accept="application/json",
+                content_type="application/json",
+            )
 
             # TODO: Consider using the `params` argument of `requests.get` to handle building the
             #       URL's query string. That way, we would be delegating the responsibility of
@@ -145,7 +185,11 @@ class NMDCSearch:
                 "hydrate": hydrate,
                 "max_page_size": max_page_size,
             }
-            response = requests.get(url=url, params=params)
+            response = requests.get(
+                url=url,
+                params=params,
+                headers=self._build_http_request_headers(),
+            )
             if response.status_code == 200:
                 batch_resources = response.json().get("resources", [])
                 next_page = response.json().get("next_page_token", None)
@@ -157,7 +201,11 @@ class NMDCSearch:
                             "ids": batch,
                             "page_token": next_page,
                         }
-                        response = requests.get(url=url, params=params)
+                        response = requests.get(
+                            url=url,
+                            params=params,
+                            headers=self._build_http_request_headers(),
+                        )
                         if response.status_code == 200:
                             batch_resources = response.json().get("resources", [])
                             batch_records.extend(batch_resources)
@@ -243,7 +291,7 @@ class NMDCSearch:
         """
         url = f"{self.api_base_url}/nmdcschema/ids/{doc_id}/collection-name"
         try:
-            response = requests.get(url)
+            response = requests.get(url, headers=self._build_http_request_headers())
             response.raise_for_status()
         except requests.exceptions.RequestException as e:
             logger.error("API request failed", exc_info=True)
@@ -321,7 +369,7 @@ class NMDCSearch:
 
         url = f"{self.api_base_url}/version"
         try:
-            response = requests.get(url)
+            response = requests.get(url, headers=self._build_http_request_headers())
             response.raise_for_status()
         except requests.exceptions.RequestException as e:
             logger.error("API request failed", exc_info=True)
@@ -353,7 +401,11 @@ class NMDCSearch:
             "projection": fields,
         }
         try:
-            response = requests.get(url, params=params)
+            response = requests.get(
+                url,
+                params=params,
+                headers=self._build_http_request_headers(),
+            )
             response.raise_for_status()
         except requests.exceptions.RequestException as e:
             logger.error("API request failed", exc_info=True)
