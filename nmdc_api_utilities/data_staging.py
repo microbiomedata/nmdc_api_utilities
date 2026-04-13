@@ -240,7 +240,9 @@ class JGISampleSearchAPI(NMDCSearch):
             }
             response = requests.get(
                 url,
-                headers=self._build_http_request_headers(access_token=self.auth.get_token()),
+                headers=self._build_http_request_headers(
+                    access_token=self.auth.get_token()
+                ),
                 params=query_params,
             )
             response.raise_for_status()
