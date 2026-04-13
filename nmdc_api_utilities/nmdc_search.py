@@ -94,7 +94,7 @@ class NMDCSearch:
         filter: str
             The filter to apply to the query. Default is an empty string.
         max_page_size: int
-            The maximum number of items to return per page. Default is 100.
+            The maximum number of records to return per page. Default is 100.
         fields: str
             The fields to return. Default is all fields.
         access_token: Optional[str]

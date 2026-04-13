@@ -32,7 +32,7 @@ class DataObjectSearch(CollectionSearch):
         study_id: str
             The study id to search for.
         max_page_size: int
-            The maximum number of items to return per page. Default is 100
+            The maximum number of records to return per page. Default is 100
         Returns
         -------
         list[dict]
