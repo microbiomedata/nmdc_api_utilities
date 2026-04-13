@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 class NMDCSearch:
     """
-    Class for interacting with the NMDC runtime API for searching and retrieving metadata.
+    Class for interacting with the NMDC runtime API for searching and retrieving records in the NMDC metadata database.
 
     Parameters
     ----------
@@ -154,7 +154,13 @@ class NMDCSearch:
         max_page_size: int = 500,
     ) -> list[dict]:
         """
-        Given a list of input ids, get the linked records from the NMDC API.
+        Retrieve linked instances for the given IDs from the NMDC API.
+
+        This method returns a list of linked instance records for the given IDs, for instance,
+        if you provide a study id, this will return the ids records within the ``biosample_set``,
+        ``data_generation_set`` etc that are associated with this study, even if it is not a single link.
+
+        See ``get_linked_instances_and_associate_ids`` for a method that returns an alternate format of the data.
 
         Parameters
         ----------
@@ -163,7 +169,8 @@ class NMDCSearch:
         hydrate : bool = False
             Whether to include full documents in the response. The default is False.
         types : list[str] | str = None
-            The types of instances you want to return. Default is None, which returns all types.
+            The types of records you want to return. Default is None, which returns all types.
+            Example: ["nmdc:Study", "nmdc:Biosample", "nmdc:MassSpectrometry"].
         max_page_size : int = 500
             The maximum number of records to return per page. Default is 500.
 
@@ -224,12 +231,15 @@ class NMDCSearch:
         max_page_size: int = 500,
     ) -> dict[str, list[str]]:
         """
-        Given a list of ids, find the associated linked mongo records and
-        return a dictionary mapping each id to its linked instances.
-        Example:
-            If I want to find all the Mongo records (studies, data objects, mass spectrometry records, etc) associated with the biosample `nmdc:bsm-11-002vgm56`
-            This function would return to me a dictionary where `nmdc:bsm-11-002vgm56` is the key, and the value is a list of ids that are related to it:
-            {"nmdc:bsm-11-002vgm56": ["nmdc:sty-11-nxrz9m96", "nmdc:sty-11-34xj1150"]}
+        Retrieve linked instances for the given IDs from the NMDC API and associate them with the input IDs.
+
+        This method returns a list of linked instance records for the given IDs, for instance,
+        if you provide a study id, this will return the ids records within the ``biosample_set``,
+        ``data_generation_set`` etc that are associated with this study, even if it is not a single link between records.
+
+        See also ``get_linked_instances`` for a method that returns the linked instances in their original list format.
+        This method reformats into a dictionary with keys as query ids, and a list of resulting linked ids as values.
+
 
         Parameters
         ----------
@@ -310,14 +320,15 @@ class NMDCSearch:
         fields: str = "",
     ) -> list[dict]:
         """
-        Retrieve records from the NMDC API based on a list of IDs.
-        The input ids can be from multiple collections.
-        Example: Input ["nmdc:sty-11-8fb6t785", "nmdc:bsm-11-002vgm56", "nmdc:dobj-11-00095294"] and get back each of these records in a list of dictionaries.
+        Retrieve records via the NMDC API from a provided list of record IDs.
+
+        The input ids can be from multiple collections. Input like
+        ["nmdc:sty-11-8fb6t785", "nmdc:bsm-11-002vgm56", "nmdc:dobj-11-00095294"] is valid and will return each of these records in a list of dictionaries.
 
         Parameters
         ----------
         ids : list[str] | str
-            The ID of the record type to retrieve.
+            List of IDs of records to retrieve.
         fields : str
             Comma-separated list of fields to include in the response.
 
@@ -359,7 +370,7 @@ class NMDCSearch:
 
     def get_schema_version(self) -> str:
         """
-        Get the current NMDC schema version that the NMDC API is running off of.
+        Get the current NMDC schema version used by the NMDC API.
 
         Returns
         -------
@@ -378,12 +389,12 @@ class NMDCSearch:
 
     def get_record_from_id(self, id: str, filter: str = "", fields: str = "") -> dict:
         """
-        Given a record ID, retrieve the full record from the NMDC API.
+        Retrieve a record via the NMDC API from a provided record ID.
 
         Parameters
         ----------
         id : str
-            The ID of the record type to retrieve.
+            The ID of the record to retrieve.
         filter : str
             Additional filter to apply to the records.
         fields : str
