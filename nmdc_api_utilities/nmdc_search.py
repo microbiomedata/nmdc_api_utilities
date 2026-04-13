@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 class NMDCSearch:
     """
-    Base class for interacting with the NMDC API.
+    Class for interacting with the NMDC runtime API for searching and retrieving metadata.
 
     Parameters
     ----------
@@ -81,7 +81,7 @@ class NMDCSearch:
         max_page_size: int = 100,
         fields: str = "",
         access_token: Optional[str] = None,
-    ):
+    ) -> dict:
         """
         Get all pages of data from the NMDC API. This is a helper function to get all pages of data from the NMDC API.
 
@@ -102,8 +102,8 @@ class NMDCSearch:
 
         Returns
         -------
-        list[dict]
-            A list of dictionaries containing the records.
+        dict
+            A dictionary containing the records in a "resources" key.
 
         Raises
         ------

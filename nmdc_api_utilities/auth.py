@@ -29,6 +29,12 @@ class NMDCAuth(NMDCSearch):
         The username for NMDC API authentication (required if using password grant).
     password : str
         The password for NMDC API authentication (required if using password grant).
+    api_base_url : str
+        The base URL of an instance of the NMDC Runtime API. By default, this is the base URL of
+        the production instance.
+    env : str
+        Deprecated. Use `api_base_url` instead. Previously used to specify the API environment
+        (e.g., "prod", "dev").
 
     Notes
     -----

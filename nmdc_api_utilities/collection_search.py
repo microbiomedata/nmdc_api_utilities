@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 class CollectionSearch(NMDCSearch):
     """
-    Class to interact with the NMDC API to get collections of data. Must know the collection name to query.
+    Class to interact with the NMDC API to search for records within a specified collection.
     """
 
     def __init__(

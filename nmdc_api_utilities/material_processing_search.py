@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 class MaterialProcessingSearch(CollectionSearch):
     """
-    Class to interact with the NMDC API to get material processings.
+    Class to interact with the NMDC API to search for records within the ``material_processing_set`` collection.
     """
 
     def __init__(self, api_base_url: str = API_BASE_URL, env: str = ""):

@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 class CollectingBiosamplesFromSiteSearch(CollectionSearch):
     """
-    Class to interact with the NMDC API to get "collecting biosamples from site" records.
+    Class to interact with the NMDC API to search for records within the ``collecting_biosamples_from_site_set`` collection.
     """
 
     def __init__(self, api_base_url: str = API_BASE_URL, env: str = ""):
