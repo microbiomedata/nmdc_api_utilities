@@ -14,10 +14,14 @@ logger = logging.getLogger(__name__)
 
 class Metadata(NMDCSearch):
     """
-    Class to interact with the NMDC API metadata endpoints. These deal mostly with metadata management, including validation and submission.
+    Class to interact with the NMDC API metadata endpoints.
+
+    This class includes methods for interacting with endpoints for metadata management, including validation and submission and is not intended for general/public use.
 
     Parameters
     ----------
+    api_base_url : str
+        The base URL of the NMDC API.
     auth : NMDCAuth
         An instance of the NMDCAuth class for authentication.
     """
@@ -86,7 +90,7 @@ class Metadata(NMDCSearch):
     @requires_auth
     def submit_json(self, json_records: list[dict] | str) -> int:
         """
-        Submits a json file to the NMDC API metadata.
+        Submits a json file to the NMDC metadata database via the NMDC runtime API's json_submit endpoint.
 
         Parameters
         ----------
