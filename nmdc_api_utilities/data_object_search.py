@@ -22,6 +22,10 @@ class DataObjectSearch(CollectionSearch):
             env=env,
         )
 
+    def get_data_objects_for_studies(self, study_id: str) -> list[dict]:
+        """(Deprecated) This method is deprecated. Use `get_data_objects_for_study` instead."""
+        return self.get_data_objects_for_study(study_id)
+
     def get_data_objects_for_study(self, study_id: str) -> list[dict]:
         """
         Get all data objects related to the specified study.
