@@ -97,7 +97,7 @@ class Minter(NMDCSearch):
         try:
             response = requests.post(
                 url,
-                headers={"Authorization": f"Bearer {token}"},
+                headers=self._build_http_request_headers(access_token=token),
                 data=json.dumps(payload),
             )
             response.raise_for_status()

@@ -65,11 +65,11 @@ class JGISequencingProjectAPI(NMDCSearch):
         """
 
         url = f"{self.api_base_url}/wf_file_staging/jgi_sequencing_projects"
-        headers = {
-            "accept": "application/json",
-            "Content-Type": "application/json",
-            "Authorization": f"Bearer {self.auth.get_token()}",
-        }
+        headers = self._build_http_request_headers(
+            access_token=self.auth.get_token(),
+            accept="application/json",
+            content_type="application/json",
+        )
         try:
             response = requests.post(url, headers=headers, json=jgi_sequencing_project)
             response.raise_for_status()
@@ -111,11 +111,11 @@ class JGISequencingProjectAPI(NMDCSearch):
             The list of JGI sequencing projects.
         """
         url = f"{self.api_base_url}/wf_file_staging/jgi_sequencing_projects"
-        headers = {
-            "accept": "application/json",
-            "Content-Type": "application/json",
-            "Authorization": f"Bearer {self.auth.get_token()}",
-        }
+        headers = self._build_http_request_headers(
+            access_token=self.auth.get_token(),
+            accept="application/json",
+            content_type="application/json",
+        )
         try:
             query_params = {
                 "filter": f"{json.dumps(filter)}",
@@ -159,10 +159,10 @@ class JGISequencingProjectAPI(NMDCSearch):
             The JGI sequencing project record.
         """
         url = f"{self.api_base_url}/wf_file_staging/jgi_sequencing_projects/{project_name}"
-        headers = {
-            "accept": "application/json",
-            "Authorization": f"Bearer {self.auth.get_token()}",
-        }
+        headers = self._build_http_request_headers(
+            access_token=self.auth.get_token(),
+            accept="application/json",
+        )
         try:
             response = requests.get(url, headers=headers)
             response.raise_for_status()
@@ -240,7 +240,9 @@ class JGISampleSearchAPI(NMDCSearch):
             }
             response = requests.get(
                 url,
-                headers={"Authorization": f"Bearer {self.auth.get_token()}"},
+                headers=self._build_http_request_headers(
+                    access_token=self.auth.get_token()
+                ),
                 params=query_params,
             )
             response.raise_for_status()
@@ -289,11 +291,11 @@ class JGISampleSearchAPI(NMDCSearch):
             If the insertion fails.
         """
         url = f"{self.api_base_url}/wf_file_staging/jgi_samples"
-        headers = {
-            "accept": "application/json",
-            "Content-Type": "application/json",
-            "Authorization": f"Bearer {self.auth.get_token()}",
-        }
+        headers = self._build_http_request_headers(
+            access_token=self.auth.get_token(),
+            accept="application/json",
+            content_type="application/json",
+        )
         try:
             response = requests.post(url, headers=headers, json=jgi_sample)
             response.raise_for_status()
@@ -336,11 +338,11 @@ class JGISampleSearchAPI(NMDCSearch):
             If the update fails.
         """
         url = f"{self.api_base_url}/wf_file_staging/jgi_samples/{jgi_file_id}"
-        headers = {
-            "accept": "application/json",
-            "Content-Type": "application/json",
-            "Authorization": f"Bearer {self.auth.get_token()}",
-        }
+        headers = self._build_http_request_headers(
+            access_token=self.auth.get_token(),
+            accept="application/json",
+            content_type="application/json",
+        )
         try:
             response = requests.patch(url, headers=headers, json=jgi_sample)
             response.raise_for_status()
@@ -409,11 +411,11 @@ class GlobusTaskAPI(NMDCSearch):
             The list of Globus task records.
         """
         url = f"{self.api_base_url}/wf_file_staging/globus_tasks"
-        headers = {
-            "accept": "application/json",
-            "Content-Type": "application/json",
-            "Authorization": f"Bearer {self.auth.get_token()}",
-        }
+        headers = self._build_http_request_headers(
+            access_token=self.auth.get_token(),
+            accept="application/json",
+            content_type="application/json",
+        )
         query_params = {
             "filter": f"{json.dumps(filter)}",
             "max_page_size": max_page_size,
@@ -462,11 +464,11 @@ class GlobusTaskAPI(NMDCSearch):
         """
 
         url = f"{self.api_base_url}/wf_file_staging/globus_tasks"
-        headers = {
-            "accept": "application/json",
-            "Content-Type": "application/json",
-            "Authorization": f"Bearer {self.auth.get_token()}",
-        }
+        headers = self._build_http_request_headers(
+            access_token=self.auth.get_token(),
+            accept="application/json",
+            content_type="application/json",
+        )
         try:
             response = requests.post(url, headers=headers, json=globus_task)
             response.raise_for_status()
@@ -509,11 +511,11 @@ class GlobusTaskAPI(NMDCSearch):
             If the update fails.
         """
         url = f"{self.api_base_url}/wf_file_staging/globus_tasks/{globus_task_id}"
-        headers = {
-            "accept": "application/json",
-            "Content-Type": "application/json",
-            "Authorization": f"Bearer {self.auth.get_token()}",
-        }
+        headers = self._build_http_request_headers(
+            access_token=self.auth.get_token(),
+            accept="application/json",
+            content_type="application/json",
+        )
         try:
             response = requests.patch(url, headers=headers, json=globus_task)
             response.raise_for_status()

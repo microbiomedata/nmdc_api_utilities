@@ -66,7 +66,10 @@ class Metadata(NMDCSearch):
             raise Exception("Placeholder values found in json!")
 
         url = f"{self.api_base_url}/metadata/json:validate"
-        headers = {"accept": "application/json", "Content-Type": "application/json"}
+        headers = self._build_http_request_headers(
+            accept="application/json",
+            content_type="application/json",
+        )
         response = requests.post(url, headers=headers, json=data)
         if response.text != '{"result":"All Okay!"}' or response.status_code != 200:
             logging.error(f"Validation failed.")
@@ -110,11 +113,11 @@ class Metadata(NMDCSearch):
 
         # api request
         url = f"{self.api_base_url}/metadata/json:submit"
-        headers = {
-            "accept": "application/json",
-            "Content-Type": "application/json",
-            "Authorization": f"Bearer {token}",
-        }
+        headers = self._build_http_request_headers(
+            access_token=token,
+            accept="application/json",
+            content_type="application/json",
+        )
         response = requests.post(url, headers=headers, json=json_records)
 
         # error handling

@@ -69,7 +69,10 @@ class CollectionSearch(NMDCSearch):
         url_prefix = f"{self.api_base_url}/nmdcschema/{self.collection_name}"
         url = f"{url_prefix}?filter={filter}&max_page_size={max_page_size}&projection={fields}"
         try:
-            response = requests.get(url)
+            response = requests.get(
+                url,
+                headers=self._build_http_request_headers(),
+            )
             response.raise_for_status()
         except requests.exceptions.RequestException as e:
             logger.error("API request failed", exc_info=True)
@@ -195,7 +198,10 @@ class CollectionSearch(NMDCSearch):
         url = f"{self.api_base_url}/nmdcschema/{self.collection_name}/{collection_id}?max_page_size={max_page_size}&projection={fields}"
         # get the reponse
         try:
-            response = requests.get(url)
+            response = requests.get(
+                url,
+                headers=self._build_http_request_headers(),
+            )
             response.raise_for_status()
         except requests.exceptions.RequestException as e:
             logger.error("API request failed", exc_info=True)

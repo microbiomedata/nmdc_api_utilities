@@ -98,7 +98,14 @@ class NMDCAuth(NMDCSearch):
                 "password": self.password,
             }
 
-        response = requests.post(f"{self.api_base_url}/token", data=token_request_body)
+        # TODO: If `self.grant_type` is neither "client_credentials" nor "password",
+        #       `token_request_body` below will be unbound. Handle that situation.
+
+        response = requests.post(
+            f"{self.api_base_url}/token",
+            headers=self._build_http_request_headers(),
+            data=token_request_body,
+        )
         token_response = response.json()
 
         if "access_token" not in token_response:
