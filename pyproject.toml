@@ -21,3 +21,8 @@ license-files = ["LICENSE"]
 dynamic = ["dependencies"]
 [tool.setuptools.dynamic]
 dependencies = {file = ["requirements.txt"]}
+
+# Configure pytest.
+# Docs: https://docs.pytest.org/en/stable/reference/customize.html#pyproject-toml
+[tool.pytest]
+addopts = ["--doctest-modules"]  # run doctests defined in _all_ modules (not only `test_*` modules)

@@ -44,7 +44,10 @@ class DataObjectSearch(CollectionSearch):
         """
         url = f"{self.api_base_url}/data_objects/study/{study_id}?max_page_size={max_page_size}"
         try:
-            response = requests.get(url)
+            response = requests.get(
+                url,
+                headers=self._build_http_request_headers(),
+            )
             response.raise_for_status()
         except requests.exceptions.RequestException as e:
             logger.error("API request failed", exc_info=True)
