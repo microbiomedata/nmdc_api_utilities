@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 class NMDCAPIClient(ABC):
     """
-    Abstract base class for interacting with NMDC runtime API.
+    Abstract base class for interacting with NMDC Runtime API.
 
     Parameters
     ----------
