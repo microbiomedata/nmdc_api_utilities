@@ -24,7 +24,7 @@ class DataObjectSearch(CollectionSearch):
 
     def get_data_objects_for_study(self, study_id: str) -> list[dict]:
         """
-        Gets all data objects related to all biosamples associated with the specified study.
+        Get all data objects related to the specified study.
 
         Parameters
         ----------
