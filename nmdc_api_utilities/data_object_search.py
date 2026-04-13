@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import logging
-from typing import Optional
 import warnings
+from typing import Optional
 
 import requests
 
