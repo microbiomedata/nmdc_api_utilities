@@ -26,9 +26,17 @@ class NMDCSearch:
 
     def __init__(self, api_base_url: str = API_BASE_URL, env: str = ""):
         if env != "":
-            # Note: `stacklevel=2` makes it so the displayed warning focuses on the function call
-            #       that _used_ the deprecated parameter (since that is where action is required)
-            #       rather than focusing on this call of `warnings.warn`, itself.
+            # Note: Although we could have used `stacklevel=3` here (which would have made it so that,
+            #       when the user instantiates this class via an inheriting class, the warning shown
+            #       by Python would show the line of code where the user instantiated the inheriting
+            #       class, which we think would be most useful to that user) we have opted to use
+            #       `stacklevel=2` here, since this class can _also_ be instantiated directly and,
+            #       if we were to use `stacklevel=3`, Python wouldn't even _show_ a warning for those
+            #       direct instantiations. Using `stacklevel=2` is a compromise that ensures that
+            #       Python _does_ show a warning in both situations, although the line of code shown
+            #       in the warning message may not always be code controlled by the user.
+            #       Docs: https://docs.python.org/3/library/warnings.html#warnings.deprecated
+            #
             warnings.warn(
                 "`env` is deprecated and will be removed in a future release. "
                 "Use `api_base_url` instead.",
