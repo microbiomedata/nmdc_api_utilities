@@ -22,27 +22,24 @@ class DataObjectSearch(CollectionSearch):
             env=env,
         )
 
-    def get_data_objects_for_studies(
-        self, study_id: str, max_page_size: int = 100
-    ) -> list[dict]:
+    def get_data_objects_for_study(self, study_id: str) -> list[dict]:
         """
-        Get data objects by study id.
+        Gets all data objects related to all biosamples associated with the specified study.
+
         Parameters
         ----------
         study_id: str
-            The study id to search for.
-        max_page_size: int
-            The maximum number of items to return per page. Default is 100
+            The ID of the study.
         Returns
         -------
         list[dict]
-            A list of data objects.
+            The data objects.
         Raises
         ------
         RuntimeError
             If the API request fails.
         """
-        url = f"{self.api_base_url}/data_objects/study/{study_id}?max_page_size={max_page_size}"
+        url = f"{self.api_base_url}/data_objects/study/{study_id}"
         try:
             response = requests.get(
                 url,
