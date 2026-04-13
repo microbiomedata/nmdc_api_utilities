@@ -29,29 +29,33 @@ class DataProcessing:
     def convert_to_df(self, data: list) -> pd.DataFrame:
         """
         Convert a list of dictionaries to a pandas dataframe.
+
         Parameters
         ----------
         data: list
             A list of dictionaries.
+
         Returns
         -------
         pd.DataFrame
-            A pandas dataframe.
+            A pandas dataframe represenation of the input dictionaries.
         """
         return pd.DataFrame(data)
 
     def split_list(self, input_list: list, chunk_size: int = 100) -> list:
         """
         Split a list into chunks of a specified size.
+
         Parameters
         ----------
         input_list: list
             The list to split.
         chunk_size: int
             The size of each chunk.
+
         Returns
         -------
-        list: A list of lists.
+        list: A list of lists where each sublist has a maximum length of chunk_size.
         """
         result = []
         for i in range(0, len(input_list), chunk_size):
@@ -87,6 +91,9 @@ class DataProcessing:
     ) -> pd.DataFrame:
         """
         Merge two dataframes.
+
+        Wrapper around ``pandas.merge`` to merge two dataframes on a specified column using an inner join.
+
         Parameters
         ----------
         column: str
@@ -95,6 +102,7 @@ class DataProcessing:
             The first dataframe to merge.
         df2: pd.DataFrame
             The second dataframe to merge.
+
         Returns
         -------
         pd.DataFrame
@@ -110,8 +118,10 @@ class DataProcessing:
         key2: str,
     ) -> pd.DataFrame:
         """
-        Define a merging function to join results
-        This function merges new results with the previous results that were used for the new API request. It uses two keys from each result to match on.
+        Merges two dataframes using an inner join based on specified keys, automatically exploding list-like columns and removing duplicates.
+
+        Helpful for merging two sets of dataframe results obtained from the ``convert_to_df`` method.
+
         Parameters
         ----------
         df1: pd.DataFrame
@@ -122,6 +132,7 @@ class DataProcessing:
             The key in df1 to match with key2 in df2.
         key2: str
             The key in df2 to match with key1 in df1.
+
         Returns
         -------
         pd.DataFrame
@@ -180,18 +191,19 @@ class DataProcessing:
 
     def extract_field(self, api_results: list, field_name: str) -> list:
         """
-        This function is used to extract a field from the API results.
+        Extract a specific field's values from records retrieved via the NMDC API.
+
         Parameters
         ----------
         api_results: list
             A list of dictionaries.
         field_name: str
             The name of the field to extract.
+
         Returns
         -------
         list
             A list of values for the specified field.
-
         """
         field_list = []
         for item in api_results:
