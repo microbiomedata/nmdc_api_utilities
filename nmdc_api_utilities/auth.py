@@ -5,13 +5,13 @@ from datetime import datetime, timedelta
 
 import requests
 
+from nmdc_api_utilities.api_client import NMDCAPIClient
 from nmdc_api_utilities.config import API_BASE_URL
-from nmdc_api_utilities.nmdc_search import NMDCSearch
 
 logger = logging.getLogger(__name__)
 
 
-class NMDCAuth(NMDCSearch):
+class NMDCAuth(NMDCAPIClient):
     """
     Authentication handler for NMDC API operations.
 

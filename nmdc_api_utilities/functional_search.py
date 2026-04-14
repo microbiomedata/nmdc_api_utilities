@@ -4,13 +4,15 @@ from nmdc_api_utilities.collection_search import CollectionSearch
 from nmdc_api_utilities.config import API_BASE_URL
 
 
-class FunctionalSearch:
+class FunctionalSearch(CollectionSearch):
     """
     Class to interact with the NMDC API to filter functional annotations by KEGG, COG, or PFAM ids.
     """
 
+    supports_get_by_id = False
+
     def __init__(self, api_base_url: str = API_BASE_URL, env: str = ""):
-        self.collectioninstance = CollectionSearch(
+        super().__init__(
             collection_name="functional_annotation_agg",
             api_base_url=api_base_url,
             env=env,
@@ -61,36 +63,5 @@ class FunctionalSearch:
 
         filter = f'{{"gene_function_id": "{formatted_annotation_type}"}}'
 
-        result = self.collectioninstance.get_record_by_filter(
-            filter, page_size, fields, all_pages
-        )
+        result = self.get_record_by_filter(filter, page_size, fields, all_pages)
         return result
-
-    def get_records(
-        self,
-        filter: str = "",
-        max_page_size: int = 100,
-        fields: str = "",
-        all_pages: bool = False,
-    ) -> list[dict]:
-        """
-        Get a collection of data from the NMDC API. Generic function to get a collection of data from the NMDC API. Can provide a specific filter if desired.
-
-        Parameters
-        ----------
-        filter: str
-            The filter to apply to the query. Default is an empty string.
-        max_page_size: int
-            The maximum number of items to return per page. Default is 100.
-        fields: str
-            The fields to return. Default is all fields.
-
-        Returns
-        -------
-        list[dict]
-            A list of records.
-
-        """
-        return self.collectioninstance.get_records(
-            filter, max_page_size, fields, all_pages
-        )
