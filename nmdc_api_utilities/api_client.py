@@ -26,10 +26,20 @@ class NMDCAPIClient(ABC):
 
     def __init__(self, api_base_url: str = API_BASE_URL, env: str = ""):
         if env != "":
+            # Note: We use `stacklevel=3` here so that, when the user instantiates a class that
+            #       inherits from this abstract class, the warning shown by Python shows the line of
+            #       code where the user instantiated that inheriting class. If we were to use
+            #       `stacklevel=2` here, the warning would show the line of code where the
+            #       inheriting class called the `__init__` method of its superclass (i.e. this
+            #       method of this abstract class), which (unless the user has created their own
+            #       class that inherits directly from this one) is not code that the user controls.
+            #       Docs: https://docs.python.org/3/library/warnings.html#warnings.deprecated
+            #
             warnings.warn(
                 "`env` is deprecated and will be removed in a future release. "
                 "Use `api_base_url` instead.",
-                DeprecationWarning,
+                category=DeprecationWarning,
+                stacklevel=3,
             )
         self.api_base_url = get_api_base_url(api_base_url=api_base_url, env=env)
 
