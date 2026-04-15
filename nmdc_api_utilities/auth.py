@@ -34,7 +34,7 @@ class NMDCAuth(NMDCAPIClient):
 
     Notes
     -----
-    Security Warning - your credentials should be stored in a secure location. Do not hard code these values in your code; we recommend using environment variables.
+    Security Warning - your credentials should be stored in a secure location. Do not hard-code these values in your code; we recommend using environment variables.
 
     You must provide either:
 
