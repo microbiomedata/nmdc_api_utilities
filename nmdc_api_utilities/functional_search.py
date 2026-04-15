@@ -58,7 +58,7 @@ class FunctionalSearch(CollectionSearch):
         The ``annotation_type`` must be one of the following: "KEGG", "COG", "PFAM".
         """
         if annotation_type not in ["KEGG", "COG", "PFAM"]:
-            raise ValueError("id_type must be one of the following: KEGG, COG, PFAM")
+            raise ValueError("annotation_type must be one of the following: KEGG, COG, PFAM")
         if annotation_type == "KEGG":
             formatted_annotation_type = f"KEGG.ORTHOLOGY:{annotation}"
         elif annotation_type == "COG":

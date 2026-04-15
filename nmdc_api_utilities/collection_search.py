@@ -107,8 +107,8 @@ class CollectionSearch(NMDCSearch):
         ----------
         filter: str
             The filter to use to query the collection. Must be in MonogDB query format.
-            Example: {"name":{"my record name"}}.
-            `More resources found here for construction MonogDB filters <https://www.mongodb.com/docs/manual/reference/method/db.collection.find/#std-label-method-find-query>`_.
+            Example: {"name":"my record name"}.
+            `More resources found here for construction MongoDB filters <https://www.mongodb.com/docs/manual/reference/method/db.collection.find/#std-label-method-find-query>`_.
         max_page_size: int
             The number of records to return per page. Default is 25.
         fields: str

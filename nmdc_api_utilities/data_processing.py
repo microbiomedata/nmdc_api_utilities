@@ -38,7 +38,7 @@ class DataProcessing:
         Returns
         -------
         pd.DataFrame
-            A pandas dataframe represenation of the input dictionaries.
+            A pandas dataframe representation of the input dictionaries.
         """
         return pd.DataFrame(data)
 
