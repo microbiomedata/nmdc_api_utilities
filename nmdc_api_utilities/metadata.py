@@ -16,7 +16,8 @@ class Metadata(NMDCAPIClient):
     """
     Class to interact with the NMDC API metadata endpoints.
 
-    This class includes methods for interacting with endpoints for metadata management, including validation and submission and is not intended for general/public use.
+    This class includes methods for interacting with endpoints for metadata management, including validation and submission.
+    It is not intended for general/public use.
 
     Parameters
     ----------
