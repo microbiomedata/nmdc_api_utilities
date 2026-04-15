@@ -112,8 +112,8 @@ class NMDCSearch(NMDCAPIClient):
         """
         Retrieve linked instances for the given IDs from the NMDC API and associate them with the input IDs.
 
-        This method returns a list of linked instance records for the given IDs, for instance,
-        if you provide a study id, this will return the ids records within the ``biosample_set``,
+        This method returns a list of records that are linked to the records with the giving IDs. For instance,
+        if you provide an ID for a study record, this can return the ids records within the ``biosample_set``,
         ``data_generation_set`` etc that are associated with this study, even if it is not a single link between records.
 
         See also ``get_linked_instances`` for a method that returns the linked instances in their original list format.

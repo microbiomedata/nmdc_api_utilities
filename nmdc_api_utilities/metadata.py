@@ -90,7 +90,7 @@ class Metadata(NMDCAPIClient):
     @requires_auth
     def submit_json(self, json_records: list[dict] | str) -> int:
         """
-        Submits a json file to the NMDC metadata database via the NMDC runtime API's json_submit endpoint.
+        Submits a json file to the NMDC metadata database via the NMDC Runtime API's json_submit endpoint.
 
         Parameters
         ----------
