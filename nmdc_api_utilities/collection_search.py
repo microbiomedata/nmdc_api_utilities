@@ -14,6 +14,12 @@ from nmdc_api_utilities.nmdc_search import NMDCSearch
 logger = logging.getLogger(__name__)
 
 
+class OperationNotSupportedError(RuntimeError):
+    """Raised when an operation isn't supported by a collection subclass."""
+
+    pass
+
+
 class CollectionSearch(NMDCSearch):
     """
     Class to interact with the NMDC API to search for records within a specified collection.
@@ -197,6 +203,11 @@ class CollectionSearch(NMDCSearch):
             If the API request fails.
 
         """
+        if not getattr(self, "supports_get_by_id", True):
+            raise OperationNotSupportedError(
+                f"get_record_by_id is not supported for the {self.collection_name} collection"
+            )
+
         url = f"{self.api_base_url}/nmdcschema/{self.collection_name}/{collection_id}?max_page_size={max_page_size}&projection={fields}"
         # get the reponse
         try:
@@ -238,6 +249,11 @@ class CollectionSearch(NMDCSearch):
             True if all IDs exist in the collection, False otherwise.
 
         """
+        if not getattr(self, "supports_get_by_id", True):
+            raise OperationNotSupportedError(
+                f"check_ids_exist is not supported for the {self.collection_name} collection"
+            )
+
         # chunk the input list of IDs into smaller lists of 100 IDs each
         # to avoid the maximum URL length limit
         ids_test = list(set(ids))
@@ -284,6 +300,11 @@ class CollectionSearch(NMDCSearch):
         list[dict]
             A list of dictionaries containing the records.
         """
+        if not getattr(self, "supports_get_by_id", True):
+            raise OperationNotSupportedError(
+                f"get_record_by_id is not supported for the {self.collection_name} collection"
+            )
+
         dp = DataProcessing()
         results = []
         id_list = list(set(id_list))

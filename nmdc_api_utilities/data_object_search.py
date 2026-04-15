@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import logging
+import warnings
+from typing import Optional
 
 import requests
 
@@ -23,26 +25,50 @@ class DataObjectSearch(CollectionSearch):
         )
 
     def get_data_objects_for_studies(
-        self, study_id: str, max_page_size: int = 100
+        self,
+        study_id: str,
+        max_page_size: Optional[int] = None,
     ) -> list[dict]:
         """
-        Get data objects by study id.
+        (Deprecated) This method is deprecated. Use `get_data_objects_for_study` instead.
+        """
+
+        warnings.warn(
+            "The `get_data_objects_for_studies` method is deprecated and will be removed in "
+            "a future release. Use the `get_data_objects_for_study` method instead.",
+            category=DeprecationWarning,
+            stacklevel=2,
+        )
+
+        if max_page_size is not None:
+            warnings.warn(
+                "The `max_page_size` parameter is deprecated and will be removed in "
+                "a future release. It has no effect.",
+                category=DeprecationWarning,
+                stacklevel=2,
+            )
+
+        return self.get_data_objects_for_study(study_id)
+
+    def get_data_objects_for_study(self, study_id: str) -> list[dict]:
+        """
+        Get all data objects related to the specified study.
+
         Parameters
         ----------
         study_id: str
-            The study id to search for.
-        max_page_size: int
-            The maximum number of records to return per page. Default is 100
+            The ID of the study.
         Returns
         -------
         list[dict]
-            A list of data objects.
+            The data objects.
         Raises
         ------
         RuntimeError
             If the API request fails.
         """
-        url = f"{self.api_base_url}/data_objects/study/{study_id}?max_page_size={max_page_size}"
+
+        url = f"{self.api_base_url}/data_objects/study/{study_id}"
         try:
             response = requests.get(
                 url,
