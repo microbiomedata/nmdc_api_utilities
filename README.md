@@ -4,7 +4,7 @@ A library designed to simplify various research tasks for users looking to lever
 # Usage
 Example use of the Biosample class:
 ```python
-from nmdc_api_utilities.biosample_search import BiosampleSearch
+from nmdc_api_utilities import BiosampleSearch
 
 # Create an instance of the module
 biosample_client = BiosampleSearch()

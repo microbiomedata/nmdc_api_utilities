@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import logging
 
+from nmdc_api_utilities import DataObjectSearch
 from nmdc_api_utilities.config import API_BASE_URL
-from nmdc_api_utilities.data_object_search import DataObjectSearch
 
 logging.basicConfig(level=logging.DEBUG)
 

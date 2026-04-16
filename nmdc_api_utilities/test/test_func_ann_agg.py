@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 import unittest
 
+from nmdc_api_utilities import FunctionalAnnotationAggSearch
 from nmdc_api_utilities.config import API_BASE_URL
-from nmdc_api_utilities.functional_annotation_agg_search import (
-    FunctionalAnnotationAggSearch,
-)
 
 
 class TestFunctionalAnnotation(unittest.TestCase):
