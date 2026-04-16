@@ -1,7 +1,7 @@
-pre-commit
-sphinx
+pre-commit==4.5.1
+sphinx==9.1.0
 nbsphinx
-sphinx_rtd_theme
-pytest
-build
-twine
+sphinx_rtd_theme==3.1.0
+pytest==9.0.3
+build==1.4.3
+twine==6.2.0

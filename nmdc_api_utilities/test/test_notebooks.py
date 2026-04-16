@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
+from nmdc_api_utilities import DataObjectSearch, DataProcessing, WorkflowExecutionSearch
 from nmdc_api_utilities.config import API_BASE_URL
-from nmdc_api_utilities.data_object_search import DataObjectSearch
-from nmdc_api_utilities.data_processing import DataProcessing
-from nmdc_api_utilities.workflow_execution_search import WorkflowExecutionSearch
 
 
 def test_nom_notebook():
