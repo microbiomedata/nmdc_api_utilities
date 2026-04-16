@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import logging
 
+from nmdc_api_utilities import InstrumentSearch
 from nmdc_api_utilities.config import API_BASE_URL
-from nmdc_api_utilities.instrument_search import InstrumentSearch
 
 logging.basicConfig(level=logging.DEBUG)
 
