@@ -1,4 +1,4 @@
-pandas
-requests
-matplotlib
-dotenv
+pandas==3.0.2
+requests==2.33.1
+matplotlib==3.10.8
+dotenv==0.9.9
