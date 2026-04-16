@@ -24,7 +24,10 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.napoleon",  # For Google/NumPy style docstrings
     "sphinx.ext.viewcode",  # Add links to source code
+    "nbsphinx",  # Render Jupyter notebooks as documentation pages
 ]
+
+nbsphinx_execute = "never"
 
 templates_path = ["_templates"]
 exclude_patterns = ["build", "Thumbs.db", ".DS_Store"]

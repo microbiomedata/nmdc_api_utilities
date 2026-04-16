@@ -1,5 +1,6 @@
 pre-commit
 sphinx
+nbsphinx
 sphinx_rtd_theme
 pytest
 build
