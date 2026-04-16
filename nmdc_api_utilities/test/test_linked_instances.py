@@ -2,8 +2,8 @@
 import logging
 from itertools import chain
 
+from nmdc_api_utilities import NMDCSearch
 from nmdc_api_utilities.config import API_BASE_URL
-from nmdc_api_utilities.nmdc_search import NMDCSearch
 
 logging.basicConfig(level=logging.DEBUG)
 
