@@ -6,7 +6,7 @@ from nmdc_api_utilities.config import API_BASE_URL
 
 class FunctionalSearch(CollectionSearch):
     """
-    Class to interact with the NMDC API to filter functional annotations by KEGG, COG, or PFAM ids.
+    Class to interact with the NMDC API to search for records within the ``functional_annotation_agg`` collection.
     """
 
     supports_get_by_id = False
@@ -27,17 +27,14 @@ class FunctionalSearch(CollectionSearch):
         all_pages: bool = False,
     ) -> list[dict]:
         """
-        Get a record from the NMDC API by id. ID types can be KEGG, COG, or PFAM.
+        Retrieve records with specific annotation value and type.
 
         Parameters
         -----------
         annotation: str
-            The data base id to query the function annotations.
+            The functional annotation value to query.
         annotation_type:
-            The type of id to query. MUST be one of the following:
-                KEGG
-                COG
-                PFAM
+            The type of id to query. See Notes for more details.
         page_size: int
             The number of results to return per page. Default is 25.
         fields: str
@@ -51,9 +48,19 @@ class FunctionalSearch(CollectionSearch):
         list[dict]
             A list of functional annotations.
 
+        Raises
+        ------
+        ValueError
+            If the annotation_type is not one of the allowed types. See Notes for more details.
+
+        Notes
+        -----
+        The ``annotation_type`` must be one of the following: "KEGG", "COG", "PFAM".
         """
         if annotation_type not in ["KEGG", "COG", "PFAM"]:
-            raise ValueError("id_type must be one of the following: KEGG, COG, PFAM")
+            raise ValueError(
+                "annotation_type must be one of the following: KEGG, COG, PFAM"
+            )
         if annotation_type == "KEGG":
             formatted_annotation_type = f"KEGG.ORTHOLOGY:{annotation}"
         elif annotation_type == "COG":

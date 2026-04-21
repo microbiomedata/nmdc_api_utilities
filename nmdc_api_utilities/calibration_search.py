@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 class CalibrationSearch(CollectionSearch):
     """
-    Class to interact with the NMDC API to get calibration records.
+    Class to interact with the NMDC API to search for records within the ``calibration_set`` collection.
     """
 
     def __init__(self, api_base_url: str = API_BASE_URL, env: str = ""):

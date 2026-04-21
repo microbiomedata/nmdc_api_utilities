@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 class DataObjectSearch(CollectionSearch):
     """
-    Class to interact with the NMDC API to get data objects.
+    Class to interact with the NMDC API to search for records within the ``data_object_set`` collection.
     """
 
     def __init__(self, api_base_url: str = API_BASE_URL, env: str = ""):

@@ -15,26 +15,33 @@ class NMDCAuth(NMDCAPIClient):
     """
     Authentication handler for NMDC API operations.
 
-    You must provide either:
-      - client_id and client_secret (for client credentials grant), OR
-      - username and password (for password grant).
-
     Parameters
     ----------
     client_id : str
-        The client ID for NMDC API authentication (required if using client credentials grant).
+        The client ID for NMDC API authentication. See Notes for further details.
     client_secret : str
-        The client secret for NMDC API authentication (required if using client credentials grant).
+        The client secret for NMDC API authentication. See Notes for further details.
     username : str
-        The username for NMDC API authentication (required if using password grant).
+        The username for NMDC API authentication. See Notes for further details.
     password : str
-        The password for NMDC API authentication (required if using password grant).
+        The password for NMDC API authentication. See Notes for further details.
+    api_base_url : str
+        The base URL of an instance of the NMDC Runtime API. By default, this is the base URL of
+        the production instance.
+    env : str
+        Deprecated. Use `api_base_url` instead. Previously used to specify the API environment
+        (e.g., "prod", "dev").
 
     Notes
     -----
-    Security Warning: Your client_id and client_secret should be stored in a secure location.
-        We recommend using environment variables.
-        Do not hard code these values in your code.
+    Security Warning - your credentials should be stored in a secure location. Do not hard-code these values in your code; we recommend using environment variables.
+
+    You must provide either:
+
+    - ``client_id`` and ``client_secret`` (for client credentials grant), OR
+    - ``username`` and ``password`` (for password grant).
+
+
     """
 
     def __init__(

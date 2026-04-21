@@ -18,8 +18,10 @@ class Minter(NMDCAPIClient):
 
     Parameters
     ----------
+    api_base_url : str
+        The base URL of the NMDC API. Default is API_BASE_URL.
     auth : NMDCAuth
-        An instance of the NMDCAuth class for authentication.
+        An instance of the NMDCAuth class for authentication. Default is None.
     """
 
     def __init__(
@@ -43,20 +45,17 @@ class Minter(NMDCAPIClient):
         client_secret: str = None,
     ) -> str | list[str]:
         """
-        Mint new identifier(s) for a collection.
+        Mint new identifier(s) for a specified type of record.
 
         Parameters
         ----------
         nmdc_type : str
             The type of NMDC ID to mint (e.g., 'nmdc:MassSpectrometry',
             'nmdc:DataObject').
-
         count : int, optional
             The number of identifiers to mint. Default is 1.
-
         client_id : str
             The client ID for authentication. Kept for backwards compatibility.
-
         client_secret : str
             The client secret for authentication. Kept for backwards compatibility.
 
@@ -73,9 +72,9 @@ class Minter(NMDCAPIClient):
         ValueError
             If count is less than 1.
 
-        Note
-        ----
-        If client_id and client_secret are provided, a new NMDCAuth object will be created. The newest and preferred method for authentication is to use the NMDCAuth class directly.
+        Notes
+        -----
+        If ``client_id`` and ``client_secret`` are provided, a new instance of the ``NMDCAuth`` class will be created. The newest and preferred method for authentication is to use the ``NMDCAuth`` class directly.
 
         """
         # if they are passed into the function, create the auth object

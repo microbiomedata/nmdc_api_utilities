@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 class StorageProcessSearch(CollectionSearch):
     """
-    Class to interact with the NMDC API to get storage processes.
+    Class to interact with the NMDC API to search for records within the ``storage_process_set`` collection.
     """
 
     def __init__(self, api_base_url: str = API_BASE_URL, env: str = ""):

@@ -9,7 +9,9 @@ logger = logging.getLogger(__name__)
 
 class FunctionalAnnotationAggSearch(FunctionalSearch):
     """
-    Class to interact with the NMDC API to get functional annotation agg members. These are most helpful when trying to identify workflows associated with a KEGG, COG, or PFAM ids.
+    Class to interact with the NMDC API to search for records within the ``functional_annotation_agg`` collection.
+
+    These are most helpful when trying to identify workflows associated with a KEGG, COG, or PFAM ids.
     """
 
     def __init__(self, api_base_url: str = API_BASE_URL, env: str = ""):

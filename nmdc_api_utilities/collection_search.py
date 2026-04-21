@@ -22,7 +22,7 @@ class OperationNotSupportedError(RuntimeError):
 
 class CollectionSearch(NMDCSearch):
     """
-    Class to interact with the NMDC API to get collections of data. Must know the collection name to query.
+    Class to interact with the NMDC API to search for records within a specified collection.
     """
 
     def __init__(
@@ -45,14 +45,14 @@ class CollectionSearch(NMDCSearch):
         all_pages: bool = False,
     ) -> list[dict]:
         """
-        Get a collection of data from the NMDC API. Generic function to get a collection of data from the NMDC API. Can provide a specific filter if desired.
+        Retrieve records from the collection via the NMDC API.
 
         Parameters
         ----------
         filter: str
             The filter to apply to the query. Default is an empty string.
         max_page_size: int
-            The maximum number of items to return per page. Default is 100.
+            The maximum number of records to return per page. Default is 100.
         fields: str
             The fields to return. Default is all fields.
         all_pages: bool
@@ -101,19 +101,19 @@ class CollectionSearch(NMDCSearch):
         self, filter: str, max_page_size=25, fields: str = "", all_pages=False
     ) -> list[dict]:
         """
-        Get a record from the NMDC API by its id.
+        Retrieve a record via the NMDC API using a specified filter.
 
         Parameters
         ----------
         filter: str
             The filter to use to query the collection. Must be in MonogDB query format.
-                Resources found here - https://www.mongodb.com/docs/manual/reference/method/db.collection.find/#std-label-method-find-query
-            Example: {"name":{"my record name"}}
+            Example: {"name":"my record name"}.
+            `More resources found here for construction MongoDB filters <https://www.mongodb.com/docs/manual/reference/method/db.collection.find/#std-label-method-find-query>`_.
         max_page_size: int
-            The number of results to return per page. Default is 25.
+            The number of records to return per page. Default is 25.
         fields: str
             The fields to return. Default is all fields.
-            Example: "id,name,description,alternative_identifiers,file_size_bytes,md5_checksum,data_object_type,url,type"
+            Example: "id,name,description,url,type"
         all_pages: bool
             True to return all pages. False to return the first page. Default is False.
 
@@ -136,7 +136,7 @@ class CollectionSearch(NMDCSearch):
         exact_match: bool = False,
     ):
         """
-        Get a record from the NMDC API by its name. Records can be filtered based on their attributes found https://microbiomedata.github.io/nmdc-schema/.
+        Retrieve a record via the NMDC API by a specific attribute's value.
 
         Parameters
         ----------
@@ -145,13 +145,15 @@ class CollectionSearch(NMDCSearch):
         attribute_value: str
             The value of the attribute to filter by.
         max_page_size: int
-            The number of results to return per page. Default is 25.
+            The number of records to return per page. Default is 25.
         fields: str
             The fields to return. Default is all fields.
         all_pages: bool
             True to return all pages. False to return the first page. Default is False.
         exact_match: bool
-            This var is used to determine if the inputted attribute value is an exact match or a partial match. Default is False, meaning the user does not need to input an exact match. Under the hood this is used to determine if the inputted attribute value should be wrapped in a regex expression.
+            Whether the attribute value should be matched exactly or partially.
+            Used to determine if the inputted attribute value is an exact match or a partial match.
+            Default is False, meaning the user does not need to input an exact match.
 
         Returns
         -------
@@ -179,14 +181,14 @@ class CollectionSearch(NMDCSearch):
         fields: str = "",
     ) -> list[dict]:
         """
-        Get a collection of data from the NMDC API by id.
+        Retrieve a record from the collection via the NMDC API using a specified ID.
 
         Parameters
         ----------
         collection_id: str
-            The id of the collection.
+            The id of the record to retrieve from the collection.
         max_page_size: int
-            The maximum number of items to return per page. Default is 100.
+            The maximum number of records to return per page. Default is 100.
         fields: str
             The fields to return. Default is all fields.
 
@@ -228,7 +230,7 @@ class CollectionSearch(NMDCSearch):
         self, ids: list, chunk_size: int = 100, return_missing_ids: bool = False
     ) -> bool:
         """
-        Check if the IDs exist in the collection.
+        Check if specified IDs exist in the collection.
 
         This method constructs a query to the API to filter the collection based on the given IDs, and checks if all IDs exist in the collection.
 
@@ -276,15 +278,18 @@ class CollectionSearch(NMDCSearch):
         self, id_list: list, search_field: str, chunk_size=100, fields=""
     ) -> list[dict]:
         """
-        Get a batch of records from the collection by a list of input IDs. This method is used to identify records that include any of the IDs from the input list, matching the search_field.
-        This is using the MongoDB filter keyword $in to identify other records that include the input IDs.
+        Get a batch of records from the collection that relate to input IDs.
+
+        This method is used to retrieve records that include any of the IDs from the input list in specified fields (including fields other than ``id``).
+        For example, if records in a collection contain study IDs in a field called ``associated_studies``,
+        this method can be used to retrieve all records that include any of the input study IDs in the ``associated_studies`` field.
 
         Parameters
         ---------
         id_list: list
             A list of IDs to get records for.
         search_field: str
-            The field to search for. This must match a field from the NMDC Schema.
+            The field in which to search for the IDs.
         chunk_size: int
             The number of IDs to get in each query. Default is 100.
         fields: str
@@ -294,7 +299,6 @@ class CollectionSearch(NMDCSearch):
         -------
         list[dict]
             A list of dictionaries containing the records.
-
         """
         if not getattr(self, "supports_get_by_id", True):
             raise OperationNotSupportedError(
