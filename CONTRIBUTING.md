@@ -16,6 +16,7 @@ Unlike other repos for data exploration, the code in this repo is used by many m
     * [Making pull requests](#pull-requests)
 - [Best practices](#best-practices)
 - [Development](#development)
+    * [Previewing user documentation](#previewing-user-documentation)
 - [Making a release](#release)
 
 <a id="code-of-conduct"></a>
@@ -105,6 +106,44 @@ This project uses pip paired with venv to manage dependencies. Note that require
 1. Install precommit hooks to run formatting before committing:
 
     `pre-commit install`
+
+### Previewing user documentation
+
+We use [Sphinx](https://www.sphinx-doc.org/en/master/) to generate user documentation. Our Sphinx
+configuration files and static assets are located in the `docs/` directory.
+
+In production, our user documentation is generated via a GitHub Actions workflow
+(i.e. `documentation.yml`) that builds the documentation website and deploys it to GitHub Pages,
+where it can be accessed by users.
+
+In development, you can build and preview the documentation website locally by following these steps:
+
+<!-- TODO: Add `myst_parser` to the "requirements-dev.txt" file. -->
+
+1. Install dependencies.
+
+   ```sh
+    pip install -r requirements.txt
+    pip install -r requirements-dev.txt
+    pip install myst_parser
+    pip install .
+   ```
+
+2. Build (or rebuild) the documentation website.
+
+   ```sh
+   sphinx-build -v docs build/html
+   ```
+
+3. Use Python's built-in HTTP server to serve the documentation website locally,
+   at [`http://localhost:8000`](http://localhost:8000)
+
+   ```sh
+   python -m http.server 8000 --directory build/html
+   ```
+
+When you're done previewing the documentation website, you can terminate the HTTP server by pressing
+`^C` at the terminal.
 
 #### Major refactoring
 
