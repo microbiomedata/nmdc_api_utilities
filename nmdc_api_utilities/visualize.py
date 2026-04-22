@@ -14,7 +14,7 @@ def plot(
     y: str = "",
     xlabel: str = "",
     ylabel: str = "",
-):
+) -> None:
     if plot_type == "scatter":
         plt.scatter(data[x], data[y])
     elif plot_type == "box":

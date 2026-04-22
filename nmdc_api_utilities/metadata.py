@@ -30,7 +30,7 @@ class Metadata(NMDCAPIClient):
     def __init__(
         self,
         api_base_url: str = API_BASE_URL,
-        auth: NMDCAuth = None,
+        auth: NMDCAuth | None = None,
         env: str = "",
     ):
         super().__init__(

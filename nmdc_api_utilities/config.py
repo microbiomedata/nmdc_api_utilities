@@ -5,11 +5,6 @@ This module contains the definitions of variables used throughout the package.
 
 import os
 import re
-from typing import Literal
-
-# (Deprecated) Name of the environment hosting an instance of the NMDC Runtime API.
-EnvName = Literal["dev", "prod", ""]
-
 
 # Base URL of the production instance of the NMDC Runtime API.
 PRODUCTION_API_BASE_URL = "https://api.microbiomedata.org"
@@ -32,7 +27,7 @@ def _sanitize_api_base_url(api_base_url: str) -> str:
     raise ValueError(f"Invalid API base URL: {api_base_url}")
 
 
-def get_api_base_url(api_base_url: str = PRODUCTION_API_BASE_URL, env: EnvName = ""):
+def get_api_base_url(api_base_url: str = PRODUCTION_API_BASE_URL, env: str = "") -> str:
     """
     Get the base URL of the NMDC Runtime API to use for API requests, based upon the specified
     API base URL and environment nickname (each oftentimes obtained from an environment variable).

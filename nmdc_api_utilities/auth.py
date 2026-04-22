@@ -2,6 +2,7 @@
 
 import logging
 from datetime import datetime, timedelta
+from typing import Any
 
 import requests
 
@@ -46,10 +47,10 @@ class NMDCAuth(NMDCAPIClient):
 
     def __init__(
         self,
-        client_id: str = None,
-        client_secret: str = None,
-        username: str = None,
-        password: str = None,
+        client_id: str | None = None,
+        client_secret: str | None = None,
+        username: str | None = None,
+        password: str | None = None,
         api_base_url: str = API_BASE_URL,
         env: str = "",
     ):
@@ -61,9 +62,9 @@ class NMDCAuth(NMDCAPIClient):
         self.client_secret = client_secret
         self.username = username
         self.password = password
-        self._token = None
-        self._token_expires_at = None
-        self._oauth_session = None
+        self._token: str | None = None
+        self._token_expires_at: datetime | None = None
+        self._oauth_session: Any | None = None
         self.grant_type = (
             "client_credentials"
             if (self.client_id and self.client_secret)
@@ -81,6 +82,7 @@ class NMDCAuth(NMDCAPIClient):
     def get_token(self) -> str:
         """Get a valid access token, refreshing if necessary."""
         if self._is_token_valid():
+            assert isinstance(self._token, str)  # to appease mypy
             return self._token
         return self._refresh_token()
 
@@ -104,9 +106,10 @@ class NMDCAuth(NMDCAPIClient):
                 "username": self.username,
                 "password": self.password,
             }
-
-        # TODO: If `self.grant_type` is neither "client_credentials" nor "password",
-        #       `token_request_body` below will be unbound. Handle that situation.
+        else:
+            raise ValueError(
+                "Refreshing a token requires that credentials be specified."
+            )
 
         response = requests.post(
             f"{self.api_base_url}/token",
@@ -133,4 +136,5 @@ class NMDCAuth(NMDCAPIClient):
             self._token_expires_at = (
                 datetime.now() + expires_delta - timedelta(seconds=60)
             )
+        assert isinstance(self._token, str)  # to appease mypy
         return self._token

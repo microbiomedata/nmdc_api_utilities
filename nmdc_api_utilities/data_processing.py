@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import logging
 import re
+from typing import Any
 
 import pandas as pd
 
@@ -11,7 +12,7 @@ class DataProcessing:
     def __init__(self):
         pass
 
-    def _string_mongo_list(self, data: list) -> str:
+    def _string_mongo_list(self, data: list[Any] | dict[str, Any]) -> str:
         """
         Convert elements in a list to use double quotes instead of single quotes.
         This is required for mongo queries.
@@ -24,9 +25,11 @@ class DataProcessing:
         str
             A string representation of the list with double quotes.
         """
+        # TODO: The docstring contradicts (a) the type hint and (b) some invocations of this method
+        #       within this library, itself (they pass it a dictionary instead of a list).
         return str(data).replace("'", '"')
 
-    def convert_to_df(self, data: list) -> pd.DataFrame:
+    def convert_to_df(self, data: list[dict[str, Any]]) -> pd.DataFrame:
         """
         Convert a list of dictionaries to a pandas dataframe.
 
@@ -42,7 +45,9 @@ class DataProcessing:
         """
         return pd.DataFrame(data)
 
-    def split_list(self, input_list: list, chunk_size: int = 100) -> list:
+    def split_list(
+        self, input_list: list[Any], chunk_size: int = 100
+    ) -> list[list[Any]]:
         """
         Split a list into chunks of a specified size.
 
@@ -63,7 +68,9 @@ class DataProcessing:
 
         return result
 
-    def rename_columns(self, df: pd.DataFrame, new_col_names: list) -> pd.DataFrame:
+    def rename_columns(
+        self, df: pd.DataFrame, new_col_names: list[str]
+    ) -> pd.DataFrame:
         """
         Rename columns in a pandas dataframe.
 
@@ -155,7 +162,9 @@ class DataProcessing:
         merged_df.drop_duplicates(keep="first", inplace=True)
         return merged_df
 
-    def build_filter(self, attributes: dict, exact_match: bool = False) -> dict:
+    def build_filter(
+        self, attributes: dict[str, str], exact_match: bool = False
+    ) -> str:
         """
         Create a MongoDB filter using $regex for each attribute in the input dictionary. For nested attributes, use dot notation.
 
@@ -173,7 +182,7 @@ class DataProcessing:
             A dictionary representing the MongoDB filter.
             Example: {"name": {"$regex": "example", "$options": "i"}, "description": {"$regex": "example", "$options": "i"}}
         """
-        filter_dict = {}
+        filter_dict: dict[str, str | dict[str, str]] = {}
         if exact_match:
             for attribute_name, attribute_value in attributes.items():
                 filter_dict[attribute_name] = attribute_value
@@ -185,11 +194,17 @@ class DataProcessing:
                 logging.debug(f"Attribute name: {attribute_name}")
                 filter_dict[attribute_name] = {"$regex": escaped_value, "$options": "i"}
                 logging.debug(f"Filter dict: {filter_dict}")
+
+        # TODO: The value being passed to `_string_mongo_list` below might be a dictionary whose
+        #       values are string, and it might be a dictionary whose values are, themselves,
+        #       dictionaries. The method's docstring says it expects to be passed a LIST.
         clean = self._string_mongo_list(filter_dict)
         logging.debug(f"Filter cleaned: {clean}")
         return clean
 
-    def extract_field(self, api_results: list, field_name: str) -> list:
+    def extract_field(
+        self, api_results: list[dict[str, Any]], field_name: str
+    ) -> list[Any]:
         """
         Extract a specific field's values from records retrieved via the NMDC API.
 
@@ -205,11 +220,11 @@ class DataProcessing:
         list
             A list of values for the specified field.
         """
-        field_list = []
+        field_list: list[Any] = []
         for item in api_results:
-            if type(item[field_name]) == str:
+            if isinstance(item[field_name], str):
                 field_list.append(item[field_name])
-            elif type(item[field_name]) == list:
+            elif isinstance(item[field_name], list):
                 for another_item in item[field_name]:
                     field_list.append(another_item)
         return field_list
