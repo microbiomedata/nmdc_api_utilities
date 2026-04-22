@@ -8,7 +8,15 @@ from nmdc_api_utilities.lat_long_filters import LatLongFilters
 logger = logging.getLogger(__name__)
 
 
-class BiosampleSearch(LatLongFilters, CollectionSearch):
+# Note: We specify the `CollectionSearch` class before the `LatLongFilters` class so that the
+#       `BiosampleSearch` class uses the _concrete_ `get_records` method from the `CollectionSearch`
+#       class (which is specified first) instead of the _abstract_ `get_records` method from the
+#       `LatLongFilters` (which is specified later). An alternative would be to implement a concrete
+#       "pass-through" method (here in `BiosampleSearch`) that, itself, explicitly invokes
+#       `CollectionSearch.get_records(self, filter, max_page_size, fields, all_pages)`.
+#       Docs: https://realpython.com/ref/glossary/mro/
+#
+class BiosampleSearch(CollectionSearch, LatLongFilters):
     """
     Class to interact with the NMDC API to search for records within the ``biosample_set`` collection.
     """
