@@ -110,20 +110,21 @@ This project uses pip paired with venv to manage dependencies. Note that require
 ### Static type checking
 
 We use [mypy](https://mypy-lang.org/) to validate our code in terms of data types.
-Because mypy is a _static_ type checker, we can use it to find problems without running the code. For example, mypy will detect and report inconsistencies like the following:
+Because mypy is a _static_ type checker, we can use it to find problems without running the code.
+For example, mypy will report inconsistencies like the following:
 
 ```py
-# Inconsistency: Return type `bool` doesn't account for value `None`.
-def is_large(num: int) -> bool:
-    if num > 10:
-        return True
+def triple(n: int) -> int:
+    return n * 3
+
+greet("1")  # 🙋 mypy will report this inconsistency
 ```
 
 #### Perform static type checking
 
 You can perform static type checking by running:
 
-```py
+```sh
 mypy
 ```
 

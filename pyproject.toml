@@ -30,4 +30,5 @@ addopts = ["--doctest-modules"]  # run doctests defined in _all_ modules (not on
 # Configure mypy.
 # Docs: https://mypy.readthedocs.io/en/stable/config_file.html#the-mypy-configuration-file
 [tool.mypy]
-packages = ["nmdc_api_utilities"]  # run mypy against the `nmdc_api_utilities` package (not the `tests` package)
+packages = ["nmdc_api_utilities"]  # check the `nmdc_api_utilities` package
+exclude = ["^nmdc_api_utilities/test/"]  # ignore the `nmdc_api_utilities/test` directory

@@ -58,21 +58,23 @@ repos:
         args: ["--select", "I", "--fix"]  # Automatically fix import formatting
         additional_dependencies: []
 
-  # This pre-commit hook runs mypy to perform static type checking.
+  # This pre-commit hook performs static type checking by running mypy.
   #
-  # Note: We use `bash -c '... || true'` to guarantee the overall command returns true,
-  #       effectively making this a _non-blocking_ hook. This allows developers to see
-  #       mypy's output, without requiring them to ensure error-free output. We may convert
-  #       this into a blocking hook later, after resolving all existing violations.
+  # Note: We use `bash -c 'mypy || true'` to guarantee the overall command returns a zero status,
+  #       effectively making this a _non-blocking_ hook. This allows developers to see mypy's
+  #       output, without requiring them to ensure error-free output. We may convert this into a
+  #       blocking hook later, after resolving all existing violations.
   #
   - repo: local
     hooks:
       - id: mypy
         name: mypy
-        entry: bash -c './.venv/bin/mypy || true'  # non-blocking
+        entry: bash -c 'mypy || true'  # non-blocking
         language: python
         types: [python]
-        verbose: true  # show mypy's output
+        pass_filenames: false  # avoid redundant args (mypy will use the config in `pyproject.toml`)
+        verbose: true  # show the hook's output even when the hook always returns a zero status
+        additional_dependencies: [mypy]
 
   # - repo: https://github.com/thclark/pre-commit-sphinx
   #   rev: 0.0.1
