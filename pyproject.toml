@@ -26,3 +26,8 @@ dependencies = {file = ["requirements.txt"]}
 # Docs: https://docs.pytest.org/en/stable/reference/customize.html#pyproject-toml
 [tool.pytest]
 addopts = ["--doctest-modules"]  # run doctests defined in _all_ modules (not only `test_*` modules)
+
+# Configure mypy.
+# Docs: https://mypy.readthedocs.io/en/stable/config_file.html#the-mypy-configuration-file
+[tool.mypy]
+packages = ["nmdc_api_utilities"]  # run mypy against the `nmdc_api_utilities` package (not the `tests` package)

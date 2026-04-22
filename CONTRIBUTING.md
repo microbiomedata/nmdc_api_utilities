@@ -107,6 +107,28 @@ This project uses pip paired with venv to manage dependencies. Note that require
 
     `pre-commit install`
 
+### Static type checking
+
+We use [mypy](https://mypy-lang.org/) to validate our code in terms of data types.
+Because mypy is a _static_ type checker, we can use it to find problems without running the code. For example, mypy will detect and report inconsistencies like the following:
+
+```py
+# Inconsistency: Return type `bool` doesn't account for value `None`.
+def is_large(num: int) -> bool:
+    if num > 10:
+        return True
+```
+
+#### Perform static type checking
+
+You can perform static type checking by running:
+
+```py
+mypy
+```
+
+By default, mypy will use the configuration specified within the `[tool.mypy]` section of `pyproject.toml`. You can override aspects of that configuration via [CLI options](https://mypy.readthedocs.io/en/stable/command_line.html).
+
 ### Previewing user documentation
 
 We use [Sphinx](https://www.sphinx-doc.org/en/master/) to generate user documentation. Our Sphinx

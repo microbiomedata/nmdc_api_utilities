@@ -4,3 +4,6 @@ sphinx_rtd_theme==3.1.0
 pytest==9.0.3
 build==1.4.3
 twine==6.2.0
+# We use mypy to validate our code in terms of data types.
+# Homepage: https://mypy-lang.org/
+mypy==1.20.2
