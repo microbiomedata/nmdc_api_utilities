@@ -117,7 +117,7 @@ For example, mypy will report inconsistencies like the following:
 def triple(n: int) -> int:
     return n * 3
 
-greet("1")  # 🙋 mypy will report this inconsistency
+triple("1")  # 🙋 mypy will report this inconsistency
 ```
 
 #### Perform static type checking
