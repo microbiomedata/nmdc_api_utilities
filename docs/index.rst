@@ -10,8 +10,8 @@ Public and privileged APIs are documented separately so most users can start qui
    :caption: Getting Started:
 
    usage
-   example_usage
    filters
+   example_usage
 
 .. toctree::
    :maxdepth: 1
