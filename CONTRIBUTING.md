@@ -142,6 +142,7 @@ In development, you can build and preview the documentation website locally by f
     pip install -r requirements-dev.txt
     pip install myst_parser
     pip install ipykernel
+    pip install nbsphinx
     pip install .
     python -m ipykernel install --user --name python3 --display-name "Python 3"
    ```
