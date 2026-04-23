@@ -544,9 +544,43 @@ def test_get_linked_instance_strings():
     assert len(result) == 2
 
 
+def test_get_linked_instance_hydrate():
+    """
+    Test to get a record and hydrate it.
+    """
+    ll_client = NMDCSearch(api_base_url=API_BASE_URL)
+    id = "nmdc:bsm-11-002vgm56"
+    result = ll_client.get_linked_instances(types="nmdc:Study", ids=id, hydrate=True)
+
+    assert len(result[0].keys()) > 3 and len(result[1].keys()) > 3
+
+
 def test_association():
     ll_client = NMDCSearch(api_base_url=API_BASE_URL)
     association = ll_client.get_linked_instances_and_associate_ids(
         types=["nmdc:Study"], ids=["nmdc:bsm-11-002vgm56", "nmdc:bsm-11-006pnx90"]
     )
     assert "nmdc:bsm-11-002vgm56" and "nmdc:bsm-11-006pnx90" in association.keys()
+
+
+def test_association_hydrate():
+    """
+    Test to get associated ids and hydrate them.
+    """
+    ll_client = NMDCSearch(api_base_url=API_BASE_URL)
+    association = ll_client.get_linked_instances_and_associate_ids(
+        types=["nmdc:Study"],
+        ids=["nmdc:bsm-11-002vgm56", "nmdc:bsm-11-006pnx90"],
+        hydrate=False,
+    )
+    association = ll_client.get_linked_instances_and_associate_ids(
+        types=["nmdc:Study"],
+        ids=["nmdc:bsm-11-002vgm56", "nmdc:bsm-11-006pnx90"],
+        hydrate=True,
+    )
+    assert (
+        len(next(iter(association["nmdc:bsm-11-002vgm56"][0].values()))) > 3
+        and len(next(iter(association["nmdc:bsm-11-002vgm56"][1].values()))) > 3
+        and len(next(iter(association["nmdc:bsm-11-006pnx90"][0].values()))) > 3
+        and len(next(iter(association["nmdc:bsm-11-006pnx90"][1].values()))) > 3
+    )

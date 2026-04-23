@@ -144,17 +144,29 @@ class NMDCSearch(NMDCAPIClient):
         association = {}
         # loop through the linked instances and build the association
         for record in linked_instances:
-            study_id = record["id"]
-            if "_upstream_of" in record:
-                for upstream_id in record["_upstream_of"]:
-                    if upstream_id not in association:
-                        association[upstream_id] = []
-                    association[upstream_id].append(study_id)
-            if "_downstream_of" in record:
-                for upstream_id in record["_downstream_of"]:
-                    if upstream_id not in association:
-                        association[upstream_id] = []
-                    association[upstream_id].append(study_id)
+            id = record["id"]
+            stream = (
+                "_upstream_of"
+                if "_upstream_of" in record
+                else "_downstream_of"
+                if "_downstream_of" in record
+                else None
+            )
+            if stream is not None:
+                for stream_id in record[stream]:
+                    if stream_id not in association:
+                        association[stream_id] = []
+                    if hydrate:
+                        hydrate_dict = {
+                            id: {
+                                key: record[key]
+                                for key in record.keys()
+                                if key not in [stream, "id"]
+                            }
+                        }
+                        association[stream_id].append(hydrate_dict)
+                    else:
+                        association[stream_id].append(id)
 
         return association
 
