@@ -63,7 +63,7 @@ repos:
   # Note: We use `sh -c 'mypy || true'` to guarantee the overall command returns a 0 exit code,
   #       effectively making this a _non-blocking_ hook. This allows developers to see mypy's
   #       output, without requiring them to ensure the output is error-free. We may convert this
-  #       into a blocking hook later, after resolving all existing violations.
+  #       into a blocking hook later, after developers have formed opinions about mypy over time.
   #
   # TODO: Figure out a way to keep the `additional_dependencies` package list (names and versions)
   #       in sync with `requirements.txt` and `requirements-dev.txt` automatically. We could use
