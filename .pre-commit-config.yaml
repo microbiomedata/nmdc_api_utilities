@@ -60,15 +60,15 @@ repos:
 
   # This pre-commit hook performs static type checking by running mypy.
   #
-  # Note: We use `bash -c 'mypy || true'` to guarantee the overall command returns a 0 exit code,
+  # Note: We use `sh -c 'mypy || true'` to guarantee the overall command returns a 0 exit code,
   #       effectively making this a _non-blocking_ hook. This allows developers to see mypy's
   #       output, without requiring them to ensure the output is error-free. We may convert this
   #       into a blocking hook later, after resolving all existing violations.
   #
   # TODO: Figure out a way to keep the `additional_dependencies` package list (names and versions)
   #       in sync with `requirements.txt` and `requirements-dev.txt` automatically. We could use
-  #       `language: system` for that, but that would require developers to run `git commit` in a
-  #       an environment that has all the dependencies already installed (which might be OK for us).
+  #       `language: system` for that, but that would require developers to run `git commit` in an
+  #       environment that has all the dependencies already installed (which might be OK for us).
   #
   - repo: local
     hooks:
