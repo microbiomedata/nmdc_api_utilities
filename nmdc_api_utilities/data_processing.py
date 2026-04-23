@@ -27,6 +27,12 @@ class DataProcessing:
         """
         # TODO: The docstring contradicts (a) the type hint and (b) some invocations of this method
         #       within this library, itself (they pass it a dictionary instead of a list).
+        #
+        # TODO: Add doctests demonstrating how this would treat an input list containing dictionaries
+        #       whose values contain single quotes (not as delimiters); e.g. { lastName: "O'Connor" }.
+        #       In general, consider using a standard serialization pipeline (e.g. dict -> json -> str)
+        #       instead of an ad hoc one so corner cases are covered.
+        #
         return str(data).replace("'", '"')
 
     def convert_to_df(self, data: list[dict[str, Any]]) -> pd.DataFrame:
@@ -178,9 +184,8 @@ class DataProcessing:
             Under the hood this is used to determine if the inputted attribute value should be wrapped in a regex expression.
         Returns
         -------
-        dict
-            A dictionary representing the MongoDB filter.
-            Example: {"name": {"$regex": "example", "$options": "i"}, "description": {"$regex": "example", "$options": "i"}}
+        str
+            A string representing the MongoDB filter.
         """
         filter_dict: dict[str, str | dict[str, str]] = {}
         if exact_match:
