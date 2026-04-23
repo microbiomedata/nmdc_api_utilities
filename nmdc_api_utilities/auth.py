@@ -65,10 +65,12 @@ class NMDCAuth(NMDCAPIClient):
         self._token: str | None = None
         self._token_expires_at: datetime | None = None
         self._oauth_session: Any | None = None
-        self.grant_type = (
+        self.grant_type: str | None = (
             "client_credentials"
             if (self.client_id and self.client_secret)
             else "password"
+            if (self.username and self.password)
+            else None
         )
 
     def has_credentials(self) -> bool:
