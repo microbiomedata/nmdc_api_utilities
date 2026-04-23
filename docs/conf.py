@@ -27,7 +27,9 @@ extensions = [
     "nbsphinx",  # Render Jupyter notebooks as documentation pages
 ]
 
-nbsphinx_execute = "never"
+# Execute notebook cells during docs builds so HTML includes cell output.
+nbsphinx_execute = "always"
+nbsphinx_timeout = 300
 
 templates_path = ["_templates"]
 exclude_patterns = ["build", "Thumbs.db", ".DS_Store"]
