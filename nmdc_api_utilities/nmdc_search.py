@@ -109,7 +109,7 @@ class NMDCSearch(NMDCAPIClient):
         types: list[str] | str = None,
         hydrate: bool = False,
         max_page_size: int = 500,
-    ) -> dict[str, list[str]]:
+    ) -> dict[str, list[dict] | list[str]]:
         """
         Retrieve linked instances for the given IDs from the NMDC API and associate them with the input IDs.
 
@@ -134,7 +134,7 @@ class NMDCSearch(NMDCAPIClient):
 
         Returns
         -------
-        dict[str, list[str]]
+        dict[str, list[dict] | list[str]]
             A dictionary mapping each input id to a list of its linked instance records.
         """
         # get the linked instances
@@ -145,28 +145,24 @@ class NMDCSearch(NMDCAPIClient):
         # loop through the linked instances and build the association
         for record in linked_instances:
             id = record["id"]
-            stream = (
-                "_upstream_of"
-                if "_upstream_of" in record
-                else "_downstream_of"
-                if "_downstream_of" in record
-                else None
-            )
-            if stream is not None:
-                for stream_id in record[stream]:
-                    if stream_id not in association:
-                        association[stream_id] = []
-                    if hydrate:
-                        hydrate_dict = {
-                            id: {
-                                key: record[key]
-                                for key in record.keys()
-                                if key not in [stream, "id"]
+            for stream in ["_upstream_of", "_downstream_of"]:
+                if stream in record:
+                    for stream_id in record[stream]:
+                        if stream_id not in association:
+                            association[stream_id] = []
+                        if hydrate:
+                            hydrate_dict = {
+                                id: {
+                                    key: record[key]
+                                    for key in record.keys()
+                                    if key not in [stream, "id"]
+                                }
                             }
-                        }
-                        association[stream_id].append(hydrate_dict)
-                    else:
-                        association[stream_id].append(id)
+                            association[stream_id].append(hydrate_dict)
+                        else:
+                            association[stream_id].append(id)
+                else:
+                    continue
 
         return association
 

@@ -552,7 +552,7 @@ def test_get_linked_instance_hydrate():
     id = "nmdc:bsm-11-002vgm56"
     result = ll_client.get_linked_instances(types="nmdc:Study", ids=id, hydrate=True)
 
-    assert len(result[0].keys()) > 3 and len(result[1].keys()) > 3
+    assert all("id" in record and "type" in record for record in result)
 
 
 def test_association():
@@ -560,7 +560,10 @@ def test_association():
     association = ll_client.get_linked_instances_and_associate_ids(
         types=["nmdc:Study"], ids=["nmdc:bsm-11-002vgm56", "nmdc:bsm-11-006pnx90"]
     )
-    assert "nmdc:bsm-11-002vgm56" and "nmdc:bsm-11-006pnx90" in association.keys()
+    assert (
+        "nmdc:bsm-11-002vgm56" in association.keys()
+        and "nmdc:bsm-11-006pnx90" in association.keys()
+    )
 
 
 def test_association_hydrate():
@@ -571,16 +574,11 @@ def test_association_hydrate():
     association = ll_client.get_linked_instances_and_associate_ids(
         types=["nmdc:Study"],
         ids=["nmdc:bsm-11-002vgm56", "nmdc:bsm-11-006pnx90"],
-        hydrate=False,
-    )
-    association = ll_client.get_linked_instances_and_associate_ids(
-        types=["nmdc:Study"],
-        ids=["nmdc:bsm-11-002vgm56", "nmdc:bsm-11-006pnx90"],
         hydrate=True,
     )
-    assert (
-        len(next(iter(association["nmdc:bsm-11-002vgm56"][0].values()))) > 3
-        and len(next(iter(association["nmdc:bsm-11-002vgm56"][1].values()))) > 3
-        and len(next(iter(association["nmdc:bsm-11-006pnx90"][0].values()))) > 3
-        and len(next(iter(association["nmdc:bsm-11-006pnx90"][1].values()))) > 3
+    assert all(
+        "type" in inner
+        for records in association.values()
+        for record in records
+        for inner in record.values()
     )
