@@ -1,4 +1,4 @@
-Public Core API Reference
+Core Search API Reference
 =========================
 
 This page documents public, reusable core classes.

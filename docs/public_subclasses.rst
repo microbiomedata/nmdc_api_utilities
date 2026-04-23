@@ -1,4 +1,4 @@
-Public Collection Subclasses
+`CollectionSearch` Subclasses
 ============================
 
 Collection-specific subclasses are the recommended public entry points.
