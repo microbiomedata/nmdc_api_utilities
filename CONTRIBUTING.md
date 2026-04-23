@@ -120,22 +120,39 @@ In development, you can build and preview the documentation website locally by f
 
 <!-- TODO: Add `myst_parser` to the "requirements-dev.txt" file. -->
 
-1. Install dependencies.
+1. Install system dependency required by `nbsphinx`.
+
+    On macOS (Homebrew):
+
+    ```sh
+    brew install pandoc
+    ```
+
+    On Ubuntu/Debian:
+
+    ```sh
+    sudo apt-get update
+    sudo apt-get install -y pandoc
+    ```
+
+2. Install Python dependencies and register notebook kernel.
 
    ```sh
     pip install -r requirements.txt
     pip install -r requirements-dev.txt
     pip install myst_parser
+    pip install ipykernel
     pip install .
+    python -m ipykernel install --user --name python3 --display-name "Python 3"
    ```
 
-2. Build (or rebuild) the documentation website.
+3. Build (or rebuild) the documentation website.
 
    ```sh
    sphinx-build -v docs build/html
    ```
 
-3. Use Python's built-in HTTP server to serve the documentation website locally,
+4. Use Python's built-in HTTP server to serve the documentation website locally,
    at [`http://localhost:8000`](http://localhost:8000)
 
    ```sh
