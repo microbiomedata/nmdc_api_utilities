@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import logging
+from typing import Any
 
 import requests
 
@@ -25,11 +26,16 @@ class NMDCSearch(NMDCAPIClient):
     def __init__(self, api_base_url: str = API_BASE_URL, env: str = ""):
         super().__init__(api_base_url=api_base_url, env=env)
 
+    @staticmethod
+    def _normalize_ids(ids: list[str] | str) -> list[str]:
+        """Ensures the IDs are in a list, even if there is only one ID."""
+        return ids if isinstance(ids, list) else [ids]
+
     def get_linked_instances(
         self,
         ids: list[str] | str,
         hydrate: bool = False,
-        types: list[str] | str = None,
+        types: list[str] | str | None = None,
         max_page_size: int = 500,
     ) -> list[dict]:
         """
@@ -61,11 +67,16 @@ class NMDCSearch(NMDCAPIClient):
         """
         # highest number I could get to without a timeout
         batch_size = 250
-        batch_records = []
+        # Note: We normalize the `ids` value into a list, since the docstring says the caller can
+        #       pass it in as either a bare string _or_ a list of strings. If we didn't do this,
+        #       and the caller did pass in a bare string, the code below would iterate over the
+        #       individual characters of that string (strings are iterable in Python).
+        list_of_ids = NMDCSearch._normalize_ids(ids)
+        batch_records: list[dict[str, Any]] = []
         url = f"{self.api_base_url}/nmdcschema/linked_instances"
         # split the ids into batches
-        for i in range(0, len(ids), batch_size):
-            batch = ids[i : i + batch_size]
+        for i in range(0, len(list_of_ids), batch_size):
+            batch = list_of_ids[i : i + batch_size]
             params = {
                 "types": types,
                 "ids": batch,
@@ -106,7 +117,7 @@ class NMDCSearch(NMDCAPIClient):
     def get_linked_instances_and_associate_ids(
         self,
         ids: list[str] | str,
-        types: list[str] | str = None,
+        types: list[str] | str | None = None,
         hydrate: bool = False,
         max_page_size: int = 500,
     ) -> dict[str, list[str]]:
@@ -135,13 +146,13 @@ class NMDCSearch(NMDCAPIClient):
         Returns
         -------
         dict[str, list[str]]
-            A dictionary mapping each input id to a list of its linked instance records.
+            A dictionary mapping each input id to a list of the ids of its linked instance records.
         """
         # get the linked instances
         linked_instances = self.get_linked_instances(
             types=types, ids=ids, hydrate=hydrate, max_page_size=max_page_size
         )
-        association = {}
+        association: dict[str, list[str]] = {}
         # loop through the linked instances and build the association
         for record in linked_instances:
             study_id = record["id"]
@@ -218,10 +229,10 @@ class NMDCSearch(NMDCAPIClient):
             The record(s) data.
         """
 
-        resources = []
+        resources: list[dict[str, Any]] = []
         # sort the input ids
         sorted_ids = sorted(ids) if isinstance(ids, list) else [ids]
-        id_dict = {}
+        id_dict: dict[str, list[str]] = {}
         # group ids by their collection subset nmdc:sty, nmdc:bsm, etc
         for id in sorted_ids:
             cur_group = id.split("-")[0]

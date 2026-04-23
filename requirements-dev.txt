@@ -4,3 +4,12 @@ sphinx_rtd_theme==3.1.0
 pytest==9.0.3
 build==1.4.3
 twine==6.2.0
+# We use `mypy` to perform static type checking of our Python code.
+# PyPI: https://pypi.org/project/mypy
+mypy==1.20.2
+# We use `types-requests` to get type information about the `requests` package.
+# PyPI: https://pypi.org/project/types-requests/
+types-requests==2.33.0.20260408
+# We use `pandas-stubs` to get type information about the `pandas` package.
+# PyPI: https://pypi.org/project/pandas-stubs/
+pandas-stubs==3.0.0.260204

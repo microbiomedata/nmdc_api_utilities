@@ -27,7 +27,7 @@ class Minter(NMDCAPIClient):
     def __init__(
         self,
         api_base_url: str = API_BASE_URL,
-        auth: NMDCAuth = None,
+        auth: NMDCAuth | None = None,
         env: str = "",
     ):
         super().__init__(
@@ -41,8 +41,8 @@ class Minter(NMDCAPIClient):
         self,
         nmdc_type: str,
         count: int = 1,
-        client_id: str = None,
-        client_secret: str = None,
+        client_id: str | None = None,
+        client_secret: str | None = None,
     ) -> str | list[str]:
         """
         Mint new identifier(s) for a specified type of record.
