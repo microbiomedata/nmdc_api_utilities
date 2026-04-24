@@ -95,7 +95,7 @@ class LatLongFilters(ABC):
         page_size
             The number of results to return per page.
         fields
-            The fields to return. Default will return all fields.
+            The fields to return. If empty, all fields are returned.
             Example: "id,name,description,type"
         all_pages
             True to return all pages. False to return the first page.
@@ -158,7 +158,7 @@ class LatLongFilters(ABC):
         page_size
             The number of results to return per page.
         fields
-            The fields to return. Default will return all fields.
+            The fields to return. If empty, all fields are returned.
             Example: "id,name,description,type"
         all_pages
             True to return all pages. False to return the first page.

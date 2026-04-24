@@ -85,7 +85,7 @@ class DataProcessing:
         df
             The pandas dataframe to rename columns.
         new_col_names
-            A list of new column names. Names MUST be in order of the columns in the dataframe.\n
+            A list of new column names. Names MUST be in order of the columns in the dataframe.
             Example:
                 If the current column names are - ['old_col1', 'old_col2', 'old_col3']
                 You will need to pass in the new names like - ['new_col1', 'new_col2', 'new_col3']

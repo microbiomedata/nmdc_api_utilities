@@ -117,9 +117,9 @@ class CollectionSearch(NMDCSearch):
         Parameters
         ----------
         filter
-            The filter to use to query the collection. Must be in MonogDB query format.
+            The filter to use to query the collection. Must be in MongoDB query format.
             Example: {"name":"my record name"}.
-            `More resources found here for construction MongoDB filters <https://www.mongodb.com/docs/manual/reference/method/db.collection.find/#std-label-method-find-query>`_.
+            `More resources for constructing MongoDB filters can be found here <https://www.mongodb.com/docs/manual/reference/method/db.collection.find/#std-label-method-find-query>`_.
         max_page_size
             The number of records to return per page.
         fields
@@ -158,7 +158,7 @@ class CollectionSearch(NMDCSearch):
         max_page_size
             The number of records to return per page.
         fields
-            The fields to return. Default will return all fields.
+            The fields to return. If empty, all fields are returned.
         all_pages
             True to return all pages. False to return the first page.
         exact_match
@@ -308,7 +308,7 @@ class CollectionSearch(NMDCSearch):
         chunk_size
             The number of IDs to get in each query.
         fields
-            The fields to return. Default will return all fields.
+            The fields to return. If empty or not provided, all fields are returned.
 
         Returns
         -------

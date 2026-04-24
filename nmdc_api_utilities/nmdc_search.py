@@ -55,8 +55,8 @@ class NMDCSearch(NMDCAPIClient):
         hydrate
             Whether to include full documents in the response.
         types
-            The types of records you want to return. Default will returns all types.
-            Example: ["nmdc:Study", "nmdc:Biosample", "nmdc:MassSpectrometry"].
+            The types of records to return. If omitted or ``None``, linked instances of all
+            types are returned. Example: ["nmdc:Study", "nmdc:Biosample", "nmdc:MassSpectrometry"].
         max_page_size
             The maximum number of records to return per page.
 
@@ -137,7 +137,7 @@ class NMDCSearch(NMDCAPIClient):
         ids
             The ids to search for.
         types
-            The types of instances you want to return. Default will return all types.
+            The types of instances you want to return. If ``types`` is None, all types are returned.
         hydrate
             Whether to include full documents in the response.
         max_page_size
@@ -221,7 +221,7 @@ class NMDCSearch(NMDCAPIClient):
         ids
             List of IDs of records to retrieve.
         fields
-            Comma-separated list of fields to include in the response. Default will return all fields.
+            Comma-separated list of fields to include in the response. An empty string returns all fields.
 
         Returns
         -------
@@ -287,9 +287,9 @@ class NMDCSearch(NMDCAPIClient):
         id
             The ID of the record to retrieve.
         filter
-            Additional filter to apply to the records. Default will have no filter.
+            Additional filter to apply to the records. If empty, no additional filter is applied.
         fields
-            Comma-separated list of fields to include in the response. Default will return all fields.
+            Comma-separated list of fields to include in the response. If empty, all fields are returned.
 
         Returns
         -------
