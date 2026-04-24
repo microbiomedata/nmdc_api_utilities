@@ -571,14 +571,13 @@ def test_association_hydrate():
     Test to get associated ids and hydrate them.
     """
     ll_client = NMDCSearch(api_base_url=API_BASE_URL)
-    association = ll_client.get_linked_instances_and_associate_ids(
+    associations = ll_client.get_linked_instances_and_associate_ids(
         types=["nmdc:Study"],
         ids=["nmdc:bsm-11-002vgm56", "nmdc:bsm-11-006pnx90"],
         hydrate=True,
     )
     assert all(
-        "type" in inner
-        for records in association.values()
-        for record in records
-        for inner in record.values()
+        "type" in association.keys()
+        for biosample_associations in associations.values()
+        for association in biosample_associations
     )

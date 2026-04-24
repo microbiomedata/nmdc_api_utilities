@@ -151,14 +151,9 @@ class NMDCSearch(NMDCAPIClient):
                         if stream_id not in association:
                             association[stream_id] = []
                         if hydrate:
-                            hydrate_dict = {
-                                id: {
-                                    key: record[key]
-                                    for key in record.keys()
-                                    if key not in [stream, "id"]
-                                }
-                            }
-                            association[stream_id].append(hydrate_dict)
+                            association[stream_id].append(
+                                {key: record[key] for key in record if key != stream}
+                            )
                         else:
                             association[stream_id].append(id)
                 else:
