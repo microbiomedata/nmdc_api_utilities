@@ -227,8 +227,11 @@ class CollectionSearch(NMDCSearch):
         return results
 
     def check_ids_exist(
-        self, ids: list, chunk_size: int = 100, return_missing_ids: bool = False
-    ) -> bool:
+        self,
+        ids: list[str],
+        chunk_size: int = 100,
+        return_missing_ids: bool = False,
+    ) -> bool | tuple[bool, list[str]]:
         """
         Check if specified IDs exist in the collection.
 
@@ -245,9 +248,10 @@ class CollectionSearch(NMDCSearch):
 
         Returns
         -------
-        bool
-            True if all IDs exist in the collection, False otherwise.
-
+        bool | tuple[bool, list[str]]
+            True if all IDs exist in the collection, False otherwise. However,
+            if return_missing_ids is True, returns a tuple whose first item is the aforementioned boolean value,
+            and whose second item is a list of the IDs, if any, that don't exist in the collection.
         """
         if not getattr(self, "supports_get_by_id", True):
             raise OperationNotSupportedError(
@@ -310,8 +314,8 @@ class CollectionSearch(NMDCSearch):
         id_list = list(set(id_list))
         chunks = dp.split_list(input_list=id_list, chunk_size=chunk_size)
         for chunk in chunks:
-            chunk = dp._string_mongo_list(data=chunk)
-            filter = f'{{"{search_field}": {{"$in": {chunk}}}}}'
+            sanitized_chunk = dp._string_mongo_list(data=chunk)
+            filter = f'{{"{search_field}": {{"$in": {sanitized_chunk}}}}}'
             res = self.get_records(
                 filter=filter, max_page_size=len(chunk), fields=fields, all_pages=True
             )
