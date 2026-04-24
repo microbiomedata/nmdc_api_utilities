@@ -148,7 +148,7 @@ In development, you can build and preview the documentation website locally by f
    ```sh
     pip install -r requirements.txt
     pip install -r requirements-dev.txt
-    pip install myst_parser
+    pip install myst_parser sphinx-autodoc-typehints
     pip install .
    ```
 

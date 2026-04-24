@@ -24,6 +24,7 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.napoleon",  # For Google/NumPy style docstrings
     "sphinx.ext.viewcode",  # Add links to source code
+    "sphinx_autodoc_typehints",  # Automatically include type hints in the documentation
 ]
 
 templates_path = ["_templates"]
