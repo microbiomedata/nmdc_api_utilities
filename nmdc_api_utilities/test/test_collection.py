@@ -2,6 +2,8 @@
 import logging
 import unittest
 
+import pytest
+
 from nmdc_api_utilities.collection_search import CollectionSearch
 from nmdc_api_utilities.config import API_BASE_URL
 
@@ -42,6 +44,28 @@ class TestCollection(unittest.TestCase):
         collection = CollectionSearch("study_set", api_base_url=API_BASE_URL)
         results = collection.get_record_by_id("nmdc:sty-11-8fb6t785")
         assert results["id"] == "nmdc:sty-11-8fb6t785"
+
+    def test_get_record_by_id_params(self):
+        # simple test to check if the get_record_by_id method returns a record for the two id parameters (record_id (current), collection_id (deprecated))
+        collection = CollectionSearch("study_set", api_base_url=API_BASE_URL)
+
+        with self.assertLogs(level=logging.WARNING) as cm:
+            results_collect_id = collection.get_record_by_id(
+                collection_id="nmdc:sty-11-8fb6t785"
+            )
+        assert results_collect_id["id"] == "nmdc:sty-11-8fb6t785"
+        self.assertIn("deprecated", "\n".join(cm.output))
+
+        results_record_id = collection.get_record_by_id(
+            record_id="nmdc:sty-11-8fb6t785"
+        )
+        assert results_record_id["id"] == "nmdc:sty-11-8fb6t785"
+
+        with pytest.raises(ValueError, match="Both.*record_id.*collection_id"):
+            collection.get_record_by_id(
+                record_id="nmdc:sty-11-8fb6t785",
+                collection_id="nmdc:sty-11-8fb6t785",
+            )
 
     def test_check_ids_exist(self):
         # simple test to check if the check_ids_exist method returns a boolean

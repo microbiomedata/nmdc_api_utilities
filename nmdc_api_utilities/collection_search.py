@@ -4,6 +4,7 @@ import json
 import logging
 import re
 import urllib.parse
+from typing import Optional
 
 import requests
 
@@ -176,21 +177,24 @@ class CollectionSearch(NMDCSearch):
 
     def get_record_by_id(
         self,
-        collection_id: str,
+        record_id: Optional[str] = None,
         max_page_size: int = 100,
         fields: str = "",
+        collection_id: Optional[str] = None,
     ) -> list[dict]:
         """
         Retrieve a record from the collection via the NMDC API using a specified ID.
 
         Parameters
         ----------
-        collection_id: str
-            The id of the record to retrieve from the collection.
+        record_id: str
+            The id of the record to retrieve from the collection. Not required to enable backwards compatibility with the deprecated collection_id parameter.
         max_page_size: int
             The maximum number of records to return per page. Default is 100.
         fields: str
             The fields to return. Default is all fields.
+        collection_id: str, DEPRECATED
+            The id of the record to retrieve from the collection. This parameter is deprecated and will be removed in a future version. Please use record_id instead.
 
         Returns
         -------
@@ -208,7 +212,21 @@ class CollectionSearch(NMDCSearch):
                 f"get_record_by_id is not supported for the {self.collection_name} collection"
             )
 
-        url = f"{self.api_base_url}/nmdcschema/{self.collection_name}/{collection_id}?max_page_size={max_page_size}&projection={fields}"
+        if record_id is None and collection_id is None:
+            raise ValueError(
+                "No record_id provided. Please provide this parameter to retrieve a record."
+            )
+        if record_id and collection_id:
+            raise ValueError(
+                "Both record_id and collection_id were provided. Please provide record_id, as collection_id is deprecated and will be removed in a future version."
+            )
+        if collection_id:
+            logger.warning(
+                "The collection_id parameter is deprecated and will be removed in a future version. Please use record_id instead."
+            )
+            record_id = collection_id
+
+        url = f"{self.api_base_url}/nmdcschema/{self.collection_name}/{record_id}?max_page_size={max_page_size}&projection={fields}"
         # get the reponse
         try:
             response = requests.get(
