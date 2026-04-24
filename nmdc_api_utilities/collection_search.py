@@ -34,7 +34,7 @@ class CollectionSearch(NMDCSearch):
 
     def __init__(
         self,
-        collection_name,
+        collection_name: str,
         api_base_url: str = API_BASE_URL,
         env: str = "",
     ):
@@ -57,13 +57,13 @@ class CollectionSearch(NMDCSearch):
         Parameters
         ----------
         filter
-            The filter to apply to the query. Default is an empty string.
+            The filter to apply to the query. An empty string will return all records.
         max_page_size
-            The maximum number of records to return per page. Default is 100.
+            The maximum number of records to return per page.
         fields
-            The fields to return. Default is all fields.
+            The fields to return. An empty string will return all fields.
         all_pages
-            True to return all pages. False to return the first page. Default is False.
+            True to return all pages. False to return the first page.
 
         Returns
         -------

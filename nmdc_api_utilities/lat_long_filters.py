@@ -22,8 +22,13 @@ class LatLongFilters(ABC):
         """Retrieve records from a collection via the NMDC API."""
 
     def get_record_by_latitude(
-        self, comparison: str, latitude: float, page_size=25, fields="", all_pages=False
-    ):
+        self,
+        comparison: str,
+        latitude: float,
+        page_size: int = 25,
+        fields: str = "",
+        all_pages: bool = False,
+    ) -> list[dict]:
         """
         Retrieve records by latitude filter via the NMDC API.
 
