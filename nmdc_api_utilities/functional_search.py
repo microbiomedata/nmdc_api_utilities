@@ -31,17 +31,17 @@ class FunctionalSearch(CollectionSearch):
 
         Parameters
         -----------
-        annotation: str
+        annotation
             The functional annotation value to query.
-        annotation_type:
+        annotation_type
             The type of id to query. See Notes for more details.
-        page_size: int
-            The number of results to return per page. Default is 25.
-        fields: str
-            The fields to return. Default is all fields.
+        page_size
+            The number of results to return per page.
+        fields
+            The fields to return. Default will return all fields.
             Example: "id,name"
-        all_pages: bool
-            True to return all pages. False to return the first page. Default is False.
+        all_pages
+            True to return all pages. False to return the first page.
 
         Returns
         -------
