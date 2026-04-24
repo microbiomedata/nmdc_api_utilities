@@ -13,8 +13,8 @@ jobs:
   docs:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v6  # docs: https://github.com/marketplace/actions/checkout
+      - uses: actions/setup-python@v6  # docs: https://github.com/marketplace/actions/setup-python
       - name: Install dependencies
         run: |
           pip install sphinx sphinx_rtd_theme myst_parser
