@@ -15,11 +15,18 @@ jobs:
     steps:
       - uses: actions/checkout@v6  # docs: https://github.com/marketplace/actions/checkout
       - uses: actions/setup-python@v6  # docs: https://github.com/marketplace/actions/setup-python
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc
       - name: Install dependencies
         run: |
-          pip install sphinx sphinx_rtd_theme myst_parser sphinx-autodoc-typehints
-          pip install .
+          python -m pip install --upgrade pip
           pip install -r requirements.txt
+          pip install sphinx sphinx_rtd_theme myst_parser nbsphinx sphinx-autodoc-typehints
+          pip install ipykernel
+          pip install .
+          python -m ipykernel install --user --name python3 --display-name "Python 3"
       - name: Sphinx build
         run: |
           sphinx-build -v docs build/html
