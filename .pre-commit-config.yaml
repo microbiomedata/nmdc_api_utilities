@@ -58,6 +58,33 @@ repos:
         args: ["--select", "I", "--fix"]  # Automatically fix import formatting
         additional_dependencies: []
 
+  # This pre-commit hook performs static type checking by running mypy.
+  #
+  # Note: We use `sh -c 'mypy || true'` to guarantee the overall command returns a 0 exit code,
+  #       effectively making this a _non-blocking_ hook. This allows developers to see mypy's
+  #       output, without requiring them to ensure the output is error-free. We may convert this
+  #       into a blocking hook later, after developers have formed opinions about mypy over time.
+  #
+  # TODO: Figure out a way to keep the `additional_dependencies` package list (names and versions)
+  #       in sync with `requirements.txt` and `requirements-dev.txt` automatically. We could use
+  #       `language: system` for that, but that would require developers to run `git commit` in an
+  #       environment that has all the dependencies already installed (which might be OK for us).
+  #
+  - repo: local
+    hooks:
+      - id: mypy
+        name: mypy
+        entry: sh -c 'mypy || true'  # always returns a 0 exit code (making this hook non-blocking)
+        language: python
+        types: [python]
+        pass_filenames: false  # avoid redundant args to mypy (see mypy config in `pyproject.toml`)
+        verbose: true  # show the hook's output in all circumstances (regardless of exit code)
+        additional_dependencies:
+          - mypy==1.20.2
+          - types-requests==2.33.0.20260408
+          - pandas-stubs==3.0.0.260204
+          - matplotlib==3.10.8
+
   # - repo: https://github.com/thclark/pre-commit-sphinx
   #   rev: 0.0.1
   #   hooks:

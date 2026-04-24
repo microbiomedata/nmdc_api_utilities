@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import logging
-from abc import ABC
+from abc import ABC, abstractmethod
 
 logger = logging.getLogger(__name__)
 
@@ -10,6 +10,16 @@ class LatLongFilters(ABC):
     Mixin class with methods to interact with collections that
     can be searched by latitude and longitude via the NMDC API.
     """
+
+    @abstractmethod
+    def get_records(
+        self,
+        filter: str = "",
+        max_page_size: int = 100,
+        fields: str = "",
+        all_pages: bool = False,
+    ) -> list[dict]:
+        """Retrieve records from a collection via the NMDC API."""
 
     def get_record_by_latitude(
         self, comparison: str, latitude: float, page_size=25, fields="", all_pages=False
