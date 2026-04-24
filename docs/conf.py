@@ -24,7 +24,12 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.napoleon",  # For Google/NumPy style docstrings
     "sphinx.ext.viewcode",  # Add links to source code
+    "nbsphinx",  # Render Jupyter notebooks as documentation pages
 ]
+
+# Execute notebook cells during docs builds so HTML includes cell output.
+nbsphinx_execute = "always"
+nbsphinx_timeout = 300
 
 templates_path = ["_templates"]
 exclude_patterns = ["build", "Thumbs.db", ".DS_Store"]

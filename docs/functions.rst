@@ -1,175 +1,67 @@
-NMDC API Utilities Documentation
-=================================
-Welcome to NMDC API Utilities documentation. This package provides tools for interacting with the NMDC API.
+Core Search API Reference
+=========================
 
-The Collection Module is a foundational component that defines common behaviors and properties between collections.
+This page documents public, reusable core classes.
+Collection-specific subclasses are documented in :doc:`public_subclasses`.
 
-Each subclass is designed to be more user-friendly and specific for certain collections, making them the recommended entry points for using the package. Each function of CollectionSearch can be accessed via each subclass.
+NMDC Search Base
+----------------
 
-NMDC Module
-~~~~~~~~~~~~
+The foundational class for cross-collection queries and linked-instance retrieval.
+Use this class for custom workflows that span multiple schema classes.
+
 .. autoclass:: nmdc_api_utilities.nmdc_search.NMDCSearch
    :members:
    :undoc-members:
    :show-inheritance:
 
-Collection Module
-~~~~~~~~~~~~~~~~~~
+Collection Search Base
+----------------------
+
+Extends ``NMDCSearch`` with collection-focused query helpers.
+Use this class for generic collection operations, or use :doc:`public_subclasses` for preconfigured collection targets.
+
 .. autoclass:: nmdc_api_utilities.collection_search.CollectionSearch
    :members:
    :undoc-members:
    :show-inheritance:
 
-Latitude Longitude Module
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-.. autoclass:: nmdc_api_utilities.lat_long_filters.LatLongFilters
-   :members:
-   :undoc-members:
-   :show-inheritance:
+Functional Search
+-----------------
 
-Functional Search Module
-~~~~~~~~~~~~~~~~~~~~~~~~~
+Provides search utilities focused on functional annotation and related retrieval patterns.
+
 .. autoclass:: nmdc_api_utilities.functional_search.FunctionalSearch
    :members:
    :undoc-members:
    :show-inheritance:
 
-Metadata Module
-~~~~~~~~~~~~~~~~
-.. autoclass:: nmdc_api_utilities.metadata.Metadata
+Latitude and Longitude Utilities
+--------------------------------
+
+Provides geospatial helper methods for lat/lon-based filtering and coordinate handling.
+
+.. autoclass:: nmdc_api_utilities.lat_long_filters.LatLongFilters
    :members:
    :undoc-members:
    :show-inheritance:
 
-Mint Module
-~~~~~~~~~~~~
-.. autoclass:: nmdc_api_utilities.minter.Minter
-   :members:
-   :undoc-members:
-   :show-inheritance:
+Data Processing Utilities
+-------------------------
 
-BioSample Subclass
-~~~~~~~~~~~~~~~~~~~
-.. autoclass:: nmdc_api_utilities.biosample_search.BiosampleSearch
-   :members:
-   :undoc-members:
-   :show-inheritance:
+Provides helpers for transforming and reshaping query outputs.
 
-Calibration Subclass
-~~~~~~~~~~~~~~~~~~~~~
-.. autoclass:: nmdc_api_utilities.calibration_search.CalibrationSearch
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Collecting Biosamples From Site Subclass
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-.. autoclass:: nmdc_api_utilities.collecting_biosamples_from_site_search.CollectingBiosamplesFromSiteSearch
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Configuration Subclass
-~~~~~~~~~~~~~~~~~~~~~~~
-.. autoclass:: nmdc_api_utilities.configuration_search.ConfigurationSearch
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Data Generation Subclass
-~~~~~~~~~~~~~~~~~~~~~~~~~
-.. autoclass:: nmdc_api_utilities.data_generation_search.DataGenerationSearch
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Data Object Subclass
-~~~~~~~~~~~~~~~~~~~~~
-.. autoclass:: nmdc_api_utilities.data_object_search.DataObjectSearch
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Field Research From Site Subclass
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-.. autoclass:: nmdc_api_utilities.field_research_site_search.FieldResearchSiteSearch
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Instrument Subclass
-~~~~~~~~~~~~~~~~~~~~
-.. autoclass:: nmdc_api_utilities.instrument_search.InstrumentSearch
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Manifest Subclass
-~~~~~~~~~~~~~~~~~~
-.. autoclass:: nmdc_api_utilities.manifest_search.ManifestSearch
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Material Subclass
-~~~~~~~~~~~~~~~~~~
-.. autoclass:: nmdc_api_utilities.material_processing_search.MaterialProcessingSearch
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Processed Sample Subclass
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-.. autoclass:: nmdc_api_utilities.processed_sample_search.ProcessedSampleSearch
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Storage Process Subclass
-~~~~~~~~~~~~~~~~~~~~~~~~~
-.. autoclass:: nmdc_api_utilities.storage_process_search.StorageProcessSearch
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Study Subclass
-~~~~~~~~~~~~~~~~~~~~~~~~~
-.. autoclass:: nmdc_api_utilities.study_search.StudySearch
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Functional Annotation Agg Subclass
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-.. autoclass:: nmdc_api_utilities.functional_annotation_agg_search.FunctionalAnnotationAggSearch
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Workflow Execution Subclass
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-.. autoclass:: nmdc_api_utilities.workflow_execution_search.WorkflowExecutionSearch
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Data Processing
-~~~~~~~~~~~~~~~~
 .. autoclass:: nmdc_api_utilities.data_processing.DataProcessing
    :members:
    :undoc-members:
    :show-inheritance:
 
-Utils
-~~~~~~
-.. autoclass:: nmdc_api_utilities.utils.Utils
-   :members:
-   :undoc-members:
-   :show-inheritance:
+General Utilities
+-----------------
 
-Auth
-~~~~
-.. autoclass:: nmdc_api_utilities.auth.NMDCAuth
+General-purpose helper utilities used across workflows.
+
+.. autoclass:: nmdc_api_utilities.utils.Utils
    :members:
    :undoc-members:
    :show-inheritance:
