@@ -129,7 +129,7 @@ class NMDCSearch(NMDCAPIClient):
         ``data_generation_set`` etc that are associated with this study, even if it is not a single link between records.
 
         See also ``get_linked_instances`` for a method that returns the linked instances in their original list format.
-        This method reformats into a dictionary with keys as query ids, and a list of resulting linked ids as values.
+        This method reformats into a dictionary with keys as query ids, and either a list of resulting linked ids or a list of hydrated records as values.
 
 
         Parameters
@@ -152,10 +152,9 @@ class NMDCSearch(NMDCAPIClient):
         linked_instances = self.get_linked_instances(
             types=types, ids=ids, hydrate=hydrate, max_page_size=max_page_size
         )
-        association: dict[str, list[str]] = {}
+        association: dict[str, list[dict] | list[str]] = {}
         # loop through the linked instances and build the association
         for record in linked_instances:
-            id = record["id"]
             for stream in ["_upstream_of", "_downstream_of"]:
                 if stream in record:
                     for stream_id in record[stream]:
@@ -166,7 +165,7 @@ class NMDCSearch(NMDCAPIClient):
                                 {key: record[key] for key in record if key != stream}
                             )
                         else:
-                            association[stream_id].append(id)
+                            association[stream_id].append(record["id"])
                 else:
                     continue
 

@@ -549,8 +549,10 @@ def test_get_linked_instance_hydrate():
     Test to get a record and hydrate it.
     """
     ll_client = NMDCSearch(api_base_url=API_BASE_URL)
-    id = "nmdc:bsm-11-002vgm56"
-    result = ll_client.get_linked_instances(types="nmdc:Study", ids=id, hydrate=True)
+    search_id = "nmdc:bsm-11-002vgm56"
+    result = ll_client.get_linked_instances(
+        types="nmdc:Study", ids=search_id, hydrate=True
+    )
 
     assert all("id" in record and "type" in record for record in result)
 
