@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import json
 import logging
+from typing import Any
 
 import requests
 
@@ -86,11 +87,11 @@ class JGISequencingProjectAPI(NMDCAPIClient):
     @requires_auth
     def list_jgi_sequencing_projects(
         self,
-        filter: str = None,
+        filter: str | None = None,
         max_page_size: int = 20,
         fields: str = "",
         all_pages: bool = False,
-    ) -> dict:
+    ) -> list[dict[str, Any]]:
         """
         List JGI sequencing projects from the NMDC database.
 
@@ -107,7 +108,7 @@ class JGISequencingProjectAPI(NMDCAPIClient):
 
         Returns
         -------
-        dict
+        list
             The list of JGI sequencing projects.
         """
         url = f"{self.api_base_url}/wf_file_staging/jgi_sequencing_projects"
@@ -117,7 +118,9 @@ class JGISequencingProjectAPI(NMDCAPIClient):
             content_type="application/json",
         )
         try:
-            query_params = {
+            # Note: The `dict` is here to appease mypy, which, for some reason, doesn't infer that
+            #       the dictionary being assigned here is sufficient to pass to `requests.get`.
+            query_params: dict = {
                 "filter": f"{json.dumps(filter)}",
                 "max_page_size": max_page_size,
                 "projection": fields,
@@ -135,7 +138,7 @@ class JGISequencingProjectAPI(NMDCAPIClient):
             return self._get_all_pages(
                 response,
                 url,
-                filter,
+                filter or "",
                 max_page_size,
                 fields,
                 access_token=self.auth.get_token(),
@@ -206,7 +209,7 @@ class JGISampleSearchAPI(NMDCAPIClient):
     @requires_auth
     def list_jgi_samples(
         self,
-        filter: str = None,
+        filter: str | None = None,
         max_page_size: int = 20,
         fields: str = "",
         all_pages: bool = False,
@@ -233,7 +236,7 @@ class JGISampleSearchAPI(NMDCAPIClient):
         url = f"{self.api_base_url}/wf_file_staging/jgi_samples"
         try:
             query = filter if filter else {}
-            query_params = {
+            query_params: dict[str, str | int] = {
                 "filter": f"{json.dumps(query)}",
                 "max_page_size": max_page_size,
                 "projection": fields,
@@ -257,7 +260,7 @@ class JGISampleSearchAPI(NMDCAPIClient):
             return self._get_all_pages(
                 response,
                 url,
-                filter,
+                filter or "",
                 max_page_size,
                 fields,
                 self.auth.get_token(),
@@ -386,7 +389,7 @@ class GlobusTaskAPI(NMDCAPIClient):
     @requires_auth
     def list_globus_tasks(
         self,
-        filter: str = None,
+        filter: str | None = None,
         max_page_size: int = 20,
         fields: str = "",
         all_pages: bool = False,
@@ -416,7 +419,7 @@ class GlobusTaskAPI(NMDCAPIClient):
             accept="application/json",
             content_type="application/json",
         )
-        query_params = {
+        query_params: dict[str, str | int] = {
             "filter": f"{json.dumps(filter)}",
             "max_page_size": max_page_size,
             "projection": fields,
@@ -433,7 +436,12 @@ class GlobusTaskAPI(NMDCAPIClient):
             )
         if all_pages:
             return self._get_all_pages(
-                response, url, filter, max_page_size, fields, self.auth.get_token()
+                response,
+                url,
+                filter or "",
+                max_page_size,
+                fields,
+                self.auth.get_token(),
             )["resources"]
         return response.json()["resources"]
 
