@@ -24,12 +24,14 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.napoleon",  # For Google/NumPy style docstrings
     "sphinx.ext.viewcode",  # Add links to source code
-    "sphinx_autodoc_typehints",  # Automatically include type hints in the documentation
+    "sphinx_autodoc_typehints",  # For automatically including type hints in the documentation
 ]
 
 templates_path = ["_templates"]
 exclude_patterns = ["build", "Thumbs.db", ".DS_Store"]
 
+# This setting adds the default values of function parameters to the documentation without needing to include them in the docstring.
+typehints_defaults = "comma"
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
