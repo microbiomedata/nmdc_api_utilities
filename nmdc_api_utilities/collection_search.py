@@ -4,6 +4,7 @@ import json
 import logging
 import re
 import urllib.parse
+from typing import Optional
 
 import requests
 
@@ -176,10 +177,10 @@ class CollectionSearch(NMDCSearch):
 
     def get_record_by_id(
         self,
-        record_id: str = None,
+        record_id: Optional[str] = None,
         max_page_size: int = 100,
         fields: str = "",
-        collection_id: str = None,
+        collection_id: Optional[str] = None,
     ) -> list[dict]:
         """
         Retrieve a record from the collection via the NMDC API using a specified ID.
