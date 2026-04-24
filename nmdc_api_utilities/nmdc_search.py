@@ -120,7 +120,7 @@ class NMDCSearch(NMDCAPIClient):
         types: list[str] | str | None = None,
         hydrate: bool = False,
         max_page_size: int = 500,
-    ) -> dict[str, list[dict] | list[str]]:
+    ) -> dict[str, list[dict | str]]:
         """
         Retrieve linked instances for the given IDs from the NMDC API and associate them with the input IDs.
 
