@@ -152,7 +152,7 @@ class NMDCSearch(NMDCAPIClient):
         linked_instances = self.get_linked_instances(
             types=types, ids=ids, hydrate=hydrate, max_page_size=max_page_size
         )
-        association: dict[str, list[dict] | list[str]] = {}
+        association: dict[str, list[dict | str]] = {}
         # loop through the linked instances and build the association
         for record in linked_instances:
             for stream in ["_upstream_of", "_downstream_of"]:
