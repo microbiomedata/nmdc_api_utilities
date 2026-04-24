@@ -56,13 +56,13 @@ class CollectionSearch(NMDCSearch):
 
         Parameters
         ----------
-        filter:
+        filter
             The filter to apply to the query. Default is an empty string.
-        max_page_size:
+        max_page_size
             The maximum number of records to return per page. Default is 100.
-        fields:
+        fields
             The fields to return. Default is all fields.
-        all_pages:
+        all_pages
             True to return all pages. False to return the first page. Default is False.
 
         Returns
