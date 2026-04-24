@@ -16,7 +16,7 @@ class NMDCSearch(NMDCAPIClient):
 
     Parameters
     ----------
-    api_base_url: str
+    api_base_url
         The base URL of an instance of the NMDC Runtime API. By default, this is the base URL of
         the production instance. NMDC team members will occasionally set this to the base URL of
         a different instance; for example, a self-hosted instance used for testing.
@@ -50,15 +50,15 @@ class NMDCSearch(NMDCAPIClient):
 
         Parameters
         ----------
-        ids : list[str] | str
+        ids
             The ids to search for.
-        hydrate : bool = False
-            Whether to include full documents in the response. The default is False.
-        types : list[str] | str = None
-            The types of records you want to return. Default is None, which returns all types.
+        hydrate
+            Whether to include full documents in the response.
+        types
+            The types of records you want to return. Default will returns all types.
             Example: ["nmdc:Study", "nmdc:Biosample", "nmdc:MassSpectrometry"].
-        max_page_size : int = 500
-            The maximum number of records to return per page. Default is 500.
+        max_page_size
+            The maximum number of records to return per page.
 
         Returns
         -------
@@ -134,14 +134,14 @@ class NMDCSearch(NMDCAPIClient):
 
         Parameters
         ----------
-        ids : list[str] | str
+        ids
             The ids to search for.
-        types : list[str] | str = None
-            The types of instances you want to return. Default is None, which returns all types.
-        hydrate : bool = False
-            Whether to include full documents in the response. The default is False.
-        max_page_size : int = 500
-            The maximum number of records to return per page. Default is 500.
+        types
+            The types of instances you want to return. Default will return all types.
+        hydrate
+            Whether to include full documents in the response.
+        max_page_size
+            The maximum number of records to return per page.
 
         Returns
         -------
@@ -176,7 +176,7 @@ class NMDCSearch(NMDCAPIClient):
 
         Parameters
         ----------
-        doc_id: str
+        doc_id
             The id of the document.
 
         Returns
@@ -218,10 +218,10 @@ class NMDCSearch(NMDCAPIClient):
 
         Parameters
         ----------
-        ids : list[str] | str
+        ids
             List of IDs of records to retrieve.
-        fields : str
-            Comma-separated list of fields to include in the response.
+        fields
+            Comma-separated list of fields to include in the response. Default will return all fields.
 
         Returns
         -------
@@ -284,12 +284,12 @@ class NMDCSearch(NMDCAPIClient):
 
         Parameters
         ----------
-        id : str
+        id
             The ID of the record to retrieve.
-        filter : str
-            Additional filter to apply to the records.
-        fields : str
-            Comma-separated list of fields to include in the response.
+        filter
+            Additional filter to apply to the records. Default will have no filter.
+        fields
+            Comma-separated list of fields to include in the response. Default will return all fields.
 
         Returns
         -------
