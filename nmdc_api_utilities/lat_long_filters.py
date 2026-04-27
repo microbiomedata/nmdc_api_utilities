@@ -22,24 +22,29 @@ class LatLongFilters(ABC):
         """Retrieve records from a collection via the NMDC API."""
 
     def get_record_by_latitude(
-        self, comparison: str, latitude: float, page_size=25, fields="", all_pages=False
-    ):
+        self,
+        comparison: str,
+        latitude: float,
+        page_size: int = 25,
+        fields: str = "",
+        all_pages: bool = False,
+    ) -> list[dict]:
         """
         Retrieve records by latitude filter via the NMDC API.
 
         Parameters
         ----------
-        comparison: str
+        comparison
             The comparison to use to query the record. See Notes for more details.
-        latitude: float
+        latitude
             The latitude of the record to query.
-        page_size: int
-            The number of results to return per page. Default is 25.
-        fields: str
+        page_size
+            The number of results to return per page.
+        fields
             The fields to return. Default is all fields.
             Example: "id,name,description,type"
-        all_pages: bool
-            True to return all pages. False to return the first page. Default is False.
+        all_pages
+            True to return all pages. False to return the first page.
 
         Returns
         -------
@@ -88,17 +93,17 @@ class LatLongFilters(ABC):
 
         Parameters
         ----------
-        comparison: str
+        comparison
             The comparison to use to query the record. See Notes for more details.
-        longitude: float
+        longitude
             The longitude of the record to query.
-        page_size: int
-            The number of results to return per page. Default is 25.
-        fields: str
-            The fields to return. Default is all fields.
+        page_size
+            The number of results to return per page.
+        fields
+            The fields to return. If empty, all fields are returned.
             Example: "id,name,description,type"
-        all_pages: bool
-            True to return all pages. False to return the first page. Default is False.
+        all_pages
+            True to return all pages. False to return the first page.
 
         Returns
         -------
@@ -147,21 +152,21 @@ class LatLongFilters(ABC):
 
         Parameters
         ----------
-        lat_comparison: str
+        lat_comparison
             The comparison to use to query the record for latitude. See Notes for more details.
-        long_comparison: str
+        long_comparison
             The comparison to use to query the record for longitude. See Notes for more details.
-        latitude: float
+        latitude
             The latitude of the record to query.
-        longitude: float
+        longitude
             The longitude of the record to query.
-        page_size: int
-            The number of results to return per page. Default is 25.
-        fields: str
-            The fields to return. Default is all fields.
+        page_size
+            The number of results to return per page.
+        fields
+            The fields to return. If empty, all fields are returned.
             Example: "id,name,description,type"
-        all_pages: bool
-            True to return all pages. False to return the first page. Default is False.
+        all_pages
+            True to return all pages. False to return the first page.
 
         Returns
         -------
