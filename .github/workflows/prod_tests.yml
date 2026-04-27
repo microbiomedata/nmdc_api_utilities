@@ -18,26 +18,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6  # docs: https://github.com/marketplace/actions/checkout
-      - uses: actions/setup-python@v6  # docs: https://github.com/marketplace/actions/setup-python
+      - uses: astral-sh/setup-uv@v6  # docs: https://github.com/marketplace/actions/astral-sh-setup-uv
         with:
-            python-version: 3.12
-      - name: Set up environment variables
-        run: echo "Environment variables set up"
-        env:
-          CLIENT_ID: ${{ secrets.CLIENT_ID }}
-          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-          API_BASE_URL : "https://api.microbiomedata.org"  # prod
+          python-version: 3.12
+          enable-cache: true
       - name: Install dependencies
-        run: |
-            pip install -r requirements.txt
-            pip install -r requirements-dev.txt
+        run: uv sync --group dev
       - name: Run tests
         env:
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
           CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-          API_BASE_URL : "https://api.microbiomedata.org"  # prod
+          API_BASE_URL: "https://api.microbiomedata.org"  # prod
         # Note: Our baseline pytest CLI options are in the `[tool.pytest]` section of `pyproject.toml`.
-        run: pytest -x nmdc_api_utilities/
+        run: uv run pytest -x nmdc_api_utilities/
       - name: Create Issue
         if: failure() && github.event.pull_request == null && github.event_name == 'schedule'
         uses: actions/github-script@v6
