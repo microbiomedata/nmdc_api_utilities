@@ -2,18 +2,17 @@
 
 [![PyPI version](https://badge.fury.io/py/nmdc-api-utilities.svg)](https://pypi.org/project/nmdc_api_utilities/)
 [![Python 3.x](https://img.shields.io/badge/python-3.x-blue.svg)](https://www.python.org/)
-[![CI](https://github.com/microbiomedata/nmdc_api_utilities/actions/workflows/python-package.yml/badge.svg)](https://github.com/microbiomedata/nmdc_api_utilities/actions)
+[![Tests](https://github.com/microbiomedata/nmdc_api_utilities/actions/workflows/prod_tests.yml/badge.svg)](https://github.com/microbiomedata/nmdc_api_utilities/actions)
 
-A Python client for the [NMDC (National Microbiome Data Collaborative)](https://microbiomedata.org/) Runtime API. NMDC is a multi-institutional effort to enable findable, accessible, interoperable, and reusable (FAIR) microbiome data. This library provides Pythonic access to NMDC metadata so you can query, filter, and traverse linked records without writing raw API calls.
+A Python client for the [NMDC (National Microbiome Data Collaborative)](https://microbiomedata.org/) Runtime API. NMDC is a multi-institutional effort to enable findable, accessible, interoperable, and reusable (FAIR) microbiome data. This library provides Pythonic access to NMDC metadata so you can query, filter, and traverse linked records without writing raw API calls. For more information on the NMDC Runtime API itself, see the [API documentation](https://api.microbiomedata.org/docs).
 
 ## What you can do
 
 - Search and retrieve metadata for studies, biosamples, data objects, workflow executions, and more
 - Traverse linked records across collections (e.g. study → biosamples → data objects)
 - Apply MongoDB-style filters to build precise queries
-- Work with geospatial filters on biosample collection sites
+- Work with geospatial filters for applicable records (e.g. biosample collection locations)
 - Access privileged submission and staging endpoints (authorized users only)
-- Enable debug logging to inspect requests and responses
 
 ## Documentation
 
@@ -88,12 +87,10 @@ from nmdc_api_utilities import BiosampleSearch
 
 client = BiosampleSearch()
 
-# Find biosamples from soil collected at a depth between 0 and 0.1 m
+# Find biosamples from soil
 results = client.get_record_by_filter(
     filter={
         "env_medium.has_raw_value": {"$regex": "soil"},
-        "depth.has_minimum_numeric_value": {"$gte": 0},
-        "depth.has_maximum_numeric_value": {"$lte": 0.1},
     }
 )
 ```
