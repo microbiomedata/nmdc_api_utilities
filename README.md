@@ -101,20 +101,20 @@ See the [MongoDB filters guide](https://microbiomedata.github.io/nmdc_api_utilit
 
 All clients share a common interface (`get_record_by_id`, `get_record_by_attribute`, `get_record_by_filter`, `get_records`, `get_linked_instances`).
 
-**Biosample & study**
-These clients are for searching core metadata about biosamples, studies, and collection sites:
+**Biosample & study**\
+*for retrieving metadata about biosamples, studies, and collection sites*\
 `BiosampleSearch`, `StudySearch`, `CollectingBiosamplesFromSiteSearch`, `FieldResearchSiteSearch`
 
-**Sample processing**
-These clients are for searching metadata about sample processing and storage:
+**Sample processing**\
+*for retrieving metadata about sample processing and storage*\
 `ProcessedSampleSearch`, `MaterialProcessingSearch`, `StorageProcessSearch`
 
-**Data generation**
-These clients are for searching metadata about data generation processes, instruments, and configurations for sequencing and mass spectrometry:
+**Data generation**\
+*for retrieving metadata about data generation processes, instruments, and configurations for sequencing and mass spectrometry*\
 `DataGenerationSearch`, `ManifestSearch`, `InstrumentSearch`, `ConfigurationSearch`
 
-**Data & workflow**
-These clients are for searching metadata about workflows for processing raw data, data objects, and functional annotations:
+**Data & workflow**\
+*for retrieving metadata about workflows for processing raw data, data objects, and functional annotations*\
 `WorkflowExecutionSearch`, `DataObjectSearch`, `CalibrationSearch`, `FunctionalAnnotationAggSearch`
 
 See the [CollectionSearch subclasses reference](https://microbiomedata.github.io/nmdc_api_utilities/public_subclasses.html) for full detail on each class.
