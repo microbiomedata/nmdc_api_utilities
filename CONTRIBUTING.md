@@ -134,13 +134,11 @@ where it can be accessed by users.
 
 In development, you can build and preview the documentation website locally by following these steps:
 
-1. Install Python dependencies and register notebook kernel. The pandoc binary that
-   `nbsphinx` needs is bundled in the `pypandoc-binary` package, so no system-level
-   install (Homebrew, apt) is required.
+1. Install Python dependencies. The pandoc binary that `nbsphinx` needs is bundled in
+   the `pypandoc-binary` package, so no system-level install (Homebrew, apt) is required.
 
    ```sh
    uv sync --group docs
-   uv run python -m ipykernel install --user --name python3 --display-name "Python 3"
    ```
 
 2. Build (or rebuild) the documentation website.
