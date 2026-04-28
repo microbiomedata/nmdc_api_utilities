@@ -16,7 +16,6 @@ jobs:
       - uses: actions/checkout@v6  # docs: https://github.com/marketplace/actions/checkout
       - uses: astral-sh/setup-uv@v6  # docs: https://github.com/marketplace/actions/astral-sh-setup-uv
         with:
-          python-version: 3.12
           enable-cache: true
       - name: Install system dependencies
         run: |
