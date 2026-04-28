@@ -83,7 +83,7 @@ This project uses [uv](https://docs.astral.sh/uv/) for Python and dependency man
 #### To install the python dependencies:
 
 1. [Install uv](https://docs.astral.sh/uv/getting-started/installation/) if you don't already have it.
-2. Clone the github repository.
+2. Clone the GitHub repository.
 3. Install the project plus the `dev` dependency group into a managed virtual environment:
 
     `uv sync --group dev`
