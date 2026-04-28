@@ -4,6 +4,18 @@ import os
 import sys
 
 sys.path.insert(0, os.path.abspath(".."))  # Path to your project root
+
+# Make the pandoc binary that `pypandoc-binary` installs into the venv discoverable on
+# PATH so `nbsphinx` (which calls pandoc via subprocess, not pypandoc) can find it
+# without a system-level install. Falls back silently to system pandoc if the package
+# isn't installed.
+try:
+    import pypandoc
+
+    _pandoc_dir = os.path.dirname(pypandoc.get_pandoc_path())
+    os.environ["PATH"] = _pandoc_dir + os.pathsep + os.environ.get("PATH", "")
+except (ImportError, OSError):
+    pass
 # Configuration file for the Sphinx documentation builder.
 #
 # For the full list of built-in configuration values, see the documentation:
