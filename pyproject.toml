@@ -30,9 +30,6 @@ dependencies = [
     # We use `requests` to call the NMDC HTTP APIs.
     # Docs: https://requests.readthedocs.io/en/latest/
     "requests >= 2.33.1, < 3",
-    # We use `matplotlib` to render plots produced by helper utilities.
-    # Docs: https://matplotlib.org/stable/index.html
-    "matplotlib >= 3.10.8, < 4",
     # We use `dotenv` to load credentials from a local `.env` file.
     # Docs: https://pypi.org/project/dotenv/
     "dotenv >= 0.9.9, < 1",
