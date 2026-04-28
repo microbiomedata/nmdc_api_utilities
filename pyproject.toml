@@ -17,7 +17,7 @@ authors = [
     { name = "Olivia Hess", email = "olivia.hess@pnnl.gov" },
 ]
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.10"
 classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
@@ -26,7 +26,7 @@ license-files = ["LICENSE"]
 dependencies = [
     # We use `pandas` for tabular data handling in the public API and notebooks.
     # Docs: https://pandas.pydata.org/docs/
-    "pandas >= 3.0.2, < 4",
+    "pandas >= 2.2, < 4",
     # We use `requests` to call the NMDC HTTP APIs.
     # Docs: https://requests.readthedocs.io/en/latest/
     "requests >= 2.33.1, < 3",
@@ -56,12 +56,12 @@ dev = [
     "types-requests >= 2.33.0",
     # We use `pandas-stubs` to get type information about the `pandas` package.
     # PyPI: https://pypi.org/project/pandas-stubs/
-    "pandas-stubs >= 3.0.0",
+    "pandas-stubs >= 2.2",
 ]
 docs = [
     # We use `sphinx` to generate the user documentation.
     # Docs: https://www.sphinx-doc.org/en/master/
-    "sphinx >= 9.1.0, < 10",
+    "sphinx >= 8, < 10",
     # We use the Read the Docs theme for the rendered HTML output.
     # Docs: https://sphinx-rtd-theme.readthedocs.io/en/stable/
     "sphinx_rtd_theme >= 3.1.0, < 4",
