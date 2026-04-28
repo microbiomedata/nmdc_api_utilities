@@ -343,7 +343,7 @@ class CollectionSearch(NMDCSearch):
         id_list = list(set(id_list))
         chunks = dp.split_list(input_list=id_list, chunk_size=chunk_size)
         for chunk in chunks:
-            sanitized_chunk = dp._string_mongo_list(data=chunk)
+            sanitized_chunk = json.dumps(chunk)
             filter = f'{{"{search_field}": {{"$in": {sanitized_chunk}}}}}'
             res = self.get_records(
                 filter=filter, max_page_size=len(chunk), fields=fields, all_pages=True

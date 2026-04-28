@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import json
 import logging
 import re
 from typing import Any
@@ -11,29 +12,6 @@ logger = logging.getLogger(__name__)
 class DataProcessing:
     def __init__(self):
         pass
-
-    def _string_mongo_list(self, data: list[Any] | dict[str, Any]) -> str:
-        """
-        Convert elements in a list to use double quotes instead of single quotes.
-        This is required for mongo queries.
-        Parameters
-        ----------
-        data: list
-            A list of dictionaries.
-        Returns
-        -------
-        str
-            A string representation of the list with double quotes.
-        """
-        # TODO: The docstring contradicts (a) the type hint and (b) some invocations of this method
-        #       within this library, itself (they pass it a dictionary instead of a list).
-        #
-        # TODO: Add doctests demonstrating how this would treat an input list containing dictionaries
-        #       whose values contain single quotes (not as delimiters); e.g. { lastName: "O'Connor" }.
-        #       In general, consider using a standard serialization pipeline (e.g. dict -> json -> str)
-        #       instead of an ad hoc one so corner cases are covered.
-        #
-        return str(data).replace("'", '"')
 
     def convert_to_df(self, data: list[dict[str, Any]]) -> pd.DataFrame:
         """
@@ -200,10 +178,7 @@ class DataProcessing:
                 filter_dict[attribute_name] = {"$regex": escaped_value, "$options": "i"}
                 logging.debug(f"Filter dict: {filter_dict}")
 
-        # TODO: The value being passed to `_string_mongo_list` below might be a dictionary whose
-        #       values are string, and it might be a dictionary whose values are, themselves,
-        #       dictionaries. The method's docstring says it expects to be passed a LIST.
-        clean = self._string_mongo_list(filter_dict)
+        clean = json.dumps(filter_dict)
         logging.debug(f"Filter cleaned: {clean}")
         return clean
 
