@@ -1,6 +1,13 @@
 [build-system]
-requires = ["setuptools>=61.0", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["uv_build >= 0.8.14, < 0.9.0"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+# Tell the `uv_build` backend that our package lives at the repo root in `nmdc_api_utilities/`
+# (not under a `src/` directory, which is where the backend would look by default).
+# Reference: https://docs.astral.sh/uv/concepts/build-backend/#modules
+module-name = "nmdc_api_utilities"
+module-root = ""
 
 [project]
 name = "nmdc_api_utilities"
@@ -40,10 +47,6 @@ dev = [
     # Usage: $ uv run pytest
     # Docs: https://docs.pytest.org/en/stable/contents.html
     "pytest >= 9.0.3, < 10",
-    # We use `build` and `twine` to package and publish releases to PyPI.
-    # Docs: https://build.pypa.io/en/stable/ , https://twine.readthedocs.io/en/stable/
-    "build >= 1.4.3, < 2",
-    "twine >= 6.2.0, < 7",
     # We use `mypy` to perform static type checking.
     # Usage: $ uv run mypy
     # Docs: https://mypy.readthedocs.io/en/stable/
