@@ -56,12 +56,14 @@ class DataObjectSearch(CollectionSearch):
 
         Parameters
         ----------
-        study_id: str
+        study_id
             The ID of the study.
+
         Returns
         -------
         list[dict]
             The data objects.
+
         Raises
         ------
         RuntimeError

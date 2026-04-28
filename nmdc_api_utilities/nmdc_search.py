@@ -16,7 +16,7 @@ class NMDCSearch(NMDCAPIClient):
 
     Parameters
     ----------
-    api_base_url: str
+    api_base_url
         The base URL of an instance of the NMDC Runtime API. By default, this is the base URL of
         the production instance. NMDC team members will occasionally set this to the base URL of
         a different instance; for example, a self-hosted instance used for testing.
@@ -50,15 +50,15 @@ class NMDCSearch(NMDCAPIClient):
 
         Parameters
         ----------
-        ids : list[str] | str
+        ids
             The ids to search for.
-        hydrate : bool = False
-            Whether to include full documents in the response. The default is False.
-        types : list[str] | str = None
-            The types of records you want to return. Default is None, which returns all types.
-            Example: ["nmdc:Study", "nmdc:Biosample", "nmdc:MassSpectrometry"].
-        max_page_size : int = 500
-            The maximum number of records to return per page. Default is 500.
+        hydrate
+            Whether to include full documents in the response.
+        types
+            The types of records to return. If omitted or ``None``, linked instances of all
+            types are returned. Example: ["nmdc:Study", "nmdc:Biosample", "nmdc:MassSpectrometry"].
+        max_page_size
+            The maximum number of records to return per page.
 
         Returns
         -------
@@ -120,7 +120,7 @@ class NMDCSearch(NMDCAPIClient):
         types: list[str] | str | None = None,
         hydrate: bool = False,
         max_page_size: int = 500,
-    ) -> dict[str, list[str]]:
+    ) -> dict[str, list[dict | str]]:
         """
         Retrieve linked instances for the given IDs from the NMDC API and associate them with the input IDs.
 
@@ -129,43 +129,45 @@ class NMDCSearch(NMDCAPIClient):
         ``data_generation_set`` etc that are associated with this study, even if it is not a single link between records.
 
         See also ``get_linked_instances`` for a method that returns the linked instances in their original list format.
-        This method reformats into a dictionary with keys as query ids, and a list of resulting linked ids as values.
+        This method reformats into a dictionary with keys as query ids, and either a list of resulting linked ids or a list of hydrated records as values.
 
 
         Parameters
         ----------
-        ids : list[str] | str
+        ids
             The ids to search for.
-        types : list[str] | str = None
-            The types of instances you want to return. Default is None, which returns all types.
-        hydrate : bool = False
-            Whether to include full documents in the response. The default is False.
-        max_page_size : int = 500
-            The maximum number of records to return per page. Default is 500.
+        types
+            The types of instances you want to return. If ``types`` is None, all types are returned.
+        hydrate
+            Whether to include full documents in the response.
+        max_page_size
+            The maximum number of records to return per page.
 
         Returns
         -------
-        dict[str, list[str]]
-            A dictionary mapping each input id to a list of the ids of its linked instance records.
+        dict[str, list[dict] | list[str]]
+            A dictionary mapping each input id to a list of its linked instance records.
         """
         # get the linked instances
         linked_instances = self.get_linked_instances(
             types=types, ids=ids, hydrate=hydrate, max_page_size=max_page_size
         )
-        association: dict[str, list[str]] = {}
+        association: dict[str, list[dict | str]] = {}
         # loop through the linked instances and build the association
         for record in linked_instances:
-            study_id = record["id"]
-            if "_upstream_of" in record:
-                for upstream_id in record["_upstream_of"]:
-                    if upstream_id not in association:
-                        association[upstream_id] = []
-                    association[upstream_id].append(study_id)
-            if "_downstream_of" in record:
-                for upstream_id in record["_downstream_of"]:
-                    if upstream_id not in association:
-                        association[upstream_id] = []
-                    association[upstream_id].append(study_id)
+            for stream in ["_upstream_of", "_downstream_of"]:
+                if stream in record:
+                    for stream_id in record[stream]:
+                        if stream_id not in association:
+                            association[stream_id] = []
+                        if hydrate:
+                            association[stream_id].append(
+                                {key: record[key] for key in record if key != stream}
+                            )
+                        else:
+                            association[stream_id].append(record["id"])
+                else:
+                    continue
 
         return association
 
@@ -176,7 +178,7 @@ class NMDCSearch(NMDCAPIClient):
 
         Parameters
         ----------
-        doc_id: str
+        doc_id
             The id of the document.
 
         Returns
@@ -218,10 +220,10 @@ class NMDCSearch(NMDCAPIClient):
 
         Parameters
         ----------
-        ids : list[str] | str
+        ids
             List of IDs of records to retrieve.
-        fields : str
-            Comma-separated list of fields to include in the response.
+        fields
+            Comma-separated list of fields to include in the response. An empty string returns all fields.
 
         Returns
         -------
@@ -284,12 +286,12 @@ class NMDCSearch(NMDCAPIClient):
 
         Parameters
         ----------
-        id : str
+        id
             The ID of the record to retrieve.
-        filter : str
-            Additional filter to apply to the records.
-        fields : str
-            Comma-separated list of fields to include in the response.
+        filter
+            Additional filter to apply to the records. If empty, no additional filter is applied.
+        fields
+            Comma-separated list of fields to include in the response. If empty, all fields are returned.
 
         Returns
         -------

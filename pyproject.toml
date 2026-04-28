@@ -1,12 +1,17 @@
 [build-system]
-requires = ["setuptools>=61.0", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["uv_build >= 0.8.14, < 0.9.0"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+# Tell the `uv_build` backend that our package lives at the repo root in `nmdc_api_utilities/`
+# (not under a `src/` directory, which is where the backend would look by default).
+# Reference: https://docs.astral.sh/uv/concepts/build-backend/#modules
+module-name = "nmdc_api_utilities"
+module-root = ""
 
 [project]
 name = "nmdc_api_utilities"
-
 version = "0.6.1"
-
 description = "A Python library for general research functions using NMDC APIs"
 authors = [
     { name = "Olivia Hess", email = "olivia.hess@pnnl.gov" },
@@ -18,9 +23,62 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 license-files = ["LICENSE"]
-dynamic = ["dependencies"]
-[tool.setuptools.dynamic]
-dependencies = {file = ["requirements.txt"]}
+dependencies = [
+    # We use `pandas` for tabular data handling in the public API and notebooks.
+    # Docs: https://pandas.pydata.org/docs/
+    "pandas >= 2.2, < 4",
+    # We use `requests` to call the NMDC HTTP APIs.
+    # Docs: https://requests.readthedocs.io/en/latest/
+    "requests >= 2.33.1, < 3",
+    # We use `matplotlib` to render plots produced by helper utilities.
+    # Docs: https://matplotlib.org/stable/index.html
+    "matplotlib >= 3.10.8, < 4",
+    # We use `dotenv` to load credentials from a local `.env` file.
+    # Docs: https://pypi.org/project/dotenv/
+    "dotenv >= 0.9.9, < 1",
+]
+
+[dependency-groups]
+dev = [
+    # We use `pre-commit` to run formatting and lint hooks before committing.
+    # Docs: https://pre-commit.com/
+    "pre-commit >= 4.5.1, < 5",
+    # We use `pytest` to run tests.
+    # Usage: $ uv run pytest
+    # Docs: https://docs.pytest.org/en/stable/contents.html
+    "pytest >= 9.0.3, < 10",
+    # We use `mypy` to perform static type checking.
+    # Usage: $ uv run mypy
+    # Docs: https://mypy.readthedocs.io/en/stable/
+    "mypy >= 1.20.2, < 2",
+    # We use `types-requests` to get type information about the `requests` package.
+    # PyPI: https://pypi.org/project/types-requests/
+    "types-requests >= 2.33.0",
+    # We use `pandas-stubs` to get type information about the `pandas` package.
+    # PyPI: https://pypi.org/project/pandas-stubs/
+    "pandas-stubs >= 2.2",
+]
+docs = [
+    # We use `sphinx` to generate the user documentation.
+    # Docs: https://www.sphinx-doc.org/en/master/
+    "sphinx >= 8, < 10",
+    # We use the Read the Docs theme for the rendered HTML output.
+    # Docs: https://sphinx-rtd-theme.readthedocs.io/en/stable/
+    "sphinx_rtd_theme >= 3.1.0, < 4",
+    # We use `nbsphinx` to render Jupyter notebooks as documentation pages.
+    # Docs: https://nbsphinx.readthedocs.io/en/stable/
+    "nbsphinx >= 0.9, < 1",
+    # We use `sphinx-autodoc-typehints` to include type hints in API documentation.
+    # Docs: https://pypi.org/project/sphinx-autodoc-typehints/
+    "sphinx-autodoc-typehints >= 2.3, < 4",
+    # We use `ipykernel` so `nbsphinx` can execute notebook cells during the build.
+    # Docs: https://ipykernel.readthedocs.io/en/stable/
+    "ipykernel >= 6, < 7",
+    # We use `pypandoc-binary` to bundle the pandoc binary that `nbsphinx` needs to render
+    # notebooks, so contributors don't have to install pandoc via Homebrew or apt separately.
+    # Docs: https://pypi.org/project/pypandoc-binary/
+    "pypandoc-binary >= 1.13, < 2",
+]
 
 # Configure pytest.
 # Docs: https://docs.pytest.org/en/stable/reference/customize.html#pyproject-toml

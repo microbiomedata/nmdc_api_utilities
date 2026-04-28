@@ -76,36 +76,29 @@ We recommend also reading [GitHub Pull Requests: 10 Tips to Know](https://blog.m
 
 <a id="Development"></a>
 
-This project uses `venv` for package management.
+This project uses [uv](https://docs.astral.sh/uv/) for Python and dependency management. Production dependencies live under `[project].dependencies` in `pyproject.toml`; development and documentation dependencies live under `[dependency-groups]` (`dev` and `docs`). The `uv.lock` file pins the exact resolved versions and is committed to the repo.
 
 ### Python
 
-This project uses pip paired with venv to manage dependencies. Note that requirements.txt should be used for production dependencies (updated manually and with discretion).
-
 #### To install the python dependencies:
 
-1. Clone the github repository
-2. create a virtual environment:
+1. [Install uv](https://docs.astral.sh/uv/getting-started/installation/) if you don't already have it.
+2. Clone the GitHub repository.
+3. Install the project plus the `dev` dependency group into a managed virtual environment:
 
-    `python -m venv venv`
-3. Activate the virtual environment:
+    `uv sync --group dev`
 
-    `source venv/bin/activate`
-4. Install the necessary packages:
+    Add `--group docs` if you also want the documentation tooling. To update an existing environment after pulling new changes, re-run the same command.
 
-    `pip install -r requirements.txt`
+4. Run any tool inside the managed environment with `uv run`, for example:
 
-    **Note** to update your package installations:
-        `pip install -U -r requirements.txt`
-5. Install the necessary development packages:
-
-    `pip install -r requirements-dev.txt`
+    `uv run pytest`
 
 #### Set up pre commit
 
 1. Install precommit hooks to run formatting before committing:
 
-    `pre-commit install`
+    `uv run pre-commit install`
 
 ### Static type checking
 
@@ -125,7 +118,7 @@ triple("1")  # 🙋 mypy will report this inconsistency
 You can perform static type checking by running:
 
 ```sh
-mypy
+uv run mypy
 ```
 
 By default, mypy will use the configuration specified within the `[tool.mypy]` section of `pyproject.toml`. You can override aspects of that configuration via [CLI options](https://mypy.readthedocs.io/en/stable/command_line.html).
@@ -141,46 +134,24 @@ where it can be accessed by users.
 
 In development, you can build and preview the documentation website locally by following these steps:
 
-<!-- TODO: Add `myst_parser` to the "requirements-dev.txt" file. -->
-
-1. Install system dependency required by `nbsphinx`.
-
-    On macOS (Homebrew):
-
-    ```sh
-    brew install pandoc
-    ```
-
-    On Ubuntu/Debian:
-
-    ```sh
-    sudo apt-get update
-    sudo apt-get install -y pandoc
-    ```
-
-2. Install Python dependencies and register notebook kernel.
+1. Install Python dependencies. The pandoc binary that `nbsphinx` needs is bundled in
+   the `pypandoc-binary` package, so no system-level install (Homebrew, apt) is required.
 
    ```sh
-    pip install -r requirements.txt
-    pip install -r requirements-dev.txt
-    pip install myst_parser
-    pip install ipykernel
-    pip install nbsphinx
-    pip install .
-    python -m ipykernel install --user --name python3 --display-name "Python 3"
+   uv sync --group docs
    ```
 
-3. Build (or rebuild) the documentation website.
+2. Build (or rebuild) the documentation website.
 
    ```sh
-   sphinx-build -v docs build/html
+   uv run sphinx-build -v docs build/html
    ```
 
-4. Use Python's built-in HTTP server to serve the documentation website locally,
+3. Use Python's built-in HTTP server to serve the documentation website locally,
    at [`http://localhost:8000`](http://localhost:8000)
 
    ```sh
-   python -m http.server 8000 --directory build/html
+   uv run python -m http.server 8000 --directory build/html
    ```
 
 When you're done previewing the documentation website, you can terminate the HTTP server by pressing

@@ -18,18 +18,18 @@ class NMDCAuth(NMDCAPIClient):
 
     Parameters
     ----------
-    client_id : str
+    client_id
         The client ID for NMDC API authentication. See Notes for further details.
-    client_secret : str
+    client_secret
         The client secret for NMDC API authentication. See Notes for further details.
-    username : str
+    username
         The username for NMDC API authentication. See Notes for further details.
-    password : str
+    password
         The password for NMDC API authentication. See Notes for further details.
-    api_base_url : str
+    api_base_url
         The base URL of an instance of the NMDC Runtime API. By default, this is the base URL of
         the production instance.
-    env : str
+    env
         Deprecated. Use `api_base_url` instead. Previously used to specify the API environment
         (e.g., "prod", "dev").
 

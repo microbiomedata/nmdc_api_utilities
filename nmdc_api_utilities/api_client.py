@@ -18,7 +18,7 @@ class NMDCAPIClient(ABC):
 
     Parameters
     ----------
-    api_base_url: str
+    api_base_url
         The base URL of an instance of the NMDC Runtime API. By default, this is the base URL of
         the production instance. NMDC team members will occasionally set this to the base URL of
         a different instance; for example, a self-hosted instance used for testing.

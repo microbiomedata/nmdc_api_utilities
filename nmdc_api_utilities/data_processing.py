@@ -41,7 +41,7 @@ class DataProcessing:
 
         Parameters
         ----------
-        data: list
+        data
             A list of dictionaries.
 
         Returns
@@ -59,9 +59,9 @@ class DataProcessing:
 
         Parameters
         ----------
-        input_list: list
+        input_list
             The list to split.
-        chunk_size: int
+        chunk_size
             The size of each chunk.
 
         Returns
@@ -82,10 +82,10 @@ class DataProcessing:
 
         Parameters
         ----------
-        df: pd.DataFrame
+        df
             The pandas dataframe to rename columns.
-        new_col_names: list
-            A list of new column names. Names MUST be in order of the columns in the dataframe.\n
+        new_col_names
+            A list of new column names. Names MUST be in order of the columns in the dataframe.
             Example:
                 If the current column names are - ['old_col1', 'old_col2', 'old_col3']
                 You will need to pass in the new names like - ['new_col1', 'new_col2', 'new_col3']
@@ -109,11 +109,11 @@ class DataProcessing:
 
         Parameters
         ----------
-        column: str
+        column
             The column to merge on.
-        df1: pd.DataFrame
+        df1
             The first dataframe to merge.
-        df2: pd.DataFrame
+        df2
             The second dataframe to merge.
 
         Returns
@@ -137,13 +137,13 @@ class DataProcessing:
 
         Parameters
         ----------
-        df1: pd.DataFrame
+        df1
             The first dataframe to merge.
-        df2: pd.DataFrame
+        df2
             The second dataframe to merge.
-        key1: str
+        key1
             The key in df1 to match with key2 in df2.
-        key2: str
+        key2
             The key in df2 to match with key1 in df1.
 
         Returns
@@ -176,10 +176,10 @@ class DataProcessing:
 
         Parameters
         ----------
-        attributes: dict
+        attributes
             Dictionary of attribute names and their corresponding values to match using regex.
             Example: {"name": "example", "description": "example", "geo_loc_name": "example"}
-        exact_match: bool
+        exact_match
             This var is used to determine if the inputted attribute value is an exact match or a partial match. Default is False, meaning the user does not need to input an exact match.
             Under the hood this is used to determine if the inputted attribute value should be wrapped in a regex expression.
         Returns
@@ -215,9 +215,9 @@ class DataProcessing:
 
         Parameters
         ----------
-        api_results: list
+        api_results
             A list of dictionaries.
-        field_name: str
+        field_name
             The name of the field to extract.
 
         Returns
