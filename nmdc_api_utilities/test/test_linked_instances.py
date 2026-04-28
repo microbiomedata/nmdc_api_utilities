@@ -544,9 +544,42 @@ def test_get_linked_instance_strings():
     assert len(result) == 2
 
 
+def test_get_linked_instance_hydrate():
+    """
+    Test to get a record and hydrate it.
+    """
+    ll_client = NMDCSearch(api_base_url=API_BASE_URL)
+    search_id = "nmdc:bsm-11-002vgm56"
+    result = ll_client.get_linked_instances(
+        types="nmdc:Study", ids=search_id, hydrate=True
+    )
+
+    assert all("id" in record and "type" in record for record in result)
+
+
 def test_association():
     ll_client = NMDCSearch(api_base_url=API_BASE_URL)
     association = ll_client.get_linked_instances_and_associate_ids(
         types=["nmdc:Study"], ids=["nmdc:bsm-11-002vgm56", "nmdc:bsm-11-006pnx90"]
     )
-    assert "nmdc:bsm-11-002vgm56" and "nmdc:bsm-11-006pnx90" in association.keys()
+    assert (
+        "nmdc:bsm-11-002vgm56" in association.keys()
+        and "nmdc:bsm-11-006pnx90" in association.keys()
+    )
+
+
+def test_association_hydrate():
+    """
+    Test to get associated ids and hydrate them.
+    """
+    ll_client = NMDCSearch(api_base_url=API_BASE_URL)
+    associations = ll_client.get_linked_instances_and_associate_ids(
+        types=["nmdc:Study"],
+        ids=["nmdc:bsm-11-002vgm56", "nmdc:bsm-11-006pnx90"],
+        hydrate=True,
+    )
+    assert all(
+        "type" in association.keys()
+        for biosample_associations in associations.values()
+        for association in biosample_associations
+    )

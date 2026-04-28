@@ -120,7 +120,7 @@ class NMDCSearch(NMDCAPIClient):
         types: list[str] | str | None = None,
         hydrate: bool = False,
         max_page_size: int = 500,
-    ) -> dict[str, list[str]]:
+    ) -> dict[str, list[dict | str]]:
         """
         Retrieve linked instances for the given IDs from the NMDC API and associate them with the input IDs.
 
@@ -129,7 +129,7 @@ class NMDCSearch(NMDCAPIClient):
         ``data_generation_set`` etc that are associated with this study, even if it is not a single link between records.
 
         See also ``get_linked_instances`` for a method that returns the linked instances in their original list format.
-        This method reformats into a dictionary with keys as query ids, and a list of resulting linked ids as values.
+        This method reformats into a dictionary with keys as query ids, and either a list of resulting linked ids or a list of hydrated records as values.
 
 
         Parameters
@@ -145,27 +145,29 @@ class NMDCSearch(NMDCAPIClient):
 
         Returns
         -------
-        dict[str, list[str]]
-            A dictionary mapping each input id to a list of the ids of its linked instance records.
+        dict[str, list[dict] | list[str]]
+            A dictionary mapping each input id to a list of its linked instance records.
         """
         # get the linked instances
         linked_instances = self.get_linked_instances(
             types=types, ids=ids, hydrate=hydrate, max_page_size=max_page_size
         )
-        association: dict[str, list[str]] = {}
+        association: dict[str, list[dict | str]] = {}
         # loop through the linked instances and build the association
         for record in linked_instances:
-            study_id = record["id"]
-            if "_upstream_of" in record:
-                for upstream_id in record["_upstream_of"]:
-                    if upstream_id not in association:
-                        association[upstream_id] = []
-                    association[upstream_id].append(study_id)
-            if "_downstream_of" in record:
-                for upstream_id in record["_downstream_of"]:
-                    if upstream_id not in association:
-                        association[upstream_id] = []
-                    association[upstream_id].append(study_id)
+            for stream in ["_upstream_of", "_downstream_of"]:
+                if stream in record:
+                    for stream_id in record[stream]:
+                        if stream_id not in association:
+                            association[stream_id] = []
+                        if hydrate:
+                            association[stream_id].append(
+                                {key: record[key] for key in record if key != stream}
+                            )
+                        else:
+                            association[stream_id].append(record["id"])
+                else:
+                    continue
 
         return association
 
