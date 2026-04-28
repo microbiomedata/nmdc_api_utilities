@@ -134,35 +134,22 @@ where it can be accessed by users.
 
 In development, you can build and preview the documentation website locally by following these steps:
 
-1. Install system dependency required by `nbsphinx`.
-
-    On macOS (Homebrew):
-
-    ```sh
-    brew install pandoc
-    ```
-
-    On Ubuntu/Debian:
-
-    ```sh
-    sudo apt-get update
-    sudo apt-get install -y pandoc
-    ```
-
-2. Install Python dependencies and register notebook kernel.
+1. Install Python dependencies and register notebook kernel. The pandoc binary that
+   `nbsphinx` needs is bundled in the `pypandoc-binary` package, so no system-level
+   install (Homebrew, apt) is required.
 
    ```sh
    uv sync --group docs
    uv run python -m ipykernel install --user --name python3 --display-name "Python 3"
    ```
 
-3. Build (or rebuild) the documentation website.
+2. Build (or rebuild) the documentation website.
 
    ```sh
    uv run sphinx-build -v docs build/html
    ```
 
-4. Use Python's built-in HTTP server to serve the documentation website locally,
+3. Use Python's built-in HTTP server to serve the documentation website locally,
    at [`http://localhost:8000`](http://localhost:8000)
 
    ```sh

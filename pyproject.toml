@@ -74,6 +74,10 @@ docs = [
     # We use `ipykernel` so `nbsphinx` can execute notebook cells during the build.
     # Docs: https://ipykernel.readthedocs.io/en/stable/
     "ipykernel >= 6, < 7",
+    # We use `pypandoc-binary` to bundle the pandoc binary that `nbsphinx` needs to render
+    # notebooks, so contributors don't have to install pandoc via Homebrew or apt separately.
+    # Docs: https://pypi.org/project/pypandoc-binary/
+    "pypandoc-binary >= 1.13, < 2",
 ]
 
 # Configure pytest.
