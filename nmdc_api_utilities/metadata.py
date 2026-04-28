@@ -21,9 +21,9 @@ class Metadata(NMDCAPIClient):
 
     Parameters
     ----------
-    api_base_url : str
+    api_base_url
         The base URL of the NMDC API.
-    auth : NMDCAuth
+    auth
         An instance of the NMDCAuth class for authentication.
     """
 
@@ -47,7 +47,7 @@ class Metadata(NMDCAPIClient):
 
         Parameters
         ----------
-        json_records : list[dict] | str
+        json_records
             The json records to be validated. Can be passed in as a file path or list of dictionaries.
 
         Returns
@@ -95,7 +95,7 @@ class Metadata(NMDCAPIClient):
 
         Parameters
         ----------
-        json_records : list[dict] | str
+        json_records
             The json records to be submitted. Can be passed in as a file path or list of dictionaries.
 
         Returns

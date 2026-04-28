@@ -18,10 +18,10 @@ class Minter(NMDCAPIClient):
 
     Parameters
     ----------
-    api_base_url : str
-        The base URL of the NMDC API. Default is API_BASE_URL.
-    auth : NMDCAuth
-        An instance of the NMDCAuth class for authentication. Default is None.
+    api_base_url
+        The base URL of the NMDC API.
+    auth
+        An instance of the NMDCAuth class for authentication.
     """
 
     def __init__(
@@ -49,14 +49,14 @@ class Minter(NMDCAPIClient):
 
         Parameters
         ----------
-        nmdc_type : str
+        nmdc_type
             The type of NMDC ID to mint (e.g., 'nmdc:MassSpectrometry',
             'nmdc:DataObject').
-        count : int, optional
-            The number of identifiers to mint. Default is 1.
-        client_id : str
+        count
+            The number of identifiers to mint.
+        client_id
             The client ID for authentication. Kept for backwards compatibility.
-        client_secret : str
+        client_secret
             The client secret for authentication. Kept for backwards compatibility.
 
         Returns

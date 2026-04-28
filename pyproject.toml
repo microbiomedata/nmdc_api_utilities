@@ -68,6 +68,9 @@ docs = [
     # We use `nbsphinx` to render Jupyter notebooks as documentation pages.
     # Docs: https://nbsphinx.readthedocs.io/en/stable/
     "nbsphinx >= 0.9, < 1",
+    # We use `sphinx-autodoc-typehints` to include type hints in API documentation.
+    # Docs: https://pypi.org/project/sphinx-autodoc-typehints/
+    "sphinx-autodoc-typehints >= 2.3, < 4",
     # We use `ipykernel` so `nbsphinx` can execute notebook cells during the build.
     # Docs: https://ipykernel.readthedocs.io/en/stable/
     "ipykernel >= 6, < 7",

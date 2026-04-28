@@ -16,6 +16,15 @@ logger = logging.getLogger(__name__)
 class JGISequencingProjectAPI(NMDCAPIClient):
     """
     Class to interact with the NMDC API to get JGI samples.
+
+    Parameters
+    ----------
+    auth
+        The NMDCAuth instance containing the credentials and API base URL for authentication.
+    api_base_url
+        The base URL of an instance of the NMDC Runtime API. By default, this is the base URL of the production instance.
+    env
+        Deprecated. Use `api_base_url` instead. Previously used to specify the API environment (e.g., "prod", "dev").
     """
 
     def __init__(
@@ -51,7 +60,7 @@ class JGISequencingProjectAPI(NMDCAPIClient):
 
         Parameters
         ----------
-        jgi_sequencing_project : dict
+        jgi_sequencing_project
             The JGI sequencing project data to be created.
 
         Returns
@@ -97,13 +106,13 @@ class JGISequencingProjectAPI(NMDCAPIClient):
 
         Parameters
         ----------
-        filter : str, optional
+        filter
             Filter to apply to the API call.
-        max_page_size : int, optional
+        max_page_size
             The maximum number of items to return per page.
-        fields : str, optional
+        fields
             The fields to return.
-        all_pages : bool, optional
+        all_pages
             True to return all pages. False to return the first page.
 
         Returns
@@ -153,7 +162,7 @@ class JGISequencingProjectAPI(NMDCAPIClient):
 
         Parameters
         ----------
-        project_name : str
+        project_name
             The name of the JGI sequencing project to retrieve.
 
         Returns
@@ -183,6 +192,15 @@ class JGISequencingProjectAPI(NMDCAPIClient):
 class JGISampleSearchAPI(NMDCAPIClient):
     """
     Class to interact with the NMDC API to get JGI samples.
+
+    Parameters
+    ----------
+    auth
+        The NMDCAuth instance containing the credentials and API base URL for authentication.
+    api_base_url
+        The base URL of an instance of the NMDC Runtime API. By default, this is the base URL of the production instance.
+    env
+        Deprecated. Use `api_base_url` instead. Previously used to specify the API environment (e.g., "prod", "dev").
     """
 
     def __init__(
@@ -219,13 +237,13 @@ class JGISampleSearchAPI(NMDCAPIClient):
 
         Parameters
         ----------
-        filter : str, optional
+        filter
             Filter to apply to the API call.
-        max_page_size : int, optional
+        max_page_size
             The maximum number of items to return per page.
-        fields : str, optional
+        fields
             The fields to return.
-        all_pages : bool, optional
+        all_pages
             True to return all pages. False to return the first page.
 
         Returns
@@ -280,7 +298,7 @@ class JGISampleSearchAPI(NMDCAPIClient):
 
         Parameters
         ----------
-        jgi_sample : dict
+        jgi_sample
             The JGI sample data to be inserted.
 
         Returns
@@ -325,9 +343,9 @@ class JGISampleSearchAPI(NMDCAPIClient):
 
         Parameters
         ----------
-        jgi_file_id : str
+        jgi_file_id
             The JGI file ID of the sample to be updated.
-        jgi_sample : dict
+        jgi_sample
             The updated JGI sample data.
 
         Returns
@@ -363,6 +381,15 @@ class JGISampleSearchAPI(NMDCAPIClient):
 class GlobusTaskAPI(NMDCAPIClient):
     """
     Class to interact with the NMDC API for Globus tasks.
+
+    Parameters
+    ----------
+    auth
+        The NMDCAuth instance containing the credentials and API base URL for authentication.
+    api_base_url
+        The base URL of an instance of the NMDC Runtime API. By default, this is the base URL of the production instance.
+    env
+        Deprecated. Use `api_base_url` instead. Previously used to specify the API environment (e.g., "prod", "dev").
     """
 
     def __init__(
@@ -399,13 +426,13 @@ class GlobusTaskAPI(NMDCAPIClient):
 
         Parameters
         ----------
-        filter : str, optional
+        filter
             Filter to apply to the API call.
-        max_page_size : int, optional
+        max_page_size
             The maximum number of items to return per page.
-        fields : str, optional
+        fields
             The fields to return.
-        all_pages : bool, optional
+        all_pages
             True to return all pages. False to return the first page.
 
         Returns
@@ -457,7 +484,7 @@ class GlobusTaskAPI(NMDCAPIClient):
 
         Parameters
         ----------
-        globus_task : dict
+        globus_task
             The Globus task data to be created.
 
         Returns
@@ -503,9 +530,9 @@ class GlobusTaskAPI(NMDCAPIClient):
 
         Parameters
         ----------
-        globus_task_id: str
+        globus_task_id
             The ID of the Globus task to be updated.
-        globus_task : dict
+        globus_task
             The Globus task data to be updated.
 
         Returns
