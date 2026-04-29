@@ -1,30 +1,29 @@
 # Contributing
 
-
 👍 First of all: Thank you for taking the time to contribute!
 
-The following is a set of guidelines for contributing to the nmdc_api_utilities repo. This guide is aimed primarily at the developers, although anyone is welcome to contribute.
+The following is a set of guidelines for contributing to the [nmdc_api_utilities](https://github.com/microbiomedata/nmdc_api_utilities) repo. This guide is aimed primarily at the developers, although anyone is welcome to contribute.
 
-Unlike other repos for data exploration, the code in this repo is used by many moving parts in the NMDC stack. We strive to hold best and interpretable practices for development, as small changes could impact downstream processes. If you want to experiment with large changes we suggest forking or meeting with the maintainers first.
-
+Unlike other repos for data exploration, the code in this repo is used by many moving parts in the NMDC stack. We strive to hold best and interpretable practices for development, as small changes could impact downstream processes. If you want to experiment with large changes, we suggest forking or meeting with the maintainers first.
 
 ## Table Of Contents
 
+<!-- TODO: Update the table of contents. Consider using a VS Code extension that generates this automatically based upon the headings within the document. -->
+
 - [Code of Conduct](#code-of-conduct)
 - [Guidelines for Contributions and Requests](#contributions)
-    * [Reporting issues](#reporting-issues)
-    * [Making pull requests](#pull-requests)
-- [Best practices](#best-practices)
+  - [Reporting issues](#reporting-issues)
+  - [Making pull requests](#pull-requests)
+  - [Best practices](#best-practices)
 - [Development](#development)
-    * [Previewing user documentation](#previewing-user-documentation)
+  - [Previewing user documentation](#previewing-user-documentation)
 - [Making a release](#release)
 
 <a id="code-of-conduct"></a>
 
 ## Code of Conduct
 
-The NMDC team strives to create a
-welcoming environment for editors, users and other contributors.
+The NMDC team strives to create a welcoming environment for editors, users, and other contributors.
 
 Please carefully read NMDC's [Code of Conduct](https://github.com/microbiomedata/nmdc-schema/blob/main/CODE_OF_CONDUCT.md).
 
@@ -41,22 +40,24 @@ Please use the [Issue Tracker](https://github.com/microbiomedata/nmdc_api_utilit
 Please review GitHub's overview article,
 ["Tracking Your Work with Issues"][about-issues].
 
-### Pull Requests
+<a id="pull-requests"></a>
 
-See [Pull Requests](https://github.com/microbiomedata/nmdc-schema/pulls/) for all pull requests. Every pull request should be associated with an issue.
+### Making pull requests
+
+See [Pull Requests](https://github.com/microbiomedata/nmdc_api_utilities/pulls/) for all pull requests. Every pull request should be associated with an issue.
 
 Please review GitHub's article, ["About Pull Requests"][about-pulls],
 and make your changes on a [new branch][about-branches].
 
 We recommend also reading [GitHub Pull Requests: 10 Tips to Know](https://blog.mergify.com/github-pull-requests-10-tips-to-know/)
 
-## Best Practices
-
 <a id="best-practices"></a>
+
+### Best practices for issues and pull requests
 
 - Read ["About Issues"][about-issues] and ["About Pull Requests"][about-pulls]
 - Issues should be focused and actionable
-- Bugs should be reported with a clear description of the problem and steps to reproduce.
+- Bugs should be reported with a clear description of the problem and steps to reproduce
 - Complex issues should be broken down into simpler issues where possible
 - Pull Requests (PRs) should be atomic and aim to close a single issue
 - PRs should reference issues following standard conventions (e.g. “Fixes #123”)
@@ -66,11 +67,15 @@ We recommend also reading [GitHub Pull Requests: 10 Tips to Know](https://blog.m
 - PRs should be reviewed and merged in a timely fashion
 - In the case of git conflicts, the contributor should try and resolve the conflict
 
+<!--
+    Note: The following are "reference-style" links, whose references are sprinkled throughout this document.
+          For more information: https://www.markdownguide.org/basic-syntax/#reference-style-links
+          These kinds of links are not mentioned in GitHub's docs, at: https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#links
+-->
 
 [about-branches]: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-branches
 [about-issues]: https://docs.github.com/en/issues/tracking-your-work-with-issues/about-issues
 [about-pulls]: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests
-
 
 ## Development
 
@@ -80,25 +85,31 @@ This project uses [uv](https://docs.astral.sh/uv/) for Python and dependency man
 
 ### Python
 
-#### To install the python dependencies:
+#### Install Python dependencies
 
 1. [Install uv](https://docs.astral.sh/uv/getting-started/installation/) if you don't already have it.
 2. Clone the GitHub repository.
-3. Install the project plus the `dev` dependency group into a managed virtual environment:
+3. Install the project, plus the dependencies in the `dev` group, into a uv-managed virtual environment:
 
-    `uv sync --group dev`
+    ```sh
+    uv sync --group dev
+    ```
 
-    Add `--group docs` if you also want the documentation tooling. To update an existing environment after pulling new changes, re-run the same command.
+    You can add `--group docs` to also install the documentation dependencies. To update an existing environment after pulling new changes, re-run the same command.
 
-4. Run any tool inside the managed environment with `uv run`, for example:
+4. Run any tool inside the uv-managed environment with `uv run`; for example:
 
-    `uv run pytest`
+    ```sh
+    uv run pytest
+    ```
 
-#### Set up pre commit
+#### Set up pre-commit
 
-1. Install precommit hooks to run formatting before committing:
+1. Install pre-commit hooks to run formatting before committing:
 
-    `uv run pre-commit install`
+    ```sh
+    uv run pre-commit install
+    ```
 
 ### Static type checking
 
@@ -162,5 +173,7 @@ When you're done previewing the documentation website, you can terminate the HTT
 Major refactoring should be scoped with the main developers of the repo.
 
 <a id="release"></a>
+
 ## Making a release
-Right now, only the maintainer of this repository can make a release to PyPi. This process may change in the future. If you need to make a release please contact Olivia Hess.
+
+Right now, only the maintainer of this repository can make a release to [PyPI](https://pypi.org/project/nmdc-api-utilities/). This process may change in the future. If you need to make a release, please contact Olivia Hess.
