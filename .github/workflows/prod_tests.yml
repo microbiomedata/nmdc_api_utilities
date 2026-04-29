@@ -5,6 +5,10 @@ on:
     branches: [ main ]
   pull_request:
     types: [opened, synchronize, reopened]
+    paths-ignore:
+      - CONTRIBUTING.md
+      - LICENSE
+      - README.md
   workflow_dispatch:
   schedule:
     - cron: '0 0 * * *'
