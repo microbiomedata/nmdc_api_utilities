@@ -14,7 +14,7 @@ Unlike other repos for data exploration, the code in this repo is used by many m
 - [Guidelines for Contributions and Requests](#contributions)
   - [Reporting issues](#reporting-issues)
   - [Making pull requests](#pull-requests)
-- [Best practices](#best-practices)
+  - [Best practices](#best-practices)
 - [Development](#development)
   - [Previewing user documentation](#previewing-user-documentation)
 - [Making a release](#release)
@@ -44,7 +44,7 @@ Please review GitHub's overview article,
 
 ### Making pull requests
 
-See [Pull Requests](https://github.com/microbiomedata/nmdc-schema/pulls/) for all pull requests. Every pull request should be associated with an issue.
+See [Pull Requests](https://github.com/microbiomedata/nmdc_api_utilities/pulls/) for all pull requests. Every pull request should be associated with an issue.
 
 Please review GitHub's article, ["About Pull Requests"][about-pulls],
 and make your changes on a [new branch][about-branches].
@@ -85,7 +85,7 @@ This project uses [uv](https://docs.astral.sh/uv/) for Python and dependency man
 
 ### Python
 
-#### Install the python dependencies
+#### Install Python dependencies
 
 1. [Install uv](https://docs.astral.sh/uv/getting-started/installation/) if you don't already have it.
 2. Clone the GitHub repository.
