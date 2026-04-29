@@ -16,6 +16,7 @@ Unlike other repos for data exploration, the code in this repo is used by many m
     * [Making pull requests](#pull-requests)
 - [Best practices](#best-practices)
 - [Development](#development)
+    * [Docstrings](#docstrings)
     * [Previewing user documentation](#previewing-user-documentation)
 - [Making a release](#release)
 
@@ -122,6 +123,56 @@ uv run mypy
 ```
 
 By default, mypy will use the configuration specified within the `[tool.mypy]` section of `pyproject.toml`. You can override aspects of that configuration via [CLI options](https://mypy.readthedocs.io/en/stable/command_line.html).
+
+<a id="docstrings"></a>
+
+### Docstrings
+
+We use [numpydoc](https://numpydoc.readthedocs.io/en/latest/format.html) style for all docstrings.
+The key sections are `Parameters`, `Returns`, `Raises`, and `Examples` (when helpful).
+
+**Do not** include types or default values in docstrings. Instead, express them as Python type hints
+directly in the function or method signature. For example:
+
+```py
+# ✅ Do this — type hints in the signature, no types or defaults in the docstring
+def get_records(self, filter: str = "", max_page_size: int = 100) -> list[dict]:
+    """
+    Retrieve records from the collection.
+
+    Parameters
+    ----------
+    filter
+        A MongoDB-style filter string to narrow the results.
+    max_page_size
+        Maximum number of records to return per page.
+
+    Returns
+    -------
+    list[dict]
+        The matching records.
+    """
+    ...
+
+# ❌ Don't do this — types and defaults duplicated in the docstring
+def get_records(self, filter: str = "", max_page_size: int = 100) -> list[dict]:
+    """
+    Retrieve records from the collection.
+
+    Parameters
+    ----------
+    filter : str, optional
+        A MongoDB-style filter string to narrow the results, by default "".
+    max_page_size : int, optional
+        Maximum number of records to return per page, by default 100.
+
+    Returns
+    -------
+    list[dict]
+        The matching records.
+    """
+    ...
+```
 
 ### Previewing user documentation
 
