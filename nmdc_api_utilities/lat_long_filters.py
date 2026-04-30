@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import logging
 from abc import ABC, abstractmethod
-from typing import cast
+from typing import Literal, cast
 
 import pandas as pd
 
@@ -21,7 +21,7 @@ class LatLongFilters(ABC):
         max_page_size: int = 100,
         fields: str = "",
         all_pages: bool = False,
-        shape: str = "records",
+        shape: Literal["records", "dataframe"] = "records",
     ) -> list[dict] | pd.DataFrame:
         """Retrieve records from a collection via the NMDC API."""
 

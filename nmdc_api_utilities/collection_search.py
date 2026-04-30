@@ -399,7 +399,7 @@ class CollectionSearch(NMDCSearch):
             res = cast(list[dict], res)
             results += res
         if shape == "dataframe":
-            results = pd.DataFrame(results)
+            return pd.DataFrame(results)
         return results
 
 
