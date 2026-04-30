@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from typing import cast
+
 from nmdc_api_utilities.collection_search import CollectionSearch
 from nmdc_api_utilities.config import API_BASE_URL
 
@@ -70,5 +72,8 @@ class FunctionalSearch(CollectionSearch):
 
         filter = f'{{"gene_function_id": "{formatted_annotation_type}"}}'
 
-        result = self.get_record_by_filter(filter, page_size, fields, all_pages)
-        return result
+        result = self.get_record_by_filter(
+            filter, page_size, fields, all_pages, shape="records"
+        )
+        records = cast(list[dict], result)
+        return records
