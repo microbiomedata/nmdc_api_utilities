@@ -279,7 +279,10 @@ class CollectionSearch(NMDCSearch):
             )
         results = response.json()
         if shape == "dataframe":
-            results = pd.DataFrame(results)
+            if isinstance(results, dict):
+                results = pd.DataFrame([results])
+            else:
+                results = pd.DataFrame(results)
         return results
 
     def check_ids_exist(
