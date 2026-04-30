@@ -40,7 +40,7 @@ pip install --upgrade nmdc_api_utilities
 from nmdc_api_utilities import BiosampleSearch
 
 biosample_client = BiosampleSearch()
-biosample_client.get_record_by_id(collection_id="nmdc:bsm-13-amrnys72")
+biosample_client.get_record_by_id(record_id="nmdc:bsm-13-amrnys72")
 ```
 
 ### Multi-step workflow: study → biosamples → data objects
