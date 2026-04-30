@@ -52,7 +52,7 @@ class CollectionSearch(NMDCSearch):
         max_page_size: int = 100,
         fields: str = "",
         all_pages: bool = False,
-        shape: str = "records",
+        shape: Literal["records", "dataframe"] = "records",
     ) -> list[dict] | pd.DataFrame:
         """
         Retrieve records from the collection via the NMDC API.
@@ -83,6 +83,10 @@ class CollectionSearch(NMDCSearch):
             If the API request fails.
 
         """
+        if shape not in ["records", "dataframe"]:
+            raise ValueError(
+                f"Invalid shape input: {shape}\n Valid inputs: 'records' or 'dataframe'"
+            )
         logging.debug(f"get_records Filter: {filter}")
         filter = urllib.parse.quote(filter)
         logging.debug(f"get_records encoded Filter: {filter}")
@@ -383,7 +387,7 @@ class CollectionSearch(NMDCSearch):
             )
 
         dp = DataProcessing()
-        results: list[dict] | pd.DataFrame = []
+        results: list[dict] = []
         id_list = list(set(id_list))
         chunks = dp.split_list(input_list=id_list, chunk_size=chunk_size)
         for chunk in chunks:
