@@ -34,6 +34,9 @@ jobs:
       - name: Run pre-commit hooks
         run: uv run pre-commit run --all-files || true
 
+      - name: Run mypy (blocking)
+        run: uv run mypy
+
       - name: Commit and push changes if pre-commit made any modifications
         run: |
           git config user.name "github-actions[bot]"
