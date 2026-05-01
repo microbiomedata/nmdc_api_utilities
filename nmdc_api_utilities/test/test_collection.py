@@ -2,6 +2,7 @@
 import logging
 import unittest
 
+import pandas as pd
 import pytest
 
 from nmdc_api_utilities.collection_search import CollectionSearch
@@ -19,6 +20,16 @@ class TestCollection(unittest.TestCase):
         # simple test to check if the get_records method returns a list of records
         collection = CollectionSearch("study_set", api_base_url=API_BASE_URL)
         results = collection.get_records(max_page_size=10)
+        assert isinstance(results, list) and all(
+            isinstance(item, dict) for item in results
+        )
+        assert len(results) == 10
+
+    def test_get_records_dataframe(self):
+        # simple test to check if the get_records method returns a pandas dataframe
+        collection = CollectionSearch("study_set", api_base_url=API_BASE_URL)
+        results = collection.get_records(max_page_size=10, shape="dataframe")
+        assert isinstance(results, pd.DataFrame)
         assert len(results) == 10
 
     def test_get_record_by_filter(self):

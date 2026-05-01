@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 import logging
 from abc import ABC, abstractmethod
+from typing import Literal, cast
+
+import pandas as pd
 
 logger = logging.getLogger(__name__)
 
@@ -18,7 +21,8 @@ class LatLongFilters(ABC):
         max_page_size: int = 100,
         fields: str = "",
         all_pages: bool = False,
-    ) -> list[dict]:
+        shape: Literal["records", "dataframe"] = "records",
+    ) -> list[dict] | pd.DataFrame:
         """Retrieve records from a collection via the NMDC API."""
 
     def get_record_by_latitude(
@@ -77,8 +81,8 @@ class LatLongFilters(ABC):
             )
         filter = f'{{"lat_lon.latitude": {{"${comparison}": {latitude}}}}}'
 
-        result = self.get_records(filter, page_size, fields, all_pages)
-        return result
+        result = self.get_records(filter, page_size, fields, all_pages, shape="records")
+        return cast(list[dict], result)
 
     def get_record_by_longitude(
         self,
@@ -134,8 +138,8 @@ class LatLongFilters(ABC):
                 f"Invalid comparison input: {comparison}\n Valid inputs: {allowed_comparisons}"
             )
         filter = f'{{"lat_lon.longitude": {{"${comparison}": {longitude}}}}}'
-        result = self.get_records(filter, page_size, fields, all_pages)
-        return result
+        result = self.get_records(filter, page_size, fields, all_pages, shape="records")
+        return cast(list[dict], result)
 
     def get_record_by_lat_long(
         self,
@@ -205,5 +209,7 @@ class LatLongFilters(ABC):
                 f"Invalid comparison input: {long_comparison}\n Valid inputs: {allowed_comparisons}"
             )
         filter = f'{{"lat_lon.latitude": {{"${lat_comparison}": {latitude}}}, "lat_lon.longitude": {{"${long_comparison}": {longitude}}}}}'
-        results = self.get_records(filter, page_size, fields, all_pages)
-        return results
+        results = self.get_records(
+            filter, page_size, fields, all_pages, shape="records"
+        )
+        return cast(list[dict], results)
