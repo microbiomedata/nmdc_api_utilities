@@ -14,6 +14,8 @@ from nmdc_api_utilities.nmdc_search import NMDCSearch
 
 logger = logging.getLogger(__name__)
 
+QueryParamValue = str | bytes | int | float | None
+
 
 class OperationNotSupportedError(RuntimeError):
     """Raised when an operation isn't supported by a collection subclass."""
@@ -86,7 +88,7 @@ class CollectionSearch(NMDCSearch):
                 f"Invalid shape input: {shape}\n Valid inputs: 'records' or 'dataframe'"
             )
         url = f"{self.api_base_url}/nmdcschema/{self.collection_name}"
-        params = {
+        params: dict[str, QueryParamValue] = {
             "filter": filter,
             "max_page_size": max_page_size,
             "projection": fields,
@@ -264,7 +266,7 @@ class CollectionSearch(NMDCSearch):
             record_id = collection_id
 
         url = f"{self.api_base_url}/nmdcschema/{self.collection_name}/{record_id}"
-        params = {
+        params: dict[str, QueryParamValue] = {
             "max_page_size": max_page_size,
             "projection": fields,
         }
