@@ -70,7 +70,6 @@ class CollectionSearch(NMDCSearch):
         shape
             The shape of the returned data. If "records", the data will be returned as a list of dictionaries,
             where each dictionary is a record. If "dataframe", the data will be returned as a pandas dataframe.
-            Default is "records".
 
         Returns
         -------
@@ -144,7 +143,6 @@ class CollectionSearch(NMDCSearch):
         shape
             The shape of the returned data. If "records", the data will be returned as a list of dictionaries,
             where each dictionary is a record. If "dataframe", the data will be returned as a pandas dataframe.
-            Default is "records".
 
         Returns
         -------
@@ -187,7 +185,6 @@ class CollectionSearch(NMDCSearch):
         shape
             The shape of the returned data. If "records", the data will be returned as a list of dictionaries,
             where each dictionary is a record. If "dataframe", the data will be returned as a pandas dataframe.
-            Default is "records".
 
         Returns
         -------
@@ -234,7 +231,6 @@ class CollectionSearch(NMDCSearch):
         shape
             The shape of the returned data. If "records", the data will be returned as a list of dictionaries,
             where each dictionary is a record. If "dataframe", the data will be returned as a pandas dataframe.
-            Default is "records".
 
         Returns
         -------
@@ -373,7 +369,6 @@ class CollectionSearch(NMDCSearch):
         shape
             The shape of the returned data. If "records", the data will be returned as a list of dictionaries,
             where each dictionary is a record. If "dataframe", the data will be returned as a pandas dataframe.
-            Default is "records".
 
         Returns
         -------
