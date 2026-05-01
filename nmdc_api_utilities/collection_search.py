@@ -3,7 +3,6 @@
 import json
 import logging
 import re
-import urllib.parse
 from typing import Literal, Optional, cast
 
 import pandas as pd
@@ -86,14 +85,16 @@ class CollectionSearch(NMDCSearch):
             raise ValueError(
                 f"Invalid shape input: {shape}\n Valid inputs: 'records' or 'dataframe'"
             )
-        logging.debug(f"get_records Filter: {filter}")
-        filter = urllib.parse.quote(filter)
-        logging.debug(f"get_records encoded Filter: {filter}")
-        url_prefix = f"{self.api_base_url}/nmdcschema/{self.collection_name}"
-        url = f"{url_prefix}?filter={filter}&max_page_size={max_page_size}&projection={fields}"
+        url = f"{self.api_base_url}/nmdcschema/{self.collection_name}"
+        params = {
+            "filter": filter,
+            "max_page_size": max_page_size,
+            "projection": fields,
+        }
         try:
             response = requests.get(
-                url,
+                url=url,
+                params=params,
                 headers=self._build_http_request_headers(),
             )
             response.raise_for_status()
@@ -108,9 +109,9 @@ class CollectionSearch(NMDCSearch):
         results = response.json()["resources"]
         # otherwise, get all pages
         if all_pages:
-            results = self._get_all_pages(
-                response, url_prefix, filter, max_page_size, fields
-            )["resources"]
+            results = self._get_all_pages(response, url, filter, max_page_size, fields)[
+                "resources"
+            ]
 
         if shape == "dataframe":
             results = pd.DataFrame(results)
@@ -262,12 +263,17 @@ class CollectionSearch(NMDCSearch):
             )
             record_id = collection_id
 
-        url = f"{self.api_base_url}/nmdcschema/{self.collection_name}/{record_id}?max_page_size={max_page_size}&projection={fields}"
+        url = f"{self.api_base_url}/nmdcschema/{self.collection_name}/{record_id}"
+        params = {
+            "max_page_size": max_page_size,
+            "projection": fields,
+        }
         # get the reponse
         try:
             response = requests.get(
-                url,
+                url=url,
                 headers=self._build_http_request_headers(),
+                params=params,
             )
             response.raise_for_status()
         except requests.exceptions.RequestException as e:
