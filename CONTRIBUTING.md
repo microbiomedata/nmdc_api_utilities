@@ -259,37 +259,9 @@ uv run pytest nmdc_api_utilities/test/test_collection.py::TestCollection::test_g
 
 ### The `api_base_url` variable
 
-Many classes in this package accept an `api_base_url` parameter that specifies which instance of the NMDC Runtime API to send requests to. At module load time, the `API_BASE_URL` constant in `nmdc_api_utilities/config.py` is resolved from environment variables and is used as the default value throughout the test suite.
+Most methods in this package accept an `api_base_url` parameter that specifies which instance of the NMDC Runtime API to send requests to. At module load time, the `API_BASE_URL` constant in `nmdc_api_utilities/config.py` is resolved from environment variables and is used as the default value throughout the test suite.
 
-**How it is resolved (in priority order):**
-
-1. If the `ENV` environment variable is set to `"prod"`, the production API (`https://api.microbiomedata.org`) is used.
-2. If the `ENV` environment variable is set to `"dev"`, the internal development API (`https://api-dev.microbiomedata.org`) is used. (Caution: this instance is intended for NMDC development team members only and may change without notice, potentially causing test failures.)
-3. Otherwise, the value of the `API_BASE_URL` environment variable is used. If that variable is not set, the production API is used by default.
-
-**Setting it for a local run:**
-
-```sh
-# Use a local instance of the NMDC Runtime API (e.g. running on port 8000)
-export API_BASE_URL="http://localhost:8000"
-uv run pytest
-
-# Explicitly target production
-export ENV="prod"
-uv run pytest
-```
-
-Most tests import `API_BASE_URL` at the top of the file and pass it directly when constructing client objects:
-
-```python
-from nmdc_api_utilities.config import API_BASE_URL
-from nmdc_api_utilities.collection_search import CollectionSearch
-
-def test_get_records():
-    collection = CollectionSearch("study_set", api_base_url=API_BASE_URL)
-    results = collection.get_records(max_page_size=10)
-    assert len(results) == 10
-```
+For our CI/CD testing workflows, we test against both the production and development instances of the NMDC Runtime API. This is configured via environment variables in the GitHub Actions workflow files (`prod_tests.yml` and `dev_tests.yml`), and the logic for resolving which API to target is implemented in `nmdc_api_utilities/config.py`. For any new test you write, you should ensure that it can be run against any API instance by using the `API_BASE_URL` constant as the default value for the `api_base_url` parameter when constructing client objects. This allows the test to be flexible and work in different environments without modification.
 
 <a id="writing-new-tests"></a>
 
@@ -340,7 +312,6 @@ The key rules are:
 
 - **Never** call a write/submission endpoint against the live API in a test.
 - Always assert both the return value _and_ that the mock was called the expected number of times. Use `assert_called_once()` to verify it was called exactly once, or `assert_called_once_with(expected_url, ...)` to also verify the correct arguments were passed (which provides stronger validation).
-- Keep credentials out of tests. Load them from environment variables (e.g. via `python-dotenv`) and skip or xfail the test gracefully when credentials are not available.
 
 <a id="release"></a>
 
