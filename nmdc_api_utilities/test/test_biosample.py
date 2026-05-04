@@ -65,24 +65,24 @@ def test_biosample_by_proximity_biosample():
     results = biosample.get_record_by_proximity(
         radius_meters=1000, biosample_id="nmdc:bsm-11-7bk7nf04"
     )
-    assert len(results) > 0
+    assert len(results) > 5
 
 
 def test_biosample_by_proximity_location():
     biosample = BiosampleSearch(api_base_url=API_BASE_URL)
     results = biosample.get_record_by_proximity(
-        radius_meters=100000,
-        query_lat=37.851667,
-        query_lon=-122.294444,
+        radius_meters=2180000,
+        query_lat=65.42577,
+        query_lon=-150.416496,
         all_pages=True,
     )
-    assert len(results) > 0
+    assert len(results) > 1000
     captured_studies = {
         study_id
         for result in results
         for study_id in result.get("associated_studies", [])
     }
-    assert len(captured_studies) > 1
+    assert len(captured_studies) > 10
 
 
 def test_biosample_build_filter_1():
