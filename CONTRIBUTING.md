@@ -16,6 +16,10 @@ Unlike other repos for data exploration, the code in this repo is used by many m
   - [Making pull requests](#pull-requests)
   - [Best practices](#best-practices)
 - [Development](#development)
+- [Testing](#testing)
+  - [Running tests](#running-tests)
+  - [The `api_base_url` variable](#the-api_base_url-variable)
+  - [Writing new tests](#writing-new-tests)
 - [Docstrings](#docstrings)
 - [Previewing user documentation](#previewing-user-documentation)
 - [Making a release](#release)
@@ -222,6 +226,92 @@ When you're done previewing the documentation website, you can terminate the HTT
 #### Major refactoring
 
 Major refactoring should be scoped with the main developers of the repo.
+
+<a id="testing"></a>
+
+## Testing
+
+We use [pytest](https://docs.pytest.org/) as our testing framework. All tests live in the `nmdc_api_utilities/test/` directory.
+
+<a id="running-tests"></a>
+
+### Running tests
+
+Run the full test suite with:
+
+```sh
+uv run pytest
+```
+
+To run only a specific test file:
+
+```sh
+uv run pytest nmdc_api_utilities/test/test_collection.py
+```
+
+To run a specific test by name:
+
+```sh
+uv run pytest nmdc_api_utilities/test/test_collection.py::TestCollection::test_get_records
+```
+
+<a id="the-api_base_url-variable"></a>
+
+### The `api_base_url` variable
+
+Most methods in this package accept an `api_base_url` parameter that specifies which instance of the NMDC Runtime API to send requests to. At module load time, the `API_BASE_URL` constant in `nmdc_api_utilities/config.py` is resolved from environment variables and is used as the default value throughout the test suite.
+
+For our CI/CD testing workflows, we test against both the production and development instances of the NMDC Runtime API. This is configured via environment variables in the GitHub Actions workflow files (`prod_tests.yml` and `dev_tests.yml`), and the logic for resolving which API to target is implemented in `nmdc_api_utilities/config.py`. For any new test you write, you should ensure that it can be run against any API instance by using the `API_BASE_URL` constant as the default value for the `api_base_url` parameter when constructing client objects. This allows the test to be flexible and work in different environments without modification.
+
+<a id="writing-new-tests"></a>
+
+### Writing new tests
+
+- Place new test files in `nmdc_api_utilities/test/` and name them `test_<module>.py`.
+- Test functions and methods should be named `test_<what_is_being_tested>`.
+- Import `API_BASE_URL` from `nmdc_api_utilities.config` and pass it as the `api_base_url` argument to any client object you instantiate.
+
+**Mocking privileged API calls**
+
+Any test that exercises an API endpoint that requires authentication or that _submits, modifies, or deletes_ data **must** mock the underlying HTTP calls. Do **not** write tests that actually submit data to the production (or development) NMDC Runtime API.
+
+Use `unittest.mock.patch` (or pytest's `monkeypatch`) to intercept the relevant HTTP calls. The existing tests in `test_staging.py` demonstrate the recommended pattern:
+
+```python
+from unittest.mock import MagicMock, patch
+import pytest
+from nmdc_api_utilities.config import API_BASE_URL
+from nmdc_api_utilities.data_staging import JGISequencingProjectAPI
+
+
+@pytest.fixture
+def mock_auth():
+    with patch("nmdc_api_utilities.data_staging.NMDCAuth") as mock_auth_class:
+        mock_auth_instance = MagicMock()
+        mock_auth_instance.get_token.return_value = "fake-token"
+        mock_auth_instance.has_credentials.return_value = True
+        mock_auth_class.return_value = mock_auth_instance
+        yield mock_auth_instance
+
+
+@pytest.fixture
+def mock_post_response():
+    with patch("requests.post") as mock_post:
+        yield mock_post
+
+
+def test_create_sequencing_project(mock_auth, mock_post_response):
+    mock_post_response.return_value.json.return_value = {"resources": {"key": "value"}}
+    client = JGISequencingProjectAPI(api_base_url=API_BASE_URL, auth=mock_auth)
+    result = client.create_jgi_sequencing_project({"key": "value"})
+    assert result == {"resources": {"key": "value"}}
+    mock_post_response.assert_called_once()  # verify the call was made (but not for real)
+```
+
+The key rules are:
+
+- **Never** call a write/submission endpoint against the live API in a test.
+- Always assert both the return value _and_ that the mock was called the expected number of times. Use `assert_called_once()` to verify it was called exactly once, or `assert_called_once_with(expected_url, ...)` to also verify the correct arguments were passed (which provides stronger validation).
 
 <a id="release"></a>
 
