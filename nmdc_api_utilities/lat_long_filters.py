@@ -265,8 +265,8 @@ class LatLongFilters(ABC):
 
     def get_record_by_proximity(
         self,
-        radius_meters: float,
-        biosample_id: str | None = None,
+        radius_km: float,
+        record_id: str | None = None,
         query_lat: float | None = None,
         query_lon: float | None = None,
         page_size: int = 25,
@@ -274,19 +274,21 @@ class LatLongFilters(ABC):
         all_pages: bool = False,
     ) -> list[dict]:
         """
-        Retrieve records by proximity to a biosample or lat lon via the NMDC API.
+        Retrieve records by proximity to a record or lat lon via the NMDC API.
         First retrieve records within a bounding box, then refine to those within the circular radius.
 
         Parameters
         ----------
-        radius_meters
-            The radius in meters to search for records around the biosample.
-        biosample_id
-            The ID of the biosample to query. If provided, query_lat and query_lon must not be provided.
+        radius_km
+            The radius in kilometers to search for records around the record.
+        record_id
+            The ID of a record to query where lat/lon are provided (Biosample or FieldResearchSite). If provided, query_lat and query_lon must not be provided.
         query_lat
-            The latitude to query. If provided, biosample_id must not be provided.
+            The latitude, in decimal degrees, to query. If provided, record_id must not be provided.
+            Example: "63.875088"
         query_lon
-            The longitude to query. If provided, biosample_id must not be provided.
+            The longitude, in decimal degrees, to query. If provided, record_id must not be provided.
+            Example: "-149.210438"
         page_size
             The number of results to return per page.
         fields
@@ -301,14 +303,14 @@ class LatLongFilters(ABC):
             A list of records.
 
         """
-        if biosample_id is not None and (
-            query_lat is not None or query_lon is not None
-        ):
+        radius_meters = radius_km * 1000
+
+        if record_id is not None and (query_lat is not None or query_lon is not None):
             logger.error(
-                "Invalid input: ONLY biosample_id or query_lat/query_lon can be used, not both."
+                "Invalid input: ONLY record_id or query_lat/query_lon can be used, not both."
             )
             raise ValueError(
-                "Invalid input: ONLY biosample_id or query_lat/query_lon can be used, not both."
+                "Invalid input: ONLY record_id or query_lat/query_lon can be used, not both."
             )
         if (
             query_lat is not None
@@ -324,16 +326,16 @@ class LatLongFilters(ABC):
             )
 
         # Calculate bounding box for mongoDB query
-        if biosample_id is not None:
-            biosample_lat_lon = self.get_records(
-                filter=f'{{"id": "{biosample_id}"}}',
+        if record_id is not None:
+            record_lat_lon = self.get_records(
+                filter=f'{{"id": "{record_id}"}}',
                 max_page_size=1,
                 fields="lat_lon",
                 all_pages=False,
                 shape="records",
             )
-            center_lat = biosample_lat_lon[0].get("lat_lon", {}).get("latitude")
-            center_lon = biosample_lat_lon[0].get("lat_lon", {}).get("longitude")
+            center_lat = record_lat_lon[0].get("lat_lon", {}).get("latitude")
+            center_lon = record_lat_lon[0].get("lat_lon", {}).get("longitude")
         if query_lat is not None and query_lon is not None:
             center_lat = query_lat
             center_lon = query_lon
