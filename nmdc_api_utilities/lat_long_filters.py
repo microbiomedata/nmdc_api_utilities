@@ -285,10 +285,10 @@ class LatLongFilters(ABC):
             The ID of a record to query where lat/lon are provided (Biosample or FieldResearchSite). If provided, query_lat and query_lon must not be provided.
         query_lat
             The latitude, in decimal degrees, to query. If provided, record_id must not be provided.
-            Example: "63.875088"
+            Example: 63.875088
         query_lon
             The longitude, in decimal degrees, to query. If provided, record_id must not be provided.
-            Example: "-149.210438"
+            Example: -149.210438
         page_size
             The number of results to return per page.
         fields
