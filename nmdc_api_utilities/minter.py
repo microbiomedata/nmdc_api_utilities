@@ -96,7 +96,10 @@ class Minter(NMDCAPIClient):
         try:
             response = requests.post(
                 url,
-                headers=self._build_http_request_headers(access_token=token),
+                headers=self._build_http_request_headers(
+                    access_token=token,
+                    content_type="application/json",
+                ),
                 data=json.dumps(payload),
             )
             response.raise_for_status()
