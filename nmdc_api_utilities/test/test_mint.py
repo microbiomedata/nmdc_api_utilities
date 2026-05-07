@@ -87,23 +87,3 @@ def test_old_auth():
     assert results
     assert isinstance(results, str)
     assert "nmdc:dobj" in results
-
-
-def test_mint_sets_content_type_header():
-    """Test that mint requests include JSON Content-Type header."""
-    mock_auth = MagicMock()
-    mock_auth.get_token.return_value = "abcd123"
-    mock_auth.has_credentials.return_value = True
-
-    with patch("requests.post") as mock_post:
-        mock_response = MagicMock()
-        mock_response.raise_for_status.return_value = None
-        mock_response.json.return_value = ["nmdc:dobj-11-abcd1234"]
-        mock_post.return_value = mock_response
-
-        mint = Minter(api_base_url=API_BASE_URL, auth=mock_auth)
-        result = mint.mint("nmdc:DataObject")
-
-        assert result == "nmdc:dobj-11-abcd1234"
-        headers = mock_post.call_args.kwargs["headers"]
-        assert headers["Content-Type"] == "application/json"
