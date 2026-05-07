@@ -174,6 +174,7 @@ class JGISequencingProjectAPI(NMDCAPIClient):
         headers = self._build_http_request_headers(
             access_token=self.auth.get_token(),
             accept="application/json",
+            content_type="application/json",
         )
         try:
             response = requests.get(url, headers=headers)
@@ -262,7 +263,9 @@ class JGISampleSearchAPI(NMDCAPIClient):
             response = requests.get(
                 url,
                 headers=self._build_http_request_headers(
-                    access_token=self.auth.get_token()
+                    access_token=self.auth.get_token(),
+                    accept="application/json",
+                    content_type="application/json",
                 ),
                 params=query_params,
             )
