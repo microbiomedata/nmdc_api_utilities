@@ -30,7 +30,7 @@ class DataObjectSearch(CollectionSearch):
         max_page_size: Optional[int] = None,
     ) -> list[dict]:
         """
-        (Deprecated) This method is deprecated. Use `get_data_objects_for_study` instead.
+        (Deprecated) This method is deprecated. Use ``get_data_objects_for_study`` instead.
         """
 
         warnings.warn(
@@ -42,7 +42,7 @@ class DataObjectSearch(CollectionSearch):
 
         if max_page_size is not None:
             warnings.warn(
-                "The `max_page_size` parameter is deprecated and will be removed in "
+                "The ``max_page_size`` parameter is deprecated and will be removed in "
                 "a future release. It has no effect.",
                 category=DeprecationWarning,
                 stacklevel=2,

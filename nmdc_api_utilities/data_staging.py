@@ -24,7 +24,7 @@ class JGISequencingProjectAPI(NMDCAPIClient):
     api_base_url
         The base URL of an instance of the NMDC Runtime API. By default, this is the base URL of the production instance.
     env
-        Deprecated. Use `api_base_url` instead. Previously used to specify the API environment (e.g., "prod", "dev").
+        Deprecated. Use ``api_base_url`` instead. Previously used to specify the API environment (e.g., "prod", "dev").
     """
 
     def __init__(
@@ -201,7 +201,7 @@ class JGISampleSearchAPI(NMDCAPIClient):
     api_base_url
         The base URL of an instance of the NMDC Runtime API. By default, this is the base URL of the production instance.
     env
-        Deprecated. Use `api_base_url` instead. Previously used to specify the API environment (e.g., "prod", "dev").
+        Deprecated. Use ``api_base_url`` instead. Previously used to specify the API environment (e.g., "prod", "dev").
     """
 
     def __init__(
@@ -392,7 +392,7 @@ class GlobusTaskAPI(NMDCAPIClient):
     api_base_url
         The base URL of an instance of the NMDC Runtime API. By default, this is the base URL of the production instance.
     env
-        Deprecated. Use `api_base_url` instead. Previously used to specify the API environment (e.g., "prod", "dev").
+        Deprecated. Use ``api_base_url`` instead. Previously used to specify the API environment (e.g., "prod", "dev").
     """
 
     def __init__(
