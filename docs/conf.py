@@ -25,9 +25,12 @@ except (ImportError, OSError):
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "nmdc_api_utilities"
-copyright = "2024, Olivia Hess"
-author = "Olivia Hess"
-release = "2/1/2025"
+copyright = "2026, NMDC"
+author = "NMDC"
+
+from nmdc_api_utilities import __version__
+
+release = __version__
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
