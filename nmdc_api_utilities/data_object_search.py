@@ -8,6 +8,7 @@ import requests
 
 from nmdc_api_utilities.collection_search import CollectionSearch
 from nmdc_api_utilities.config import API_BASE_URL
+from nmdc_api_utilities.lib.deprecation import deprecated, has_deprecated_parameter
 
 logger = logging.getLogger(__name__)
 
@@ -24,29 +25,18 @@ class DataObjectSearch(CollectionSearch):
             env=env,
         )
 
+    @has_deprecated_parameter(
+        parameter_name="max_page_size", stacklevel=2, footnote="It has no effect."
+    )
+    @deprecated("Use ``get_data_objects_for_study`` instead.", stacklevel=2)
     def get_data_objects_for_studies(
         self,
         study_id: str,
         max_page_size: Optional[int] = None,
     ) -> list[dict]:
         """
-        (Deprecated) This method is deprecated. Use ``get_data_objects_for_study`` instead.
+        .. deprecated:: 0.6.2 Use the ``get_data_objects_for_study`` method instead.
         """
-
-        warnings.warn(
-            "The `get_data_objects_for_studies` method is deprecated and will be removed in "
-            "a future release. Use the `get_data_objects_for_study` method instead.",
-            category=DeprecationWarning,
-            stacklevel=2,
-        )
-
-        if max_page_size is not None:
-            warnings.warn(
-                "The ``max_page_size`` parameter is deprecated and will be removed in "
-                "a future release. It has no effect.",
-                category=DeprecationWarning,
-                stacklevel=2,
-            )
 
         return self.get_data_objects_for_study(study_id)
 

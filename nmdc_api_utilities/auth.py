@@ -8,6 +8,7 @@ import requests
 
 from nmdc_api_utilities.api_client import NMDCAPIClient
 from nmdc_api_utilities.config import API_BASE_URL
+from nmdc_api_utilities.lib.deprecation import has_deprecated_parameter
 
 logger = logging.getLogger(__name__)
 
@@ -45,6 +46,9 @@ class NMDCAuth(NMDCAPIClient):
 
     """
 
+    @has_deprecated_parameter(
+        parameter_name="env", stacklevel=2, footnote="Use ``api_base_url`` instead."
+    )
     def __init__(
         self,
         client_id: str | None = None,
