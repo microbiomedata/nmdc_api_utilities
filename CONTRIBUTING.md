@@ -253,28 +253,24 @@ In production, our user documentation is generated via a GitHub Actions workflow
 (i.e. `documentation.yml`) that builds the documentation website and deploys it to GitHub Pages,
 where it can be accessed by users.
 
-In development, you can build and preview the documentation website locally by following these steps:
+In development, you can build and preview the documentation website locally by running the following
+command:
 
-1. Install Python dependencies. The pandoc binary that `nbsphinx` needs is bundled in
-   the `pypandoc-binary` package, so no system-level install (Homebrew, apt) is required.
+```sh
+uv run --group docs sphinx-autobuild --watch nmdc_api_utilities docs build/html
+```
 
-   ```sh
-   uv sync --group docs
-   ```
-
-2. Build and serve the documentation website, automatically rebuilding it whenever any
-   [documentation or code](https://github.com/sphinx-doc/sphinx-autobuild#relevant-sphinx-bugs) file
-   within either `nmdc_api_utilities/` or `docs/` changes:
-
-   ```sh
-   uv run sphinx-autobuild --watch nmdc_api_utilities docs build/html
-   ```
+That will do the following: (a) install the packages listed in the `docs` group in `pyproject.toml`,
+(b) use Sphinx to build the documentation website, (c) launch a web server that serves the
+documentation website, and (d) **automatically rebuild** the documentation website whenever any
+[documentation or code](https://github.com/sphinx-doc/sphinx-autobuild#relevant-sphinx-bugs) file
+within either `nmdc_api_utilities/` or `docs/` changes.
 
 The documentation website will be accessible at the URL shown on the console (usually
-[`http://localhost:8000`](http://localhost:8000)).
+[`http://127.0.0.1:8000`](http://127.0.0.1:8000)).
 
-When you're done previewing the documentation website, you can terminate the server by pressing
-`^C` at the terminal.
+When you're done previewing the documentation website, you can terminate the web server by pressing
+`^C`.
 
 #### Major refactoring
 
