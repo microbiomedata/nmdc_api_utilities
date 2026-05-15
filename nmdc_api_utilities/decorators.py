@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
-# file to hold decorators
-from __future__ import annotations
 
 from collections.abc import Callable
 from functools import wraps
-from typing import Any, ParamSpec, TypeVar
 
 from deprecated.params import deprecated_params
 

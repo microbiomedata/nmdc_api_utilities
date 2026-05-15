@@ -208,9 +208,9 @@ thing includes a deprecation message. A deprecation message looks something like
 To accomplish (a) and (b) for classes, methods, and functions, we use a third-party package named
 [Deprecated](https://deprecated.readthedocs.io/en/latest/).
 
-To accomplish (a) and (b) for function parameters, we use a custom decorator implemented in
-`nmdc_api_utilities/lib/deprecation.py`. That's because, while the third-party `Deprecated` package
-does have a decorator that designates a parameter as being deprecated, that decorator does not add
+To accomplish (a) and (b) for function and method parameters, we use a custom decorator called
+`has_deprecated_parameter`. That's because, while the third-party `Deprecated` package does have
+a decorator that designates a parameter as being deprecated, that decorator does not add
 a note to the Sphinx docs.
 
 #### How to deprecate things
