@@ -218,22 +218,26 @@ a note to the Sphinx docs.
 To deprecate a class, method, or function, follow the steps shown in the documentation of the
 [deprecated.sphinx](https://deprecated.readthedocs.io/en/latest/sphinx_deco.html#using-the-sphinx-decorators) module.
 
-To deprecate a parameter(s) of a function, use our custom decorator as shown here:
+To deprecate a parameter of a function or method, use our custom decorator as shown here:
 
 ```py
-from nmdc_api_utilities.decorators import has_deprecated_params
+from nmdc_api_utilities.decorators import has_deprecated_parameter
 
-@has_deprecated_params("region", reason="Use ``region_id`` instead.")
-def get_location(name: str, region: str | None, region_id: str):
+@has_deprecated_parameter("region", reason="Use ``region_id`` instead.")
+def get_location(name: str, region: str | None, region_id: str) -> Location:
     pass
 ```
 
 ```py
-from nmdc_api_utilities.decorators import has_deprecated_params
+from nmdc_api_utilities.decorators import has_deprecated_parameter
 
-@has_deprecated_params("region", reason="Use ``region_id`` instead.")
+@has_deprecated_parameter("region", reason="Use ``region_id`` instead.")
 class Location:
-    def __init__(self, name: str, region: str | None = None, region_id: str):
+    def __init__(self, name: str, region: str | None, region_id: str):
+        pass
+
+    @has_deprecated_parameter("r", reason="Use ``radius_km`` instead.")
+    def get_nearby_locations(self, r: float | None, radius_km: float) -> list[Location]:
         pass
 ```
 
