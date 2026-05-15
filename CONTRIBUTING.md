@@ -189,6 +189,57 @@ def get_records(self, filter: str = "", max_page_size: int = 100) -> list[dict]:
     ...
 ```
 
+### Deprecation
+
+#### Overview
+
+We occasionally [deprecate](https://en.wikipedia.org/wiki/Deprecation#Software) existing Python
+classes, methods, functions, or function parameters; normally, when we introduce an alternative
+that we want people to use instead.
+
+#### Our approach
+
+In this project, deprecating something involves making it so that: (a) Python displays a deprecation
+message whenever someone uses that thing; and (b) the Sphinx-generated documentation about that
+thing includes a deprecation message. A deprecation message looks something like this:
+
+> `foo` is deprecated. Use `bar` instead.
+
+To accomplish (a) and (b) for classes, methods, and functions, we use a third-party package named
+[Deprecated](https://deprecated.readthedocs.io/en/latest/).
+
+To accomplish (a) and (b) for function parameters, we use a custom decorator implemented in
+`nmdc_api_utilities/lib/deprecation.py`. That's because, while the third-party `Deprecated` package
+does have a decorator that designates a parameter as being deprecated, that decorator does not add
+a note to the Sphinx docs.
+
+#### How to deprecate things
+
+To deprecate a class, method, or function, follow the steps shown in the documentation of the
+[deprecated.sphinx](https://deprecated.readthedocs.io/en/latest/sphinx_deco.html#using-the-sphinx-decorators) module.
+
+To deprecate a parameter(s) of a function, use our custom decorator as shown here:
+
+```py
+from nmdc_api_utilities.decorators import has_deprecated_params
+
+@has_deprecated_params("region", reason="Use ``region_id`` instead.")
+def get_location(name: str, region: str | None, region_id: str):
+    pass
+```
+
+```py
+from nmdc_api_utilities.decorators import has_deprecated_params
+
+@has_deprecated_params("region", reason="Use ``region_id`` instead.")
+class Location:
+    def __init__(self, name: str, region: str | None = None, region_id: str):
+        pass
+```
+
+> When deprecating a parameter of a class's `__init__` method, apply the decorator to the **class**,
+> itself; not to the `__init__` method.
+
 ### Previewing user documentation
 
 We use [Sphinx](https://www.sphinx-doc.org/en/master/) to generate user documentation. Our Sphinx

@@ -10,6 +10,7 @@ import requests
 
 from nmdc_api_utilities.config import API_BASE_URL
 from nmdc_api_utilities.data_processing import DataProcessing
+from nmdc_api_utilities.decorators import has_deprecated_parameter
 from nmdc_api_utilities.nmdc_search import NMDCSearch
 
 logger = logging.getLogger(__name__)
@@ -23,6 +24,7 @@ class OperationNotSupportedError(RuntimeError):
     pass
 
 
+@has_deprecated_parameter("env", reason="Use ``api_base_url`` instead.")
 class CollectionSearch(NMDCSearch):
     """
     Class to interact with the NMDC API to search for records within a specified collection.
@@ -210,6 +212,7 @@ class CollectionSearch(NMDCSearch):
         )
         return results
 
+    @has_deprecated_parameter("collection_id", reason="Use ``record_id`` instead.")
     def get_record_by_id(
         self,
         record_id: Optional[str] = None,

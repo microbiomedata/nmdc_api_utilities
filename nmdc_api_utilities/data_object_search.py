@@ -1,18 +1,19 @@
 # -*- coding: utf-8 -*-
 
 import logging
-import warnings
 from typing import Optional
 
 import requests
+from deprecated.sphinx import deprecated
 
 from nmdc_api_utilities.collection_search import CollectionSearch
 from nmdc_api_utilities.config import API_BASE_URL
-from nmdc_api_utilities.lib.deprecation import deprecated, has_deprecated_parameter
+from nmdc_api_utilities.decorators import has_deprecated_parameter
 
 logger = logging.getLogger(__name__)
 
 
+@has_deprecated_parameter("env", reason="Use ``api_base_url`` instead.")
 class DataObjectSearch(CollectionSearch):
     """
     Class to interact with the NMDC API to search for records within the ``data_object_set`` collection.
@@ -25,19 +26,14 @@ class DataObjectSearch(CollectionSearch):
             env=env,
         )
 
-    @has_deprecated_parameter(
-        parameter_name="max_page_size", stacklevel=2, footnote="It has no effect."
-    )
-    @deprecated("Use ``get_data_objects_for_study`` instead.", stacklevel=2)
+    @has_deprecated_parameter("max_page_size", reason="It has no effect.")
+    @deprecated(reason="Use ``get_data_objects_for_study`` instead.", version="0.7.0")
     def get_data_objects_for_studies(
         self,
         study_id: str,
         max_page_size: Optional[int] = None,
     ) -> list[dict]:
-        """
-        .. deprecated:: 0.6.2 Use the ``get_data_objects_for_study`` method instead.
-        """
-
+        _ = max_page_size
         return self.get_data_objects_for_study(study_id)
 
     def get_data_objects_for_study(self, study_id: str) -> list[dict]:
