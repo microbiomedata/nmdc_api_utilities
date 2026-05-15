@@ -216,20 +216,37 @@ a note to the Sphinx docs.
 #### How to deprecate things
 
 To deprecate a class, method, or function, follow the steps shown in the documentation of the
-[deprecated.sphinx](https://deprecated.readthedocs.io/en/latest/sphinx_deco.html#using-the-sphinx-decorators) module.
+[deprecated.sphinx](https://deprecated.readthedocs.io/en/latest/sphinx_deco.html#using-the-sphinx-decorators) module; for example:
 
-To deprecate a parameter of a function or method, use our custom decorator as shown here:
+```py
+from deprecated.sphinx import deprecated
+
+
+@deprecated(version="0.2.0", reason="Use ``get_geographical_location`` instead.")
+def get_location(name: str, region: str | None, region_id: str) -> Location:
+    pass
+
+
+@deprecated(version="0.2.0", reason="Use ``GeographicalLocation`` instead.")
+class Location:
+    def __init__(self, name: str, region: str | None, region_id: str):
+        pass
+
+    @deprecated(version="0.1.0", reason="Use ``get_nearby_geographical_locations`` instead.")
+    def get_nearby_locations(self, r: float | None, radius_km: float) -> list[Location]:
+        pass
+```
+
+To deprecate a _parameter_ of a function or method, use our custom decorator as shown here:
 
 ```py
 from nmdc_api_utilities.decorators import has_deprecated_parameter
+
 
 @has_deprecated_parameter("region", reason="Use ``region_id`` instead.")
 def get_location(name: str, region: str | None, region_id: str) -> Location:
     pass
-```
 
-```py
-from nmdc_api_utilities.decorators import has_deprecated_parameter
 
 @has_deprecated_parameter("region", reason="Use ``region_id`` instead.")
 class Location:
@@ -243,6 +260,9 @@ class Location:
 
 > When deprecating a parameter of a class's `__init__` method, apply the decorator to the **class**,
 > itself; not to the `__init__` method.
+
+You _can_ decorate already-decorated functions (e.g. in order to deprecate multiple parameters, or
+both the function and some of its parameters).
 
 ### Previewing user documentation
 
