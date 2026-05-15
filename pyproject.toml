@@ -81,6 +81,9 @@ docs = [
     # notebooks, so contributors don't have to install pandoc via Homebrew or apt separately.
     # Docs: https://pypi.org/project/pypandoc-binary/
     "pypandoc-binary >= 1.13, < 2",
+    # We use `sphinx-autobuild` to automatically rebuild the Sphinx docs when source files change.
+    # PyPI: https://pypi.org/project/sphinx-autobuild/
+    "sphinx-autobuild >= 2024.10.3",
 ]
 
 # Configure pytest.

@@ -262,20 +262,18 @@ In development, you can build and preview the documentation website locally by f
    uv sync --group docs
    ```
 
-2. Build (or rebuild) the documentation website.
+2. Build and serve the documentation website, automatically rebuilding it whenever any
+   [documentation or code](https://github.com/sphinx-doc/sphinx-autobuild#relevant-sphinx-bugs) file
+   within either `nmdc_api_utilities/` or `docs/` changes:
 
    ```sh
-   uv run sphinx-build -v docs build/html
+   uv run sphinx-autobuild --watch nmdc_api_utilities docs build/html
    ```
 
-3. Use Python's built-in HTTP server to serve the documentation website locally,
-   at [`http://localhost:8000`](http://localhost:8000)
+The documentation website will be accessible at the URL shown on the console (usually
+[`http://localhost:8000`](http://localhost:8000)).
 
-   ```sh
-   uv run python -m http.server 8000 --directory build/html
-   ```
-
-When you're done previewing the documentation website, you can terminate the HTTP server by pressing
+When you're done previewing the documentation website, you can terminate the server by pressing
 `^C` at the terminal.
 
 #### Major refactoring
@@ -373,3 +371,15 @@ The key rules are:
 ## Making a release
 
 Right now, only the maintainer of this repository can make a release to [PyPI](https://pypi.org/project/nmdc-api-utilities/). This process may change in the future. If you need to make a release, please contact Olivia Hess.
+
+## Appendix
+
+### Tips
+
+To launch an [interactive Python interpreter](https://bpython-interpreter.org/)—with syntax
+highlighting, parameter lists, autocomplete, and more—in your development environment, without
+introducing it as a dependency of the project, you can run:
+
+```sh
+uv run --with bpython bpython
+```
