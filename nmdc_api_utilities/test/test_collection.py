@@ -60,12 +60,11 @@ class TestCollection(unittest.TestCase):
         # simple test to check if the get_record_by_id method returns a record for the two id parameters (record_id (current), collection_id (deprecated))
         collection = CollectionSearch("study_set", api_base_url=API_BASE_URL)
 
-        with self.assertLogs(level=logging.WARNING) as cm:
+        with pytest.warns(DeprecationWarning, match="record_id"):
             results_collect_id = collection.get_record_by_id(
                 collection_id="nmdc:sty-11-8fb6t785"
             )
         assert results_collect_id["id"] == "nmdc:sty-11-8fb6t785"
-        self.assertIn("deprecated", "\n".join(cm.output))
 
         results_record_id = collection.get_record_by_id(
             record_id="nmdc:sty-11-8fb6t785"
