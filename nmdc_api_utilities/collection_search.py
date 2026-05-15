@@ -263,9 +263,6 @@ class CollectionSearch(NMDCSearch):
                 "Both record_id and collection_id were provided. Please provide record_id, as collection_id is deprecated and will be removed in a future version."
             )
         if collection_id:
-            logger.warning(
-                "The collection_id parameter is deprecated and will be removed in a future version. Please use record_id instead."
-            )
             record_id = collection_id
 
         url = f"{self.api_base_url}/nmdcschema/{self.collection_name}/{record_id}"
