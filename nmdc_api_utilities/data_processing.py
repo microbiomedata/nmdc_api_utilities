@@ -61,12 +61,12 @@ class DataProcessing:
         Parameters
         ----------
         df
-            The pandas dataframe to rename columns.
+            The pandas dataframe whose columns you want to rename.
         new_col_names
             A list of new column names. Names MUST be in order of the columns in the dataframe.
-            Example:
-                If the current column names are - ['old_col1', 'old_col2', 'old_col3']
-                You will need to pass in the new names like - ['new_col1', 'new_col2', 'new_col3']
+            For example, if the column in the dataframe are named "col1", "col2", and "col3" (in
+            that order) and you want to rename "col1" to "new_col1", "col2" to "new_col2",
+            and "col3" to "new_col3", you would pass in ``["new_col1", "new_col2", "new_col3"]``.
 
         Returns
         -------
