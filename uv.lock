@@ -1026,8 +1026,8 @@ wheels = [
 ]
 
 [[package]]
-name = "nmdc-api-utilities"
-version = "0.6.1"
+name = "nmdc-client"
+version = "1.0.0"
 source = { editable = "." }
 dependencies = [
     { name = "dotenv" },

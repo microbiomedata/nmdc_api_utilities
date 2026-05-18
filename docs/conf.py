@@ -24,11 +24,11 @@ except (ImportError, OSError):
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = "nmdc_api_utilities"
+project = "nmdc_client"
 copyright = "2026, NMDC"
 author = "NMDC"
 
-from nmdc_api_utilities import __version__
+from nmdc_client import __version__
 
 release = __version__
 

@@ -38,7 +38,7 @@ jobs:
           CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
           API_BASE_URL: "https://api-dev.microbiomedata.org"  # dev
         # Note: Our baseline pytest CLI options are in the `[tool.pytest]` section of `pyproject.toml`.
-        run: uv run pytest -x nmdc_api_utilities/
+        run: uv run pytest -x nmdc_client/
       - name: Create Issue
         if: failure() && github.event.pull_request == null && github.event_name == 'schedule'
         uses: actions/github-script@v6
