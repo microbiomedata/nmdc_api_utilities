@@ -1,8 +1,10 @@
-# nmdc_api_utilities
+# nmdc-client
 
-[![PyPI version](https://badge.fury.io/py/nmdc-api-utilities.svg)](https://pypi.org/project/nmdc_api_utilities/)
+[![PyPI version](https://badge.fury.io/py/nmdc-client.svg)](https://pypi.org/project/nmdc-client/)
 [![Python 3.x](https://img.shields.io/badge/python-3.x-blue.svg)](https://www.python.org/)
-[![Tests](https://github.com/microbiomedata/nmdc_api_utilities/actions/workflows/prod_tests.yml/badge.svg)](https://github.com/microbiomedata/nmdc_api_utilities/actions)
+[![Tests](https://github.com/microbiomedata/nmdc-client/actions/workflows/prod_tests.yml/badge.svg)](https://github.com/microbiomedata/nmdc-client/actions)
+
+> **Renamed:** This package was previously published on PyPI as `nmdc-api-utilities`. The old name still installs (and pulls in `nmdc-client` automatically with a `DeprecationWarning`), but new development happens here. Please migrate your installs to `pip install nmdc-client` and your imports to `from nmdc_client import ...` at your earliest convenience.
 
 A Python client for the [NMDC (National Microbiome Data Collaborative)](https://microbiomedata.org/) Runtime API. NMDC is a multi-institutional effort to enable findable, accessible, interoperable, and reusable (FAIR) microbiome data. This library provides Pythonic access to NMDC metadata so you can query, filter, and traverse linked records without writing raw API calls. For more information on the NMDC Runtime API itself, see the [API documentation](https://api.microbiomedata.org/docs).
 
@@ -16,20 +18,20 @@ A Python client for the [NMDC (National Microbiome Data Collaborative)](https://
 
 ## Documentation
 
-Full documentation is at [microbiomedata.github.io/nmdc_api_utilities](https://microbiomedata.github.io/nmdc_api_utilities/).
+Full documentation is at [microbiomedata.github.io/nmdc-client](https://microbiomedata.github.io/nmdc-client/).
 
 For additional real-world examples, the [nmdc_notebooks](https://github.com/microbiomedata/nmdc_notebooks) repository contains Jupyter notebooks that use this package end-to-end.
 
 ## Installation
 
 ```bash
-pip install nmdc_api_utilities
+pip install nmdc-client
 ```
 
 To stay up to date with new releases:
 
 ```bash
-pip install --upgrade nmdc_api_utilities
+pip install --upgrade nmdc-client
 ```
 
 ## Quick start
@@ -37,7 +39,7 @@ pip install --upgrade nmdc_api_utilities
 ### Single record lookup
 
 ```python
-from nmdc_api_utilities import BiosampleSearch
+from nmdc_client import BiosampleSearch
 
 biosample_client = BiosampleSearch()
 biosample_client.get_record_by_id(record_id="nmdc:bsm-13-amrnys72")
@@ -48,7 +50,7 @@ biosample_client.get_record_by_id(record_id="nmdc:bsm-13-amrnys72")
 A more realistic workflow starts from a study name and traverses linked records:
 
 ```python
-from nmdc_api_utilities import StudySearch, DataObjectSearch
+from nmdc_client import StudySearch, DataObjectSearch
 
 # Step 1: Find a study by name
 study_client = StudySearch()
@@ -83,7 +85,7 @@ data_objects = data_object_client.get_linked_instances(
 ### Filtering with MongoDB-style operators
 
 ```python
-from nmdc_api_utilities import BiosampleSearch
+from nmdc_client import BiosampleSearch
 
 client = BiosampleSearch()
 
@@ -95,7 +97,7 @@ results = client.get_record_by_filter(
 )
 ```
 
-See the [MongoDB filters guide](https://microbiomedata.github.io/nmdc_api_utilities/filters.html) for supported operators and more examples.
+See the [MongoDB filters guide](https://microbiomedata.github.io/nmdc-client/filters.html) for supported operators and more examples.
 
 ## Available search clients
 
@@ -117,12 +119,27 @@ All clients share a common interface (`get_record_by_id`, `get_record_by_attribu
 *for retrieving metadata about workflows for processing raw data, data objects, and functional annotations*\
 `WorkflowExecutionSearch`, `DataObjectSearch`, `CalibrationSearch`, `FunctionalAnnotationAggSearch`
 
-See the [CollectionSearch subclasses reference](https://microbiomedata.github.io/nmdc_api_utilities/public_subclasses.html) for full detail on each class.
+See the [CollectionSearch subclasses reference](https://microbiomedata.github.io/nmdc-client/public_subclasses.html) for full detail on each class.
 
 ## Public vs. privileged API
 
-Most users will only need the public search clients above. A separate privileged API is available for users with NMDC submission and staging permissions. See the [Privileged API reference](https://microbiomedata.github.io/nmdc_api_utilities/privileged_api.html) for details.
+Most users will only need the public search clients above. A separate privileged API is available for users with NMDC submission and staging permissions. See the [Privileged API reference](https://microbiomedata.github.io/nmdc-client/privileged_api.html) for details.
 
+## Migrating from `nmdc-api-utilities`
+
+If you were previously installing `nmdc-api-utilities`, both of the following will continue to work:
+
+- `pip install nmdc-api-utilities` — installs the tombstone shim, which pulls in `nmdc-client` and emits a `DeprecationWarning`.
+- `from nmdc_api_utilities import ...` and `from nmdc_api_utilities.<submodule> import ...` — still resolve, with a `DeprecationWarning`.
+
+To migrate fully:
+
+```bash
+pip uninstall nmdc-api-utilities
+pip install nmdc-client
+```
+
+Then replace `nmdc_api_utilities` with `nmdc_client` in your imports.
 
 ## Contributing
 

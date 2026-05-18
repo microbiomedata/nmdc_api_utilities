@@ -3,16 +3,16 @@ requires = ["uv_build >= 0.8.14, < 0.9.0"]
 build-backend = "uv_build"
 
 [tool.uv.build-backend]
-# Tell the `uv_build` backend that our package lives at the repo root in `nmdc_api_utilities/`
+# Tell the `uv_build` backend that our package lives at the repo root in `nmdc_client/`
 # (not under a `src/` directory, which is where the backend would look by default).
 # Reference: https://docs.astral.sh/uv/concepts/build-backend/#modules
-module-name = "nmdc_api_utilities"
+module-name = "nmdc_client"
 module-root = ""
 
 [project]
-name = "nmdc_api_utilities"
-version = "0.6.1"
-description = "A Python library for general research functions using NMDC APIs"
+name = "nmdc-client"
+version = "1.0.0"
+description = "Python client library for the NMDC APIs (formerly nmdc-api-utilities)"
 authors = [
     { name = "Olivia Hess", email = "olivia.hess@pnnl.gov" },
 ]
@@ -85,5 +85,5 @@ addopts = ["--doctest-modules"]  # run doctests defined in _all_ modules (not on
 # Configure mypy.
 # Docs: https://mypy.readthedocs.io/en/stable/config_file.html#the-mypy-configuration-file
 [tool.mypy]
-packages = ["nmdc_api_utilities"]  # check the `nmdc_api_utilities` package
-exclude = "^nmdc_api_utilities/test/"  # ignore paths beginning with `nmdc_api_utilities/test/`
+packages = ["nmdc_client"]  # check the `nmdc_client` package
+exclude = "^nmdc_client/test/"  # ignore paths beginning with `nmdc_client/test/`

@@ -10,7 +10,7 @@ Authentication Support
 
 ``NMDCAuth`` is required for all privileged classes on this page.
 
-.. autoclass:: nmdc_api_utilities.auth.NMDCAuth
+.. autoclass:: nmdc_client.auth.NMDCAuth
    :members:
    :undoc-members:
    :show-inheritance:
@@ -22,8 +22,8 @@ Instantiate ``NMDCAuth`` and pass it to privileged classes:
 
 .. code-block:: python
 
-   from nmdc_api_utilities.auth import NMDCAuth
-   from nmdc_api_utilities.metadata import Metadata
+   from nmdc_client.auth import NMDCAuth
+   from nmdc_client.metadata import Metadata
 
    auth = NMDCAuth(client_id="YOUR_CLIENT_ID", client_secret="YOUR_CLIENT_SECRET")
    metadata_client = Metadata(auth=auth)
@@ -31,7 +31,7 @@ Instantiate ``NMDCAuth`` and pass it to privileged classes:
 Metadata Submission
 -------------------
 
-.. autoclass:: nmdc_api_utilities.metadata.Metadata
+.. autoclass:: nmdc_client.metadata.Metadata
    :members:
    :undoc-members:
    :show-inheritance:
@@ -39,7 +39,7 @@ Metadata Submission
 Identifier Minting
 ------------------
 
-.. autoclass:: nmdc_api_utilities.minter.Minter
+.. autoclass:: nmdc_client.minter.Minter
    :members:
    :undoc-members:
    :show-inheritance:
@@ -47,17 +47,17 @@ Identifier Minting
 Data Staging and Workflow Management
 ------------------------------------
 
-.. autoclass:: nmdc_api_utilities.data_staging.JGISequencingProjectAPI
+.. autoclass:: nmdc_client.data_staging.JGISequencingProjectAPI
    :members:
    :undoc-members:
    :show-inheritance:
 
-.. autoclass:: nmdc_api_utilities.data_staging.JGISampleSearchAPI
+.. autoclass:: nmdc_client.data_staging.JGISampleSearchAPI
    :members:
    :undoc-members:
    :show-inheritance:
 
-.. autoclass:: nmdc_api_utilities.data_staging.GlobusTaskAPI
+.. autoclass:: nmdc_client.data_staging.GlobusTaskAPI
    :members:
    :undoc-members:
    :show-inheritance:

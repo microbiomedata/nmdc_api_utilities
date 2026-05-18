@@ -1,0 +1,112 @@
+# -*- coding: utf-8 -*-
+import logging
+import unittest
+
+import pandas as pd
+import pytest
+
+from nmdc_client.collection_search import CollectionSearch
+from nmdc_client.config import API_BASE_URL
+
+logging.basicConfig(level=logging.DEBUG)
+
+
+class TestCollection(unittest.TestCase):
+    """
+    A class to test each endpoint in the CollectionSearch class.
+    """
+
+    def test_get_records(self):
+        # simple test to check if the get_records method returns a list of records
+        collection = CollectionSearch("study_set", api_base_url=API_BASE_URL)
+        results = collection.get_records(max_page_size=10)
+        assert isinstance(results, list) and all(
+            isinstance(item, dict) for item in results
+        )
+        assert len(results) == 10
+
+    def test_get_records_dataframe(self):
+        # simple test to check if the get_records method returns a pandas dataframe
+        collection = CollectionSearch("study_set", api_base_url=API_BASE_URL)
+        results = collection.get_records(max_page_size=10, shape="dataframe")
+        assert isinstance(results, pd.DataFrame)
+        assert len(results) == 10
+
+    def test_get_record_by_filter(self):
+        # simple test to check if the get_record_by_filter method returns a record
+        collection = CollectionSearch("study_set", api_base_url=API_BASE_URL)
+        results = collection.get_record_by_filter(
+            filter='{"id": "nmdc:sty-11-8fb6t785"}'
+        )
+        assert results[0]["id"] == "nmdc:sty-11-8fb6t785"
+        assert len(results) == 1
+
+    def test_get_record_by_attribute(self):
+        # simple test to check if the get_record_by_attribute method returns a record
+        collection = CollectionSearch("study_set", api_base_url=API_BASE_URL)
+        results = collection.get_record_by_attribute(
+            "name",
+            "Lab enrichment of tropical soil microbial communities from Luquillo Experimental Forest, Puerto Rico",
+        )
+        assert len(results) == 1
+
+    def test_get_record_by_id(self):
+        # simple test to check if the get_record_by_id method returns a record
+        collection = CollectionSearch("study_set", api_base_url=API_BASE_URL)
+        results = collection.get_record_by_id("nmdc:sty-11-8fb6t785")
+        assert results["id"] == "nmdc:sty-11-8fb6t785"
+
+    def test_get_record_by_id_params(self):
+        # simple test to check if the get_record_by_id method returns a record for the two id parameters (record_id (current), collection_id (deprecated))
+        collection = CollectionSearch("study_set", api_base_url=API_BASE_URL)
+
+        with self.assertLogs(level=logging.WARNING) as cm:
+            results_collect_id = collection.get_record_by_id(
+                collection_id="nmdc:sty-11-8fb6t785"
+            )
+        assert results_collect_id["id"] == "nmdc:sty-11-8fb6t785"
+        self.assertIn("deprecated", "\n".join(cm.output))
+
+        results_record_id = collection.get_record_by_id(
+            record_id="nmdc:sty-11-8fb6t785"
+        )
+        assert results_record_id["id"] == "nmdc:sty-11-8fb6t785"
+
+        with pytest.raises(ValueError, match="Both.*record_id.*collection_id"):
+            collection.get_record_by_id(
+                record_id="nmdc:sty-11-8fb6t785",
+                collection_id="nmdc:sty-11-8fb6t785",
+            )
+
+    def test_check_ids_exist(self):
+        # simple test to check if the check_ids_exist method returns a boolean
+        collection = CollectionSearch("study_set", api_base_url=API_BASE_URL)
+        results = collection.check_ids_exist(["nmdc:sty-11-8fb6t785"])
+        assert results == True
+
+    def test_check_ids_exist_multiple(self):
+        # simple test to check if the check_ids_exist method returns a boolean
+        ids = [
+            "nmdc:bsm-11-002vgm56",
+            "nmdc:bsm-11-006pnx90",
+            "nmdc:bsm-11-00dkyf35",
+            "nmdc:bsm-11-00hrxp98",
+            "nmdc:bsm-11-00m15h97",
+            "nmdc:bsm-11-00yhef97",
+            "nmdc:bsm-11-011z7z70",
+            "nmdc:bsm-11-0169zs66",
+            "nmdc:bsm-11-01bbrr08",
+            "nmdc:bsm-11-01f6m423",
+            "nmdc:bsm-11-01g9wf51",
+            "nmdc:bsm-11-01teww33",
+            "nmdc:bsm-11-024rsd62",
+            "nmdc:bsm-11-02kcw433",
+            "nmdc:bsm-11-02n85875",
+            "nmdc:bsm-11-02v78297",
+            "nmdc:bsm-11-02x97z84",
+            "nmdc:bsm-11-034x5t48",
+        ]
+        # ids = ['nmdc:bsm-11-002vgm56','nmdc:bsm-11-006pnx90']
+        collection = CollectionSearch("biosample_set", api_base_url=API_BASE_URL)
+        results = collection.check_ids_exist(ids)
+        assert results == True
