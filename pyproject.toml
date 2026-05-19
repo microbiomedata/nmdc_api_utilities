@@ -11,7 +11,7 @@ module-root = ""
 
 [project]
 name = "nmdc_api_utilities"
-version = "0.6.1"
+version = "0.0.0"
 description = "A Python library for general research functions using NMDC APIs"
 authors = [
     { name = "Olivia Hess", email = "olivia.hess@pnnl.gov" },
