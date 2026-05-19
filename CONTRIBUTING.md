@@ -321,5 +321,5 @@ This repo supports automated releases to PyPi via GHA. To make a new release and
 
 Steps:
 1. Increment the version in `pyproject.toml` on main (either via a direct commit of a PR). If this step is not done first, it will break the automated release. If the version is the same as the one already in PyPi - it blocks upload of that package.
-2. Create a release in Github. Using the convention `vx.x.x` as the title and new tag. Generate the notes automatically and add mroe if desired.
+2. Create a release in Github. Using the convention `vx.x.x` as the title and new tag. Generate the notes automatically and add more if desired.
 3. Publish release. The GHA will take care of the rest.
