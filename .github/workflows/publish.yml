@@ -61,7 +61,7 @@ jobs:
       id-token: write
     steps:
       - name: Load the built package for publishing  # Docs: https://github.com/actions/download-artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: built-package
           path: dist
