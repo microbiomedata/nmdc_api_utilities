@@ -12,7 +12,7 @@ jobs:
   # Use existing workflows to check source code format and run tests.
   # Reference: https://docs.github.com/en/actions/using-workflows/reusing-workflows#calling-a-reusable-workflow
   prod_tests:
-    name: Check source code format
+    name: Check format and run tests
     uses: ./.github/workflows/prod_tests.yml
   build:
     name: Build package
