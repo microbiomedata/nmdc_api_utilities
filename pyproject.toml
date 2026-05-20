@@ -11,6 +11,7 @@ module-root = ""
 
 [project]
 name = "nmdc_api_utilities"
+# Version is managed by GitHub releases and synced to PyPI - so this is just a placeholder that gets replaced during the release process.
 version = "0.0.0"
 description = "A Python library for general research functions using NMDC APIs"
 authors = [
