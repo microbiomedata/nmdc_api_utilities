@@ -1074,7 +1074,7 @@ wheels = [
 
 [[package]]
 name = "nmdc-api-utilities"
-version = "0.6.1"
+version = "0.0.0"
 source = { editable = "." }
 dependencies = [
     { name = "deprecated" },

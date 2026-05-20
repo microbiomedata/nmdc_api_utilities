@@ -386,7 +386,14 @@ The key rules are:
 
 ## Making a release
 
-Right now, only the maintainer of this repository can make a release to [PyPI](https://pypi.org/project/nmdc-api-utilities/). This process may change in the future. If you need to make a release, please contact Olivia Hess.
+This repo supports automated publishing to PyPI via GitHub Actions (GHA).
+To make a new release, you must have write access to the repo.
+
+Steps:
+1. Draft a new release on GitHub, using the convention `v{MAJOR}.{Minor}.{patch}` for both the
+   release title and tag (e.g. `v1.2.3`). Generate the release notes automatically, then add to
+   them if you want.
+2. Publish the release. The GHA workflow (i.e. `.github/workflows/publish.yml`) will take care of the rest.
 
 ## Appendix
 
