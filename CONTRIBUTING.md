@@ -317,7 +317,7 @@ The key rules are:
 
 ## Making a release
 
-This repo supports automated releases to PyPi via GHA. To make a new release and push to PyPi - you must have write access to the repo.
+This repo supports automated publishing to PyPI via GHA. To make a new release and publish to PyPI, you must have write access to the repo.
 
 Steps:
 1. Increment the version in `pyproject.toml` on main (either via a direct commit of a PR). If this step is not done first, it will break the automated release. If the version is the same as the one already in PyPi - it blocks upload of that package.
