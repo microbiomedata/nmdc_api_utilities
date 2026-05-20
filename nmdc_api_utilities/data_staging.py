@@ -8,11 +8,12 @@ import requests
 from nmdc_api_utilities.api_client import NMDCAPIClient
 from nmdc_api_utilities.auth import NMDCAuth
 from nmdc_api_utilities.config import API_BASE_URL
-from nmdc_api_utilities.decorators import requires_auth
+from nmdc_api_utilities.decorators import has_deprecated_parameter, requires_auth
 
 logger = logging.getLogger(__name__)
 
 
+@has_deprecated_parameter("env", reason="Use ``api_base_url`` instead.")
 class JGISequencingProjectAPI(NMDCAPIClient):
     """
     Class to interact with the NMDC API to get JGI samples.
@@ -24,7 +25,7 @@ class JGISequencingProjectAPI(NMDCAPIClient):
     api_base_url
         The base URL of an instance of the NMDC Runtime API. By default, this is the base URL of the production instance.
     env
-        Deprecated. Use `api_base_url` instead. Previously used to specify the API environment (e.g., "prod", "dev").
+        Deprecated. Use ``api_base_url`` instead. Previously used to specify the API environment (e.g., "prod", "dev").
     """
 
     def __init__(
@@ -190,6 +191,7 @@ class JGISequencingProjectAPI(NMDCAPIClient):
         return response.json()
 
 
+@has_deprecated_parameter("env", reason="Use ``api_base_url`` instead.")
 class JGISampleSearchAPI(NMDCAPIClient):
     """
     Class to interact with the NMDC API to get JGI samples.
@@ -201,7 +203,7 @@ class JGISampleSearchAPI(NMDCAPIClient):
     api_base_url
         The base URL of an instance of the NMDC Runtime API. By default, this is the base URL of the production instance.
     env
-        Deprecated. Use `api_base_url` instead. Previously used to specify the API environment (e.g., "prod", "dev").
+        Deprecated. Use ``api_base_url`` instead. Previously used to specify the API environment (e.g., "prod", "dev").
     """
 
     def __init__(
@@ -381,6 +383,7 @@ class JGISampleSearchAPI(NMDCAPIClient):
         return response.json()
 
 
+@has_deprecated_parameter("env", reason="Use ``api_base_url`` instead.")
 class GlobusTaskAPI(NMDCAPIClient):
     """
     Class to interact with the NMDC API for Globus tasks.
@@ -392,7 +395,7 @@ class GlobusTaskAPI(NMDCAPIClient):
     api_base_url
         The base URL of an instance of the NMDC Runtime API. By default, this is the base URL of the production instance.
     env
-        Deprecated. Use `api_base_url` instead. Previously used to specify the API environment (e.g., "prod", "dev").
+        Deprecated. Use ``api_base_url`` instead. Previously used to specify the API environment (e.g., "prod", "dev").
     """
 
     def __init__(

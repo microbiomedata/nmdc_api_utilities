@@ -7,11 +7,12 @@ import requests
 from nmdc_api_utilities.api_client import NMDCAPIClient
 from nmdc_api_utilities.auth import NMDCAuth
 from nmdc_api_utilities.config import API_BASE_URL
-from nmdc_api_utilities.decorators import requires_auth
+from nmdc_api_utilities.decorators import has_deprecated_parameter, requires_auth
 
 logger = logging.getLogger(__name__)
 
 
+@has_deprecated_parameter("env", reason="Use ``api_base_url`` instead.")
 class Minter(NMDCAPIClient):
     """
     Class to interact with the NMDC API to mint new identifiers.

@@ -8,10 +8,12 @@ import requests
 
 from nmdc_api_utilities.api_client import NMDCAPIClient
 from nmdc_api_utilities.config import API_BASE_URL
+from nmdc_api_utilities.decorators import has_deprecated_parameter
 
 logger = logging.getLogger(__name__)
 
 
+@has_deprecated_parameter("env", reason="Use ``api_base_url`` instead.")
 class NMDCAuth(NMDCAPIClient):
     """
     Authentication handler for NMDC API operations.
@@ -30,7 +32,7 @@ class NMDCAuth(NMDCAPIClient):
         The base URL of an instance of the NMDC Runtime API. By default, this is the base URL of
         the production instance.
     env
-        Deprecated. Use `api_base_url` instead. Previously used to specify the API environment
+        Deprecated. Use ``api_base_url`` instead. Previously used to specify the API environment
         (e.g., "prod", "dev").
 
     Notes

@@ -1,7 +1,14 @@
 # -*- coding: utf-8 -*-
-# Add these lines to conf.py
+
+# Configuration file for the Sphinx documentation builder.
+#
+# For the full list of built-in configuration values, see the documentation:
+# https://www.sphinx-doc.org/en/master/usage/configuration.html
+
 import os
 import sys
+
+from nmdc_api_utilities import __version__
 
 sys.path.insert(0, os.path.abspath(".."))  # Path to your project root
 
@@ -16,10 +23,6 @@ try:
     os.environ["PATH"] = _pandoc_dir + os.pathsep + os.environ.get("PATH", "")
 except (ImportError, OSError):
     pass
-# Configuration file for the Sphinx documentation builder.
-#
-# For the full list of built-in configuration values, see the documentation:
-# https://www.sphinx-doc.org/en/master/usage/configuration.html
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
@@ -27,9 +30,6 @@ except (ImportError, OSError):
 project = "nmdc_api_utilities"
 copyright = "2026, NMDC"
 author = "NMDC"
-
-from nmdc_api_utilities import __version__
-
 release = __version__
 
 # -- General configuration ---------------------------------------------------

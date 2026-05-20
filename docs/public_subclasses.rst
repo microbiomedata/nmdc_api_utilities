@@ -1,5 +1,5 @@
 ``CollectionSearch`` Subclasses
-============================
+===============================
 
 Collection-specific subclasses are the recommended public entry points.
 Each class inherits ``CollectionSearch`` behavior while preconfiguring a collection target.

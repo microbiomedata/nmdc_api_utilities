@@ -189,6 +189,81 @@ def get_records(self, filter: str = "", max_page_size: int = 100) -> list[dict]:
     ...
 ```
 
+### Deprecation
+
+#### Overview
+
+We occasionally [deprecate](https://en.wikipedia.org/wiki/Deprecation#Software) existing Python
+classes, methods, functions, or function parameters; normally, when we introduce an alternative
+that we want people to use instead.
+
+#### Our approach
+
+In this project, deprecating something involves making it so that: (a) Python displays a deprecation
+message whenever someone uses that thing; and (b) the Sphinx-generated documentation about that
+thing includes a deprecation message. A deprecation message looks something like this:
+
+> `foo` is deprecated. Use `bar` instead.
+
+To accomplish (a) and (b) for classes, methods, and functions, we use a third-party package named
+[Deprecated](https://deprecated.readthedocs.io/en/latest/).
+
+To accomplish (a) and (b) for function and method parameters, we use a custom decorator called
+`has_deprecated_parameter`. That's because, while the third-party `Deprecated` package does have
+a decorator that designates a parameter as being deprecated, that decorator does not add
+a note to the Sphinx docs.
+
+#### How to deprecate things
+
+To deprecate a class, method, or function, follow the steps shown in the documentation of the
+[deprecated.sphinx](https://deprecated.readthedocs.io/en/latest/sphinx_deco.html#using-the-sphinx-decorators) module; for example:
+
+```py
+from deprecated.sphinx import deprecated
+
+
+@deprecated(version="0.2.0", reason="Use ``get_geographical_location`` instead.")
+def get_location(name: str, region: str | None, region_id: str) -> Location:
+    pass
+
+
+@deprecated(version="0.2.0", reason="Use ``GeographicalLocation`` instead.")
+class Location:
+    def __init__(self, name: str, region: str | None, region_id: str):
+        pass
+
+    @deprecated(version="0.1.0", reason="Use ``get_nearby_geographical_locations`` instead.")
+    def get_nearby_locations(self, r: float | None, radius_km: float) -> list[Location]:
+        pass
+```
+
+To deprecate a _parameter_ of a function or method, use our custom decorator as shown here:
+
+```py
+from nmdc_api_utilities.decorators import has_deprecated_parameter
+
+
+@has_deprecated_parameter("region", reason="Use ``region_id`` instead.")
+def get_location(name: str, region: str | None, region_id: str) -> Location:
+    pass
+
+
+@has_deprecated_parameter("region", reason="Use ``region_id`` instead.")
+class Location:
+    def __init__(self, name: str, region: str | None, region_id: str):
+        pass
+
+    @has_deprecated_parameter("r", reason="Use ``radius_km`` instead.")
+    def get_nearby_locations(self, r: float | None, radius_km: float) -> list[Location]:
+        pass
+```
+
+> When deprecating a parameter of a class's `__init__` method, apply the decorator to the **class**,
+> itself; not to the `__init__` method.
+
+You _can_ decorate already-decorated functions (e.g. in order to deprecate multiple parameters, or
+both the function and some of its parameters).
+
 ### Previewing user documentation
 
 We use [Sphinx](https://www.sphinx-doc.org/en/master/) to generate user documentation. Our Sphinx
@@ -198,30 +273,24 @@ In production, our user documentation is generated via a GitHub Actions workflow
 (i.e. `documentation.yml`) that builds the documentation website and deploys it to GitHub Pages,
 where it can be accessed by users.
 
-In development, you can build and preview the documentation website locally by following these steps:
+In development, you can build and preview the documentation website locally by running the following
+command:
 
-1. Install Python dependencies. The pandoc binary that `nbsphinx` needs is bundled in
-   the `pypandoc-binary` package, so no system-level install (Homebrew, apt) is required.
+```sh
+uv run --group docs sphinx-autobuild --watch nmdc_api_utilities docs build/html
+```
 
-   ```sh
-   uv sync --group docs
-   ```
+That will do the following: (a) install the packages listed in the `docs` group in `pyproject.toml`,
+(b) use Sphinx to build the documentation website, (c) launch a web server that serves the
+documentation website, and (d) **automatically rebuild** the documentation website whenever any
+[documentation or code](https://github.com/sphinx-doc/sphinx-autobuild#relevant-sphinx-bugs) file
+within either `nmdc_api_utilities/` or `docs/` changes.
 
-2. Build (or rebuild) the documentation website.
+The documentation website will be accessible at the URL shown on the console (usually
+[`http://127.0.0.1:8000`](http://127.0.0.1:8000)).
 
-   ```sh
-   uv run sphinx-build -v docs build/html
-   ```
-
-3. Use Python's built-in HTTP server to serve the documentation website locally,
-   at [`http://localhost:8000`](http://localhost:8000)
-
-   ```sh
-   uv run python -m http.server 8000 --directory build/html
-   ```
-
-When you're done previewing the documentation website, you can terminate the HTTP server by pressing
-`^C` at the terminal.
+When you're done previewing the documentation website, you can terminate the web server by pressing
+`^C`.
 
 #### Major refactoring
 
@@ -317,8 +386,23 @@ The key rules are:
 
 ## Making a release
 
-This repo supports automated publishing to PyPI via GHA. To make a new release and publish to PyPI, you must have write access to the repo.
+This repo supports automated publishing to PyPI via GitHub Actions (GHA).
+To make a new release, you must have write access to the repo.
 
 Steps:
-1. Draft a new release on GitHub, using the convention `v{MAJOR}.{Minor}.{patch}` for both the release title and tag (e.g. `v1.2.3`). Generate the release notes automatically, then add to them if you want.
-2. Publish the release. The GHA workflow will take care of the rest.
+1. Draft a new release on GitHub, using the convention `v{MAJOR}.{Minor}.{patch}` for both the
+   release title and tag (e.g. `v1.2.3`). Generate the release notes automatically, then add to
+   them if you want.
+2. Publish the release. The GHA workflow (i.e. `.github/workflows/publish.yml`) will take care of the rest.
+
+## Appendix
+
+### Tips
+
+To launch an [interactive Python interpreter](https://bpython-interpreter.org/)—with syntax
+highlighting, parameter lists, autocomplete, and more—in your development environment, without
+introducing it as a dependency of the project, you can run:
+
+```sh
+uv run --with bpython bpython
+```
