@@ -320,5 +320,5 @@ The key rules are:
 This repo supports automated publishing to PyPI via GHA. To make a new release and publish to PyPI, you must have write access to the repo.
 
 Steps:
-1. Create a release in Github. Using the convention `vx.x.x` as the title and new tag. Generate the notes automatically and add more if desired.
-2. Publish release. The GHA workflow will take care of the rest.
+1. Draft a new release on GitHub, using the convention `v{MAJOR}.{Minor}.{patch}` for both the release title and tag (e.g. `v1.2.3`). Generate the release notes automatically, then add to them if you want.
+2. Publish the release. The GHA workflow will take care of the rest.
