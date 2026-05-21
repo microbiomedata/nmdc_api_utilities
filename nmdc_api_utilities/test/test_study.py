@@ -42,13 +42,13 @@ def test_find_study_by_filter():
 
 def test_get_studies_all_pages():
     st = StudySearch(api_base_url=API_BASE_URL)
-    studies = st.get_records(max_page_size=20, all_pages=True)
+    studies = st.get_records(max_page_size=20)
     print(studies)
     assert len(studies) > 32
 
 
 def test_get_studies():
     st = StudySearch(api_base_url=API_BASE_URL)
-    studies = st.get_records(max_page_size=100)
+    studies = st.get_records(max_page_size=20, all_pages=False)
     print(studies)
-    assert len(studies) > 32
+    assert len(studies) == 20

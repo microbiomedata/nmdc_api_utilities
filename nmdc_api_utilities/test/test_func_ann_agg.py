@@ -19,5 +19,5 @@ class TestFunctionalAnnotation(unittest.TestCase):
 
     def test_get_records(self):
         fannagg = FunctionalAnnotationAggSearch(api_base_url=API_BASE_URL)
-        results = fannagg.get_records(max_page_size=10)
+        results = fannagg.get_records(max_page_size=10, all_pages=False)
         self.assertEqual(len(results), 10)

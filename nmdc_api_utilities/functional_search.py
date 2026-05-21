@@ -28,7 +28,7 @@ class FunctionalSearch(CollectionSearch):
         annotation_type: str,
         page_size: int = 25,
         fields: str = "",
-        all_pages: bool = False,
+        all_pages: bool = True,
     ) -> list[dict]:
         """
         Retrieve records with specific annotation value and type.
@@ -45,7 +45,7 @@ class FunctionalSearch(CollectionSearch):
             The fields to return. If empty, all fields are returned.
             Example: "id,name"
         all_pages
-            True to return all pages. False to return the first page.
+            True to return all pages. False to return only the first page.
 
         Returns
         -------
