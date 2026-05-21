@@ -23,8 +23,9 @@ jobs:
         run: printenv
       - name: (Debug) Dump Python package versions
         run: uv pip freeze
-      - name: Sphinx build
-        run: uv run sphinx-build -v docs build/html
+      # Reference: https://www.sphinx-doc.org/en/master/man/sphinx-build.html
+      - name: Build Sphinx documentation
+        run: uv run sphinx-build --fresh-env -v docs build/html
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
