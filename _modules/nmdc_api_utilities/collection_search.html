@@ -1,0 +1,545 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>nmdc_api_utilities.collection_search &mdash; nmdc_api_utilities 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=7026087e"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script src="../../_static/external_links.js?v=a2d33618"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            nmdc_api_utilities
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../filters.html">Using MongoDB filters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../example_usage.html">External Notebook Examples</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Public API Reference:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../functions.html">Core Search API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../public_subclasses.html"><code class="docutils literal notranslate"><span class="pre">CollectionSearch</span></code> Subclasses</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Privileged API Reference:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../privileged_api.html">Privileged API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">nmdc_api_utilities</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">nmdc_api_utilities.collection_search</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for nmdc_api_utilities.collection_search</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">cast</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">nmdc_api_utilities.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">API_BASE_URL</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nmdc_api_utilities.data_processing</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataProcessing</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nmdc_api_utilities.decorators</span><span class="w"> </span><span class="kn">import</span> <span class="n">has_deprecated_parameter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nmdc_api_utilities.nmdc_search</span><span class="w"> </span><span class="kn">import</span> <span class="n">NMDCSearch</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="n">QueryParamValue</span> <span class="o">=</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">bytes</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">OperationNotSupportedError</span><span class="p">(</span><span class="ne">RuntimeError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Raised when an operation isn&#39;t supported by a collection subclass.&quot;&quot;&quot;</span>
+
+    <span class="k">pass</span>
+
+
+<div class="viewcode-block" id="CollectionSearch">
+<a class="viewcode-back" href="../../functions.html#nmdc_api_utilities.collection_search.CollectionSearch">[docs]</a>
+<span class="nd">@has_deprecated_parameter</span><span class="p">(</span><span class="s2">&quot;env&quot;</span><span class="p">,</span> <span class="n">reason</span><span class="o">=</span><span class="s2">&quot;Use ``api_base_url`` instead.&quot;</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">CollectionSearch</span><span class="p">(</span><span class="n">NMDCSearch</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class to interact with the NMDC API to search for records within a specified collection.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    collection_name</span>
+<span class="sd">        The name of the collection to search within.</span>
+<span class="sd">    api_base_url</span>
+<span class="sd">        The base URL of an instance of the NMDC Runtime API. By default, this is the base URL of the production instance.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">collection_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">api_base_url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">API_BASE_URL</span><span class="p">,</span>
+        <span class="n">env</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">collection_name</span> <span class="o">=</span> <span class="n">collection_name</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">api_base_url</span><span class="o">=</span><span class="n">api_base_url</span><span class="p">,</span>
+            <span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">,</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="CollectionSearch.get_records">
+<a class="viewcode-back" href="../../functions.html#nmdc_api_utilities.collection_search.CollectionSearch.get_records">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_records</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="nb">filter</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">max_page_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="n">fields</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">all_pages</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">shape</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;records&quot;</span><span class="p">,</span> <span class="s2">&quot;dataframe&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;records&quot;</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">|</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve records from the collection via the NMDC API.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filter</span>
+<span class="sd">            The filter to apply to the query. An empty string will return all records.</span>
+<span class="sd">        max_page_size</span>
+<span class="sd">            The maximum number of records to return per page.</span>
+<span class="sd">        fields</span>
+<span class="sd">            The fields to return. An empty string will return all fields.</span>
+<span class="sd">        all_pages</span>
+<span class="sd">            True to return all pages. False to return the first page.</span>
+<span class="sd">        shape</span>
+<span class="sd">            The shape of the returned data. If &quot;records&quot;, the data will be returned as a list of dictionaries,</span>
+<span class="sd">            where each dictionary is a record. If &quot;dataframe&quot;, the data will be returned as a pandas dataframe.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list[dict] | pd.DataFrame</span>
+<span class="sd">            A list of dictionaries or a pandas dataframe containing the records.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        RuntimeError</span>
+<span class="sd">            If the API request fails.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">shape</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;records&quot;</span><span class="p">,</span> <span class="s2">&quot;dataframe&quot;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Invalid shape input: </span><span class="si">{</span><span class="n">shape</span><span class="si">}</span><span class="se">\n</span><span class="s2"> Valid inputs: &#39;records&#39; or &#39;dataframe&#39;&quot;</span>
+            <span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">api_base_url</span><span class="si">}</span><span class="s2">/nmdcschema/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">collection_name</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">QueryParamValue</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;filter&quot;</span><span class="p">:</span> <span class="nb">filter</span><span class="p">,</span>
+            <span class="s2">&quot;max_page_size&quot;</span><span class="p">:</span> <span class="n">max_page_size</span><span class="p">,</span>
+            <span class="s2">&quot;projection&quot;</span><span class="p">:</span> <span class="n">fields</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span>
+                <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span>
+                <span class="n">headers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_build_http_request_headers</span><span class="p">(),</span>
+            <span class="p">)</span>
+            <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;API request failed&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Failed to get collection from NMDC API&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;API request response: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span><span class="si">}</span><span class="se">\n</span><span class="s2"> API Status Code: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+
+        <span class="n">results</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;resources&quot;</span><span class="p">]</span>
+        <span class="c1"># otherwise, get all pages</span>
+        <span class="k">if</span> <span class="n">all_pages</span><span class="p">:</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_all_pages</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="nb">filter</span><span class="p">,</span> <span class="n">max_page_size</span><span class="p">,</span> <span class="n">fields</span><span class="p">)[</span>
+                <span class="s2">&quot;resources&quot;</span>
+            <span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">shape</span> <span class="o">==</span> <span class="s2">&quot;dataframe&quot;</span><span class="p">:</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">results</span></div>
+
+
+<div class="viewcode-block" id="CollectionSearch.get_record_by_filter">
+<a class="viewcode-back" href="../../functions.html#nmdc_api_utilities.collection_search.CollectionSearch.get_record_by_filter">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_record_by_filter</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="nb">filter</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">max_page_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">25</span><span class="p">,</span>
+        <span class="n">fields</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">all_pages</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">shape</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;records&quot;</span><span class="p">,</span> <span class="s2">&quot;dataframe&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;records&quot;</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">|</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve a record via the NMDC API using a specified filter.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filter</span>
+<span class="sd">            The filter to use to query the collection. Must be in MongoDB query format.</span>
+<span class="sd">            Example: {&quot;name&quot;:&quot;my record name&quot;}.</span>
+<span class="sd">            `More resources for constructing MongoDB filters can be found here &lt;https://www.mongodb.com/docs/manual/reference/method/db.collection.find/#std-label-method-find-query&gt;`_.</span>
+<span class="sd">        max_page_size</span>
+<span class="sd">            The number of records to return per page.</span>
+<span class="sd">        fields</span>
+<span class="sd">            The fields to return. Default will return all fields.</span>
+<span class="sd">            Example: &quot;id,name,description,url,type&quot;</span>
+<span class="sd">        all_pages</span>
+<span class="sd">            True to return all pages. False to return the first page.</span>
+<span class="sd">        shape</span>
+<span class="sd">            The shape of the returned data. If &quot;records&quot;, the data will be returned as a list of dictionaries,</span>
+<span class="sd">            where each dictionary is a record. If &quot;dataframe&quot;, the data will be returned as a pandas dataframe.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list[dict] | pd.DataFrame</span>
+<span class="sd">            A list of dictionaries or a pandas dataframe containing the records.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_records</span><span class="p">(</span><span class="nb">filter</span><span class="p">,</span> <span class="n">max_page_size</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">all_pages</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">results</span></div>
+
+
+<div class="viewcode-block" id="CollectionSearch.get_record_by_attribute">
+<a class="viewcode-back" href="../../functions.html#nmdc_api_utilities.collection_search.CollectionSearch.get_record_by_attribute">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_record_by_attribute</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">attribute_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">attribute_value</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">max_page_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">25</span><span class="p">,</span>
+        <span class="n">fields</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">all_pages</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">exact_match</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">shape</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;records&quot;</span><span class="p">,</span> <span class="s2">&quot;dataframe&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;records&quot;</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">|</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve a record via the NMDC API by a specific attribute&#39;s value.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        attribute_name</span>
+<span class="sd">            The name of the attribute to filter by.</span>
+<span class="sd">        attribute_value</span>
+<span class="sd">            The value of the attribute to filter by.</span>
+<span class="sd">        max_page_size</span>
+<span class="sd">            The number of records to return per page.</span>
+<span class="sd">        fields</span>
+<span class="sd">            The fields to return. If empty, all fields are returned.</span>
+<span class="sd">        all_pages</span>
+<span class="sd">            True to return all pages. False to return the first page.</span>
+<span class="sd">        exact_match</span>
+<span class="sd">            Whether the attribute value should be matched exactly or partially.</span>
+<span class="sd">            Used to determine if the inputted attribute value is an exact match or a partial match.</span>
+<span class="sd">            Default is False, meaning the user does not need to input an exact match.</span>
+<span class="sd">        shape</span>
+<span class="sd">            The shape of the returned data. If &quot;records&quot;, the data will be returned as a list of dictionaries,</span>
+<span class="sd">            where each dictionary is a record. If &quot;dataframe&quot;, the data will be returned as a pandas dataframe.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list[dict] | pd.DataFrame</span>
+<span class="sd">            A list of dictionaries or a pandas dataframe containing the records.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">exact_match</span><span class="p">:</span>
+            <span class="nb">filter</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="se">{{</span><span class="s1">&quot;</span><span class="si">{</span><span class="n">attribute_name</span><span class="si">}</span><span class="s1">&quot;:&quot;</span><span class="si">{</span><span class="n">attribute_value</span><span class="si">}</span><span class="s1">&quot;</span><span class="se">}}</span><span class="s1">&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># escape special characters - mongo db filters require special characters to be double escaped ex. GC\\-MS \\(2009\\)</span>
+            <span class="n">escaped_value</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;([\W])&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;</span><span class="se">\\\\</span><span class="s2">\1&quot;</span><span class="p">,</span> <span class="n">attribute_value</span><span class="p">)</span>
+            <span class="nb">filter</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;</span><span class="se">{{</span><span class="s1">&quot;</span><span class="si">{</span><span class="n">attribute_name</span><span class="si">}</span><span class="s1">&quot;:</span><span class="se">{{</span><span class="s1">&quot;$regex&quot;:&quot;</span><span class="si">{</span><span class="n">escaped_value</span><span class="si">}</span><span class="s1">&quot;,&quot;$options&quot;:&quot;i&quot;</span><span class="se">}}}}</span><span class="s1">&#39;</span>
+            <span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;get_record_by_attribute Filter: </span><span class="si">{</span><span class="nb">filter</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_records</span><span class="p">(</span>
+            <span class="nb">filter</span><span class="p">,</span> <span class="n">max_page_size</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">all_pages</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">shape</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">results</span></div>
+
+
+<div class="viewcode-block" id="CollectionSearch.get_record_by_id">
+<a class="viewcode-back" href="../../functions.html#nmdc_api_utilities.collection_search.CollectionSearch.get_record_by_id">[docs]</a>
+    <span class="nd">@has_deprecated_parameter</span><span class="p">(</span><span class="s2">&quot;collection_id&quot;</span><span class="p">,</span> <span class="n">reason</span><span class="o">=</span><span class="s2">&quot;Use ``record_id`` instead.&quot;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_record_by_id</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">record_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">max_page_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="n">fields</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">collection_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">shape</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;records&quot;</span><span class="p">,</span> <span class="s2">&quot;dataframe&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;records&quot;</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">|</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve a record from the collection via the NMDC API using a specified ID.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        record_id:</span>
+<span class="sd">            The id of the record to retrieve from the collection. Not required to enable backwards compatibility with the deprecated collection_id parameter.</span>
+<span class="sd">        max_page_size:</span>
+<span class="sd">            The maximum number of records to return per page. Default is 100.</span>
+<span class="sd">        fields:</span>
+<span class="sd">            The fields to return. Default is all fields.</span>
+<span class="sd">        collection_id:</span>
+<span class="sd">            The id of the record to retrieve from the collection. This parameter is deprecated and will be removed in a future version. Please use record_id instead.</span>
+<span class="sd">        shape</span>
+<span class="sd">            The shape of the returned data. If &quot;records&quot;, the data will be returned as a list of dictionaries,</span>
+<span class="sd">            where each dictionary is a record. If &quot;dataframe&quot;, the data will be returned as a pandas dataframe.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list[dict] | pd.DataFrame</span>
+<span class="sd">            A list of dictionaries or a pandas dataframe containing the records.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        RuntimeError</span>
+<span class="sd">            If the API request fails.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;supports_get_by_id&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">OperationNotSupportedError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;get_record_by_id is not supported for the </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">collection_name</span><span class="si">}</span><span class="s2"> collection&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">record_id</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">collection_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;No record_id provided. Please provide this parameter to retrieve a record.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">record_id</span> <span class="ow">and</span> <span class="n">collection_id</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Both record_id and collection_id were provided. Please provide record_id, as collection_id is deprecated and will be removed in a future version.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">collection_id</span><span class="p">:</span>
+            <span class="n">record_id</span> <span class="o">=</span> <span class="n">collection_id</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">api_base_url</span><span class="si">}</span><span class="s2">/nmdcschema/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">collection_name</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">record_id</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">QueryParamValue</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;max_page_size&quot;</span><span class="p">:</span> <span class="n">max_page_size</span><span class="p">,</span>
+            <span class="s2">&quot;projection&quot;</span><span class="p">:</span> <span class="n">fields</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="c1"># get the reponse</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span>
+                <span class="n">headers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_build_http_request_headers</span><span class="p">(),</span>
+                <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;API request failed&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Failed to get collection by id from NMDC API&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;API request response: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span><span class="si">}</span><span class="se">\n</span><span class="s2"> API Status Code: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">shape</span> <span class="o">==</span> <span class="s2">&quot;dataframe&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="n">results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">results</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">results</span></div>
+
+
+<div class="viewcode-block" id="CollectionSearch.check_ids_exist">
+<a class="viewcode-back" href="../../functions.html#nmdc_api_utilities.collection_search.CollectionSearch.check_ids_exist">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check_ids_exist</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">ids</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+        <span class="n">chunk_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="n">return_missing_ids</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check if specified IDs exist in the collection.</span>
+
+<span class="sd">        This method constructs a query to the API to filter the collection based on the given IDs, and checks if all IDs exist in the collection.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        ids</span>
+<span class="sd">            A list of IDs to check if they exist in the collection.</span>
+<span class="sd">        chunk_size</span>
+<span class="sd">            The number of IDs to check in each query.</span>
+<span class="sd">        return_missing_ids</span>
+<span class="sd">            If True, and if ids are missing in the collection, return the list of IDs that do not exist in the collection.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool | tuple[bool, list[str]]</span>
+<span class="sd">            True if all IDs exist in the collection, False otherwise. However,</span>
+<span class="sd">            if return_missing_ids is True, returns a tuple whose first item is the aforementioned boolean value,</span>
+<span class="sd">            and whose second item is a list of the IDs, if any, that don&#39;t exist in the collection.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;supports_get_by_id&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">OperationNotSupportedError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;check_ids_exist is not supported for the </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">collection_name</span><span class="si">}</span><span class="s2"> collection&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1"># chunk the input list of IDs into smaller lists of 100 IDs each</span>
+        <span class="c1"># to avoid the maximum URL length limit</span>
+        <span class="n">ids_test</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">ids</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">ids_test</span><span class="p">),</span> <span class="n">chunk_size</span><span class="p">):</span>
+            <span class="n">chunk</span> <span class="o">=</span> <span class="n">ids_test</span><span class="p">[</span><span class="n">i</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="n">chunk_size</span><span class="p">]</span>
+            <span class="n">filter_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;$in&quot;</span><span class="p">:</span> <span class="n">chunk</span><span class="p">}}</span>
+            <span class="n">filter_json_string</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">filter_dict</span><span class="p">,</span> <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="s2">&quot;:&quot;</span><span class="p">))</span>
+
+            <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_records</span><span class="p">(</span>
+                <span class="nb">filter</span><span class="o">=</span><span class="n">filter_json_string</span><span class="p">,</span>
+                <span class="n">max_page_size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">chunk</span><span class="p">),</span>
+                <span class="n">fields</span><span class="o">=</span><span class="s2">&quot;id&quot;</span><span class="p">,</span>
+                <span class="n">shape</span><span class="o">=</span><span class="s2">&quot;records&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">],</span> <span class="n">results</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span> <span class="ow">and</span> <span class="n">return_missing_ids</span><span class="p">:</span>
+                <span class="n">missing_ids</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+                    <span class="nb">set</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">([</span><span class="n">record</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">results</span><span class="p">])</span>
+                <span class="p">)</span>
+                <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="n">missing_ids</span>
+            <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">return_missing_ids</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="CollectionSearch.get_batch_records">
+<a class="viewcode-back" href="../../functions.html#nmdc_api_utilities.collection_search.CollectionSearch.get_batch_records">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_batch_records</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">id_list</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+        <span class="n">search_field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">chunk_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="n">fields</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">shape</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;records&quot;</span><span class="p">,</span> <span class="s2">&quot;dataframe&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;records&quot;</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">|</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get a batch of records from the collection that relate to input IDs.</span>
+
+<span class="sd">        This method is used to retrieve records that include any of the IDs from the input list in specified fields (including fields other than ``id``).</span>
+<span class="sd">        For example, if records in a collection contain study IDs in a field called ``associated_studies``,</span>
+<span class="sd">        this method can be used to retrieve all records that include any of the input study IDs in the ``associated_studies`` field.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ---------</span>
+<span class="sd">        id_list</span>
+<span class="sd">            A list of IDs to get records for.</span>
+<span class="sd">        search_field</span>
+<span class="sd">            The field in which to search for the IDs.</span>
+<span class="sd">        chunk_size</span>
+<span class="sd">            The number of IDs to get in each query.</span>
+<span class="sd">        fields</span>
+<span class="sd">            The fields to return. If empty or not provided, all fields are returned.</span>
+<span class="sd">        shape</span>
+<span class="sd">            The shape of the returned data. If &quot;records&quot;, the data will be returned as a list of dictionaries,</span>
+<span class="sd">            where each dictionary is a record. If &quot;dataframe&quot;, the data will be returned as a pandas dataframe.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list[dict] | pd.DataFrame</span>
+<span class="sd">            A list of dictionaries or a pandas dataframe (still packed) containing the records that relate to the input IDs in</span>
+<span class="sd">            the specified search field.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;supports_get_by_id&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">OperationNotSupportedError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;get_record_by_id is not supported for the </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">collection_name</span><span class="si">}</span><span class="s2"> collection&quot;</span>
+            <span class="p">)</span>
+
+        <span class="n">dp</span> <span class="o">=</span> <span class="n">DataProcessing</span><span class="p">()</span>
+        <span class="n">results</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">id_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">id_list</span><span class="p">))</span>
+        <span class="n">chunks</span> <span class="o">=</span> <span class="n">dp</span><span class="o">.</span><span class="n">split_list</span><span class="p">(</span><span class="n">input_list</span><span class="o">=</span><span class="n">id_list</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="n">chunk_size</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">chunks</span><span class="p">:</span>
+            <span class="n">sanitized_chunk</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+            <span class="nb">filter</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="se">{{</span><span class="s1">&quot;</span><span class="si">{</span><span class="n">search_field</span><span class="si">}</span><span class="s1">&quot;: </span><span class="se">{{</span><span class="s1">&quot;$in&quot;: </span><span class="si">{</span><span class="n">sanitized_chunk</span><span class="si">}</span><span class="se">}}}}</span><span class="s1">&#39;</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_records</span><span class="p">(</span>
+                <span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">,</span> <span class="n">max_page_size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">chunk</span><span class="p">),</span> <span class="n">fields</span><span class="o">=</span><span class="n">fields</span><span class="p">,</span> <span class="n">all_pages</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">],</span> <span class="n">res</span><span class="p">)</span>
+            <span class="n">results</span> <span class="o">+=</span> <span class="n">res</span>
+        <span class="k">if</span> <span class="n">shape</span> <span class="o">==</span> <span class="s2">&quot;dataframe&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">results</span></div>
+</div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="k">pass</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, NMDC.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,913 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Core Search API Reference &mdash; nmdc_api_utilities 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=7026087e"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script src="_static/external_links.js?v=a2d33618"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="CollectionSearch Subclasses" href="public_subclasses.html" />
+    <link rel="prev" title="External Notebook Examples" href="example_usage.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            nmdc_api_utilities
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="filters.html">Using MongoDB filters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example_usage.html">External Notebook Examples</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Public API Reference:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Core Search API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#nmdc-search-base">NMDC Search Base</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nmdc_api_utilities.nmdc_search.NMDCSearch"><code class="docutils literal notranslate"><span class="pre">NMDCSearch</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.nmdc_search.NMDCSearch.get_collection_name_from_id"><code class="docutils literal notranslate"><span class="pre">NMDCSearch.get_collection_name_from_id()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.nmdc_search.NMDCSearch.get_linked_instances"><code class="docutils literal notranslate"><span class="pre">NMDCSearch.get_linked_instances()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.nmdc_search.NMDCSearch.get_linked_instances_and_associate_ids"><code class="docutils literal notranslate"><span class="pre">NMDCSearch.get_linked_instances_and_associate_ids()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.nmdc_search.NMDCSearch.get_record_from_id"><code class="docutils literal notranslate"><span class="pre">NMDCSearch.get_record_from_id()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.nmdc_search.NMDCSearch.get_records_by_id"><code class="docutils literal notranslate"><span class="pre">NMDCSearch.get_records_by_id()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.nmdc_search.NMDCSearch.get_schema_version"><code class="docutils literal notranslate"><span class="pre">NMDCSearch.get_schema_version()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#collection-search-base">Collection Search Base</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nmdc_api_utilities.collection_search.CollectionSearch"><code class="docutils literal notranslate"><span class="pre">CollectionSearch</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.collection_search.CollectionSearch.check_ids_exist"><code class="docutils literal notranslate"><span class="pre">CollectionSearch.check_ids_exist()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.collection_search.CollectionSearch.get_batch_records"><code class="docutils literal notranslate"><span class="pre">CollectionSearch.get_batch_records()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.collection_search.CollectionSearch.get_record_by_attribute"><code class="docutils literal notranslate"><span class="pre">CollectionSearch.get_record_by_attribute()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.collection_search.CollectionSearch.get_record_by_filter"><code class="docutils literal notranslate"><span class="pre">CollectionSearch.get_record_by_filter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.collection_search.CollectionSearch.get_record_by_id"><code class="docutils literal notranslate"><span class="pre">CollectionSearch.get_record_by_id()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.collection_search.CollectionSearch.get_records"><code class="docutils literal notranslate"><span class="pre">CollectionSearch.get_records()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#functional-search">Functional Search</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nmdc_api_utilities.functional_search.FunctionalSearch"><code class="docutils literal notranslate"><span class="pre">FunctionalSearch</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.functional_search.FunctionalSearch.get_functional_annotations"><code class="docutils literal notranslate"><span class="pre">FunctionalSearch.get_functional_annotations()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.functional_search.FunctionalSearch.supports_get_by_id"><code class="docutils literal notranslate"><span class="pre">FunctionalSearch.supports_get_by_id</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#latitude-and-longitude-utilities">Latitude and Longitude Utilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nmdc_api_utilities.lat_long_filters.LatLongFilters"><code class="docutils literal notranslate"><span class="pre">LatLongFilters</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.lat_long_filters.LatLongFilters.get_record_by_lat_long"><code class="docutils literal notranslate"><span class="pre">LatLongFilters.get_record_by_lat_long()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.lat_long_filters.LatLongFilters.get_record_by_latitude"><code class="docutils literal notranslate"><span class="pre">LatLongFilters.get_record_by_latitude()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.lat_long_filters.LatLongFilters.get_record_by_longitude"><code class="docutils literal notranslate"><span class="pre">LatLongFilters.get_record_by_longitude()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.lat_long_filters.LatLongFilters.get_record_by_proximity"><code class="docutils literal notranslate"><span class="pre">LatLongFilters.get_record_by_proximity()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.lat_long_filters.LatLongFilters.get_records"><code class="docutils literal notranslate"><span class="pre">LatLongFilters.get_records()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#data-processing-utilities">Data Processing Utilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nmdc_api_utilities.data_processing.DataProcessing"><code class="docutils literal notranslate"><span class="pre">DataProcessing</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.data_processing.DataProcessing.build_filter"><code class="docutils literal notranslate"><span class="pre">DataProcessing.build_filter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.data_processing.DataProcessing.convert_to_df"><code class="docutils literal notranslate"><span class="pre">DataProcessing.convert_to_df()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.data_processing.DataProcessing.extract_field"><code class="docutils literal notranslate"><span class="pre">DataProcessing.extract_field()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.data_processing.DataProcessing.merge_dataframes"><code class="docutils literal notranslate"><span class="pre">DataProcessing.merge_dataframes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.data_processing.DataProcessing.merge_df"><code class="docutils literal notranslate"><span class="pre">DataProcessing.merge_df()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.data_processing.DataProcessing.rename_columns"><code class="docutils literal notranslate"><span class="pre">DataProcessing.rename_columns()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.data_processing.DataProcessing.split_list"><code class="docutils literal notranslate"><span class="pre">DataProcessing.split_list()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#general-utilities">General Utilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nmdc_api_utilities.utils.Utils"><code class="docutils literal notranslate"><span class="pre">Utils</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="public_subclasses.html"><code class="docutils literal notranslate"><span class="pre">CollectionSearch</span></code> Subclasses</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Privileged API Reference:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="privileged_api.html">Privileged API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">nmdc_api_utilities</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Core Search API Reference</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/functions.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="core-search-api-reference">
+<h1>Core Search API Reference<a class="headerlink" href="#core-search-api-reference" title="Link to this heading"></a></h1>
+<p>This page documents public, reusable core classes.
+Collection-specific subclasses are documented in <a class="reference internal" href="public_subclasses.html"><span class="doc">CollectionSearch Subclasses</span></a>.</p>
+<section id="nmdc-search-base">
+<h2>NMDC Search Base<a class="headerlink" href="#nmdc-search-base" title="Link to this heading"></a></h2>
+<p>The foundational class for cross-collection queries and linked-instance retrieval.
+Use this class for custom workflows that span multiple schema classes.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="nmdc_api_utilities.nmdc_search.NMDCSearch">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nmdc_api_utilities.nmdc_search.</span></span><span class="sig-name descname"><span class="pre">NMDCSearch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_base_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'https://api.microbiomedata.org'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/nmdc_search.html#NMDCSearch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.nmdc_search.NMDCSearch" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">NMDCAPIClient</span></code></p>
+<p>Class for interacting with the NMDC Runtime API for searching and retrieving records in the NMDC metadata database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>api_base_url</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">'https://api.microbiomedata.org'</span></code>) – The base URL of an instance of the NMDC Runtime API. By default, this is the base URL of
+the production instance. NMDC team members will occasionally set this to the base URL of
+a different instance; for example, a self-hosted instance used for testing.</p>
+</dd>
+</dl>
+<div class="admonition-deprecated-parameter admonition">
+<p class="admonition-title">Deprecated parameter</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">env</span></code> parameter is deprecated.
+Use <code class="docutils literal notranslate"><span class="pre">api_base_url</span></code> instead.</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.nmdc_search.NMDCSearch.get_collection_name_from_id">
+<span class="sig-name descname"><span class="pre">get_collection_name_from_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">doc_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/nmdc_search.html#NMDCSearch.get_collection_name_from_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.nmdc_search.NMDCSearch.get_collection_name_from_id" title="Link to this definition"></a></dt>
+<dd><p>Used when you have an id but not the collection name.
+Determine the collection the id is stored in.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>doc_id</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – The id of the document.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The collection name of the document.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – If the API request fails.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.nmdc_search.NMDCSearch.get_linked_instances">
+<span class="sig-name descname"><span class="pre">get_linked_instances</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hydrate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">types</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_page_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/nmdc_search.html#NMDCSearch.get_linked_instances"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.nmdc_search.NMDCSearch.get_linked_instances" title="Link to this definition"></a></dt>
+<dd><p>Retrieve linked instances for the given IDs from the NMDC API.</p>
+<p>This method returns a list of linked instance records for the given IDs. For instance,
+if you provide a study ID, this returns records from the <code class="docutils literal notranslate"><span class="pre">biosample_set</span></code>,
+<code class="docutils literal notranslate"><span class="pre">data_generation_set</span></code>, etc. that are associated with that study, even if the association
+is not represented by a single direct link.</p>
+<p>See <code class="docutils literal notranslate"><span class="pre">get_linked_instances_and_associate_ids</span></code> for a method that returns an alternate format of the data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ids</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>] | <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – The ids to search for.</p></li>
+<li><p><strong>hydrate</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">False</span></code>) – Whether to include full documents in the response.</p></li>
+<li><p><strong>types</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>] | <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> | <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – The types of records to return. If omitted or <code class="docutils literal notranslate"><span class="pre">None</span></code>, linked instances of all
+types are returned. Example: [“nmdc:Study”, “nmdc:Biosample”, “nmdc:MassSpectrometry”].</p></li>
+<li><p><strong>max_page_size</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">500</span></code>) – The maximum number of records to return per page.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of linked instance records.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.nmdc_search.NMDCSearch.get_linked_instances_and_associate_ids">
+<span class="sig-name descname"><span class="pre">get_linked_instances_and_associate_ids</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">types</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hydrate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_page_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/nmdc_search.html#NMDCSearch.get_linked_instances_and_associate_ids"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.nmdc_search.NMDCSearch.get_linked_instances_and_associate_ids" title="Link to this definition"></a></dt>
+<dd><p>Retrieve linked instances for the given IDs from the NMDC API and associate them with the input IDs.</p>
+<p>This method returns a list of records that are linked to the records with the given IDs. For instance,
+if you provide an ID for a study record, this can return the ids records within the <code class="docutils literal notranslate"><span class="pre">biosample_set</span></code>,
+<code class="docutils literal notranslate"><span class="pre">data_generation_set</span></code> etc that are associated with this study, even if it is not a single link between records.</p>
+<p>See also <code class="docutils literal notranslate"><span class="pre">get_linked_instances</span></code> for a method that returns the linked instances in their original list format.
+This method reformats into a dictionary with keys as query ids, and either a list of resulting linked ids or a list of hydrated records as values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ids</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>] | <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – The ids to search for.</p></li>
+<li><p><strong>types</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>] | <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> | <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – The types of instances you want to return. If <code class="docutils literal notranslate"><span class="pre">types</span></code> is None, all types are returned.</p></li>
+<li><p><strong>hydrate</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">False</span></code>) – Whether to include full documents in the response.</p></li>
+<li><p><strong>max_page_size</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">500</span></code>) – The maximum number of records to return per page.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary mapping each input id to a list of its linked instance records.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code> | <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.nmdc_search.NMDCSearch.get_record_from_id">
+<span class="sig-name descname"><span class="pre">get_record_from_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/nmdc_search.html#NMDCSearch.get_record_from_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.nmdc_search.NMDCSearch.get_record_from_id" title="Link to this definition"></a></dt>
+<dd><p>Retrieve a record via the NMDC API from a provided record ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – The ID of the record to retrieve.</p></li>
+<li><p><strong>filter</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">''</span></code>) – Additional filter to apply to the records. If empty, no additional filter is applied.</p></li>
+<li><p><strong>fields</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">''</span></code>) – Comma-separated list of fields to include in the response. If empty, all fields are returned.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The full record data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.nmdc_search.NMDCSearch.get_records_by_id">
+<span class="sig-name descname"><span class="pre">get_records_by_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/nmdc_search.html#NMDCSearch.get_records_by_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.nmdc_search.NMDCSearch.get_records_by_id" title="Link to this definition"></a></dt>
+<dd><p>Retrieve records via the NMDC API from a provided list of record IDs.</p>
+<p>The input ids can be from multiple collections. Input like
+[“nmdc:sty-11-8fb6t785”, “nmdc:bsm-11-002vgm56”, “nmdc:dobj-11-00095294”] is valid and will return each of these records in a list of dictionaries.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ids</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>] | <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – List of IDs of records to retrieve.</p></li>
+<li><p><strong>fields</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">''</span></code>) – Comma-separated list of fields to include in the response. An empty string returns all fields.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The record(s) data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.nmdc_search.NMDCSearch.get_schema_version">
+<span class="sig-name descname"><span class="pre">get_schema_version</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/nmdc_search.html#NMDCSearch.get_schema_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.nmdc_search.NMDCSearch.get_schema_version" title="Link to this definition"></a></dt>
+<dd><p>Get the current NMDC schema version used by the NMDC API.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The NMDC schema version</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="collection-search-base">
+<h2>Collection Search Base<a class="headerlink" href="#collection-search-base" title="Link to this heading"></a></h2>
+<p>Extends <code class="docutils literal notranslate"><span class="pre">NMDCSearch</span></code> with collection-focused query helpers.
+Use this class for generic collection operations, or use <a class="reference internal" href="public_subclasses.html"><span class="doc">CollectionSearch Subclasses</span></a> for preconfigured collection targets.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="nmdc_api_utilities.collection_search.CollectionSearch">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nmdc_api_utilities.collection_search.</span></span><span class="sig-name descname"><span class="pre">CollectionSearch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">collection_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_base_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'https://api.microbiomedata.org'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/collection_search.html#CollectionSearch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.collection_search.CollectionSearch" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nmdc_api_utilities.nmdc_search.NMDCSearch" title="nmdc_api_utilities.nmdc_search.NMDCSearch"><code class="xref py py-class docutils literal notranslate"><span class="pre">NMDCSearch</span></code></a></p>
+<p>Class to interact with the NMDC API to search for records within a specified collection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>collection_name</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – The name of the collection to search within.</p></li>
+<li><p><strong>api_base_url</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">'https://api.microbiomedata.org'</span></code>) – The base URL of an instance of the NMDC Runtime API. By default, this is the base URL of the production instance.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition-deprecated-parameter admonition">
+<p class="admonition-title">Deprecated parameter</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">env</span></code> parameter is deprecated.
+Use <code class="docutils literal notranslate"><span class="pre">api_base_url</span></code> instead.</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.collection_search.CollectionSearch.check_ids_exist">
+<span class="sig-name descname"><span class="pre">check_ids_exist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_missing_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/collection_search.html#CollectionSearch.check_ids_exist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.collection_search.CollectionSearch.check_ids_exist" title="Link to this definition"></a></dt>
+<dd><p>Check if specified IDs exist in the collection.</p>
+<p>This method constructs a query to the API to filter the collection based on the given IDs, and checks if all IDs exist in the collection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ids</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</span>) – A list of IDs to check if they exist in the collection.</p></li>
+<li><p><strong>chunk_size</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">100</span></code>) – The number of IDs to check in each query.</p></li>
+<li><p><strong>return_missing_ids</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">False</span></code>) – If True, and if ids are missing in the collection, return the list of IDs that do not exist in the collection.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if all IDs exist in the collection, False otherwise. However,
+if return_missing_ids is True, returns a tuple whose first item is the aforementioned boolean value,
+and whose second item is a list of the IDs, if any, that don’t exist in the collection.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code> | <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.collection_search.CollectionSearch.get_batch_records">
+<span class="sig-name descname"><span class="pre">get_batch_records</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_field</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'records'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/collection_search.html#CollectionSearch.get_batch_records"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.collection_search.CollectionSearch.get_batch_records" title="Link to this definition"></a></dt>
+<dd><p>Get a batch of records from the collection that relate to input IDs.</p>
+<p>This method is used to retrieve records that include any of the IDs from the input list in specified fields (including fields other than <code class="docutils literal notranslate"><span class="pre">id</span></code>).
+For example, if records in a collection contain study IDs in a field called <code class="docutils literal notranslate"><span class="pre">associated_studies</span></code>,
+this method can be used to retrieve all records that include any of the input study IDs in the <code class="docutils literal notranslate"><span class="pre">associated_studies</span></code> field.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id_list</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></span>) – A list of IDs to get records for.</p></li>
+<li><p><strong>search_field</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – The field in which to search for the IDs.</p></li>
+<li><p><strong>chunk_size</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">100</span></code>) – The number of IDs to get in each query.</p></li>
+<li><p><strong>fields</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">''</span></code>) – The fields to return. If empty or not provided, all fields are returned.</p></li>
+<li><p><strong>shape</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Literal</span></code>[<code class="docutils literal notranslate"><span class="pre">'records'</span></code>, <code class="docutils literal notranslate"><span class="pre">'dataframe'</span></code>]</span>, default: <code class="docutils literal notranslate"><span class="pre">'records'</span></code>) – The shape of the returned data. If “records”, the data will be returned as a list of dictionaries,
+where each dictionary is a record. If “dataframe”, the data will be returned as a pandas dataframe.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of dictionaries or a pandas dataframe (still packed) containing the records that relate to the input IDs in
+the specified search field.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>] | <code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.collection_search.CollectionSearch.get_record_by_attribute">
+<span class="sig-name descname"><span class="pre">get_record_by_attribute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attribute_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attribute_value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_page_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">25</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_pages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exact_match</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'records'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/collection_search.html#CollectionSearch.get_record_by_attribute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.collection_search.CollectionSearch.get_record_by_attribute" title="Link to this definition"></a></dt>
+<dd><p>Retrieve a record via the NMDC API by a specific attribute’s value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>attribute_name</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – The name of the attribute to filter by.</p></li>
+<li><p><strong>attribute_value</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – The value of the attribute to filter by.</p></li>
+<li><p><strong>max_page_size</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">25</span></code>) – The number of records to return per page.</p></li>
+<li><p><strong>fields</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">''</span></code>) – The fields to return. If empty, all fields are returned.</p></li>
+<li><p><strong>all_pages</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">False</span></code>) – True to return all pages. False to return the first page.</p></li>
+<li><p><strong>exact_match</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">False</span></code>) – Whether the attribute value should be matched exactly or partially.
+Used to determine if the inputted attribute value is an exact match or a partial match.
+Default is False, meaning the user does not need to input an exact match.</p></li>
+<li><p><strong>shape</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Literal</span></code>[<code class="docutils literal notranslate"><span class="pre">'records'</span></code>, <code class="docutils literal notranslate"><span class="pre">'dataframe'</span></code>]</span>, default: <code class="docutils literal notranslate"><span class="pre">'records'</span></code>) – The shape of the returned data. If “records”, the data will be returned as a list of dictionaries,
+where each dictionary is a record. If “dataframe”, the data will be returned as a pandas dataframe.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of dictionaries or a pandas dataframe containing the records.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>] | <code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.collection_search.CollectionSearch.get_record_by_filter">
+<span class="sig-name descname"><span class="pre">get_record_by_filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_page_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">25</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_pages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'records'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/collection_search.html#CollectionSearch.get_record_by_filter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.collection_search.CollectionSearch.get_record_by_filter" title="Link to this definition"></a></dt>
+<dd><p>Retrieve a record via the NMDC API using a specified filter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filter</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – The filter to use to query the collection. Must be in MongoDB query format.
+Example: {“name”:”my record name”}.
+<a class="reference external" href="https://www.mongodb.com/docs/manual/reference/method/db.collection.find/#std-label-method-find-query">More resources for constructing MongoDB filters can be found here</a>.</p></li>
+<li><p><strong>max_page_size</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">25</span></code>) – The number of records to return per page.</p></li>
+<li><p><strong>fields</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">''</span></code>) – The fields to return. Default will return all fields.
+Example: “id,name,description,url,type”</p></li>
+<li><p><strong>all_pages</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">False</span></code>) – True to return all pages. False to return the first page.</p></li>
+<li><p><strong>shape</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Literal</span></code>[<code class="docutils literal notranslate"><span class="pre">'records'</span></code>, <code class="docutils literal notranslate"><span class="pre">'dataframe'</span></code>]</span>, default: <code class="docutils literal notranslate"><span class="pre">'records'</span></code>) – The shape of the returned data. If “records”, the data will be returned as a list of dictionaries,
+where each dictionary is a record. If “dataframe”, the data will be returned as a pandas dataframe.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of dictionaries or a pandas dataframe containing the records.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>] | <code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.collection_search.CollectionSearch.get_record_by_id">
+<span class="sig-name descname"><span class="pre">get_record_by_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">record_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_page_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collection_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'records'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/collection_search.html#CollectionSearch.get_record_by_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.collection_search.CollectionSearch.get_record_by_id" title="Link to this definition"></a></dt>
+<dd><p>Retrieve a record from the collection via the NMDC API using a specified ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>record_id</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</span>, default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – The id of the record to retrieve from the collection. Not required to enable backwards compatibility with the deprecated collection_id parameter.</p></li>
+<li><p><strong>max_page_size</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">100</span></code>) – The maximum number of records to return per page. Default is 100.</p></li>
+<li><p><strong>fields</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">''</span></code>) – The fields to return. Default is all fields.</p></li>
+<li><p><strong>collection_id</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</span>, default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – The id of the record to retrieve from the collection. This parameter is deprecated and will be removed in a future version. Please use record_id instead.</p></li>
+<li><p><strong>shape</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Literal</span></code>[<code class="docutils literal notranslate"><span class="pre">'records'</span></code>, <code class="docutils literal notranslate"><span class="pre">'dataframe'</span></code>]</span>, default: <code class="docutils literal notranslate"><span class="pre">'records'</span></code>) – The shape of the returned data. If “records”, the data will be returned as a list of dictionaries,
+where each dictionary is a record. If “dataframe”, the data will be returned as a pandas dataframe.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of dictionaries or a pandas dataframe containing the records.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>] | <code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></span></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – If the API request fails.</p>
+</dd>
+</dl>
+<div class="admonition-deprecated-parameter admonition">
+<p class="admonition-title">Deprecated parameter</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">collection_id</span></code> parameter is deprecated.
+Use <code class="docutils literal notranslate"><span class="pre">record_id</span></code> instead.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.collection_search.CollectionSearch.get_records">
+<span class="sig-name descname"><span class="pre">get_records</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_page_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_pages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'records'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/collection_search.html#CollectionSearch.get_records"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.collection_search.CollectionSearch.get_records" title="Link to this definition"></a></dt>
+<dd><p>Retrieve records from the collection via the NMDC API.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filter</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">''</span></code>) – The filter to apply to the query. An empty string will return all records.</p></li>
+<li><p><strong>max_page_size</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">100</span></code>) – The maximum number of records to return per page.</p></li>
+<li><p><strong>fields</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">''</span></code>) – The fields to return. An empty string will return all fields.</p></li>
+<li><p><strong>all_pages</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">False</span></code>) – True to return all pages. False to return the first page.</p></li>
+<li><p><strong>shape</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Literal</span></code>[<code class="docutils literal notranslate"><span class="pre">'records'</span></code>, <code class="docutils literal notranslate"><span class="pre">'dataframe'</span></code>]</span>, default: <code class="docutils literal notranslate"><span class="pre">'records'</span></code>) – The shape of the returned data. If “records”, the data will be returned as a list of dictionaries,
+where each dictionary is a record. If “dataframe”, the data will be returned as a pandas dataframe.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of dictionaries or a pandas dataframe containing the records.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>] | <code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></span></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – If the API request fails.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="functional-search">
+<h2>Functional Search<a class="headerlink" href="#functional-search" title="Link to this heading"></a></h2>
+<p>Provides search utilities focused on functional annotation and related retrieval patterns.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="nmdc_api_utilities.functional_search.FunctionalSearch">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nmdc_api_utilities.functional_search.</span></span><span class="sig-name descname"><span class="pre">FunctionalSearch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_base_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'https://api.microbiomedata.org'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/functional_search.html#FunctionalSearch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.functional_search.FunctionalSearch" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nmdc_api_utilities.collection_search.CollectionSearch" title="nmdc_api_utilities.collection_search.CollectionSearch"><code class="xref py py-class docutils literal notranslate"><span class="pre">CollectionSearch</span></code></a></p>
+<p>Class to interact with the NMDC API to search for records within the <code class="docutils literal notranslate"><span class="pre">functional_annotation_agg</span></code> collection.</p>
+<div class="admonition-deprecated-parameter admonition">
+<p class="admonition-title">Deprecated parameter</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">env</span></code> parameter is deprecated.
+Use <code class="docutils literal notranslate"><span class="pre">api_base_url</span></code> instead.</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.functional_search.FunctionalSearch.get_functional_annotations">
+<span class="sig-name descname"><span class="pre">get_functional_annotations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">annotation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotation_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">25</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_pages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/functional_search.html#FunctionalSearch.get_functional_annotations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.functional_search.FunctionalSearch.get_functional_annotations" title="Link to this definition"></a></dt>
+<dd><p>Retrieve records with specific annotation value and type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>annotation</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – The functional annotation value to query.</p></li>
+<li><p><strong>annotation_type</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – The type of id to query. See Notes for more details.</p></li>
+<li><p><strong>page_size</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">25</span></code>) – The number of results to return per page.</p></li>
+<li><p><strong>fields</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">''</span></code>) – The fields to return. If empty, all fields are returned.
+Example: “id,name”</p></li>
+<li><p><strong>all_pages</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">False</span></code>) – True to return all pages. False to return the first page.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of functional annotations.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>]</span></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the annotation_type is not one of the allowed types. See Notes for more details.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">annotation_type</span></code> must be one of the following: “KEGG”, “COG”, “PFAM”.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="nmdc_api_utilities.functional_search.FunctionalSearch.supports_get_by_id">
+<span class="sig-name descname"><span class="pre">supports_get_by_id</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></span><a class="headerlink" href="#nmdc_api_utilities.functional_search.FunctionalSearch.supports_get_by_id" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="latitude-and-longitude-utilities">
+<h2>Latitude and Longitude Utilities<a class="headerlink" href="#latitude-and-longitude-utilities" title="Link to this heading"></a></h2>
+<p>Provides geospatial helper methods for lat/lon-based filtering and coordinate handling.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="nmdc_api_utilities.lat_long_filters.LatLongFilters">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nmdc_api_utilities.lat_long_filters.</span></span><span class="sig-name descname"><span class="pre">LatLongFilters</span></span><a class="reference internal" href="_modules/nmdc_api_utilities/lat_long_filters.html#LatLongFilters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.lat_long_filters.LatLongFilters" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Mixin class with methods to interact with collections that
+can be searched by latitude and longitude via the NMDC API.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.lat_long_filters.LatLongFilters.get_record_by_lat_long">
+<span class="sig-name descname"><span class="pre">get_record_by_lat_long</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lat_comparison</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">long_comparison</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latitude</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">longitude</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">25</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_pages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/lat_long_filters.html#LatLongFilters.get_record_by_lat_long"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.lat_long_filters.LatLongFilters.get_record_by_lat_long" title="Link to this definition"></a></dt>
+<dd><p>Retrieve records by latitude and longitude filters via the NMDC API.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lat_comparison</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – The comparison to use to query the record for latitude. See Notes for more details.</p></li>
+<li><p><strong>long_comparison</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – The comparison to use to query the record for longitude. See Notes for more details.</p></li>
+<li><p><strong>latitude</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – The latitude of the record to query.</p></li>
+<li><p><strong>longitude</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – The longitude of the record to query.</p></li>
+<li><p><strong>page_size</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">25</span></code>) – The number of results to return per page.</p></li>
+<li><p><strong>fields</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">''</span></code>) – The fields to return. If empty, all fields are returned.
+Example: “id,name,description,type”</p></li>
+<li><p><strong>all_pages</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">False</span></code>) – True to return all pages. False to return the first page.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of records.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>]</span></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the comparison is not one of the allowed comparisons.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p><code class="docutils literal notranslate"><span class="pre">lat_comparison</span></code> and <code class="docutils literal notranslate"><span class="pre">long_comparison</span></code> must be one of the following:</p>
+<ul class="simple">
+<li><p>eq : Matches values that are equal to the given value.</p></li>
+<li><p>gt : Matches if values are greater than the given value.</p></li>
+<li><p>lt : Matches if values are less than the given value.</p></li>
+<li><p>gte : Matches if values are greater or equal to the given value.</p></li>
+<li><p>lte : Matches if values are less or equal to the given value.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.lat_long_filters.LatLongFilters.get_record_by_latitude">
+<span class="sig-name descname"><span class="pre">get_record_by_latitude</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">comparison</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latitude</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">25</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_pages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/lat_long_filters.html#LatLongFilters.get_record_by_latitude"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.lat_long_filters.LatLongFilters.get_record_by_latitude" title="Link to this definition"></a></dt>
+<dd><p>Retrieve records by latitude filter via the NMDC API.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>comparison</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – The comparison to use to query the record. See Notes for more details.</p></li>
+<li><p><strong>latitude</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – The latitude of the record to query.</p></li>
+<li><p><strong>page_size</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">25</span></code>) – The number of results to return per page.</p></li>
+<li><p><strong>fields</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">''</span></code>) – The fields to return. Default is all fields.
+Example: “id,name,description,type”</p></li>
+<li><p><strong>all_pages</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">False</span></code>) – True to return all pages. False to return the first page.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of records.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>]</span></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the comparison is not one of the allowed comparisons.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">comparison</span></code> must be one of the following: “eq”, “gt”, “lt”, “gte”, “lte”.</p>
+<ul class="simple">
+<li><p>eq : Matches values that are equal to the given value.</p></li>
+<li><p>gt : Matches if values are greater than the given value.</p></li>
+<li><p>lt : Matches if values are less than the given value.</p></li>
+<li><p>gte : Matches if values are greater or equal to the given value.</p></li>
+<li><p>lte : Matches if values are less or equal to the given value.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.lat_long_filters.LatLongFilters.get_record_by_longitude">
+<span class="sig-name descname"><span class="pre">get_record_by_longitude</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">comparison</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">longitude</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">25</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_pages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/lat_long_filters.html#LatLongFilters.get_record_by_longitude"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.lat_long_filters.LatLongFilters.get_record_by_longitude" title="Link to this definition"></a></dt>
+<dd><p>Retrieve records by longitude filter via the NMDC API.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>comparison</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – The comparison to use to query the record. See Notes for more details.</p></li>
+<li><p><strong>longitude</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – The longitude of the record to query.</p></li>
+<li><p><strong>page_size</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">25</span></code>) – The number of results to return per page.</p></li>
+<li><p><strong>fields</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">''</span></code>) – The fields to return. If empty, all fields are returned.
+Example: “id,name,description,type”</p></li>
+<li><p><strong>all_pages</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">False</span></code>) – True to return all pages. False to return the first page.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of records.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>]</span></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the comparison is not one of the allowed comparisons.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">comparison</span></code> must be one of the following: “eq”, “gt”, “lt”, “gte”, “lte”.</p>
+<ul class="simple">
+<li><p>eq : Matches values that are equal to the given value.</p></li>
+<li><p>gt : Matches if values are greater than the given value.</p></li>
+<li><p>lt : Matches if values are less than the given value.</p></li>
+<li><p>gte : Matches if values are greater or equal to the given value.</p></li>
+<li><p>lte : Matches if values are less or equal to the given value.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.lat_long_filters.LatLongFilters.get_record_by_proximity">
+<span class="sig-name descname"><span class="pre">get_record_by_proximity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">radius_km</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">record_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query_lat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query_lon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">25</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_pages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/lat_long_filters.html#LatLongFilters.get_record_by_proximity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.lat_long_filters.LatLongFilters.get_record_by_proximity" title="Link to this definition"></a></dt>
+<dd><p>Retrieve records by proximity to a record or lat lon via the NMDC API.
+First retrieve records within a bounding box, then refine to those within the circular radius.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>radius_km</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – The radius in kilometers to search for records around the record.</p></li>
+<li><p><strong>record_id</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> | <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – The ID of a record to query where lat/lon are provided (Biosample or FieldResearchSite). If provided, query_lat and query_lon must not be provided.</p></li>
+<li><p><strong>query_lat</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code> | <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – The latitude, in decimal degrees, to query. If provided, record_id must not be provided.
+Example: 63.875088</p></li>
+<li><p><strong>query_lon</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code> | <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – The longitude, in decimal degrees, to query. If provided, record_id must not be provided.
+Example: -149.210438</p></li>
+<li><p><strong>page_size</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">25</span></code>) – The number of results to return per page.</p></li>
+<li><p><strong>fields</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">''</span></code>) – The fields to return. If empty, all fields are returned.
+Example: “id,name,description,type”</p></li>
+<li><p><strong>all_pages</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">False</span></code>) – True to return all pages. False to return the first page.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of records.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.lat_long_filters.LatLongFilters.get_records">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get_records</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_page_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_pages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'records'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/lat_long_filters.html#LatLongFilters.get_records"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.lat_long_filters.LatLongFilters.get_records" title="Link to this definition"></a></dt>
+<dd><p>Retrieve records from a collection via the NMDC API.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>] | <code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="data-processing-utilities">
+<h2>Data Processing Utilities<a class="headerlink" href="#data-processing-utilities" title="Link to this heading"></a></h2>
+<p>Provides helpers for transforming and reshaping query outputs.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="nmdc_api_utilities.data_processing.DataProcessing">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nmdc_api_utilities.data_processing.</span></span><span class="sig-name descname"><span class="pre">DataProcessing</span></span><a class="reference internal" href="_modules/nmdc_api_utilities/data_processing.html#DataProcessing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.data_processing.DataProcessing" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.data_processing.DataProcessing.build_filter">
+<span class="sig-name descname"><span class="pre">build_filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attributes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exact_match</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/data_processing.html#DataProcessing.build_filter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.data_processing.DataProcessing.build_filter" title="Link to this definition"></a></dt>
+<dd><p>Create a MongoDB filter using $regex for each attribute in the input dictionary. For nested attributes, use dot notation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>attributes</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</span>) – Dictionary of attribute names and their corresponding values to match using regex.
+Example: {“name”: “example”, “description”: “example”, “geo_loc_name”: “example”}</p></li>
+<li><p><strong>exact_match</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">False</span></code>) – This var is used to determine if the inputted attribute value is an exact match or a partial match. Default is False, meaning the user does not need to input an exact match.
+Under the hood this is used to determine if the inputted attribute value should be wrapped in a regex expression.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A string representing the MongoDB filter.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.data_processing.DataProcessing.convert_to_df">
+<span class="sig-name descname"><span class="pre">convert_to_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/data_processing.html#DataProcessing.convert_to_df"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.data_processing.DataProcessing.convert_to_df" title="Link to this definition"></a></dt>
+<dd><p>Convert a list of dictionaries to a pandas dataframe.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]]</span>) – A list of dictionaries.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A pandas dataframe representation of the input dictionaries.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.data_processing.DataProcessing.extract_field">
+<span class="sig-name descname"><span class="pre">extract_field</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_results</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/data_processing.html#DataProcessing.extract_field"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.data_processing.DataProcessing.extract_field" title="Link to this definition"></a></dt>
+<dd><p>Extract a specific field’s values from records retrieved via the NMDC API.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>api_results</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]]</span>) – A list of dictionaries.</p></li>
+<li><p><strong>field_name</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – The name of the field to extract.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of values for the specified field.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.data_processing.DataProcessing.merge_dataframes">
+<span class="sig-name descname"><span class="pre">merge_dataframes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">column</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/data_processing.html#DataProcessing.merge_dataframes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.data_processing.DataProcessing.merge_dataframes" title="Link to this definition"></a></dt>
+<dd><p>Merge two dataframes.</p>
+<p>Wrapper around <code class="docutils literal notranslate"><span class="pre">pandas.merge</span></code> to merge two dataframes on a specified column using an inner join.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>column</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – The column to merge on.</p></li>
+<li><p><strong>df1</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></span>) – The first dataframe to merge.</p></li>
+<li><p><strong>df2</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></span>) – The second dataframe to merge.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A pandas dataframe with the merged data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.data_processing.DataProcessing.merge_df">
+<span class="sig-name descname"><span class="pre">merge_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/data_processing.html#DataProcessing.merge_df"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.data_processing.DataProcessing.merge_df" title="Link to this definition"></a></dt>
+<dd><p>Merges two dataframes using an inner join based on specified keys, automatically exploding list-like columns and removing duplicates.</p>
+<p>Helpful for merging two sets of dataframe results obtained from the <code class="docutils literal notranslate"><span class="pre">convert_to_df</span></code> method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df1</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></span>) – The first dataframe to merge.</p></li>
+<li><p><strong>df2</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></span>) – The second dataframe to merge.</p></li>
+<li><p><strong>key1</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – The key in df1 to match with key2 in df2.</p></li>
+<li><p><strong>key2</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – The key in df2 to match with key1 in df1.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A pandas dataframe with the merged data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.data_processing.DataProcessing.rename_columns">
+<span class="sig-name descname"><span class="pre">rename_columns</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_col_names</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/data_processing.html#DataProcessing.rename_columns"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.data_processing.DataProcessing.rename_columns" title="Link to this definition"></a></dt>
+<dd><p>Rename columns in a pandas dataframe.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></span>) – The pandas dataframe whose columns you want to rename.</p></li>
+<li><p><strong>new_col_names</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</span>) – A list of new column names. Names MUST be in order of the columns in the dataframe.
+For example, if the column in the dataframe are named “col1”, “col2”, and “col3” (in
+that order) and you want to rename “col1” to “new_col1”, “col2” to “new_col2”,
+and “col3” to “new_col3”, you would pass in <code class="docutils literal notranslate"><span class="pre">[&quot;new_col1&quot;,</span> <span class="pre">&quot;new_col2&quot;,</span> <span class="pre">&quot;new_col3&quot;]</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A pandas dataframe with renamed columns.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.data_processing.DataProcessing.split_list">
+<span class="sig-name descname"><span class="pre">split_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/data_processing.html#DataProcessing.split_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.data_processing.DataProcessing.split_list" title="Link to this definition"></a></dt>
+<dd><p>Split a list into chunks of a specified size.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_list</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]</span>) – The list to split.</p></li>
+<li><p><strong>chunk_size</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">100</span></code>) – The size of each chunk.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>list</strong></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="general-utilities">
+<h2>General Utilities<a class="headerlink" href="#general-utilities" title="Link to this heading"></a></h2>
+<p>General-purpose helper utilities used across workflows.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="nmdc_api_utilities.utils.Utils">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nmdc_api_utilities.utils.</span></span><span class="sig-name descname"><span class="pre">Utils</span></span><a class="reference internal" href="_modules/nmdc_api_utilities/utils.html#Utils"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.utils.Utils" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="example_usage.html" class="btn btn-neutral float-left" title="External Notebook Examples" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="public_subclasses.html" class="btn btn-neutral float-right" title="CollectionSearch Subclasses" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, NMDC.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

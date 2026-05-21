@@ -1,0 +1,636 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privileged API Reference &mdash; nmdc_api_utilities 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=7026087e"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script src="_static/external_links.js?v=a2d33618"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="CollectionSearch Subclasses" href="public_subclasses.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            nmdc_api_utilities
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="filters.html">Using MongoDB filters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example_usage.html">External Notebook Examples</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Public API Reference:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="functions.html">Core Search API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="public_subclasses.html"><code class="docutils literal notranslate"><span class="pre">CollectionSearch</span></code> Subclasses</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Privileged API Reference:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Privileged API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#authentication-support">Authentication Support</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nmdc_api_utilities.auth.NMDCAuth"><code class="docutils literal notranslate"><span class="pre">NMDCAuth</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.auth.NMDCAuth.get_token"><code class="docutils literal notranslate"><span class="pre">NMDCAuth.get_token()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.auth.NMDCAuth.has_credentials"><code class="docutils literal notranslate"><span class="pre">NMDCAuth.has_credentials()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#authentication-requirement">Authentication Requirement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#metadata-submission">Metadata Submission</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nmdc_api_utilities.metadata.Metadata"><code class="docutils literal notranslate"><span class="pre">Metadata</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.metadata.Metadata.submit_json"><code class="docutils literal notranslate"><span class="pre">Metadata.submit_json()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.metadata.Metadata.validate_json"><code class="docutils literal notranslate"><span class="pre">Metadata.validate_json()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#identifier-minting">Identifier Minting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nmdc_api_utilities.minter.Minter"><code class="docutils literal notranslate"><span class="pre">Minter</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.minter.Minter.mint"><code class="docutils literal notranslate"><span class="pre">Minter.mint()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#data-staging-and-workflow-management">Data Staging and Workflow Management</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nmdc_api_utilities.data_staging.JGISequencingProjectAPI"><code class="docutils literal notranslate"><span class="pre">JGISequencingProjectAPI</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.data_staging.JGISequencingProjectAPI.create_jgi_sequencing_project"><code class="docutils literal notranslate"><span class="pre">JGISequencingProjectAPI.create_jgi_sequencing_project()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.data_staging.JGISequencingProjectAPI.get_jgi_sequencing_project_by_name"><code class="docutils literal notranslate"><span class="pre">JGISequencingProjectAPI.get_jgi_sequencing_project_by_name()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.data_staging.JGISequencingProjectAPI.list_jgi_sequencing_projects"><code class="docutils literal notranslate"><span class="pre">JGISequencingProjectAPI.list_jgi_sequencing_projects()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#nmdc_api_utilities.data_staging.JGISampleSearchAPI"><code class="docutils literal notranslate"><span class="pre">JGISampleSearchAPI</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.data_staging.JGISampleSearchAPI.insert_jgi_sample"><code class="docutils literal notranslate"><span class="pre">JGISampleSearchAPI.insert_jgi_sample()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.data_staging.JGISampleSearchAPI.list_jgi_samples"><code class="docutils literal notranslate"><span class="pre">JGISampleSearchAPI.list_jgi_samples()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.data_staging.JGISampleSearchAPI.update_jgi_sample"><code class="docutils literal notranslate"><span class="pre">JGISampleSearchAPI.update_jgi_sample()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#nmdc_api_utilities.data_staging.GlobusTaskAPI"><code class="docutils literal notranslate"><span class="pre">GlobusTaskAPI</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.data_staging.GlobusTaskAPI.create_globus_task"><code class="docutils literal notranslate"><span class="pre">GlobusTaskAPI.create_globus_task()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.data_staging.GlobusTaskAPI.list_globus_tasks"><code class="docutils literal notranslate"><span class="pre">GlobusTaskAPI.list_globus_tasks()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nmdc_api_utilities.data_staging.GlobusTaskAPI.update_globus_task"><code class="docutils literal notranslate"><span class="pre">GlobusTaskAPI.update_globus_task()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#related-pages">Related Pages</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">nmdc_api_utilities</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Privileged API Reference</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/privileged_api.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="privileged-api-reference">
+<h1>Privileged API Reference<a class="headerlink" href="#privileged-api-reference" title="Link to this heading"></a></h1>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Classes on this page target privileged endpoints and require valid <code class="docutils literal notranslate"><span class="pre">NMDCAuth</span></code> credentials.
+They are intended for authorized users who need metadata submission, identifier minting, or staging workflows.</p>
+</div>
+<section id="authentication-support">
+<h2>Authentication Support<a class="headerlink" href="#authentication-support" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">NMDCAuth</span></code> is required for all privileged classes on this page.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="nmdc_api_utilities.auth.NMDCAuth">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nmdc_api_utilities.auth.</span></span><span class="sig-name descname"><span class="pre">NMDCAuth</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_secret</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_base_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'https://api.microbiomedata.org'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/auth.html#NMDCAuth"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.auth.NMDCAuth" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">NMDCAPIClient</span></code></p>
+<p>Authentication handler for NMDC API operations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>client_id</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> | <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – The client ID for NMDC API authentication. See Notes for further details.</p></li>
+<li><p><strong>client_secret</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> | <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – The client secret for NMDC API authentication. See Notes for further details.</p></li>
+<li><p><strong>username</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> | <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – The username for NMDC API authentication. See Notes for further details.</p></li>
+<li><p><strong>password</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> | <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – The password for NMDC API authentication. See Notes for further details.</p></li>
+<li><p><strong>api_base_url</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">'https://api.microbiomedata.org'</span></code>) – The base URL of an instance of the NMDC Runtime API. By default, this is the base URL of
+the production instance.</p></li>
+<li><p><strong>env</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">''</span></code>) – Deprecated. Use <code class="docutils literal notranslate"><span class="pre">api_base_url</span></code> instead. Previously used to specify the API environment
+(e.g., “prod”, “dev”).</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Security Warning - your credentials should be stored in a secure location. Do not hard-code these values in your code; we recommend using environment variables.</p>
+<p>You must provide either:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">client_id</span></code> and <code class="docutils literal notranslate"><span class="pre">client_secret</span></code> (for client credentials grant), OR</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">username</span></code> and <code class="docutils literal notranslate"><span class="pre">password</span></code> (for password grant).</p></li>
+</ul>
+<div class="admonition-deprecated-parameter admonition">
+<p class="admonition-title">Deprecated parameter</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">env</span></code> parameter is deprecated.
+Use <code class="docutils literal notranslate"><span class="pre">api_base_url</span></code> instead.</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.auth.NMDCAuth.get_token">
+<span class="sig-name descname"><span class="pre">get_token</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/auth.html#NMDCAuth.get_token"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.auth.NMDCAuth.get_token" title="Link to this definition"></a></dt>
+<dd><p>Get a valid access token, refreshing if necessary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.auth.NMDCAuth.has_credentials">
+<span class="sig-name descname"><span class="pre">has_credentials</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/auth.html#NMDCAuth.has_credentials"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.auth.NMDCAuth.has_credentials" title="Link to this definition"></a></dt>
+<dd><p>Check if the credentials are passed in properly.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="authentication-requirement">
+<h2>Authentication Requirement<a class="headerlink" href="#authentication-requirement" title="Link to this heading"></a></h2>
+<p>Instantiate <code class="docutils literal notranslate"><span class="pre">NMDCAuth</span></code> and pass it to privileged classes:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">nmdc_api_utilities.auth</span><span class="w"> </span><span class="kn">import</span> <span class="n">NMDCAuth</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nmdc_api_utilities.metadata</span><span class="w"> </span><span class="kn">import</span> <span class="n">Metadata</span>
+
+<span class="n">auth</span> <span class="o">=</span> <span class="n">NMDCAuth</span><span class="p">(</span><span class="n">client_id</span><span class="o">=</span><span class="s2">&quot;YOUR_CLIENT_ID&quot;</span><span class="p">,</span> <span class="n">client_secret</span><span class="o">=</span><span class="s2">&quot;YOUR_CLIENT_SECRET&quot;</span><span class="p">)</span>
+<span class="n">metadata_client</span> <span class="o">=</span> <span class="n">Metadata</span><span class="p">(</span><span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="metadata-submission">
+<h2>Metadata Submission<a class="headerlink" href="#metadata-submission" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nmdc_api_utilities.metadata.Metadata">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nmdc_api_utilities.metadata.</span></span><span class="sig-name descname"><span class="pre">Metadata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_base_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'https://api.microbiomedata.org'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/metadata.html#Metadata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.metadata.Metadata" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">NMDCAPIClient</span></code></p>
+<p>Class to interact with the NMDC API metadata endpoints.</p>
+<p>This class includes methods for interacting with endpoints for metadata management, including validation and submission.
+It is not intended for general/public use.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>api_base_url</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">'https://api.microbiomedata.org'</span></code>) – The base URL of the NMDC API.</p></li>
+<li><p><strong>auth</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#nmdc_api_utilities.auth.NMDCAuth" title="nmdc_api_utilities.auth.NMDCAuth"><code class="xref py py-class docutils literal notranslate"><span class="pre">NMDCAuth</span></code></a> | <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – An instance of the NMDCAuth class for authentication.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition-deprecated-parameter admonition">
+<p class="admonition-title">Deprecated parameter</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">env</span></code> parameter is deprecated.
+Use <code class="docutils literal notranslate"><span class="pre">api_base_url</span></code> instead.</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.metadata.Metadata.submit_json">
+<span class="sig-name descname"><span class="pre">submit_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_records</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/metadata.html#Metadata.submit_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.metadata.Metadata.submit_json" title="Link to this definition"></a></dt>
+<dd><p>Submits a json file to the NMDC metadata database via the NMDC Runtime API’s json_submit endpoint.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>json_records</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>] | <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – The json records to be submitted. Can be passed in as a file path or list of dictionaries.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The HTTP status code of the submission request.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If the submission fails.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.metadata.Metadata.validate_json">
+<span class="sig-name descname"><span class="pre">validate_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_records</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/metadata.html#Metadata.validate_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.metadata.Metadata.validate_json" title="Link to this definition"></a></dt>
+<dd><p>Validates a json file using the NMDC json validate endpoint.</p>
+<p>If the validation passes, the method returns without any side effects.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>json_records</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>] | <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – The json records to be validated. Can be passed in as a file path or list of dictionaries.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The HTTP status code of the validation request.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If the validation fails.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="identifier-minting">
+<h2>Identifier Minting<a class="headerlink" href="#identifier-minting" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nmdc_api_utilities.minter.Minter">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nmdc_api_utilities.minter.</span></span><span class="sig-name descname"><span class="pre">Minter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_base_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'https://api.microbiomedata.org'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/minter.html#Minter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.minter.Minter" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">NMDCAPIClient</span></code></p>
+<p>Class to interact with the NMDC API to mint new identifiers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>api_base_url</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">'https://api.microbiomedata.org'</span></code>) – The base URL of the NMDC API.</p></li>
+<li><p><strong>auth</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#nmdc_api_utilities.auth.NMDCAuth" title="nmdc_api_utilities.auth.NMDCAuth"><code class="xref py py-class docutils literal notranslate"><span class="pre">NMDCAuth</span></code></a> | <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – An instance of the NMDCAuth class for authentication.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition-deprecated-parameter admonition">
+<p class="admonition-title">Deprecated parameter</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">env</span></code> parameter is deprecated.
+Use <code class="docutils literal notranslate"><span class="pre">api_base_url</span></code> instead.</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.minter.Minter.mint">
+<span class="sig-name descname"><span class="pre">mint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nmdc_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_secret</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/minter.html#Minter.mint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.minter.Minter.mint" title="Link to this definition"></a></dt>
+<dd><p>Mint new identifier(s) for a specified type of record.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nmdc_type</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – The type of NMDC ID to mint (e.g., ‘nmdc:MassSpectrometry’,
+‘nmdc:DataObject’).</p></li>
+<li><p><strong>count</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">1</span></code>) – The number of identifiers to mint.</p></li>
+<li><p><strong>client_id</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> | <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – The client ID for authentication. Kept for backwards compatibility.</p></li>
+<li><p><strong>client_secret</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> | <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – The client secret for authentication. Kept for backwards compatibility.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>If count is 1, returns a single minted identifier as a string.
+If count is greater than 1, returns a list of minted identifiers.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> | <code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</span></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>RuntimeError</strong> – If the API request fails.</p></li>
+<li><p><strong>ValueError</strong> – If count is less than 1.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">client_id</span></code> and <code class="docutils literal notranslate"><span class="pre">client_secret</span></code> are provided, a new instance of the <code class="docutils literal notranslate"><span class="pre">NMDCAuth</span></code> class will be created. The newest and preferred method for authentication is to use the <code class="docutils literal notranslate"><span class="pre">NMDCAuth</span></code> class directly.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="data-staging-and-workflow-management">
+<h2>Data Staging and Workflow Management<a class="headerlink" href="#data-staging-and-workflow-management" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="nmdc_api_utilities.data_staging.JGISequencingProjectAPI">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nmdc_api_utilities.data_staging.</span></span><span class="sig-name descname"><span class="pre">JGISequencingProjectAPI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">auth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_base_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'https://api.microbiomedata.org'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/data_staging.html#JGISequencingProjectAPI"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.data_staging.JGISequencingProjectAPI" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">NMDCAPIClient</span></code></p>
+<p>Class to interact with the NMDC API to get JGI samples.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>auth</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#nmdc_api_utilities.auth.NMDCAuth" title="nmdc_api_utilities.auth.NMDCAuth"><code class="xref py py-class docutils literal notranslate"><span class="pre">NMDCAuth</span></code></a></span>) – The NMDCAuth instance containing the credentials and API base URL for authentication.</p></li>
+<li><p><strong>api_base_url</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">'https://api.microbiomedata.org'</span></code>) – The base URL of an instance of the NMDC Runtime API. By default, this is the base URL of the production instance.</p></li>
+<li><p><strong>env</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">''</span></code>) – Deprecated. Use <code class="docutils literal notranslate"><span class="pre">api_base_url</span></code> instead. Previously used to specify the API environment (e.g., “prod”, “dev”).</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition-deprecated-parameter admonition">
+<p class="admonition-title">Deprecated parameter</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">env</span></code> parameter is deprecated.
+Use <code class="docutils literal notranslate"><span class="pre">api_base_url</span></code> instead.</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.data_staging.JGISequencingProjectAPI.create_jgi_sequencing_project">
+<span class="sig-name descname"><span class="pre">create_jgi_sequencing_project</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">jgi_sequencing_project</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/data_staging.html#JGISequencingProjectAPI.create_jgi_sequencing_project"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.data_staging.JGISequencingProjectAPI.create_jgi_sequencing_project" title="Link to this definition"></a></dt>
+<dd><p>Create a new JGI sequencing project in the NMDC database.
+For more information on available keys, visit the NMDC API Docs
+<a class="reference external" href="https://api.microbiomedata.org/docs#/Workflow%20management/create_sequencing_record_wf_file_staging_jgi_sequencing_projects_post">https://api.microbiomedata.org/docs#/Workflow%20management/create_sequencing_record_wf_file_staging_jgi_sequencing_projects_post</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>jgi_sequencing_project</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></span>) – The JGI sequencing project data to be created.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The created JGI sequencing project record.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></span></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If the creation fails.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.data_staging.JGISequencingProjectAPI.get_jgi_sequencing_project_by_name">
+<span class="sig-name descname"><span class="pre">get_jgi_sequencing_project_by_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/data_staging.html#JGISequencingProjectAPI.get_jgi_sequencing_project_by_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.data_staging.JGISequencingProjectAPI.get_jgi_sequencing_project_by_name" title="Link to this definition"></a></dt>
+<dd><p>Get a specific JGI sequencing project by name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>project_name</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – The name of the JGI sequencing project to retrieve.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The JGI sequencing project record.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.data_staging.JGISequencingProjectAPI.list_jgi_sequencing_projects">
+<span class="sig-name descname"><span class="pre">list_jgi_sequencing_projects</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_page_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_pages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/data_staging.html#JGISequencingProjectAPI.list_jgi_sequencing_projects"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.data_staging.JGISequencingProjectAPI.list_jgi_sequencing_projects" title="Link to this definition"></a></dt>
+<dd><p>List JGI sequencing projects from the NMDC database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filter</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> | <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – Filter to apply to the API call.</p></li>
+<li><p><strong>max_page_size</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">20</span></code>) – The maximum number of items to return per page.</p></li>
+<li><p><strong>fields</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">''</span></code>) – The fields to return.</p></li>
+<li><p><strong>all_pages</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">False</span></code>) – True to return all pages. False to return the first page.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The list of JGI sequencing projects.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="nmdc_api_utilities.data_staging.JGISampleSearchAPI">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nmdc_api_utilities.data_staging.</span></span><span class="sig-name descname"><span class="pre">JGISampleSearchAPI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">auth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_base_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'https://api.microbiomedata.org'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/data_staging.html#JGISampleSearchAPI"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.data_staging.JGISampleSearchAPI" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">NMDCAPIClient</span></code></p>
+<p>Class to interact with the NMDC API to get JGI samples.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>auth</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#nmdc_api_utilities.auth.NMDCAuth" title="nmdc_api_utilities.auth.NMDCAuth"><code class="xref py py-class docutils literal notranslate"><span class="pre">NMDCAuth</span></code></a></span>) – The NMDCAuth instance containing the credentials and API base URL for authentication.</p></li>
+<li><p><strong>api_base_url</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">'https://api.microbiomedata.org'</span></code>) – The base URL of an instance of the NMDC Runtime API. By default, this is the base URL of the production instance.</p></li>
+<li><p><strong>env</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">''</span></code>) – Deprecated. Use <code class="docutils literal notranslate"><span class="pre">api_base_url</span></code> instead. Previously used to specify the API environment (e.g., “prod”, “dev”).</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition-deprecated-parameter admonition">
+<p class="admonition-title">Deprecated parameter</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">env</span></code> parameter is deprecated.
+Use <code class="docutils literal notranslate"><span class="pre">api_base_url</span></code> instead.</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.data_staging.JGISampleSearchAPI.insert_jgi_sample">
+<span class="sig-name descname"><span class="pre">insert_jgi_sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">jgi_sample</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/data_staging.html#JGISampleSearchAPI.insert_jgi_sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.data_staging.JGISampleSearchAPI.insert_jgi_sample" title="Link to this definition"></a></dt>
+<dd><p>Insert JGI samples into the NMDC database.
+For more information on keys, visit the NMDC API Docs
+<a class="reference external" href="https://api.microbiomedata.org/docs#/Workflow%20management/create_jgi_sample_wf_file_staging_jgi_samples_post">https://api.microbiomedata.org/docs#/Workflow%20management/create_jgi_sample_wf_file_staging_jgi_samples_post</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>jgi_sample</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></span>) – The JGI sample data to be inserted.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The response from the insertion operation.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></span></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If the insertion fails.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.data_staging.JGISampleSearchAPI.list_jgi_samples">
+<span class="sig-name descname"><span class="pre">list_jgi_samples</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_page_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_pages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/data_staging.html#JGISampleSearchAPI.list_jgi_samples"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.data_staging.JGISampleSearchAPI.list_jgi_samples" title="Link to this definition"></a></dt>
+<dd><p>Get a specific JGI sample by name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filter</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> | <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – Filter to apply to the API call.</p></li>
+<li><p><strong>max_page_size</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">20</span></code>) – The maximum number of items to return per page.</p></li>
+<li><p><strong>fields</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">''</span></code>) – The fields to return.</p></li>
+<li><p><strong>all_pages</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">False</span></code>) – True to return all pages. False to return the first page.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The list of JGI sample records.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.data_staging.JGISampleSearchAPI.update_jgi_sample">
+<span class="sig-name descname"><span class="pre">update_jgi_sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">jgi_file_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jgi_sample</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/data_staging.html#JGISampleSearchAPI.update_jgi_sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.data_staging.JGISampleSearchAPI.update_jgi_sample" title="Link to this definition"></a></dt>
+<dd><p>Update JGI samples in the NMDC database.
+For more information on available keys, visit the NMDC API Docs
+<a class="reference external" href="https://api.microbiomedata.org/docs#/Workflow%20management/update_jgi_samples_wf_file_staging_jgi_samples__jdp_file_id__patch">https://api.microbiomedata.org/docs#/Workflow%20management/update_jgi_samples_wf_file_staging_jgi_samples__jdp_file_id__patch</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>jgi_file_id</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – The JGI file ID of the sample to be updated.</p></li>
+<li><p><strong>jgi_sample</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></span>) – The updated JGI sample data.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The response from the update operation.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></span></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If the update fails.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="nmdc_api_utilities.data_staging.GlobusTaskAPI">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">nmdc_api_utilities.data_staging.</span></span><span class="sig-name descname"><span class="pre">GlobusTaskAPI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">auth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_base_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'https://api.microbiomedata.org'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/data_staging.html#GlobusTaskAPI"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.data_staging.GlobusTaskAPI" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">NMDCAPIClient</span></code></p>
+<p>Class to interact with the NMDC API for Globus tasks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>auth</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#nmdc_api_utilities.auth.NMDCAuth" title="nmdc_api_utilities.auth.NMDCAuth"><code class="xref py py-class docutils literal notranslate"><span class="pre">NMDCAuth</span></code></a></span>) – The NMDCAuth instance containing the credentials and API base URL for authentication.</p></li>
+<li><p><strong>api_base_url</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">'https://api.microbiomedata.org'</span></code>) – The base URL of an instance of the NMDC Runtime API. By default, this is the base URL of the production instance.</p></li>
+<li><p><strong>env</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">''</span></code>) – Deprecated. Use <code class="docutils literal notranslate"><span class="pre">api_base_url</span></code> instead. Previously used to specify the API environment (e.g., “prod”, “dev”).</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition-deprecated-parameter admonition">
+<p class="admonition-title">Deprecated parameter</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">env</span></code> parameter is deprecated.
+Use <code class="docutils literal notranslate"><span class="pre">api_base_url</span></code> instead.</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.data_staging.GlobusTaskAPI.create_globus_task">
+<span class="sig-name descname"><span class="pre">create_globus_task</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">globus_task</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/data_staging.html#GlobusTaskAPI.create_globus_task"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.data_staging.GlobusTaskAPI.create_globus_task" title="Link to this definition"></a></dt>
+<dd><p>Create a new Globus task in the NMDC database.
+For more information on available keys, visit the NMDC API Docs
+<a class="reference external" href="https://api.microbiomedata.org/docs#/Workflow%20management/create_globus_tasks_wf_file_staging_globus_tasks_post">https://api.microbiomedata.org/docs#/Workflow%20management/create_globus_tasks_wf_file_staging_globus_tasks_post</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>globus_task</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></span>) – The Globus task data to be created.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The created Globus task record.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></span></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If the creation fails.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.data_staging.GlobusTaskAPI.list_globus_tasks">
+<span class="sig-name descname"><span class="pre">list_globus_tasks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_page_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_pages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/data_staging.html#GlobusTaskAPI.list_globus_tasks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.data_staging.GlobusTaskAPI.list_globus_tasks" title="Link to this definition"></a></dt>
+<dd><p>Get Globus tasks from the NMDC database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filter</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> | <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">None</span></code>) – Filter to apply to the API call.</p></li>
+<li><p><strong>max_page_size</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">20</span></code>) – The maximum number of items to return per page.</p></li>
+<li><p><strong>fields</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">''</span></code>) – The fields to return.</p></li>
+<li><p><strong>all_pages</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span>, default: <code class="docutils literal notranslate"><span class="pre">False</span></code>) – True to return all pages. False to return the first page.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The list of Globus task records.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="nmdc_api_utilities.data_staging.GlobusTaskAPI.update_globus_task">
+<span class="sig-name descname"><span class="pre">update_globus_task</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">globus_task_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">globus_task</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/nmdc_api_utilities/data_staging.html#GlobusTaskAPI.update_globus_task"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nmdc_api_utilities.data_staging.GlobusTaskAPI.update_globus_task" title="Link to this definition"></a></dt>
+<dd><p>Update a Globus task in the NMDC database.
+For more information on available keys, visit the NMDC API Docs
+<a class="reference external" href="https://api.microbiomedata.org/docs#/Workflow%20management/update_globus_tasks_wf_file_staging_globus_tasks__task_id__patch">https://api.microbiomedata.org/docs#/Workflow%20management/update_globus_tasks_wf_file_staging_globus_tasks__task_id__patch</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>globus_task_id</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – The ID of the Globus task to be updated.</p></li>
+<li><p><strong>globus_task</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></span>) – The Globus task data to be updated.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The updated Globus task record.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></span></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If the update fails.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="related-pages">
+<h2>Related Pages<a class="headerlink" href="#related-pages" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="functions.html"><span class="doc">Core Search API Reference</span></a> for public core APIs</p></li>
+<li><p><a class="reference internal" href="public_subclasses.html"><span class="doc">CollectionSearch Subclasses</span></a> for public collection subclasses</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="public_subclasses.html" class="btn btn-neutral float-left" title="CollectionSearch Subclasses" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, NMDC.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

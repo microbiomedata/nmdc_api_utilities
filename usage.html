@@ -1,0 +1,590 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quick Start &mdash; nmdc_api_utilities 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css?v=2aa19091" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=7026087e"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+      <script src="_static/external_links.js?v=a2d33618"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Using MongoDB filters" href="filters.html" />
+    <link rel="prev" title="NMDC API Utilities Documentation" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            nmdc_api_utilities
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quick Start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Example-1:-Study--&gt;-Biosamples--&gt;-Data-Objects">Example 1: Study -&gt; Biosamples -&gt; Data Objects</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Step-1:-Find-matching-study-records">Step 1: Find matching study records</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Step-2:-Get-linked-biosamples">Step 2: Get linked biosamples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Step-3:-Get-linked-data-objects">Step 3: Get linked data objects</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Example-2:-Data-Object-Type--&gt;-Data-Objects--&gt;-Biosample-Metadata">Example 2: Data Object Type -&gt; Data Objects -&gt; Biosample Metadata</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Step-1:-Retrieve-data-objects-by-type">Step 1: Retrieve data objects by type</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Step-2:-Resolve-linked-biosample-IDs">Step 2: Resolve linked biosample IDs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Step-3:-Fetch-biosample-metadata-and-attach-by-data-object">Step 3: Fetch biosample metadata and attach by data object</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Example-3:-Study--&gt;-Biosamples--&gt;-++-Biosamples">Example 3: Study -&gt; Biosamples -&gt; ++ Biosamples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Step-1:-Find-biosamples-from-your-study-of-interest">Step 1: Find biosamples from your study of interest</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Step-2:-Find-additional-biosamples-within-a-radius-of-the-original-biosamples">Step 2: Find additional biosamples within a radius of the original biosamples</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Search-client-selection-and-schema-field-names">Search client selection and schema field names</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="filters.html">Using MongoDB filters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example_usage.html">External Notebook Examples</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Public API Reference:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="functions.html">Core Search API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="public_subclasses.html"><code class="docutils literal notranslate"><span class="pre">CollectionSearch</span></code> Subclasses</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Privileged API Reference:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="privileged_api.html">Privileged API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">nmdc_api_utilities</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Quick Start</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/usage.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="Quick-Start">
+<h1>Quick Start<a class="headerlink" href="#Quick-Start" title="Link to this heading"></a></h1>
+<p>Notebook-style examples, using real <code class="docutils literal notranslate"><span class="pre">nmdc_api_utilities</span></code> modules.</p>
+<hr class="docutils" />
+<section id="Example-1:-Study--&gt;-Biosamples--&gt;-Data-Objects">
+<h2>Example 1: Study -&gt; Biosamples -&gt; Data Objects<a class="headerlink" href="#Example-1:-Study-->-Biosamples-->-Data-Objects" title="Link to this heading"></a></h2>
+<p><strong>Goal:</strong> Start from an NMDC study name, retrieve matching study metadata records. Then collect all linked biosamples and data objects’ metadata records that are related to that study.</p>
+<section id="Step-1:-Find-matching-study-records">
+<h3>Step 1: Find matching study records<a class="headerlink" href="#Step-1:-Find-matching-study-records" title="Link to this heading"></a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">nmdc_api_utilities</span><span class="w"> </span><span class="kn">import</span> <span class="n">StudySearch</span>
+
+<span class="n">study_client</span> <span class="o">=</span> <span class="n">StudySearch</span><span class="p">()</span>
+
+<span class="n">study_name</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;Molecular mechanisms underlying changes in the temperature sensitive &quot;</span>
+    <span class="s2">&quot;respiration response of forest soils to long-term experimental warming&quot;</span>
+<span class="p">)</span>
+
+<span class="n">studies</span> <span class="o">=</span> <span class="n">study_client</span><span class="o">.</span><span class="n">get_record_by_attribute</span><span class="p">(</span>
+    <span class="n">attribute_name</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">,</span>
+    <span class="n">attribute_value</span><span class="o">=</span><span class="n">study_name</span><span class="p">,</span>
+    <span class="n">exact_match</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Studies found: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">studies</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">studies</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Study ID: </span><span class="si">{</span><span class="n">studies</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;id&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Studies found: 1
+Study ID: nmdc:sty-11-8ws97026
+</pre></div></div>
+</div>
+</section>
+<section id="Step-2:-Get-linked-biosamples">
+<h3>Step 2: Get linked biosamples<a class="headerlink" href="#Step-2:-Get-linked-biosamples" title="Link to this heading"></a></h3>
+<p>If at least one study is found, use the first study ID to request linked biosample records. The <code class="docutils literal notranslate"><span class="pre">get_linked_instances</span></code> method called like this will return a list of fully hydrated biosample metadata records. Note that the <code class="docutils literal notranslate"><span class="pre">get_linked_instances</span></code> method can be used to retrieve linked records of any type, not just biosamples, that are associated with any list of IDs (not just study IDs). It is available on both the <code class="docutils literal notranslate"><span class="pre">StudySearch</span></code> and <code class="docutils literal notranslate"><span class="pre">NMDCSearch</span></code> clients, as well as all the additional search
+clients that are available in <code class="docutils literal notranslate"><span class="pre">nmdc_api_utilities</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">biosamples</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">biosample_ids</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">if</span> <span class="n">studies</span><span class="p">:</span>
+    <span class="n">study_id</span> <span class="o">=</span> <span class="n">studies</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
+    <span class="n">biosamples</span> <span class="o">=</span> <span class="n">study_client</span><span class="o">.</span><span class="n">get_linked_instances</span><span class="p">(</span>
+        <span class="n">ids</span><span class="o">=</span><span class="p">[</span><span class="n">study_id</span><span class="p">],</span>
+        <span class="n">types</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;nmdc:Biosample&quot;</span><span class="p">],</span>
+        <span class="n">hydrate</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">biosample_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">record</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">biosamples</span> <span class="k">if</span> <span class="s2">&quot;id&quot;</span> <span class="ow">in</span> <span class="n">record</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Biosamples found: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">biosamples</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Biosample IDs collected: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">biosample_ids</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Example biosample record: </span><span class="se">\n</span><span class="si">{</span><span class="n">biosamples</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">biosamples</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;No biosamples found&#39;</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Biosamples found: 42
+Biosample IDs collected: 42
+Example biosample record:
+{&#39;id&#39;: &#39;nmdc:bsm-11-gqrag830&#39;, &#39;type&#39;: &#39;nmdc:Biosample&#39;, &#39;_downstream_of&#39;: [&#39;nmdc:sty-11-8ws97026&#39;], &#39;name&#39;: &#39;BW-H-28-O&#39;, &#39;associated_studies&#39;: [&#39;nmdc:sty-11-8ws97026&#39;], &#39;env_broad_scale&#39;: {&#39;type&#39;: &#39;nmdc:ControlledIdentifiedTermValue&#39;, &#39;has_raw_value&#39;: &#39;forest biome [ENVO:01000174]&#39;, &#39;term&#39;: {&#39;id&#39;: &#39;ENVO:01000174&#39;, &#39;type&#39;: &#39;nmdc:OntologyClass&#39;, &#39;name&#39;: &#39;forest biome&#39;}}, &#39;env_local_scale&#39;: {&#39;type&#39;: &#39;nmdc:ControlledIdentifiedTermValue&#39;, &#39;has_raw_value&#39;: &#39;organic horizon [ENVO:03600018]&#39;, &#39;term&#39;: {&#39;id&#39;: &#39;ENVO:03600018&#39;, &#39;type&#39;: &#39;nmdc:OntologyClass&#39;, &#39;name&#39;: &#39;organic horizon&#39;}}, &#39;env_medium&#39;: {&#39;type&#39;: &#39;nmdc:ControlledIdentifiedTermValue&#39;, &#39;has_raw_value&#39;: &#39;heat stressed soil [ENVO:00005781]&#39;, &#39;term&#39;: {&#39;id&#39;: &#39;ENVO:00005781&#39;, &#39;type&#39;: &#39;nmdc:OntologyClass&#39;, &#39;name&#39;: &#39;heat stressed soil&#39;}}, &#39;samp_name&#39;: &#39;BW-H-28-O&#39;, &#39;collection_date&#39;: {&#39;type&#39;: &#39;nmdc:TimestampValue&#39;, &#39;has_raw_value&#39;: &#39;2017-05-24&#39;}, &#39;depth&#39;: {&#39;type&#39;: &#39;nmdc:QuantityValue&#39;, &#39;has_raw_value&#39;: &#39;0 - .02&#39;, &#39;has_maximum_numeric_value&#39;: 0.02, &#39;has_minimum_numeric_value&#39;: 0.0, &#39;has_unit&#39;: &#39;m&#39;}, &#39;ecosystem&#39;: &#39;Environmental&#39;, &#39;ecosystem_category&#39;: &#39;Terrestrial&#39;, &#39;ecosystem_subtype&#39;: &#39;Temperate forest&#39;, &#39;ecosystem_type&#39;: &#39;Soil&#39;, &#39;elev&#39;: 302.0, &#39;env_package&#39;: {&#39;type&#39;: &#39;nmdc:TextValue&#39;, &#39;has_raw_value&#39;: &#39;soil&#39;}, &#39;experimental_factor&#39;: {&#39;type&#39;: &#39;nmdc:ControlledTermValue&#39;, &#39;has_raw_value&#39;: &#39;heat stress treatment [MCO:0000172]&#39;, &#39;term&#39;: {&#39;id&#39;: &#39;MCO:0000172&#39;, &#39;type&#39;: &#39;nmdc:OntologyClass&#39;, &#39;name&#39;: &#39;heat stress treatment&#39;}}, &#39;geo_loc_name&#39;: {&#39;type&#39;: &#39;nmdc:TextValue&#39;, &#39;has_raw_value&#39;: &#39;USA: Massachusetts, Petersham&#39;}, &#39;growth_facil&#39;: {&#39;type&#39;: &#39;nmdc:ControlledTermValue&#39;, &#39;has_raw_value&#39;: &#39;field_incubation&#39;}, &#39;lat_lon&#39;: {&#39;type&#39;: &#39;nmdc:GeolocationValue&#39;, &#39;has_raw_value&#39;: &#39;42.481016 -72.178343&#39;, &#39;latitude&#39;: 42.481016, &#39;longitude&#39;: -72.178343}, &#39;samp_store_temp&#39;: {&#39;type&#39;: &#39;nmdc:QuantityValue&#39;, &#39;has_raw_value&#39;: &#39;-80 Celsius&#39;, &#39;has_numeric_value&#39;: -80.0, &#39;has_unit&#39;: &#39;Cel&#39;}, &#39;specific_ecosystem&#39;: &#39;O horizon/Organic&#39;, &#39;store_cond&#39;: {&#39;type&#39;: &#39;nmdc:TextValue&#39;, &#39;has_raw_value&#39;: &#39;frozen&#39;}, &#39;analysis_type&#39;: [&#39;metatranscriptomics&#39;, &#39;natural organic matter&#39;, &#39;metaproteomics&#39;, &#39;metabolomics&#39;], &#39;gold_biosample_identifiers&#39;: [&#39;gold:Gb0158494&#39;]}
+</pre></div></div>
+</div>
+</section>
+<section id="Step-3:-Get-linked-data-objects">
+<h3>Step 3: Get linked data objects<a class="headerlink" href="#Step-3:-Get-linked-data-objects" title="Link to this heading"></a></h3>
+<p>Use biosample IDs as seeds for another linked-instances query targeting <code class="docutils literal notranslate"><span class="pre">nmdc:DataObject</span></code>. For this example, we’ll just pull from a subset (5) of the biosample IDs to avoid pulling too many records, but in practice you could pull all linked data objects if desired.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_objects</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">if</span> <span class="n">biosample_ids</span><span class="p">:</span>
+    <span class="n">data_objects</span> <span class="o">=</span> <span class="n">study_client</span><span class="o">.</span><span class="n">get_linked_instances</span><span class="p">(</span>
+        <span class="n">ids</span><span class="o">=</span><span class="n">biosample_ids</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">5</span><span class="p">],</span>  <span class="c1"># Just using the first 5 biosample IDs for this example</span>
+        <span class="n">types</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;nmdc:DataObject&quot;</span><span class="p">],</span>
+        <span class="n">hydrate</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Data objects found: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">data_objects</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">data_objects</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Example data object </span><span class="se">\n</span><span class="s2">ID: </span><span class="si">{</span><span class="n">data_objects</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Name: </span><span class="si">{</span><span class="n">data_objects</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Description: </span><span class="si">{</span><span class="n">data_objects</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;description&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Link for downloading: </span><span class="si">{</span><span class="n">data_objects</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;url&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Data objects found: 417
+
+Example data object
+ID: nmdc:dobj-11-49ygea39
+Name: nmdc_wfmtan-11-17594f10.1_proteins.faa
+Description: FASTA Amino Acid File for nmdc:wfmtan-11-17594f10.1
+Link for downloading: https://data.microbiomedata.org/data/nmdc:dgns-11-vfdkag98/nmdc:wfmtan-11-17594f10.1/nmdc_wfmtan-11-17594f10.1_proteins.faa
+</pre></div></div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="Example-2:-Data-Object-Type--&gt;-Data-Objects--&gt;-Biosample-Metadata">
+<h2>Example 2: Data Object Type -&gt; Data Objects -&gt; Biosample Metadata<a class="headerlink" href="#Example-2:-Data-Object-Type-->-Data-Objects-->-Biosample-Metadata" title="Link to this heading"></a></h2>
+<p><strong>Goal:</strong> Start from a <code class="docutils literal notranslate"><span class="pre">data_object_type</span></code> value, retrieve matching data objects, then resolve associated biosample metadata. See schema documentation for more details on the <code class="docutils literal notranslate"><span class="pre">data_object_type</span></code> property and its allowed values: <a class="reference external" href="https://microbiomedata.github.io/nmdc-schema/FileTypeEnum/">https://microbiomedata.github.io/nmdc-schema/FileTypeEnum/</a>.</p>
+<section id="Step-1:-Retrieve-data-objects-by-type">
+<h3>Step 1: Retrieve data objects by type<a class="headerlink" href="#Step-1:-Retrieve-data-objects-by-type" title="Link to this heading"></a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">nmdc_api_utilities</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataObjectSearch</span>
+
+<span class="n">data_object_client</span> <span class="o">=</span> <span class="n">DataObjectSearch</span><span class="p">()</span>
+
+<span class="n">data_object_type</span> <span class="o">=</span> <span class="s2">&quot;Metagenome Raw Reads&quot;</span>
+<span class="n">filter_str</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">&quot;data_object_type&quot;</span><span class="p">:</span> <span class="n">data_object_type</span><span class="p">})</span>
+
+<span class="n">data_objects</span> <span class="o">=</span> <span class="n">data_object_client</span><span class="o">.</span><span class="n">get_record_by_filter</span><span class="p">(</span>
+    <span class="nb">filter</span><span class="o">=</span><span class="n">filter_str</span><span class="p">,</span>
+    <span class="n">all_pages</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># Set to True to retrieve all matching records across all pages of results,</span>
+    <span class="n">shape</span><span class="o">=</span><span class="s2">&quot;dataframe&quot;</span><span class="p">,</span>  <span class="c1"># Set to &quot;records&quot; to return a list of dictionaries instead of a DataFrame</span>
+<span class="p">)</span>
+<span class="n">data_object_ids</span> <span class="o">=</span> <span class="n">data_objects</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">])[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Data objects found: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">data_objects</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Data object IDs collected: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">data_object_ids</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">data_objects</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Data objects found: 25
+Data object IDs collected: 25
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>type</th>
+      <th>name</th>
+      <th>file_size_bytes</th>
+      <th>md5_checksum</th>
+      <th>data_object_type</th>
+      <th>was_generated_by</th>
+      <th>url</th>
+      <th>description</th>
+      <th>data_category</th>
+      <th>alternative_identifiers</th>
+      <th>in_manifest</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>nmdc:dobj-11-00pns528</td>
+      <td>nmdc:DataObject</td>
+      <td>52441.2.335479.CACGTTGT-ACAACGTG.fastq.gz</td>
+      <td>1.002897e+10</td>
+      <td>0c70f5574024426432ea03eb3f130e01</td>
+      <td>Metagenome Raw Reads</td>
+      <td>nmdc:omprc-11-rdvzce03</td>
+      <td>https://data.microbiomedata.org/data/nmdc:ompr...</td>
+      <td>Metagenome Raw Reads for nmdc:omprc-11-rdvzce03</td>
+      <td>instrument_data</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>nmdc:dobj-11-00xqnn30</td>
+      <td>nmdc:DataObject</td>
+      <td>12844.2.289969.GTTCAACC-GGTTGAAC.fastq.gz</td>
+      <td>8.449439e+09</td>
+      <td>c8b53dad43beabb80d768f81ec1f0f9b</td>
+      <td>Metagenome Raw Reads</td>
+      <td>nmdc:omprc-11-g8x3ed38</td>
+      <td>https://data.microbiomedata.org/data/nmdc:ompr...</td>
+      <td>Metagenome Raw Reads for nmdc:omprc-11-g8x3ed38</td>
+      <td>instrument_data</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>nmdc:dobj-11-00y67656</td>
+      <td>nmdc:DataObject</td>
+      <td>52437.1.333590.GAACGCTT-AAGCGTTC.fastq.gz</td>
+      <td>1.097406e+10</td>
+      <td>d56df876ceb5006d0d0546c8e67500ee</td>
+      <td>Metagenome Raw Reads</td>
+      <td>nmdc:omprc-11-3pn7ex35</td>
+      <td>https://data.microbiomedata.org/data/nmdc:ompr...</td>
+      <td>Metagenome Raw Reads for nmdc:omprc-11-3pn7ex35</td>
+      <td>instrument_data</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>nmdc:dobj-11-02dj2e39</td>
+      <td>nmdc:DataObject</td>
+      <td>52561.2.384837.AGTACCGT-CTAGACTG.fastq.gz</td>
+      <td>8.848502e+09</td>
+      <td>9dd6311f11abe3a960796d2c227d9d19</td>
+      <td>Metagenome Raw Reads</td>
+      <td>nmdc:omprc-11-dsv4yv97</td>
+      <td>https://data.microbiomedata.org/data/nmdc:ompr...</td>
+      <td>Metagenome Raw Reads for nmdc:omprc-11-dsv4yv97</td>
+      <td>instrument_data</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>nmdc:dobj-11-02n14844</td>
+      <td>nmdc:DataObject</td>
+      <td>52437.3.333700.ACCTCTGT-ACAGAGGT.fastq.gz</td>
+      <td>1.100929e+10</td>
+      <td>1978fc04e0ce845651f0bdd4e0be1eb3</td>
+      <td>Metagenome Raw Reads</td>
+      <td>nmdc:omprc-11-0w5g0a55</td>
+      <td>https://data.microbiomedata.org/data/nmdc:ompr...</td>
+      <td>Metagenome Raw Reads for nmdc:omprc-11-0w5g0a55</td>
+      <td>instrument_data</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</section>
+<section id="Step-2:-Resolve-linked-biosample-IDs">
+<h3>Step 2: Resolve linked biosample IDs<a class="headerlink" href="#Step-2:-Resolve-linked-biosample-IDs" title="Link to this heading"></a></h3>
+<p>Build a mapping from each data object ID to biosample IDs using linked instances.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">associations</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">biosample_ids</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">if</span> <span class="n">data_object_ids</span><span class="p">:</span>
+    <span class="n">associations</span> <span class="o">=</span> <span class="n">data_object_client</span><span class="o">.</span><span class="n">get_linked_instances_and_associate_ids</span><span class="p">(</span>
+        <span class="n">ids</span><span class="o">=</span><span class="n">data_object_ids</span><span class="p">,</span>
+        <span class="n">types</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;nmdc:Biosample&quot;</span><span class="p">],</span>
+        <span class="n">hydrate</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">for</span> <span class="n">data_object_id</span> <span class="ow">in</span> <span class="n">data_object_ids</span><span class="p">:</span>
+        <span class="n">associations</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">data_object_id</span><span class="p">,</span> <span class="p">[])</span>
+
+    <span class="n">biosample_ids</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
+        <span class="p">{</span>
+            <span class="n">biosample_id</span>
+            <span class="k">for</span> <span class="n">linked_ids</span> <span class="ow">in</span> <span class="n">associations</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">biosample_id</span> <span class="ow">in</span> <span class="n">linked_ids</span>
+        <span class="p">}</span>
+    <span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Objects with biosample links: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">associations</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unique biosample IDs: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">biosample_ids</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Objects with biosample links: 25
+Unique biosample IDs: 25
+</pre></div></div>
+</div>
+</section>
+<section id="Step-3:-Fetch-biosample-metadata-and-attach-by-data-object">
+<h3>Step 3: Fetch biosample metadata and attach by data object<a class="headerlink" href="#Step-3:-Fetch-biosample-metadata-and-attach-by-data-object" title="Link to this heading"></a></h3>
+<p>Retrieve biosample records and build a per-data-object metadata mapping. Similar to the <code class="docutils literal notranslate"><span class="pre">get_linked_instances</span></code> method, the <code class="docutils literal notranslate"><span class="pre">get_records_by_id</span></code> method is also available across multiple clients in <code class="docutils literal notranslate"><span class="pre">nmdc_api_utilities</span></code> and can be used to retrieve fully hydrated metadata records for any list of IDs, even if those IDs are not linked to each other or do not belong to a common collection.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">biosample_records</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">if</span> <span class="n">biosample_ids</span><span class="p">:</span>
+    <span class="n">biosample_records</span> <span class="o">=</span> <span class="n">data_object_client</span><span class="o">.</span><span class="n">get_records_by_id</span><span class="p">(</span><span class="n">ids</span><span class="o">=</span><span class="n">biosample_ids</span><span class="p">)</span>
+
+<span class="n">biosamples_by_id</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">record</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]:</span> <span class="n">record</span>
+    <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">biosample_records</span>
+    <span class="k">if</span> <span class="s2">&quot;id&quot;</span> <span class="ow">in</span> <span class="n">record</span>
+<span class="p">}</span>
+
+<span class="n">biosamples_by_data_object</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">data_object_id</span> <span class="ow">in</span> <span class="n">data_object_ids</span><span class="p">:</span>
+    <span class="n">linked_ids</span> <span class="o">=</span> <span class="n">associations</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">data_object_id</span><span class="p">,</span> <span class="p">[])</span>
+    <span class="n">biosamples_by_data_object</span><span class="p">[</span><span class="n">data_object_id</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">biosamples_by_id</span><span class="p">[</span><span class="n">biosample_id</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">biosample_id</span> <span class="ow">in</span> <span class="n">linked_ids</span>
+        <span class="k">if</span> <span class="n">biosample_id</span> <span class="ow">in</span> <span class="n">biosamples_by_id</span>
+    <span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Biosamples fetched: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">biosample_records</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Objects with mapped biosamples: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">biosamples_by_data_object</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Biosamples fetched: 25
+Objects with mapped biosamples: 25
+</pre></div></div>
+</div>
+</section>
+</section>
+<section id="Example-3:-Study--&gt;-Biosamples--&gt;-++-Biosamples">
+<h2>Example 3: Study -&gt; Biosamples -&gt; ++ Biosamples<a class="headerlink" href="#Example-3:-Study-->-Biosamples-->-++-Biosamples" title="Link to this heading"></a></h2>
+<p><strong>Goal:</strong> Starting from a study of interest, increase the size of your database by searching for additional biosamples within a certain radius of those you’ve already found.</p>
+<section id="Step-1:-Find-biosamples-from-your-study-of-interest">
+<h3>Step 1: Find biosamples from your study of interest<a class="headerlink" href="#Step-1:-Find-biosamples-from-your-study-of-interest" title="Link to this heading"></a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">nmdc_api_utilities</span><span class="w"> </span><span class="kn">import</span> <span class="n">StudySearch</span>
+
+<span class="n">study_client</span> <span class="o">=</span> <span class="n">StudySearch</span><span class="p">()</span>
+
+<span class="n">study_id</span> <span class="o">=</span> <span class="s2">&quot;nmdc:sty-11-8xdqsn54&quot;</span>
+
+<span class="n">studies</span> <span class="o">=</span> <span class="n">study_client</span><span class="o">.</span><span class="n">get_record_by_attribute</span><span class="p">(</span>
+    <span class="n">attribute_name</span><span class="o">=</span><span class="s2">&quot;id&quot;</span><span class="p">,</span>
+    <span class="n">attribute_value</span><span class="o">=</span><span class="n">study_id</span><span class="p">,</span>
+    <span class="n">exact_match</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">biosamples</span> <span class="o">=</span> <span class="n">study_client</span><span class="o">.</span><span class="n">get_linked_instances</span><span class="p">(</span>
+    <span class="n">ids</span><span class="o">=</span><span class="p">[</span><span class="n">study_id</span><span class="p">],</span>
+    <span class="n">types</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;nmdc:Biosample&quot;</span><span class="p">],</span>
+    <span class="n">hydrate</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">biosample_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">record</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">biosamples</span> <span class="k">if</span> <span class="s2">&quot;id&quot;</span> <span class="ow">in</span> <span class="n">record</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Biosamples from original study: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">biosamples</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Biosamples from original study: 104
+</pre></div></div>
+</div>
+</section>
+<section id="Step-2:-Find-additional-biosamples-within-a-radius-of-the-original-biosamples">
+<h3>Step 2: Find additional biosamples within a radius of the original biosamples<a class="headerlink" href="#Step-2:-Find-additional-biosamples-within-a-radius-of-the-original-biosamples" title="Link to this heading"></a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">nmdc_api_utilities</span><span class="w"> </span><span class="kn">import</span> <span class="n">BiosampleSearch</span>
+
+<span class="n">biosample_client</span> <span class="o">=</span> <span class="n">BiosampleSearch</span><span class="p">()</span>
+
+<span class="n">add_biosamples</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">biosample_id</span> <span class="ow">in</span> <span class="n">biosample_ids</span><span class="p">:</span>
+    <span class="n">new_biosamples</span> <span class="o">=</span> <span class="n">biosample_client</span><span class="o">.</span><span class="n">get_record_by_proximity</span><span class="p">(</span>
+        <span class="n">radius_km</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span>
+        <span class="n">record_id</span><span class="o">=</span><span class="n">biosample_id</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">for</span> <span class="n">biosample</span> <span class="ow">in</span> <span class="n">new_biosamples</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">biosample</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">biosample_ids</span> <span class="ow">and</span> <span class="n">biosample</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="n">b</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">add_biosamples</span><span class="p">]:</span>
+            <span class="n">add_biosamples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">biosample</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Additional biosamples found: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">add_biosamples</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Additional biosamples found: 79
+</pre></div></div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="Search-client-selection-and-schema-field-names">
+<h2>Search client selection and schema field names<a class="headerlink" href="#Search-client-selection-and-schema-field-names" title="Link to this heading"></a></h2>
+<p>The above examples use the <code class="docutils literal notranslate"><span class="pre">DataObjectSearch</span></code> and <code class="docutils literal notranslate"><span class="pre">StudySearch</span></code> clients because the initial filtering was targeted to a specific collection metadata records (data_object_set and study_set, respectively). To help orient yourself to which client to use for a given query, you can refer to the <a class="reference external" href="https://microbiomedata.github.io/nmdc-schema/typecode-to-class-map/">typecode-to-class map in the NMDC Schema documentation</a>, which shows which schema classes are associated with each typecode and
+therefore which clients will be able to filter by those schema fields.</p>
+<p>For additional query recipes and MongoDB-style filters, see the Filters page in this documentation set.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="NMDC API Utilities Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="filters.html" class="btn btn-neutral float-right" title="Using MongoDB filters" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, NMDC.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
