@@ -25,7 +25,8 @@ jobs:
           echo "CONDA_PREFIX   : ${CONDA_PREFIX}"
           echo "Python path    : $(uv python find)"
           echo "Python version : $(uv run python --version)"
-          echo "Python package versions:\n$(uv pip freeze)"
+          echo "Python package versions:"
+          uv pip freeze
       - name: Sphinx build
         run: uv run sphinx-build -v docs build/html
       - name: Deploy to GitHub Pages
