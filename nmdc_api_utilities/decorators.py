@@ -2,6 +2,7 @@
 
 from collections.abc import Callable
 from functools import wraps
+from inspect import getdoc
 
 from deprecated.params import deprecated_params
 
@@ -115,7 +116,13 @@ def has_deprecated_parameter(
         sphinx_note = "\n".join(sphinx_note_lines)
 
         # Augment the decorated function's or class's docstring with the Sphinx note.
-        original_docstring = decorated_class_or_func.__doc__
+        #
+        # Note: We use `inspect.getdoc(x)` instead of `x.__doc__` because, unlike the latter, the
+        #       former normalizes the indentation level of the docstring lines. This way, we don't
+        #       have to indent our injected note to different levels for different docstrings.
+        #       Reference: https://docs.python.org/3/library/inspect.html#inspect.getdoc
+        #
+        original_docstring = getdoc(decorated_class_or_func)
         if not isinstance(original_docstring, str):
             original_docstring = ""
         decorated_class_or_func.__doc__ = (

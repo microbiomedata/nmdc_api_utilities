@@ -19,6 +19,14 @@ jobs:
           enable-cache: true
       - name: Install Python dependencies
         run: uv sync --locked --group docs
+      - name: (Debug) Dump environment details
+        run: |
+          echo "VIRTUAL_ENV    : ${VIRTUAL_ENV}"
+          echo "CONDA_PREFIX   : ${CONDA_PREFIX}"
+          echo "Python path    : $(uv python find)"
+          echo "Python version : $(uv run python --version)"
+          echo "Python package versions:"
+          uv pip freeze
       - name: Sphinx build
         run: uv run sphinx-build -v docs build/html
       - name: Deploy to GitHub Pages
